@@ -9,6 +9,7 @@ import Link from "next/link";
 import { speciesById } from "@/config/species";
 import type { SavedSession } from "@/lib/session";
 import { SessionActions } from "./SessionView";
+import { Growwy } from "./Growwy";
 import { Badge, btnGhost, btnPrimary, input, label, LevelPill } from "./ui";
 
 export function AIPanel({
@@ -60,6 +61,8 @@ export function AIPanel({
         {busy ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-cta-ink border-t-transparent" /> : "✨"} {busy ? "Analyzing…" : "Analyze my field"}
         {!busy && <kbd>A</kbd>}
       </button>
+
+      <Growwy busy={busy} advice={advice} />
 
       <div className="space-y-2 rounded-xl border border-line p-3">
         <div className="flex items-center text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Your farm<Link href="/register" className="ml-auto normal-case tracking-normal text-ink underline-offset-4 hover:underline">{registered ? "Edit register" : "Register farm"} <kbd>R</kbd></Link></div>

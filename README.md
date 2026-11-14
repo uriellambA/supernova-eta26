@@ -45,6 +45,9 @@ Cada sitio está en `config/sites.ts`: centro, límites del mapa (los mapas sate
 ### Clima en el mapa
 Debajo de los filtros satelitales, **Weather now** pinta sobre el mapa la temperatura, el UV, el viento (con flechas), la humedad, la lluvia, la presión y las nubes. Usa las condiciones actuales de Open-Meteo en una grilla de 7×5 puntos sobre el sitio (`/api/weather-grid`).
 
+### Growwy, la Pachamama
+Growwy es el SI de Growvia y aparece como la **Pachamama** (dibujada a partir del boceto del equipo, `components/Pachamama.tsx`, en SVG). Sale cada vez que se activa el SI: mientras analiza mira hacia arriba y las hojas giran alrededor de su puño; cuando responde muestra la primera frase en un globo de diálogo. Con **Escuchar a Growwy** lee la respuesta y **mueve la boca con la voz**: con la voz del servidor usa el volumen real del audio, y con la voz del dispositivo sigue cada palabra (`lib/voz.ts`). También respira, parpadea y el pelo se mueve con el viento (se desactiva si el sistema pide menos movimiento).
+
 ### Temas
 El botón de tema alterna **claro → oscuro → tierra**. El tema tierra es rojizo, con los colores del logo.
 
@@ -151,6 +154,7 @@ app/page.tsx           introducción · app/app: panel · app/register: registro
 app/api/*              climate, vegetation, forecast, snow, soil, enso, farm (SI), advisor (SI)
 components/            Growvia (panel bento), PlanSections, Sections, RegisterForm, landing/*, ui
 scripts/soil-study.ts  comando de estudio de suelo avanzado
+components/Pachamama.tsx  avatar animado de Growwy (SI); components/Growwy.tsx la tarjeta del panel
 scripts/soil-study-all.ts  estudio de suelo de todas las ciudades de una vez + resumen
 ```
 

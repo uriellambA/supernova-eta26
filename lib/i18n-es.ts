@@ -646,6 +646,11 @@ export const ES: Record<string, string> = {
   "Bare months": "Meses desnudo", "N kg/ha": "N kg/ha", "Main benefit / risk": "Principal beneficio / riesgo", "New crops ranked for this field": "Cultivos nuevos ordenados para este campo", "Main limit": "Principal limitante", "Margin USD/ha": "Margen USD/ha",
   // ---------- Rotation explorer ----------
   "in {n}": "en {n}",
+  "For your priorities, \"{x}\" scores {n} vs {n} for your current rotation": "Según tus prioridades, \"{x}\" obtiene {n} contra {n} de tu rotación actual",
+  "Let me read your field: climate, soil, water and your register…": "Dejame leer tu campo: clima, suelo, agua y tu registro…",
+  "Let me read your field: climate, soil, water and your register": "Dejame leer tu campo: clima, suelo, agua y tu registro",
+  "Listen to Growwy": "Escuchar a Growwy",
+  "Pachamama, Growwy's guide": "Pachamama, la guía de Growwy",
   "3D terrain & weather map": "Terreno 3D y clima en el mapa",
   "See slopes and cold low spots in 3D, and layer temperature, wind, UV, humidity and rain over your valley": "Mirá pendientes y bajos fríos en 3D, y sumá temperatura, viento, UV, humedad y lluvia sobre tu valle",
   "Compare, design and plan the rotation of your field": "Compará, diseñá y planificá la rotación de tu campo",

@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getLang } from "@/lib/i18n";
+import { getLang, translate } from "@/lib/i18n";
+import { pulse, setAnalyser, setPaused, setSpeaking } from "@/lib/voz";
 
 /** Cleans text before reading it aloud (no brackets, emoji or markdown; units spelled out). */
 export function limpiarParaVoz(t: string) {
@@ -65,6 +66,7 @@ export function useLeer() {
   }, []);
 
   const terminar = useCallback(() => {
+    setSpeaking(false);
     setHablando(false);
     setPausado(false);
     if (audio.current) {
@@ -85,6 +87,8 @@ export function useLeer() {
       u.lang = v?.lang ?? (getLang() === "es" ? "es-AR" : "en-US");
       u.volume = 1; // maximum the browser allows
       u.rate = 0.95;
+      u.onstart = pulse;
+      u.onboundary = pulse; // moves the avatar's mouth on every word
       if (i === partes.length - 1) {
         u.onend = terminar;
         u.onerror = terminar;
@@ -93,11 +97,14 @@ export function useLeer() {
     });
   }, [terminar]);
 
-  const leer = useCallback(async (texto: string) => {
+  const leer = useCallback(async (original: string) => {
+    // rules-based answers are written in English: read them in Spanish when the page is in Spanish
+    const texto = getLang() === "es" ? translate(original) ?? original : original;
     window.speechSynthesis?.cancel();
     audio.current?.el.pause();
     setHablando(true);
     setPausado(false);
+    setSpeaking(true);
     if (serverTts !== false && "AudioContext" in window) {
       try {
         const r = await fetch("/api/tts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: limpiarParaVoz(texto), lang: getLang() }) });
@@ -113,6 +120,10 @@ export function useLeer() {
         comp.threshold.value = -12;
         comp.ratio.value = 6;
         ctx.createMediaElementSource(el).connect(gain).connect(comp).connect(ctx.destination);
+        const an = ctx.createAnalyser(); // loudness for the avatar's mouth
+        an.fftSize = 512;
+        comp.connect(an);
+        setAnalyser(an);
         el.onended = terminar;
         el.onerror = terminar;
         audio.current = { el, ctx, url };
@@ -129,11 +140,11 @@ export function useLeer() {
   const pausar = useCallback(() => {
     const a = audio.current;
     if (a) {
-      if (a.el.paused) { a.el.play(); setPausado(false); } else { a.el.pause(); setPausado(true); }
+      if (a.el.paused) { a.el.play(); setPausado(false); setPaused(false); } else { a.el.pause(); setPausado(true); setPaused(true); }
       return;
     }
     const s = window.speechSynthesis;
-    if (s.paused) { s.resume(); setPausado(false); } else { s.pause(); setPausado(true); }
+    if (s.paused) { s.resume(); setPausado(false); setPaused(false); } else { s.pause(); setPausado(true); setPaused(true); }
   }, []);
 
   const detener = useCallback(() => {
