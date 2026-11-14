@@ -60,8 +60,16 @@ export default function Landing() {
             </Reveal>
             </div>
             <Reveal delay={120} className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
-              <figure className="overflow-hidden rounded-3xl border border-line bg-[#f3efe3]">
-                <Image src="/brand/growvia-seal.jpg" alt="Growvia logo: a hand print with a satellite in the palm — Guiding growers towards a better future" width={900} height={964} priority className="h-auto w-full" />
+              <figure className="relative overflow-hidden rounded-3xl border border-line">
+                <Image src="/brand/los-antiguos.jpg" alt="Road into Los Antiguos with Lake Buenos Aires and the snowy Andes behind" width={664} height={462} priority className="h-auto w-full" />
+                <div className="absolute left-3 top-3 flex items-center gap-2 rounded-xl bg-[#f3efe3]/90 py-1.5 pl-1.5 pr-3 backdrop-blur">
+                  <Image src="/brand/growvia-mark-128.png" alt="" width={32} height={32} className="h-8 w-8" />
+                  <span className="font-serif text-lg leading-none text-[#111]">Growvia</span>
+                </div>
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-3 pt-10 text-sm text-white">
+                  <div className="font-medium">Los Antiguos, Santa Cruz</div>
+                  <div className="text-xs text-white/80">Lake Buenos Aires and the Andes</div>
+                </figcaption>
               </figure>
               <p className="mt-3 text-center text-xs uppercase tracking-[0.14em] text-subtle">Guiding growers towards a better future</p>
             </Reveal>

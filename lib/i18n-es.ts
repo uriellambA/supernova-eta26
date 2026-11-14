@@ -441,6 +441,8 @@ export const ES: Record<string, string> = {
   "Your farm register": "Registro de tu chacra", "Plots, history, soil test, water, economy": "Lotes, historial, análisis de suelo, agua, economía", "Personal AI analysis": "Análisis personal con IA",
   "Your field, your priorities,": "Tu campo, tus prioridades,", "Your field, your priorities": "Tu campo, tus prioridades", "your decision": "tu decisión",
   "highlights patterns and trade-offs. It supports your judgment and local agronomic advice; it never replaces them": "muestra patrones y ventajas y desventajas. Apoya tu criterio y el asesoramiento agronómico local; nunca los reemplaza",
+  "Lake Buenos Aires and the Andes": "Lago Buenos Aires y la cordillera de los Andes",
+  "Road into Los Antiguos with Lake Buenos Aires and the snowy Andes behind": "Camino de entrada a Los Antiguos con el lago Buenos Aires y la cordillera nevada detrás",
   "Guiding growers towards a better future": "Guiando a los productores hacia un futuro mejor",
   "Smarter crop rotations for resilient soil · Los Antiguos, Santa Cruz · Supernovas ETA26": "Rotaciones más inteligentes para un suelo resiliente · Los Antiguos, Santa Cruz · Supernovas ETA26",
   "Smarter crop rotations for resilient soil · Los Antiguos, Santa Cruz": "Rotaciones más inteligentes para un suelo resiliente · Los Antiguos, Santa Cruz", "Values to validate with local experts": "Valores para validar con expertos locales",
