@@ -1,0 +1,14 @@
+{
+  "name": "Chacras west of Los Antiguos",
+  "lat": -46.5525,
+  "lon": -71.648,
+  "widthM": 1400,
+  "heightM": 790,
+  "width": 1705,
+  "height": 963,
+  "scene": "S2B_18GYP_20260104_0_L2A",
+  "date": "2026-01-04",
+  "cloud": 0.005974,
+  "ndviMedian": 0.19,
+  "ndviP90": 0.62
+}
