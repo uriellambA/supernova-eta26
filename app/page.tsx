@@ -25,6 +25,7 @@ export default function Landing() {
             <a href="#how" className="rounded-lg px-2 py-1 hover:text-ink">How it works</a>
             <a href="#features" className="rounded-lg px-2 py-1 hover:text-ink">Features</a>
             <a href="#data" className="rounded-lg px-2 py-1 hover:text-ink">Our data</a>
+            <a href="#about" className="rounded-lg px-2 py-1 hover:text-ink">About us</a>
           </nav>
           <div className="ml-auto flex items-center gap-2">
             <LangToggle />
@@ -57,6 +58,13 @@ export default function Landing() {
             <Reveal delay={220} className="mt-8 flex flex-wrap gap-3">
               <Link href="/app" className={`${btnPrimary} px-5 py-3`}>Compare rotations for my field <kbd>D</kbd></Link>
               <Link href="/register" className={`${btnGhost} px-5 py-3`}>Register your farm <kbd>R</kbd></Link>
+            </Reveal>
+            <Reveal delay={280} className="mt-8 max-w-2xl rounded-2xl border border-line bg-surface p-6">
+              <section id="about" aria-labelledby="about-title" className="scroll-mt-24">
+                <h2 id="about-title" className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">About us</h2>
+                <p className="mt-3 font-serif text-2xl leading-snug">We are high school students from Caleta Olivia taking part in the NASA Space Apps Challenge. We developed Growvia: the path to smarter farming.</p>
+                <p className="mt-3 text-ink-2">Growvia is a smart web platform designed to help farmers in Los Antiguos, Santa Cruz, make better decisions about their crops and the care of their soil. Our project combines NASA satellite observations, climate information, soil data and crop characteristics to offer recommendations tailored to each farm.</p>
+              </section>
             </Reveal>
             </div>
             <Reveal delay={120} className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">

@@ -627,6 +627,10 @@ export const ES: Record<string, string> = {
   "Imagery, vegetation, land heat, snow, relief, salinity risk": "Imagen, vegetación, calor del suelo, nieve, relieve, riesgo de salinidad",
   "Light theme": "Tema claro", "Dark theme": "Tema oscuro", "Terra theme (logo colours)": "Tema tierra (colores del logo)", "{x} · switch to {x}": "{x} · cambiar a {x}", "Switch to {x}": "Cambiar a {x}",
   "average last frost": "última helada promedio",
+  // ---------- About us ----------
+  "About us": "Sobre nosotros",
+  "We are high school students from Caleta Olivia taking part in the NASA Space Apps Challenge. We developed Growvia: the path to smarter farming": "Somos alumnos de secundaria de la localidad de Caleta Olivia para el NASA Space Apps Challenge, nosotros desarrollamos Growvia: el camino hacia una agricultura más inteligente",
+  "Growvia is a smart web platform designed to help farmers in Los Antiguos, Santa Cruz, make better decisions about their crops and the care of their soil. Our project combines NASA satellite observations, climate information, soil data and crop characteristics to offer recommendations tailored to each farm": "Growvia es una plataforma web inteligente diseñada para ayudar a los productores agrícolas de Los Antiguos, Santa Cruz, a tomar mejores decisiones sobre sus cultivos y el cuidado de sus suelos. Nuestro proyecto combina observaciones satelitales de la NASA, información climática, datos del suelo y características de los cultivos para ofrecer recomendaciones adaptadas a cada chacra",
   // ---------- Report ----------
   "frost-free days · last spring frost": "días libres de heladas · última helada de primavera", "mm rain vs": "mm de lluvia vs", "mm evaporation · spring wind": "mm de evaporación · viento de primavera",
   "· water holding": "· retención de agua", "new species": "especies nuevas", "Field elevation": "Altura del campo", "Field": "Campo", "Soil ({n}–{n} cm": "Suelo ({n}–{n} cm",
