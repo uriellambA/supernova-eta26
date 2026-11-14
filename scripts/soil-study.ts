@@ -1,7 +1,9 @@
 /**
  * Growvia — advanced soil study for Los Antiguos (or any point).
  *
- *   npm run soil-study                          # the 3 reference fields
+ *   npm run soil-study                          # Los Antiguos: centre + 4 points around it
+ *   npm run soil-study -- --site perito-moreno  # also gobernador-gregores, pampa-ondulada
+ *   npm run soil-study -- --all                 # one point per site
  *   npm run soil-study -- --lat -46.55 --lon -71.62 --name "My chacra"
  *   npm run soil-study -- --grid 3              # 3×3 grid around the valley centre (~1 km spacing)
  *   npm run soil-study -- --offline             # no internet: regional reference + simulated climate
@@ -16,7 +18,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { STRATEGIES } from "../config/rotations";
-import { SITE } from "../config/site";
+import { SITES, siteById, siteNear } from "../config/sites";
 import { calcularIndicadores, shortDate } from "../lib/agro";
 import { corregirAltura, elevacionCampo, ndviModis, powerDiario } from "../lib/nasa";
 import { compareStrategies } from "../lib/rotation";
@@ -32,13 +34,24 @@ const arg = (k: string) => {
   return i >= 0 ? args[i + 1] : undefined;
 };
 const offline = args.includes("--offline");
-const out = arg("out") ?? "docs/soil-study";
-const system = (arg("system") ?? "orchard") as FarmSystem;
+const SITE = siteById(arg("site") ?? (arg("lat") && arg("lon") ? siteNear(Number(arg("lat")), Number(arg("lon"))).id : undefined));
+const all = args.includes("--all"); // one point per supported site
+const out = arg("out") ?? `docs/soil-study/${all ? "all-sites" : SITE.id}`;
+const system = (arg("system") ?? SITE.systems[0]) as FarmSystem;
 const irrigation = (arg("irrigation") ?? SITE.irrigation.defaultMethod) as SistemaRiego;
 const grid = Number(arg("grid") ?? 0);
 
 type Pt = { name: string; lat: number; lon: number };
-let points: Pt[] = SITE.fields.map((f) => ({ name: f.name, lat: f.lat, lon: f.lon }));
+// Default: the site centre plus 4 points ~1.5 km around it (N, S, E, W)
+const [c0lon, c0lat] = SITE.center;
+let points: Pt[] = [
+  { name: `${SITE.name} centre`, lat: c0lat, lon: c0lon },
+  { name: "North", lat: +(c0lat + 0.014).toFixed(4), lon: c0lon },
+  { name: "South", lat: +(c0lat - 0.014).toFixed(4), lon: c0lon },
+  { name: "East", lat: c0lat, lon: +(c0lon + 0.02).toFixed(4) },
+  { name: "West", lat: c0lat, lon: +(c0lon - 0.02).toFixed(4) },
+];
+if (all) points = SITES.map((x) => ({ name: x.name, lat: x.center[1], lon: x.center[0] }));
 if (arg("lat") && arg("lon")) points = [{ name: arg("name") ?? "Point", lat: Number(arg("lat")), lon: Number(arg("lon")) }];
 if (grid > 1) {
   const [lon0, lat0] = SITE.center;
@@ -89,18 +102,19 @@ async function study(p: Pt) {
   });
   let soil: SoilResumen;
   try {
-    soil = prof.v ? deriveSoil(topsoilValues(prof.v), "soil-map", "0–30 cm") : deriveSoil(SITE.soilReference, "reference", "0–30 cm");
+    soil = prof.v ? deriveSoil(topsoilValues(prof.v, undefined, siteNear(p.lat, p.lon).soilReference), "soil-map", "0–30 cm") : deriveSoil(siteNear(p.lat, p.lon).soilReference, "reference", "0–30 cm");
   } catch {
-    soil = deriveSoil(SITE.soilReference, "reference", "0–30 cm");
+    soil = deriveSoil(siteNear(p.lat, p.lon).soilReference, "reference", "0–30 cm");
   }
-  const elev = offline ? SITE.elevation : await elevacionCampo(p.lat, p.lon);
+  const ps = siteNear(p.lat, p.lon);
+  const elev = offline ? ps.elevation : await elevacionCampo(p.lat, p.lon);
   const { d: daily, altura } = corregirAltura(climateRaw.v, elev);
   const c: IndicadoresNasa = { ...calcularIndicadores(daily, p.lat, p.lon), altura };
   const sal = salinityEstimate(soil, c, irrigation, null);
-  const results = compareStrategies({ climate: c, soil, snow: null }, farm, DEFAULT_PRIORITIES).sort((a, b) => b.score - a.score);
+  const results = compareStrategies({ climate: c, soil, snow: null, cfg: ps }, { ...farm, system: ps.systems.includes(farm.system) ? farm.system : ps.systems[0] }, DEFAULT_PRIORITIES).sort((a, b) => b.score - a.score);
   const current = results.find((r) => r.strategy.current);
   const health = soilHealth(soil, sal, current?.metrics.bareMonths ?? 0, c.vientoPrimavera, veg.v);
-  const species = rankSpecies(c, soil, sal, farm);
+  const species = rankSpecies(c, soil, sal, farm, ps);
   const rootZoneAwc = layers.slice(0, 4).reduce((s, l) => s + (l.awcMm ?? 0), 0);
   return { point: p, sources: { soil: prof.live ? "SoilGrids 250 m" : "regional reference", climate: climateRaw.live ? "daily record 20 yr" : "simulated", vegetation: veg.live ? "MODIS 250 m" : "simulated" }, layers, rootZoneAwc, soil, sal, health, climate: c, veg: veg.v, results, species };
 }
@@ -133,7 +147,7 @@ async function main() {
 
   // Markdown report
   const md: string[] = [];
-  md.push(`# Soil study — ${SITE.name} (${SITE.region})`, "");
+  md.push(all ? "# Soil study — all Growvia sites" : `# Soil study — ${SITE.name} (${SITE.region})`, "");
   md.push(`Generated with \`npm run soil-study\` · ${points.length} point(s) · rotation system: **${system}**, irrigation: **${irrigation}**${offline ? " · ⚠️ OFFLINE (reference values + simulated climate)" : ""}.`, "");
   md.push("> Decision support only. Validate with a lab soil test (pH, EC, organic matter, texture) and local experts (INTA Santa Cruz).", "");
   md.push("## Summary by point", "");

@@ -109,7 +109,7 @@ const TREES = CROPS.filter((c) => ["cherry", "raspberry", "currant"].includes(c.
 
 export const blankCustom = (system: FarmSystem): Strategy => ({
   id: "custom", system, name: "My rotation", short: "Yours",
-  years: system === "orchard" ? [{ main: "cherry", winter: "rye" }] : system === "forage" ? [{ main: "alfalfa", winter: "alfalfa" }, { main: "potato", winter: "oats-vetch" }] : [{ main: "potato", winter: "rye" }, { main: "garlic", winter: "oats-vetch" }],
+  years: system === "orchard" ? [{ main: "cherry", winter: "rye" }] : system === "grains" ? [{ main: "maize", winter: "oats-vetch" }, { main: "soy", winter: "wheat" }] : system === "forage" ? [{ main: "alfalfa", winter: "alfalfa" }, { main: "potato", winter: "oats-vetch" }] : [{ main: "potato", winter: "rye" }, { main: "garlic", winter: "oats-vetch" }],
   alley: system === "orchard" ? "rye" : undefined,
   idea: "A rotation you designed: compare it with the alternatives before deciding.",
   gaps: ["Your own yields and costs for these crops"],

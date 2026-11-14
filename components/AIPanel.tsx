@@ -12,8 +12,9 @@ import { SessionActions } from "./SessionView";
 import { Badge, btnGhost, btnPrimary, input, label, LevelPill } from "./ui";
 
 export function AIPanel({
-  farm, setFarm, results, advice, busy, onAnalyze, error, registered, session, link, savedCount, onOpenSessions,
+  farm, setFarm, results, advice, busy, onAnalyze, error, registered, session, link, savedCount, onOpenSessions, systems,
 }: {
+  systems?: readonly string[];
   farm: FarmProfile;
   setFarm: (f: FarmProfile) => void;
   results: StrategyResult[];
@@ -62,8 +63,8 @@ export function AIPanel({
 
       <div className="space-y-2 rounded-xl border border-line p-3">
         <div className="flex items-center text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Your farm<Link href="/register" className="ml-auto normal-case tracking-normal text-ink underline-offset-4 hover:underline">{registered ? "Edit register" : "Register farm"} <kbd>R</kbd></Link></div>
-        <div className="grid grid-cols-3 gap-1">
-          {SYSTEMS.map((s) => (
+        <div className={`grid gap-1 ${systems && systems.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
+          {SYSTEMS.filter((s) => !systems || systems.includes(s.id)).map((s) => (
             <button key={s.id} onClick={() => setFarm({ ...farm, system: s.id })} className={`rounded-lg border px-1 py-1.5 text-xs font-medium ${farm.system === s.id ? "border-ink bg-ink text-canvas" : "border-line bg-surface text-ink-2 hover:bg-surface-2"}`}>
               {s.emoji} {s.name}
             </button>

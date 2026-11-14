@@ -1,5 +1,5 @@
 import { calcularIndicadores } from "./agro";
-import { SITE } from "@/config/site";
+import { siteNear } from "@/config/sites";
 import { fetchJson } from "./cache";
 import type { DiarioClima, IndicadoresNasa, NdviResumen, PuntoNdvi } from "./types";
 
@@ -42,9 +42,9 @@ export async function elevacionCampo(lat: number, lon: number): Promise<number> 
   try {
     const j = await fetchJson(`https://api.open-meteo.com/v1/elevation?latitude=${lat}&longitude=${lon}`, 10_000);
     const e = Number(j?.elevation?.[0]);
-    return Number.isFinite(e) ? e : SITE.elevation;
+    return Number.isFinite(e) ? e : siteNear(lat, lon).elevation;
   } catch {
-    return SITE.elevation;
+    return siteNear(lat, lon).elevation;
   }
 }
 

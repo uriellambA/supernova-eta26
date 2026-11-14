@@ -5,7 +5,7 @@ import { APP_NAME } from "@/config/app";
 import { useLeer } from "@/hooks/useLeer";
 import { METHOD_NAME } from "@/lib/riego";
 
-const SYSTEM_NAME = { orchard: "Orchard", vegetables: "Vegetables", forage: "Forage" } as const;
+const SYSTEM_NAME = { orchard: "Orchard", vegetables: "Vegetables", forage: "Forage", grains: "Grains" } as const;
 import { openWhatsApp, whatsappText, type SavedSession } from "@/lib/session";
 import { Badge, btnGhost, btnPrimary } from "./ui";
 

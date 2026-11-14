@@ -1,4 +1,5 @@
 "use client";
+import { WEATHER_VARS, type WeatherGrid, type WeatherVarId } from "@/lib/weathergrid";
 import type { OverlayId } from "./MapView";
 
 export const FILTERS: { id: OverlayId; name: string; desc: string; legend: string }[] = [
@@ -29,6 +30,42 @@ export function FiltersPanel({ active, toggle }: { active: Set<OverlayId>; toggl
           </button>
         );
       })}
+    </div>
+  );
+}
+
+/** Weather variables painted on the map (current conditions on a grid over the site). */
+export function WeatherPicker({ value, onChange }: { value: WeatherVarId | null; onChange: (v: WeatherVarId | null) => void }) {
+  return (
+    <div className="flex flex-wrap gap-1.5" role="group" aria-label="Weather on the map">
+      {WEATHER_VARS.map((v) => {
+        const on = value === v.id;
+        return (
+          <button key={v.id} onClick={() => onChange(on ? null : v.id)} aria-pressed={on}
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition ${on ? "border-ink bg-ink text-canvas" : "border-line bg-surface text-ink-2 hover:bg-surface-2"}`}>
+            {on ? <span className="h-2 w-5 rounded-full" style={{ background: `linear-gradient(90deg,${v.stops.join(",")})` }} /> : <span className="h-2 w-2 rounded-full border border-current" />}
+            {v.name}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+export function WeatherLegend({ varId, grid }: { varId: WeatherVarId; grid: WeatherGrid | null }) {
+  const v = WEATHER_VARS.find((x) => x.id === varId)!;
+  const vals = (grid?.values[v.param] ?? []).filter((x): x is number => x !== null);
+  const time = grid?.time ? new Date(grid.time + (grid.time.endsWith("Z") ? "" : "Z")).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : null;
+  return (
+    <div className="flex flex-wrap items-center gap-2 px-4 pb-2 text-[11px] text-muted">
+      <span className="font-medium text-ink">{v.name}</span>
+      <span>{v.min}{v.unit}</span>
+      <span className="h-2 w-28 rounded-full" style={{ background: `linear-gradient(90deg,${v.stops.join(",")})` }} />
+      <span>{v.max}{v.unit}</span>
+      {vals.length > 0 && <span>{`· now ${Math.min(...vals).toFixed(0)}–${Math.max(...vals).toFixed(0)} ${v.unit}`.trim()}</span>}
+      {time && <span>{`· updated ${time}`}</span>}
+      {!grid && <span>Loading weather…</span>}
+      {varId === "wind" && <span>· arrows show where the wind blows</span>}
     </div>
   );
 }

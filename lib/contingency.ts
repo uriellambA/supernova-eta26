@@ -16,7 +16,7 @@ export type Hazard = {
 const dayName = (iso: string) => new Date(iso + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
 
 /** Weather and climate contingencies for Los Antiguos with a live status from the forecast. */
-export function hazards(c: IndicadoresNasa, f: ClimaResumen | null, snow: NieveResumen | null, enso: EnsoResumen | null): Hazard[] {
+export function hazards(c: IndicadoresNasa, f: ClimaResumen | null, snow: NieveResumen | null, enso: EnsoResumen | null, zone: "patagonia" | "pampa" = "patagonia"): Hazard[] {
   const next = f?.dias.filter((d) => !d.pasado).slice(0, 10) ?? [];
   const frost = next.filter((d) => d.tmin <= 0);
   const gust = next.reduce((m, d) => Math.max(m, d.rafagas), 0);
@@ -83,6 +83,36 @@ export function hazards(c: IndicadoresNasa, f: ClimaResumen | null, snow: NieveR
       after: ["Incorporate thin ash layers into the soil (they add minerals)", "Thick layers: remove from roofs and greenhouses fast"],
     },
   ];
+
+  if (zone === "pampa") {
+    const rain3 = next.slice(0, 3).reduce((s, d) => s + d.lluvia, 0);
+    const dryDays = next.filter((d) => d.lluvia < 1).length;
+    // Volcanic ash and snowpack do not apply here; add water excess and drought instead
+    for (const id of ["ash", "drought"]) {
+      const i = list.findIndex((h) => h.id === id);
+      if (i >= 0) list.splice(i, 1);
+    }
+    list.push(
+      {
+        id: "flood", name: "Heavy rain, waterlogging & water erosion", emoji: "🌊",
+        level: rain3 > 60 ? "alert" : rain3 > 30 ? "watch" : "good",
+        status: `Rain next 3 days: ${rain3.toFixed(0)} mm.`,
+        history: `About ${c.lluviaAnual} mm of rain per year, concentrated in spring–summer storms that wash bare slopes.`,
+        before: ["Keep residue or a cover crop on slopes", "Clear grassed waterways and terraces", "Avoid heavy machinery on wet soil"],
+        during: ["Do not enter flooded lots (compaction)", "Note where water stands: those spots need drainage or a different crop"],
+        after: ["Check stands and replant if needed", "Measure soil loss in rills; plan contour sowing"],
+      },
+      {
+        id: "dry", name: "Dry spell / La Niña drought", emoji: "🏜️",
+        level: dryDays >= 9 && next.length ? "watch" : "good",
+        status: next.length ? `${dryDays} of the next ${next.length} days without rain.` : "Forecast not available.",
+        history: "La Niña years usually bring drier springs and summers to the Rolling Pampa: maize and second soybean suffer most.",
+        before: ["Choose drought-tolerant crops (sorghum) or lower plant density", "Keep residue on the surface: it saves soil water"],
+        during: ["Delay fertilizer and inputs until it rains", "Prioritize the lots with more stored water"],
+        after: ["Record yields by lot to adjust next season"],
+      },
+    );
+  }
 
   // El Niño / La Niña seasonal outlook
   if (phase) {

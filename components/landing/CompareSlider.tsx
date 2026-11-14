@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { SITE } from "@/config/site";
+import { SHOWCASE } from "@/config/sites";
 
 type Meta = { name: string; date?: string; cloud?: number; ndviMedian?: number };
 type View =
@@ -29,7 +29,7 @@ function palette(v: number) {
 
 /** Stitches real satellite tiles of the showcase chacra and computes a visible-band vegetation index (VARI). */
 async function buildLive(): Promise<{ color: string; index: string }> {
-  const { lat, lon, widthM, heightM } = SITE.showcase;
+  const { lat, lon, widthM, heightM } = SHOWCASE;
   const dLat = heightM / 2 / 111320, dLon = widthM / 2 / (111320 * Math.cos((lat * Math.PI) / 180));
   const x0 = Math.floor(mercX(lon - dLon)), x1 = Math.ceil(mercX(lon + dLon)), y0 = Math.floor(mercY(lat + dLat)), y1 = Math.ceil(mercY(lat - dLat));
   const W = x1 - x0, H = y1 - y0;
@@ -119,7 +119,7 @@ export function CompareSlider() {
         </div>
       </div>
       <figcaption className="mt-3 text-center text-sm text-muted">
-        {SITE.showcase.name}
+        {SHOWCASE.name}
         {view.mode === "static" && view.meta.date ? ` · ${view.meta.date}` : ""}. Satellites see plant health that is invisible to the naked eye. Drag to compare.
       </figcaption>
     </figure>

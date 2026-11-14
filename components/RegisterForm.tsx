@@ -7,7 +7,7 @@ import { LangToggle } from "@/components/Translator";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { APP_NAME } from "@/config/app";
 import { CROPS } from "@/config/crops";
-import { SITE } from "@/config/site";
+import { SITES } from "@/config/sites";
 import { SPECIES } from "@/config/species";
 import { MONTHS, SEASONS } from "@/lib/agro";
 import { emptyRegister, newPlot, polygonStats, profileFromRegister } from "@/lib/register";
@@ -20,7 +20,7 @@ const FarmMap = dynamic(() => import("./FarmMap"), { ssr: false, loading: () => 
 
 type Place = { name: string; lat: number; lon: number };
 /** Street or place search (OpenStreetMap), biased to Los Antiguos. */
-function AddressSearch({ value, onChange, onPick }: { value: string; onChange: (v: string) => void; onPick: (p: Place) => void }) {
+function AddressSearch({ siteId, value, onChange, onPick }: { siteId: string; value: string; onChange: (v: string) => void; onPick: (p: Place) => void }) {
   const [res, setRes] = useState<Place[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -29,7 +29,7 @@ function AddressSearch({ value, onChange, onPick }: { value: string; onChange: (
     setBusy(true);
     setErr(null);
     try {
-      const r = await fetch(`/api/geocode?q=${encodeURIComponent(value)}`);
+      const r = await fetch(`/api/geocode?site=${siteId}&q=${encodeURIComponent(value)}`);
       const j = await r.json();
       if (!r.ok) throw new Error(j?.error);
       setRes(j);
@@ -187,12 +187,23 @@ export function RegisterForm() {
         </aside>
 
         <div className="space-y-6">
-          <Step id="farm" n={1} title="Farm" hint="Name, location and limit">
-            <div className="grid gap-3 sm:grid-cols-2">
+          <Step id="farm" n={1} title="Farm" hint="Location, name and limit">
+            <div className="mb-2 text-[11px] font-medium text-muted">First, where is your farm?</div>
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4" role="radiogroup" aria-label="Location">
+              {SITES.map((x) => (
+                <button key={x.id} role="radio" aria-checked={r.siteId === x.id}
+                  onClick={() => setR((v) => ({ ...v, siteId: x.id, lat: x.center[1], lon: x.center[0], boundary: null, boundaryHa: null, address: "" }))}
+                  className={`rounded-xl border p-3 text-left transition ${r.siteId === x.id ? "border-ink bg-surface-2" : "border-line hover:bg-surface-2"}`}>
+                  <div className="text-sm font-semibold">{x.name}</div>
+                  <div className="text-[11px] text-muted">{x.region}</div>
+                </button>
+              ))}
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <label className={label}>Farm name<input className={input} value={r.farmName} onChange={(e) => set("farmName", e.target.value)} placeholder="e.g. Chacra Los Álamos" /></label>
               <label className={label}>Producer<input className={input} value={r.producer} onChange={(e) => set("producer", e.target.value)} placeholder="Your name (optional)" /></label>
             </div>
-            <AddressSearch value={r.address} onChange={(v) => set("address", v)} onPick={(pl) => setR((x) => ({ ...x, address: pl.name, lat: +pl.lat.toFixed(5), lon: +pl.lon.toFixed(5) }))} />
+            <AddressSearch siteId={r.siteId} value={r.address} onChange={(v) => set("address", v)} onPick={(pl) => setR((x) => ({ ...x, address: pl.name, lat: +pl.lat.toFixed(5), lon: +pl.lon.toFixed(5) }))} />
 
             <div className="mt-4 overflow-hidden rounded-xl border border-line">
               <div className="flex flex-wrap items-center gap-2 border-b border-line bg-surface px-3 py-2">
@@ -231,13 +242,7 @@ export function RegisterForm() {
             )}
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <label className={label}>Area near
-                <select className={input} value={SITE.fields.find((f) => f.lat === r.lat && f.lon === r.lon)?.id ?? "custom"} onChange={(e) => { const f = SITE.fields.find((x) => x.id === e.target.value); if (f) setR((x) => ({ ...x, lat: f.lat, lon: f.lon })); }}>
-                  {SITE.fields.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
-                  <option value="custom">Exact coordinates</option>
-                </select>
-              </label>
-              <div className="grid grid-cols-[1fr_1fr_auto] items-end gap-2">
+              <div className="grid grid-cols-[1fr_1fr_auto] items-end gap-2 sm:col-span-2 sm:max-w-md">
                 <label className={label}>Latitude<input type="number" step={0.0001} className={input} value={r.lat} onChange={(e) => set("lat", Number(e.target.value))} /></label>
                 <label className={label}>Longitude<input type="number" step={0.0001} className={input} value={r.lon} onChange={(e) => set("lon", Number(e.target.value))} /></label>
                 <button className={`${btnGhost} !py-1.5`} title="Use my location" onClick={() => navigator.geolocation?.getCurrentPosition((p) => setR((x) => ({ ...x, lat: +p.coords.latitude.toFixed(5), lon: +p.coords.longitude.toFixed(5) })))}>📍</button>

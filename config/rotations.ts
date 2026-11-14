@@ -91,10 +91,40 @@ export const STRATEGIES: Strategy[] = [
     gaps: ["Garlic seed availability and buyers"],
     risks: ["More labor than pure forage"],
   },
+  // ---------- Grains (Pampa Ondulada, rain-fed) ----------
+  {
+    id: "g-current", system: "grains", current: true, name: "Continuous soybean", short: "Current",
+    years: [{ main: "soy", winter: null }],
+    idea: "Your existing system: soybean every year, fallow (empty) field from April to November.",
+    gaps: ["Real yields and soil organic matter trend", "Herbicide-resistant weeds present"],
+    risks: ["Little residue: organic matter drops and the soil crusts", "Water erosion on slopes during heavy spring storms", "Pests and diseases build up (frogeye, stink bugs)"],
+  },
+  {
+    id: "g-wheat-soy", system: "grains", name: "Wheat/2nd soybean → maize → soybean", short: "Classic 3-year",
+    years: [{ main: "soy", winter: "wheat" }, { main: "maize", winter: null }, { main: "soy", winter: null }],
+    idea: "The classic Pampa rotation: wheat followed by second-crop soybean, then maize to return carbon, then soybean.",
+    gaps: ["Water stored in the soil at wheat sowing", "Nitrogen fertilization plan for wheat and maize"],
+    risks: ["Second soybean yields less in dry summers (La Niña)", "Needs more planning and contractors' time"],
+  },
+  {
+    id: "g-cover", system: "grains", name: "Maize–soybean with winter cover crops", short: "Cover crops",
+    years: [{ main: "maize", winter: "oats-vetch" }, { main: "soy", winter: "oats-vetch" }, { main: "soy", winter: "rye" }],
+    idea: "Never leave the field fallow: vetch + oats or rye between cash crops add nitrogen, residue and protect slopes.",
+    gaps: ["Date to terminate the cover so it does not use the next crop's water"],
+    risks: ["A cover that grows too long can dry the soil in dry springs", "Seed and termination cost"],
+  },
+  {
+    id: "g-mixed", system: "grains", name: "Mixed: 3 years pasture + 3 years crops", short: "Crop–livestock",
+    years: [{ main: "alfalfa", winter: "alfalfa" }, { main: "alfalfa", winter: "alfalfa" }, { main: "alfalfa", winter: "alfalfa" }, { main: "maize", winter: null }, { main: "soy", winter: "wheat" }, { main: "soy", winter: null }],
+    idea: "Alfalfa–grass pasture for 3 years rebuilds organic matter and structure, then 3 years of grains use it.",
+    gaps: ["Own cattle or a grazing contract for the pasture years"],
+    risks: ["Lower cash income in pasture years", "Needs fencing and water for animals"],
+  },
 ];
 
 export const SYSTEMS = [
   { id: "orchard", name: "Orchard", emoji: "🍒" },
   { id: "vegetables", name: "Vegetables", emoji: "🥔" },
   { id: "forage", name: "Forage", emoji: "🌿" },
+  { id: "grains", name: "Grains", emoji: "🌽" },
 ] as const;

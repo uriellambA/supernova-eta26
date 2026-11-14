@@ -40,7 +40,7 @@ export default function Landing() {
           <div className="grid items-center gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
             <Reveal className="flex flex-wrap gap-2">
-              <Badge tone="green" dot>Los Antiguos · Santa Cruz, Patagonia</Badge>
+              <Badge tone="green" dot>Santa Cruz · Pampa Ondulada</Badge>
               <Badge tone="blue">Decision support with AI</Badge>
             </Reveal>
             <Reveal delay={80}>
@@ -62,10 +62,6 @@ export default function Landing() {
             <Reveal delay={120} className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
               <figure className="relative overflow-hidden rounded-3xl border border-line">
                 <Image src="/brand/los-antiguos.jpg" alt="Road into Los Antiguos with Lake Buenos Aires and the snowy Andes behind" width={664} height={462} priority className="h-auto w-full" />
-                <div className="absolute left-3 top-3 flex items-center gap-2 rounded-xl bg-[#f3efe3]/90 py-1.5 pl-1.5 pr-3 backdrop-blur">
-                  <Image src="/brand/growvia-mark-128.png" alt="" width={32} height={32} className="h-8 w-8" />
-                  <span className="font-serif text-lg leading-none text-[#111]">Growvia</span>
-                </div>
                 <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-3 pt-10 text-sm text-white">
                   <div className="font-medium">Los Antiguos, Santa Cruz</div>
                   <div className="text-xs text-white/80">Lake Buenos Aires and the Andes</div>
@@ -177,8 +173,9 @@ export default function Landing() {
                     ["Weather forecast", "Hourly temperature, humidity, pressure, UV, gusts", "16 days", "Frost alerts, irrigation, contingencies"],
                     ["Snowpack", "Snowfall in the watershed that feeds the canals", "20 seasons", "Summer water outlook"],
                     ["Pacific index", "El Niño / La Niña anomaly", "Since 1950", "Seasonal tendency, contingency plans"],
-                    ["Satellite map layers", "Imagery, vegetation, land heat, snow, relief", "Valley-wide", "Map filters and 3D view"],
-                    ["Crop & species library", `${SPECIES.length} species, 15 traits each + economics`, "Los Antiguos", "New crops and viability"],
+                    ["Satellite map layers", "Imagery, vegetation, land heat, snow, relief, salinity risk", "4 sites", "Map filters and 3D view"],
+                    ["Weather map", "Temperature, UV, wind, humidity, rain, pressure, clouds", "Grid over each site, now", "Weather filters on the map"],
+                    ["Crop & species library", `${SPECIES.length} species, 15 traits each + economics`, "Patagonia and Pampa", "New crops and viability"],
                     ["Your farm register", "Plots, history, soil test, water, economy", "Your farm", "Personal AI analysis"],
                   ].map(([a, b, c, d]) => (
                     <tr key={a} className="border-b border-line last:border-0"><td className="px-6 py-3 font-medium text-ink">{a}</td><td>{b}</td><td className="whitespace-nowrap pr-4">{c}</td><td className="px-6">{d}</td></tr>

@@ -41,6 +41,7 @@ export type SavedSession = {
 const T = (s: string) => (getLang() === "es" ? translate(s) ?? s : s);
 
 export function buildSession(o: {
+  zone?: "patagonia" | "pampa";
   place: string; lat: number; lon: number; farm: FarmProfile; question?: string; advice: AdvisorResult; results: StrategyResult[];
   fits: SpeciesFit[]; risks: Hazard[]; forecast: ClimaResumen | null; climate: IndicadoresNasa | null; soil: SoilResumen | null;
 }): SavedSession {
@@ -53,7 +54,7 @@ export function buildSession(o: {
   // Tasks for this week: active hazards + what the current season asks for
   const month = new Date().getMonth() + 1;
   const season = SEASONS.find((s) => (s.months as readonly number[]).includes(month))!;
-  const plan = yearPlan(best, o.fits);
+  const plan = yearPlan(best, o.fits, o.zone ?? "patagonia");
   const tasks = [
     ...o.risks.filter((h) => h.level !== "good").slice(0, 3).map((h) => `${h.emoji} ${T(h.name)}: ${T(h.status)} → ${T(h.before[0])}`),
     ...plan[season.id].tasks.slice(0, 3).map((t) => `✅ ${T(t)}`),

@@ -1,9 +1,11 @@
-import { SITE } from "@/config/site";
+import { siteNear } from "@/config/sites";
+import type { SiteConfig } from "./types";
 import { fetchJson } from "./cache";
 import type { ClimaResumen, NieveCuenca, NieveResumen } from "./types";
 
 /** 16-day forecast + last 10 days (for the water balance). */
 export async function pronostico(lat: number, lon: number): Promise<ClimaResumen> {
+  const SITE = siteNear(lat, lon);
   const url =
     `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
     `&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_gusts_10m_max,wind_speed_10m_max,et0_fao_evapotranspiration,uv_index_max` +
@@ -52,11 +54,13 @@ export async function pronostico(lat: number, lon: number): Promise<ClimaResumen
  * Snowpack index: accumulated snowfall (ERA5 reanalysis) Apr 1 → today (or Oct 31) in the watershed
  * that feeds the irrigation canals, compared with the same window of the previous 20 seasons.
  */
-export async function nieveCuencas(): Promise<NieveResumen> {
+export async function nieveCuencas(SITE: SiteConfig): Promise<NieveResumen> {
+  if (!SITE.watershed) throw new Error("no snow-fed watershed for this site");
+  const ws = SITE.watershed;
   const fin = new Date(Date.now() - 6 * 86_400_000);
   const temporada = fin.getUTCMonth() + 1 >= 4 ? fin.getUTCFullYear() : fin.getUTCFullYear() - 1;
   const finStr = fin.toISOString().slice(0, 10);
-  const pts = SITE.watershed.points;
+  const pts = ws.points;
   const url =
     `https://archive-api.open-meteo.com/v1/archive?latitude=${pts.map((p) => p[0]).join(",")}` +
     `&longitude=${pts.map((p) => p[1]).join(",")}&start_date=${temporada - 20}-04-01&end_date=${finStr}&daily=snowfall_sum&timezone=GMT`;
@@ -78,6 +82,6 @@ export async function nieveCuencas(): Promise<NieveResumen> {
   const actual = serie.find((s) => s.anio === temporada)?.cm ?? 0;
   const hist = serie.filter((s) => s.anio < temporada);
   const prom = hist.length ? hist.reduce((s, x) => s + x.cm, 0) / hist.length : 0;
-  const c: NieveCuenca = { id: SITE.id, nombre: SITE.watershed.name, temporada, actualCm: actual, promedioCm: Math.round(prom), pct: prom ? +(actual / prom).toFixed(2) : 1, serie };
+  const c: NieveCuenca = { id: SITE.id, nombre: ws.name, temporada, actualCm: actual, promedioCm: Math.round(prom), pct: prom ? +(actual / prom).toFixed(2) : 1, serie };
   return { hasta: finStr, cuencas: [c], indice: c.pct };
 }

@@ -1,8 +1,8 @@
 import { SPECIES, type Species } from "@/config/species";
-import { SITE } from "@/config/site";
+import { SITES } from "@/config/sites";
 import { probHeladaVentana, shortDate } from "./agro";
 import { EFFICIENCY } from "./riego";
-import type { FarmProfile, IndicadoresNasa, Nivel, Salinity, SoilResumen } from "./types";
+import type { FarmProfile, IndicadoresNasa, Nivel, Salinity, SiteConfig, SoilResumen } from "./types";
 
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const lvl = (s: number): Nivel => (s >= 65 ? "good" : s >= 45 ? "watch" : "alert");
@@ -19,10 +19,10 @@ export type SpeciesFit = {
   fillsGap: boolean; // harvests outside the cherry/strawberry peak
 };
 
-/** Months when today's crops already bring income (cherry + strawberry peak). */
+/** Months when today's crops already bring income (cherry + strawberry peak in Los Antiguos). */
 export const BUSY_MONTHS = [12, 1, 2];
 
-export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, sal: Salinity, farm: FarmProfile): SpeciesFit {
+export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, sal: Salinity, farm: FarmProfile, site: SiteConfig = SITES[0]): SpeciesFit {
   const f: Factor[] = [];
   const indoor = !!sp.greenhouse;
 
@@ -30,7 +30,7 @@ export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, s
   // older cached climate records may lack minAnual: estimate it from the coldest monthly minimum
   const minAnual = Number.isFinite(c.minAnual) ? c.minAnual : +(Math.min(...c.mensual.map((m) => m.tmin)) - 9).toFixed(1);
   const margin = minAnual - sp.minWinter;
-  f.push({ name: "Winter cold", score: indoor ? 1 : clamp(0.5 + margin / 8), note: indoor ? "Protected crop" : `Coldest night averages ${minAnual} °C; survives ${sp.minWinter} °C` });
+  if (!sp.annual) f.push({ name: "Winter cold", score: indoor ? 1 : clamp(0.5 + margin / 8), note: indoor ? "Protected crop" : `Coldest night averages ${minAnual} °C; survives ${sp.minWinter} °C` });
 
   // Spring frost at a sensitive stage
   if (sp.bloom && !indoor) {
@@ -49,8 +49,9 @@ export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, s
   f.push({ name: "Salinity", score: indoor ? 1 : clamp(1 - over * 0.15), note: `${sal.measured ? "" : "~"}${sal.ece} dS/m; yield drops above ${sp.salt}` });
 
   // Water and wind
-  const supply = SITE.irrigation.grossSupplyMm * EFFICIENCY[farm.irrigation] * ({ low: 0.7, medium: 1, high: 1.25 } as const)[farm.water];
-  f.push({ name: "Water", score: clamp(1.15 - sp.water / supply), note: `Needs ~${sp.water} mm/season; useful supply ~${Math.round(supply)} mm` });
+  const rainfed = site.zone === "pampa";
+  const supply = rainfed ? Math.max(200, c.lluviaAnual * 0.55) : site.irrigation.grossSupplyMm * EFFICIENCY[farm.irrigation] * ({ low: 0.7, medium: 1, high: 1.25 } as const)[farm.water];
+  f.push({ name: "Water", score: clamp(1.15 - sp.water / supply), note: rainfed ? `Needs ~${sp.water} mm/season; useful rain ~${Math.round(supply)} mm` : `Needs ~${sp.water} mm/season; useful supply ~${Math.round(supply)} mm` });
   f.push({ name: "Wind", score: indoor ? 1 : clamp(sp.wind + (1 - sp.wind) * (1 - c.vientoPrimavera / 8)), note: `Spring wind ${c.vientoPrimavera} m/s; tolerance ${sp.wind >= 0.8 ? "high" : sp.wind >= 0.5 ? "medium" : "low"}` });
 
   for (const x of f) if (!Number.isFinite(x.score)) x.score = 0.5; // missing input → neutral, never NaN
@@ -62,7 +63,7 @@ export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, s
   const marginUsd = revenue - sp.econ.costUsdHa;
   const realMargin = marginUsd * (agro / 100); // poor fit = lower yields
   const payback = realMargin > 0 ? +(sp.yearsToHarvest + sp.econ.setupUsdHa / realMargin).toFixed(1) : null;
-  const fillsGap = sp.harvest.some((m) => !BUSY_MONTHS.includes(m));
+  const fillsGap = sp.harvest.some((m) => !site.busyMonths.includes(m));
 
   const econScore = clamp(realMargin / 25000);
   const paybackScore = payback === null ? 0 : clamp(1 - (payback - 2) / 10);
@@ -75,8 +76,8 @@ export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, s
   };
 }
 
-export function rankSpecies(c: IndicadoresNasa, soil: SoilResumen, sal: Salinity, farm: FarmProfile) {
-  return SPECIES.map((s) => speciesFit(s, c, soil, sal, farm)).sort((a, b) => b.viability - a.viability);
+export function rankSpecies(c: IndicadoresNasa, soil: SoilResumen, sal: Salinity, farm: FarmProfile, site: SiteConfig = SITES[0]) {
+  return SPECIES.filter((s) => (s.zone ?? "patagonia") === site.zone).map((s) => speciesFit(s, c, soil, sal, farm, site)).sort((a, b) => b.viability - a.viability);
 }
 
 /** Month-by-month income coverage: which months have something to harvest. */

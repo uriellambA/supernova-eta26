@@ -6,7 +6,8 @@ import { MONTHS, SEASONS } from "@/lib/agro";
 import { ensoImpacts } from "@/lib/enso";
 import type { Hazard } from "@/lib/contingency";
 import { seasonGrid, yearPlan, type SeasonCell } from "@/lib/seasons";
-import { BUSY_MONTHS, harvestCoverage, type SpeciesFit } from "@/lib/suitability";
+import { harvestCoverage, type SpeciesFit } from "@/lib/suitability";
+import type { SiteConfig } from "@/lib/types";
 import type { AdvisorResult, EnsoResumen, IndicadoresNasa, Priorities, StrategyResult } from "@/lib/types";
 import { Badge, Card, LevelPill, Meter, Note, Reveal } from "./ui";
 
@@ -133,10 +134,10 @@ function Block({ title, items }: { title: string; items: string[] }) {
 }
 
 // ---------------- Year plan (seasons) ----------------
-export function YearPlan({ results, fits, advice }: { results: StrategyResult[]; fits: SpeciesFit[]; advice: AdvisorResult | null }) {
+export function YearPlan({ results, fits, advice, site }: { results: StrategyResult[]; fits: SpeciesFit[]; advice: AdvisorResult | null; site: SiteConfig }) {
   const best = [...results].sort((a, b) => b.score - a.score)[0];
-  const plan = yearPlan(best, fits);
-  const current = SPECIES.filter((s) => s.status === "current").map((s) => s.id);
+  const plan = yearPlan(best, fits, site.zone);
+  const current = SPECIES.filter((s) => (s.zone ?? "patagonia") === site.zone && s.status === "current").map((s) => s.id);
   const added = fits.filter((f) => f.species.status === "new" && f.viability >= 55).slice(0, 4).map((f) => f.species.id);
   const before = harvestCoverage(current);
   const after = harvestCoverage([...current, ...added]);
@@ -159,7 +160,7 @@ export function YearPlan({ results, fits, advice }: { results: StrategyResult[];
         <CoverageRow label="Today" cov={before} />
         <CoverageRow label="With new crops" cov={after} />
         <p className="mt-3 text-xs text-muted">
-          Today the income is concentrated in {before.filter((x) => x.length).length} months (cherries and strawberries).
+          {`Today the income is concentrated in ${before.filter((x) => x.length).length} months (${current.map((id) => SPECIES.find((x) => x.id === id)?.name).join(", ")}).`}
           Adding {added.map((id) => SPECIES.find((s) => s.id === id)?.name).join(", ")} covers {after.filter((x) => x.length).length} months of the year.
         </p>
       </Card>
@@ -185,7 +186,7 @@ function CoverageRow({ label, cov }: { label: string; cov: string[][] }) {
 }
 
 // ---------------- New crops ----------------
-export function NewCrops({ fits, advice }: { fits: SpeciesFit[]; advice: AdvisorResult | null }) {
+export function NewCrops({ fits, advice, site }: { fits: SpeciesFit[]; advice: AdvisorResult | null; site: SiteConfig }) {
   const [filter, setFilter] = useState<"all" | "new" | "gap">("new");
   const [open, setOpen] = useState<string | null>(null);
   const list = fits.filter((f) => (filter === "all" ? true : filter === "new" ? f.species.status === "new" : f.species.status === "new" && f.fillsGap));
@@ -193,7 +194,9 @@ export function NewCrops({ fits, advice }: { fits: SpeciesFit[]; advice: Advisor
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
-        <p className="mr-auto max-w-2xl text-sm text-ink-2">Los Antiguos grows mostly cherries and strawberries. What can the soil and climate support <i>after</i> their season? Each species is scored against your field&apos;s frost, heat, chill, pH, salinity, water and wind.</p>
+        <p className="mr-auto max-w-2xl text-sm text-ink-2">{site.zone === "pampa"
+          ? "Soybean dominates the Rolling Pampa. Which crops can diversify the rotation, protect the soil and spread the price risk? Each one is scored against your field's frost, heat, pH, salinity, water and wind."
+          : "Today's main crops leave months without income. What can the soil and climate support after their season? Each species is scored against your field's frost, heat, chill, pH, salinity, water and wind."}</p>
         {([["new", "New species"], ["gap", "Fill the off-season"], ["all", "All"]] as const).map(([id, l]) => (
           <button key={id} onClick={() => setFilter(id)} aria-pressed={filter === id} className={`rounded-full border px-3 py-1 text-xs font-medium ${filter === id ? "border-ink bg-ink text-canvas" : "border-line bg-surface text-ink-2 hover:bg-surface-2"}`}>{l}</button>
         ))}
@@ -223,7 +226,7 @@ export function NewCrops({ fits, advice }: { fits: SpeciesFit[]; advice: Advisor
               <p className="mt-3 text-sm text-ink-2">{picked.get(s.id) ?? s.why}</p>
               <div className="mt-3 grid grid-cols-12 gap-[2px]">
                 {MONTHS.map((m, k) => (
-                  <div key={m} title={m} className={`h-4 rounded-sm text-center text-[8px] leading-4 ${s.harvest.includes(k + 1) ? (BUSY_MONTHS.includes(k + 1) ? "bg-blue-bg text-blue-fg" : "bg-green-bg text-green-fg") : "bg-surface-2 text-subtle"}`}>{m[0]}</div>
+                  <div key={m} title={m} className={`h-4 rounded-sm text-center text-[8px] leading-4 ${s.harvest.includes(k + 1) ? (site.busyMonths.includes(k + 1) ? "bg-blue-bg text-blue-fg" : "bg-green-bg text-green-fg") : "bg-surface-2 text-subtle"}`}>{m[0]}</div>
                 ))}
               </div>
               <div className="mt-3 grid grid-cols-3 gap-2 text-center text-[11px]">
@@ -254,7 +257,7 @@ export function NewCrops({ fits, advice }: { fits: SpeciesFit[]; advice: Advisor
 }
 
 // ---------------- Viability (economy) ----------------
-export function Viability({ fits, areaHa }: { fits: SpeciesFit[]; areaHa: number }) {
+export function Viability({ fits, areaHa, site }: { fits: SpeciesFit[]; areaHa: number; site: SiteConfig }) {
   const [sort, setSort] = useState<"viability" | "margin" | "payback">("viability");
   const rows = [...fits].sort((a, b) =>
     sort === "viability" ? b.viability - a.viability : sort === "margin" ? b.economy.margin - a.economy.margin : (a.economy.paybackYears ?? 99) - (b.economy.paybackYears ?? 99),
@@ -310,12 +313,9 @@ export function Viability({ fits, areaHa }: { fits: SpeciesFit[]; areaHa: number
           </table>
         </div>
       </Card>
-      <Card title="Regional context" eyebrow="Los Antiguos, Santa Cruz">
+      <Card title="Regional context" eyebrow={`${site.name}, ${site.region.split(",")[0]}`}>
         <ul className="grid gap-2 text-sm text-ink-2 md:grid-cols-2">
-          <li>🍒 The National Cherry Festival and summer tourism create a local market for fresh fruit, jams and experiences (lavender fields, berry picking).</li>
-          <li>🚚 Fresh fruit travels ~1,000 km to big markets: products that store well (frozen, dried, oils, saffron) avoid freight risk.</li>
-          <li>💧 Water comes from snowmelt through canals: crops with low water need are safer in low-snow years.</li>
-          <li>👥 Labor peaks in Dec–Jan with cherries: crops harvested in autumn or spring use the same workers in quieter months.</li>
+          {site.context.map((c) => <li key={c}>{c}</li>)}
         </ul>
         <p className="mt-3 text-[11px] text-muted">Margins = yield × price − yearly costs, reduced by the soil &amp; climate fit. Payback = years to first harvest + setup ÷ margin. Indicative values to validate with local data.</p>
       </Card>

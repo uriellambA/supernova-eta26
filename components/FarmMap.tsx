@@ -2,7 +2,6 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl, { type GeoJSONSource, type Map as MLMap, type Marker } from "maplibre-gl";
 import { useEffect, useRef } from "react";
-import { SITE } from "@/config/site";
 
 const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services";
 
@@ -40,7 +39,6 @@ export default function FarmMap({ lat, lon, boundary, drawing, onPick, onAddPoin
       container: box.current,
       center: [lon, lat],
       zoom: 15.5,
-      maxBounds: [[SITE.bounds[0][0] - 0.3, SITE.bounds[0][1] - 0.2], [SITE.bounds[1][0] + 0.3, SITE.bounds[1][1] + 0.2]],
       doubleClickZoom: false,
       attributionControl: { compact: true },
       style: {

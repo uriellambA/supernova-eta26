@@ -1,4 +1,4 @@
-import { SITE } from "@/config/site";
+import { siteNear } from "@/config/sites";
 import { fetchJson } from "./cache";
 import type { SmapResumen } from "./smap";
 import type { FarmProfile, IndicadoresNasa, Nivel, NdviResumen, Salinity, SoilHealth, SoilResumen, SoilValues } from "./types";
@@ -84,12 +84,11 @@ export function weighted(profile: Awaited<ReturnType<typeof soilGridsProfile>>, 
 }
 
 /** Converts a SoilGrids profile (topsoil 0–30 cm) to Growvia soil values. */
-export function topsoilValues(profile: Awaited<ReturnType<typeof soilGridsProfile>>, depths: readonly string[] = ["0-5cm", "5-15cm", "15-30cm"]): SoilValues {
+export function topsoilValues(profile: Awaited<ReturnType<typeof soilGridsProfile>>, depths: readonly string[] = ["0-5cm", "5-15cm", "15-30cm"], ref: SoilValues = siteNear(-46.55, -71.6).soilReference): SoilValues {
   const g = (p: string) => weighted(profile, p, depths);
   const sand = g("sand"), clay = g("clay");
   if (sand === undefined || clay === undefined) throw new Error("soil map: no data at this point");
   const pct = (gkg: number) => gkg / 10; // g/kg → %
-  const ref = SITE.soilReference;
   return {
     sand: +pct(sand).toFixed(0),
     silt: +(g("silt") !== undefined ? pct(g("silt")!) : 100 - pct(sand) - pct(clay)).toFixed(0),
@@ -106,10 +105,11 @@ export function topsoilValues(profile: Awaited<ReturnType<typeof soilGridsProfil
 export async function soilAt(lat: number, lon: number): Promise<SoilResumen> {
   const depths = ["0-5cm", "5-15cm", "15-30cm"];
   const profile = await soilGridsProfile(lat, lon, depths);
-  return deriveSoil(topsoilValues(profile, depths), "soil-map", "0–30 cm");
+  return deriveSoil(topsoilValues(profile, depths, siteNear(lat, lon).soilReference), "soil-map", "0–30 cm");
 }
 
-export const soilReference = () => deriveSoil(SITE.soilReference, "reference", "0–30 cm");
+/** Regional reference soil of the closest site (used when the soil map is unavailable). */
+export const soilReference = (lat = -46.55, lon = -71.6) => deriveSoil(siteNear(lat, lon).soilReference, "reference", "0–30 cm");
 
 /**
  * Salinity estimate (ECe, dS/m). Global soil maps do not include salinity, so this is an

@@ -1,12 +1,13 @@
-import { SITE } from "@/config/site";
+import { SITES } from "@/config/sites";
 import { shortDate } from "./agro";
 import { yearPlan } from "./seasons";
 import type { SpeciesFit } from "./suitability";
-import type { AdvisorResult, ClimaResumen, EnsoResumen, FarmProfile, FarmRegister, IndicadoresNasa, NdviResumen, Priorities, Salinity, SoilHealth, SoilResumen, StrategyResult } from "./types";
+import type { SiteConfig, AdvisorResult, ClimaResumen, EnsoResumen, FarmProfile, FarmRegister, IndicadoresNasa, NdviResumen, Priorities, Salinity, SoilHealth, SoilResumen, StrategyResult } from "./types";
 import { registerSummary } from "./register";
 
 export type AdvisorContext = {
   language?: "English" | "Spanish (Argentina)";
+  site?: { name: string; zone: string; description: string };
   question?: string;
   place: string;
   farm: FarmProfile;
@@ -21,7 +22,7 @@ export type AdvisorContext = {
   register: ReturnType<typeof registerSummary> | null;
 };
 
-export type ContextExtras = { fits: SpeciesFit[]; health: SoilHealth; sal: Salinity; enso: EnsoResumen | null; register: FarmRegister | null };
+export type ContextExtras = { fits: SpeciesFit[]; health: SoilHealth; sal: Salinity; enso: EnsoResumen | null; register: FarmRegister | null; site?: SiteConfig };
 
 export function buildContext(
   fieldName: string, farm: FarmProfile, pri: Priorities, c: IndicadoresNasa, soil: SoilResumen,
@@ -30,7 +31,8 @@ export function buildContext(
   const next = fc?.dias.filter((d) => !d.pasado).slice(0, 7) ?? [];
   const coldest = next.length ? next.reduce((a, b) => (b.tmin < a.tmin ? b : a)) : null;
   return {
-    place: `${fieldName}, ${SITE.name} (${SITE.region})`,
+    place: `${fieldName}, ${(x.site ?? SITES[0]).name} (${(x.site ?? SITES[0]).region})`,
+    site: { name: (x.site ?? SITES[0]).name, zone: (x.site ?? SITES[0]).zone, description: (x.site ?? SITES[0]).description },
     farm,
     priorities: pri,
     climate: {
@@ -77,7 +79,7 @@ export function buildContext(
 function localAnswer(q: string, ctx: AdvisorContext, res?: StrategyResult[], fits?: SpeciesFit[]) {
   const t = q.toLowerCase();
   const id = /verano|summer/.test(t) ? "summer" : /oto[ñn]o|autumn|fall/.test(t) ? "autumn" : /invierno|winter/.test(t) ? "winter" : /primavera|spring/.test(t) ? "spring" : null;
-  const plan = yearPlan(res ? [...res].sort((a, b) => b.score - a.score)[0] : undefined, fits ?? []);
+  const plan = yearPlan(res ? [...res].sort((a, b) => b.score - a.score)[0] : undefined, fits ?? [], ctx.site?.zone === "pampa" ? "pampa" : "patagonia");
   const months: Record<string, number[]> = { spring: [9, 10, 11], summer: [12, 1, 2], autumn: [3, 4, 5], winter: [6, 7, 8] };
   const names: Record<string, string> = { spring: "spring", summer: "summer", autumn: "autumn", winter: "winter" };
   const best = [...ctx.strategies].sort((a, b) => b.score - a.score)[0];
@@ -110,7 +112,7 @@ export function localAdvice(ctx: AdvisorContext, res?: StrategyResult[], fits?: 
       id: n.id, why: `${n.viability}/100 fit; harvest in ${n.harvestMonths.map((m) => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]).join("/")}${n.limits[0] ? `. Watch: ${n.limits[0]}` : ""}.`,
     })),
     seasons: (() => {
-      const plan = yearPlan(res ? [...res].sort((a, b) => b.score - a.score)[0] : undefined, fits ?? []);
+      const plan = yearPlan(res ? [...res].sort((a, b) => b.score - a.score)[0] : undefined, fits ?? [], ctx.site?.zone === "pampa" ? "pampa" : "patagonia");
       const line = (k: keyof typeof plan) => `${plan[k].focus}.${plan[k].harvest.length ? ` Harvest: ${plan[k].harvest.join(", ")}.` : ""}`;
       return { spring: line("spring"), summer: line("summer"), autumn: line("autumn"), winter: line("winter") };
     })(),

@@ -1,9 +1,9 @@
 import { cropById } from "@/config/crops";
 import { STRATEGIES } from "@/config/rotations";
-import { SITE } from "@/config/site";
+import { SITES } from "@/config/sites";
 import { probHeladaVentana, shortDate } from "./agro";
 import { EFFICIENCY, seasonNeed } from "./riego";
-import type { Crop, FarmProfile, IndicadoresNasa, Nivel, NieveResumen, Priorities, SoilResumen, Strategy, StrategyResult } from "./types";
+import type { SiteConfig, Crop, FarmProfile, IndicadoresNasa, Nivel, NieveResumen, Priorities, SoilResumen, Strategy, StrategyResult } from "./types";
 
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
@@ -12,7 +12,7 @@ export const levelOf = (s: number): Nivel => (s >= 55 ? "good" : s >= 40 ? "watc
 
 const WATER_SUPPLY: Record<FarmProfile["water"], number> = { low: 0.7, medium: 1, high: 1.25 };
 
-export type SiteData = { climate: IndicadoresNasa; soil: SoilResumen; snow: NieveResumen | null };
+export type SiteData = { climate: IndicadoresNasa; soil: SoilResumen; snow: NieveResumen | null; cfg?: SiteConfig };
 
 /** Net irrigation need of a crop on this field (mm/season): climate-based when available. */
 export function cropWater(c: Crop, climate: IndicadoresNasa) {
@@ -69,7 +69,9 @@ function evaluate(s: Strategy, site: SiteData) {
   const pestBreak = clamp((distinct - 1) / 3 - repeats / Math.max(2, fams.length) * 0.5 + (isOrchard ? 0.1 : 0));
 
   const forage = clamp(avg([...mains.map((c) => c.forage), ...winters.map((c) => c?.forage ?? 0)]));
-  const income = clamp(avg(mains.map((c) => c.income)));
+  // Same annual crop every year with nothing in between: yields fall over time (diseases, weeds, soil)
+  const mono = s.years.length === 1 && mains[0]?.kind === "annual" && !s.years[0].winter;
+  const income = clamp(avg(mains.map((c) => c.income)) * (mono ? 0.82 : 1));
   const labor = clamp(avg(mains.map((c) => c.labor)) + (winters.some((w) => w && w.kind === "cover") ? 0.05 : 0));
 
   return { mains, alley, metrics: { waterMm, bareMonths, erosion, nitrogen: Math.round(nitrogen), organicMatter, pestBreak, forage, income, labor } };
@@ -79,6 +81,7 @@ export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priori
   const list = [...STRATEGIES.filter((s) => s.system === farm.system), ...extra.filter((s) => s.system === farm.system && s.years.length && s.years.every((y) => cropById(y.main)))];
   const evals = list.map((s) => ({ s, ...evaluate(s, site) }));
   const current = evals.find((e) => e.s.current) ?? evals[0];
+  const SITE = site.cfg ?? SITES[0];
   const supply = SITE.irrigation.grossSupplyMm * EFFICIENCY[farm.irrigation] * WATER_SUPPLY[farm.water] * (site.snow ? clamp(0.8 + 0.2 * site.snow.indice, 0.7, 1.05) : 1);
   const { climate, soil } = site;
 
@@ -112,6 +115,7 @@ export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priori
     const evidence: string[] = [];
     const benefits: string[] = [];
     const risks = [...s.risks];
+    if (s.years.length === 1 && cropById(s.years[0].main)?.kind === "annual" && !s.years[0].winter) risks.push("Monoculture: yields usually fall 10–20% after several years of the same crop");
     const gaps = [...s.gaps];
 
     // Frost fit of each main crop
@@ -130,7 +134,13 @@ export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priori
       }
     }
     // Water fit
-    if (m.waterMm > supply) {
+    if (SITE.zone === "pampa") {
+      // rain-fed: waterMm is what rain does not cover in an average year
+      if (m.waterMm > 150) {
+        score *= 0.95;
+        risks.unshift(`Needs ~${m.waterMm} mm/yr more than average rain provides: yields drop in dry years.`);
+      }
+    } else if (m.waterMm > supply) {
       score *= 0.9;
       risks.unshift(`Uses ~${m.waterMm} mm/yr but your irrigation delivers ~${Math.round(supply)} mm useful water.`);
     }
@@ -139,8 +149,8 @@ export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priori
     const c0 = current.metrics;
     if (!s.current) {
       if (m.bareMonths < c0.bareMonths - 0.5) {
-        why.push(`Cuts bare-soil time from ${c0.bareMonths} to ${m.bareMonths} months a year, when spring winds average ${climate.vientoPrimavera} m/s.`);
-        benefits.push(`Wind erosion risk ${pct(c0.erosion)} → ${pct(m.erosion)}`);
+        why.push(`Cuts bare-soil time from ${c0.bareMonths} to ${m.bareMonths} months a year, ${SITE.zone === "pampa" ? "when spring storms hit the slopes" : `when spring winds average ${climate.vientoPrimavera} m/s`}.`);
+        benefits.push(`${SITE.zone === "pampa" ? "Erosion risk" : "Wind erosion risk"} ${pct(c0.erosion)} → ${pct(m.erosion)}`);
       }
       if (m.nitrogen > c0.nitrogen + 10) benefits.push(`Adds ~${m.nitrogen} kg N/ha/yr from legumes (less fertilizer)`);
       if (m.organicMatter > c0.organicMatter + 0.05) benefits.push("Builds organic matter → better water holding and infiltration");

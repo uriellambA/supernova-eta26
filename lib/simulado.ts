@@ -22,9 +22,11 @@ export function diarioSimulado(lat: number, lon: number): DiarioClima {
     const est = Math.cos((2 * Math.PI * (dia - 20)) / 365); // 1 in January, −1 in July
     const verano = (est + 1) / 2;
     d.fechas.push(f.toISOString().slice(0, 10));
-    d.tmin.push(+(2.5 + 5.5 * est + ruido(r) * 1.6).toFixed(1));
-    d.tmax.push(+(14 + 9 * est + ruido(r) * 2).toFixed(1));
-    d.lluvia.push(r() < 0.07 ? +(r() * 9).toFixed(1) : 0);
+    const pampa = lat > -40; // humid temperate Pampa vs cold dry Patagonia
+    const cold = pampa ? 0 : Math.max(0, (-lat - 46.5) * 0.8); // further south = colder
+    d.tmin.push(+((pampa ? 9 : 2.5 - cold) + (pampa ? 7.5 : 5.5) * est + ruido(r) * (pampa ? 2.2 : 1.6)).toFixed(1));
+    d.tmax.push(+((pampa ? 23 : 14 - cold) + (pampa ? 7 : 9) * est + ruido(r) * 2).toFixed(1));
+    d.lluvia.push(r() < (pampa ? 0.3 : 0.07) ? +(r() * (pampa ? 18 : 9) * (pampa ? 0.6 + 0.8 * verano : 1)).toFixed(1) : 0);
     d.viento.push(+(4 + 2.5 * verano + r() * 2.5).toFixed(1));
     d.humedadRaiz.push(+(0.42 - 0.12 * verano + r() * 0.04).toFixed(2));
     d.humedadSup.push(+(0.38 - 0.16 * verano + r() * 0.06).toFixed(2));
@@ -84,4 +86,4 @@ export function nieveSimulada(): NieveResumen {
   };
 }
 
-export const soilSimulado = () => ({ ...soilReference(), simulado: true });
+export const soilSimulado = (lat?: number, lon?: number) => ({ ...soilReference(lat, lon), simulado: true });

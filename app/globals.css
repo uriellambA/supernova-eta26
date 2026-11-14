@@ -50,6 +50,32 @@
   --chart-axis: #8a857e;
 }
 
+:root[data-theme="terra"] {
+  /* Reddish theme inspired by the logo: rust hand, stone letters, cream paper */
+  color-scheme: dark;
+  --canvas: #1e120e;
+  --surface: #2a1913;
+  --surface-2: #37221a;
+  --line: #4a2d23;
+  --line-strong: #5f3a2d;
+  --ink: #f6ece2;
+  --ink-2: #e5d1c3;
+  --muted: #c7a896;
+  --subtle: #9c7c6b;
+  --cta: #c4552f;
+  --cta-ink: #fff8f0;
+  --blue-bg: #232f3b;
+  --blue-fg: #b9d3ee;
+  --green-bg: #24301f;
+  --green-fg: #b9dca4;
+  --amber-bg: #422e15;
+  --amber-fg: #f2c98a;
+  --red-bg: #4d1d16;
+  --red-fg: #f6ad9c;
+  --chart-grid: #3c251c;
+  --chart-axis: #ad8f80;
+}
+
 @theme inline {
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
@@ -144,7 +170,8 @@ kbd {
 .maplibregl-ctrl-group button + button {
   border-top-color: var(--line) !important;
 }
-:root[data-theme="dark"] .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+:root[data-theme="dark"] .maplibregl-ctrl-group button .maplibregl-ctrl-icon,
+:root[data-theme="terra"] .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
   filter: invert(1);
 }
 .maplibregl-ctrl-attrib {

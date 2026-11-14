@@ -1,4 +1,4 @@
-import { SITE } from "@/config/site";
+import { DEFAULT_SITE_ID, siteById } from "@/config/sites";
 import { speciesById } from "@/config/species";
 import { DEFAULT_PRIORITIES, type FarmProfile, type FarmRegister, type FarmSystem, type PlotRecord } from "./types";
 
@@ -13,14 +13,15 @@ export const newPlot = (n: number): PlotRecord => ({
   yieldTHa: null,
 });
 
-export const emptyRegister = (): FarmRegister => ({
+export const emptyRegister = (siteId = DEFAULT_SITE_ID): FarmRegister => ({
+  siteId,
   farmName: "",
   producer: "",
   address: "",
   boundary: null,
   boundaryHa: null,
-  lat: SITE.fields[0].lat,
-  lon: SITE.fields[0].lon,
+  lat: siteById(siteId).center[1],
+  lon: siteById(siteId).center[0],
   plots: [newPlot(1)],
   water: { source: "canal", turnDays: 7, shortMonths: [2, 3] },
   soilTest: { date: "", ph: null, ec: null, organicMatter: null, notes: "" },
@@ -32,7 +33,7 @@ export const emptyRegister = (): FarmRegister => ({
   updated: "",
 });
 
-const SYSTEM_OF: Record<string, FarmSystem> = { cherry: "orchard", apple: "orchard", hazelnut: "orchard", walnut: "orchard", raspberry: "orchard", haskap: "orchard", blueberry: "orchard" };
+const SYSTEM_OF: Record<string, FarmSystem> = { soy: "grains", maize: "grains", wheat: "grains", barley: "grains", sunflower: "grains", sorghum: "grains", canola: "grains", chickpea: "grains", cherry: "orchard", apple: "orchard", hazelnut: "orchard", walnut: "orchard", raspberry: "orchard", haskap: "orchard", blueberry: "orchard" };
 
 /** Turns the register into the simple profile the rotation engine uses (largest plot sets the system). */
 export function profileFromRegister(r: FarmRegister): FarmProfile {

@@ -1,6 +1,6 @@
 # 🌱 Growvia — NASA Space Apps Challenge 2026 (supernova-eta26)
 
-Desafío **Adapting Farms with NASA Data** · Zona piloto: **Los Antiguos, Santa Cruz (Patagonia)**
+Desafío **Adapting Farms with NASA Data** · Sitios: **Los Antiguos, Perito Moreno y Gobernador Gregores (Santa Cruz, Patagonia)** y **Pampa Ondulada (Pergamino, Buenos Aires)**
 
 Growvia es una herramienta de apoyo a la decisión (en inglés) para productores. Compara la **rotación de cultivos actual con tres alternativas** y arma un **plan para las cuatro estaciones**. También propone **cultivos nuevos** para cuando termina la temporada de cerezas y frutillas, y evalúa su **viabilidad económica** y las **contingencias** (heladas, viento, sequía, El Niño / La Niña). Para todo esto usa observaciones de la Tierra, el suelo, el registro del productor y sus prioridades.
 
@@ -31,6 +31,22 @@ Atajos: `A` analizar con IA · `D` vista 3D · `H` hardware · `R` registro · `
 ### Filtro de riesgo de salinidad (SMAP)
 En el mapa, el filtro **Salinity risk · SMAP** pinta el riesgo de acumulación de sales a partir de la humedad del suelo del satélite **SMAP** (primeros 5 cm, 9 km). Las capas se toman de GIBS y se decodifican con su paleta oficial. En la pestaña Suelo, `/api/smap` lee el valor de SMAP en el punto (8 semanas) y lo suma a la estimación de salinidad.
 Ojo: **SMAP no mide sal**, mide humedad. En un valle árido, una superficie que se mantiene húmeda con mucha evaporación hace subir el agua y deja sales: eso es el riesgo. Hay que confirmarlo con un análisis de conductividad eléctrica (CE). La resolución de 9 km muestra tendencias del valle, no el detalle de un lote.
+
+### Sitios
+| Sitio | Zona | Sistemas | Estudio de suelo |
+|---|---|---|---|
+| Los Antiguos | Patagonia, valle regado | huerto, hortalizas, forraje | [`docs/estudio-suelo-los-antiguos.md`](docs/estudio-suelo-los-antiguos.md) |
+| Perito Moreno | Patagonia, estepa y valle del río Fénix | forraje, hortalizas, huerto | [`docs/estudio-suelo-perito-moreno.md`](docs/estudio-suelo-perito-moreno.md) |
+| Gobernador Gregores | Patagonia, valle del río Chico | forraje, hortalizas, huerto | [`docs/estudio-suelo-gobernador-gregores.md`](docs/estudio-suelo-gobernador-gregores.md) |
+| Pampa Ondulada | Pampa húmeda, secano (Pergamino) | granos, forraje | [`docs/estudio-suelo-pampa-ondulada.md`](docs/estudio-suelo-pampa-ondulada.md) |
+
+Cada sitio está en `config/sites.ts`: centro, límites del mapa, altura, cuenca de nieve (si hay), riego, suelo de referencia, sistemas típicos y contexto regional. La Pampa Ondulada suma cultivos (soja, maíz, trigo, cebada, girasol), rotaciones de granos y especies propias (colza, garbanzo, sorgo, pecán), además de contingencias de anegamiento y sequía por La Niña. En el panel se elige el sitio arriba, y al registrar la chacra lo primero es elegir la ubicación. Ya no hay chacras predefinidas.
+
+### Clima en el mapa
+Debajo de los filtros satelitales, **Weather now** pinta sobre el mapa la temperatura, el UV, el viento (con flechas), la humedad, la lluvia, la presión y las nubes. Usa las condiciones actuales de Open-Meteo en una grilla de 7×5 puntos sobre el sitio (`/api/weather-grid`).
+
+### Temas
+El botón de tema alterna **claro → oscuro → tierra**. El tema tierra es rojizo, con los colores del logo.
 
 ### Sesiones, WhatsApp y PDF
 - Cada vez que tocás **Analizar mi campo** (podés escribir o dictar una pregunta, por ejemplo "¿Qué puedo plantar para verano?"), el resultado se guarda como **sesión** en el dispositivo. Desde **Sesiones guardadas** se vuelve a abrir, compartir o borrar.
@@ -83,6 +99,12 @@ npm run soil-study
 Por cada punto extrae el **perfil completo de suelo** (6 profundidades, 0–200 cm, con rango de incertidumbre). Con eso calcula textura, agua útil y conductividad (Saxton & Rawls), salinidad estimada y salud del suelo. Suma el clima de 20 años, NDVI/EVI, el ranking de las 20 especies con su economía y las rotaciones. Genera `report.md`, `data.json`, `points.csv`, `profile.csv` y `species.csv` en `docs/soil-study/`.
 
 Opciones:
+```bash
+npm run soil-study -- --site perito-moreno
+```
+```bash
+npm run soil-study -- --all
+```
 ```bash
 npm run soil-study -- --lat -46.55 --lon -71.62 --name "Mi chacra"
 ```

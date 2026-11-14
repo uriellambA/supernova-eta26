@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { APP_NAME } from "@/config/app";
-import { SITE } from "@/config/site";
+import { DEFAULT_SITE_ID, SITES, siteById } from "@/config/sites";
+import type { WeatherGrid, WeatherVarId } from "@/lib/weathergrid";
 import { useOnline } from "@/hooks/useOnline";
 import { useRecurso } from "@/hooks/useRecurso";
 import { buildContext, localAdvice } from "@/lib/advisor";
@@ -23,7 +24,7 @@ import {
 } from "@/lib/types";
 import { AIPanel } from "./AIPanel";
 import { LineChart, ndviPoints } from "./Charts";
-import { FiltersPanel } from "./FiltersPanel";
+import { FiltersPanel, WeatherLegend, WeatherPicker } from "./FiltersPanel";
 import { HardwareModal } from "./HardwareModal";
 import type { OverlayId } from "./MapView";
 import { Contingency, NewCrops, Rotations, Viability, YearPlan } from "./PlanSections";
@@ -50,8 +51,10 @@ type TabId = (typeof TABS)[number]["id"];
 
 export function Growvia() {
   const router = useRouter();
-  const first = SITE.fields[0];
-  const [field, setField] = useState({ lat: first.lat, lon: first.lon, name: first.name });
+  const [siteId, setSiteIdState] = useState(DEFAULT_SITE_ID);
+  const site = siteById(siteId);
+  const [field, setField] = useState({ lat: site.center[1], lon: site.center[0], name: site.name });
+  const [weatherVar, setWeatherVar] = useState<WeatherVarId | null>(null);
   const [farm, setFarmState] = useState<FarmProfile>(DEFAULT_PROFILE);
   const [pri, setPriState] = useState<Priorities>(DEFAULT_PRIORITIES);
   const [register, setRegister] = useState<FarmRegister | null>(null);
@@ -76,12 +79,22 @@ export function Growvia() {
   const [sessionsOpen, setSessionsOpen] = useState(false);
   useEffect(() => { listSessions().then(setSessions); }, []);
   const online = useOnline();
+  /** Change of site: go to its centre, keep a farming system that exists there. */
+  const chooseSite = useCallback((id: string) => {
+    const s2 = siteById(id);
+    setSiteIdState(s2.id);
+    guardar("site", s2.id);
+    setField({ lat: s2.center[1], lon: s2.center[0], name: s2.name });
+    setFarmState((f) => ({ ...f, system: s2.systems[0], irrigation: s2.irrigation.defaultMethod }));
+    setAdvice(null);
+  }, []);
 
   const q = `lat=${field.lat.toFixed(2)}&lon=${field.lon.toFixed(2)}`;
   const climate = useRecurso<IndicadoresNasa>(`/api/climate?v=3&lat=${field.lat.toFixed(1)}&lon=${field.lon.toFixed(1)}`);
   const ndvi = useRecurso<NdviResumen>(`/api/vegetation?${q}`);
   const forecast = useRecurso<ClimaResumen>(`/api/forecast?${q}`);
-  const snow = useRecurso<NieveResumen>("/api/snow");
+  const snow = useRecurso<NieveResumen>(site.watershed ? `/api/snow?site=${site.id}` : null);
+  const wgrid = useRecurso<WeatherGrid>(weatherVar ? `/api/weather-grid?site=${site.id}` : null);
   const soil = useRecurso<SoilResumen>(`/api/soil?${q}`);
   const enso = useRecurso<EnsoResumen>("/api/enso");
   const smap = useRecurso<SmapResumen>(`/api/smap?${q}`);
@@ -90,6 +103,7 @@ export function Growvia() {
   useEffect(() => {
     leer<FarmRegister>("register").then((r) => {
       if (!r) {
+        leer<string>("site").then((x) => x && x.v !== DEFAULT_SITE_ID && chooseSite(x.v));
         leer<FarmProfile>("farm").then((f) => f && setFarmState({ ...DEFAULT_PROFILE, ...f.v }));
         leer<Priorities>("priorities").then((p) => p && setPriState(p.v));
         return;
@@ -97,39 +111,40 @@ export function Growvia() {
       setRegister(r.v);
       setFarmState(profileFromRegister(r.v));
       setPriState(r.v.priorities);
+      setSiteIdState(siteById(r.v.siteId).id);
       setField({ lat: r.v.lat, lon: r.v.lon, name: r.v.farmName || "My farm" });
     });
+
     leer<GroundReading[]>("readings").then((r) => r && setReadings(r.v));
     leer<Strategy | null>("customRotation").then((r) => r?.v && setCustomState(r.v));
-  }, []);
+  }, [chooseSite]);
   const setFarm = useCallback((f: FarmProfile) => { setFarmState(f); guardar("farm", f); setAdvice(null); }, []);
   const setPri = useCallback((p: Priorities) => { setPriState(p); guardar("priorities", p); setAdvice(null); }, []);
   const setCustom = useCallback((c: Strategy | null) => { setCustomState(c); guardar("customRotation", c); setAdvice(null); }, []);
   const addReading = (r: GroundReading) => { const n = [...readings, r]; setReadings(n); guardar("readings", n); };
 
   const pick = useCallback((lat: number, lon: number) => {
-    const preset = SITE.fields.find((f) => Math.abs(f.lat - lat) < 0.002 && Math.abs(f.lon - lon) < 0.003);
-    setField({ lat, lon, name: preset?.name ?? "My field" });
+    setField({ lat, lon, name: "My field" });
     setAdvice(null);
   }, []);
 
   const results = useMemo(
-    () => (climate.data && soil.data ? compareStrategies({ climate: climate.data, soil: soil.data, snow: snow.data }, farm, pri, custom ? [custom] : []) : []),
-    [climate.data, soil.data, snow.data, farm, pri, custom],
+    () => (climate.data && soil.data ? compareStrategies({ climate: climate.data, soil: soil.data, snow: site.watershed ? snow.data : null, cfg: site }, farm, pri, custom ? [custom] : []) : []),
+    [climate.data, soil.data, snow.data, farm, pri, custom, site],
   );
   const current = results.find((r) => r.strategy.current) ?? null;
   const measuredEc = register?.soilTest.ec ?? [...readings].reverse().find((r) => r.ec != null)?.ec ?? null;
   const sal = useMemo(() => (climate.data && soil.data ? salinityEstimate(soil.data, climate.data, farm.irrigation, measuredEc, smap.data) : null), [climate.data, soil.data, farm.irrigation, measuredEc, smap.data]);
   const health = useMemo(() => (soil.data && sal && climate.data ? soilHealth(soil.data, sal, current?.metrics.bareMonths ?? 0, climate.data.vientoPrimavera, ndvi.data) : null), [soil.data, sal, climate.data, current, ndvi.data]);
-  const fits = useMemo(() => (climate.data && soil.data && sal ? rankSpecies(climate.data, soil.data, sal, farm) : []), [climate.data, soil.data, sal, farm]);
-  const risks = useMemo(() => (climate.data ? hazards(climate.data, forecast.data, snow.data, enso.data) : []), [climate.data, forecast.data, snow.data, enso.data]);
+  const fits = useMemo(() => (climate.data && soil.data && sal ? rankSpecies(climate.data, soil.data, sal, farm, site) : []), [climate.data, soil.data, sal, farm, site]);
+  const risks = useMemo(() => (climate.data ? hazards(climate.data, forecast.data, site.watershed ? snow.data : null, enso.data, site.zone) : []), [climate.data, forecast.data, snow.data, enso.data, site]);
   const options = useMemo(() => (climate.data ? farmOptions(climate.data, farm) : []), [climate.data, farm]);
   const simulated = climate.data?.simulado || soil.data?.simulado;
 
   async function analyze(question = "") {
     if (!climate.data || !soil.data || !results.length || !health || !sal) return;
     const ctx = {
-      ...buildContext(field.name, farm, pri, climate.data, soil.data, forecast.data, ndvi.data, results, { fits, health, sal, enso: enso.data, register }),
+      ...buildContext(field.name, farm, pri, climate.data, soil.data, forecast.data, ndvi.data, results, { fits, health, sal, enso: enso.data, register, site }),
       language: getLang() === "es" ? ("Spanish (Argentina)" as const) : ("English" as const),
       question: question.trim() || undefined,
     };
@@ -149,7 +164,7 @@ export function Growvia() {
     setAdvice(adv);
     setBusy(false);
     // Save this analysis as a session (on the device) and prepare its share link
-    const ses = buildSession({ place: field.name, lat: field.lat, lon: field.lon, farm, question, advice: adv, results, fits, risks, forecast: forecast.data, climate: climate.data, soil: soil.data });
+    const ses = buildSession({ zone: site.zone, place: field.name, lat: field.lat, lon: field.lon, farm, question, advice: adv, results, fits, risks, forecast: forecast.data, climate: climate.data, soil: soil.data });
     setSession(ses);
     setSessions(await saveSession(ses));
     setLink(await sessionLink(ses));
@@ -186,18 +201,18 @@ export function Growvia() {
             </nav>
             <div className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-line bg-surface px-3 py-1.5 text-sm sm:max-w-md">
               <span className="text-muted">📍</span>
-              <select className="min-w-0 flex-1 bg-transparent font-medium focus:outline-none" aria-label="Field"
-                value={register && field.lat === register.lat && field.lon === register.lon ? "register" : SITE.fields.find((f) => f.name === field.name)?.id ?? "custom"}
+              <select className="min-w-0 flex-1 bg-transparent font-medium focus:outline-none" aria-label="Satellite map"
+                value={register && field.lat === register.lat && field.lon === register.lon ? "register" : site.id}
                 onChange={(e) => {
-                  if (e.target.value === "register" && register) return setField({ lat: register.lat, lon: register.lon, name: register.farmName || "My farm" });
-                  const f = SITE.fields.find((x) => x.id === e.target.value);
-                  if (f) pick(f.lat, f.lon);
+                  if (e.target.value === "register" && register) {
+                    chooseSite(register.siteId);
+                    return setField({ lat: register.lat, lon: register.lon, name: register.farmName || "My farm" });
+                  }
+                  chooseSite(e.target.value);
                 }}>
                 {register && <option value="register">🏠 {register.farmName || "My farm"}</option>}
-                {SITE.fields.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
-                <option value="custom" disabled>My field (tap the map)</option>
+                {SITES.map((x) => <option key={x.id} value={x.id}>{x.name} · {x.region.split(",")[0]}</option>)}
               </select>
-              <span className="hidden truncate text-xs text-subtle lg:inline">{SITE.name}</span>
               <DemoBadge show={simulated} />
             </div>
             <div className="flex gap-2">
@@ -221,7 +236,7 @@ export function Growvia() {
           <div className="mb-6 flex flex-wrap items-end gap-3">
             <div>
               <h1 className="font-serif text-4xl leading-none tracking-tight sm:text-5xl">{tab === "home" ? field.name : current_tab.label}</h1>
-              <p className="mt-2 text-sm text-muted">{tab === "home" ? `${SITE.name}, ${SITE.region} · ${field.lat.toFixed(3)}, ${field.lon.toFixed(3)} · ${farm.areaHa} ha · ${farm.system}` : `${field.name} · ${SITE.name}`}</p>
+              <p className="mt-2 text-sm text-muted">{tab === "home" ? `${site.name}, ${site.region} · ${field.lat.toFixed(3)}, ${field.lon.toFixed(3)} · ${farm.areaHa} ha · ${farm.system}` : `${field.name} · ${site.name}`}</p>
             </div>
             {tab === "home" && (
               <div className="flex flex-wrap gap-1.5 sm:ml-auto">
@@ -251,9 +266,14 @@ export function Growvia() {
                   <span className="hidden text-xs text-subtle sm:inline">Tap to place your field</span>
                   <div className="w-full sm:ml-auto sm:w-auto"><FiltersPanel active={overlays} toggle={toggleOverlay} /></div>
                 </div>
+                <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-2">
+                  <span className="text-xs font-medium text-muted">Weather now</span>
+                  <div className="w-full sm:ml-auto sm:w-auto"><WeatherPicker value={weatherVar} onChange={setWeatherVar} /></div>
+                </div>
+                {weatherVar && <WeatherLegend varId={weatherVar} grid={wgrid.data} />}
                 {overlays.has("salinity") && <SmapStatus />}
                 <div className="h-[46vh] min-h-[340px] lg:h-[560px]">
-                  <MapView field={field} onPick={pick} is3D={is3D} overlays={overlays} boundary={register && field.lat === register.lat && field.lon === register.lon ? register.boundary : null} />
+                  <MapView site={site} weather={weatherVar && wgrid.data ? { varId: weatherVar, grid: wgrid.data } : null} field={field} onPick={pick} is3D={is3D} overlays={overlays} boundary={register && field.lat === register.lat && field.lon === register.lon ? register.boundary : null} />
                 </div>
               </Reveal>
 
@@ -262,7 +282,7 @@ export function Growvia() {
                   <span className="font-serif text-2xl leading-none">Decision support</span>
                   <Badge tone="blue">AI</Badge>
                 </div>
-                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} />
+                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems} />
                 {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => go("plan", "seasons")}>See the year plan →</button>}
               </Reveal>
 
@@ -336,9 +356,9 @@ export function Growvia() {
                 return <RotationBuilder system={farm.system} custom={custom} setCustom={setCustom} result={mine} rank={mine ? list.indexOf(mine) + 1 : 0} total={list.length} register={register} />;
               })()}
               {sub === "method" && <RotationMethod />}
-              {sub === "seasons" && <YearPlan results={results} fits={fits} advice={advice} />}
-              {sub === "crops" && <NewCrops fits={fits} advice={advice} />}
-              {sub === "viability" && <Viability fits={fits} areaHa={farm.areaHa} />}
+              {sub === "seasons" && <YearPlan results={results} fits={fits} advice={advice} site={site} />}
+              {sub === "crops" && <NewCrops fits={fits} advice={advice} site={site} />}
+              {sub === "viability" && <Viability fits={fits} areaHa={farm.areaHa} site={site} />}
               {sub === "options" && <Options options={options} />}
               {sub === "forecast" && (forecast.data ? <Forecast f={forecast.data} /> : <Spinner text="Loading forecast…" />)}
               {sub === "risks" && <Contingency list={risks} enso={enso.data} c={climate.data!} />}

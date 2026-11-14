@@ -29,13 +29,21 @@ export function seasonGrid(s: Strategy): SeasonCell[][] {
 export type SeasonPlan = Record<SeasonId, { focus: string; tasks: string[]; harvest: string[] }>;
 
 /** A year-round plan: the chosen rotation plus new species that fill each season. */
-export function yearPlan(best: StrategyResult | undefined, fits: SpeciesFit[]): SeasonPlan {
+export function yearPlan(best: StrategyResult | undefined, fits: SpeciesFit[], zone: "patagonia" | "pampa" = "patagonia"): SeasonPlan {
   const good = fits.filter((f) => f.viability >= 55 && f.species.status === "new");
   const harvestIn = (months: readonly number[]) =>
     good.filter((f) => f.species.harvest.some((m) => months.includes(m))).slice(0, 3).map((f) => `${f.species.emoji} ${f.species.name}`);
   const sys = best?.strategy.system ?? "orchard";
   const winterCover = best ? seasonGrid(best.strategy).flat().find((c) => c.kind === "cover")?.label : undefined;
-  const cur = (months: readonly number[]) => SPECIES.filter((s) => s.status === "current" && s.harvest.some((m) => months.includes(m))).map((s) => `${s.emoji} ${s.name}`);
+  const cur = (months: readonly number[]) => SPECIES.filter((s) => (s.zone ?? "patagonia") === zone && s.status === "current" && s.harvest.some((m) => months.includes(m))).map((s) => `${s.emoji} ${s.name}`);
+  if (zone === "pampa") {
+    return {
+      spring: { focus: "Sow summer crops on covered soil", tasks: ["Terminate cover crops 3–4 weeks before sowing", "Sow maize when the soil reaches 10 °C, soybean at 14 °C", "Direct seeding: never plow the slopes"], harvest: [...cur(SEASONS[0].months), ...harvestIn(SEASONS[0].months)] },
+      summer: { focus: "Crop growth, pests and the wheat → second soybean switch", tasks: ["Harvest wheat/barley and sow second soybean the same week", "Monitor stink bugs and caterpillars; spray only above thresholds", "Check soil water before deciding inputs (La Niña years)"], harvest: [...cur(SEASONS[1].months), ...harvestIn(SEASONS[1].months)] },
+      autumn: { focus: "Harvest and sow the winter crop or cover", tasks: ["Harvest soybean and maize; leave the residue on the field", `Sow ${winterCover ? winterCover.toLowerCase() : "wheat, barley or a vetch + oats cover"} right after harvest`, "Soil sampling (0–20 cm): organic matter, P, N, pH"], harvest: [...cur(SEASONS[2].months), ...harvestIn(SEASONS[2].months)] },
+      winter: { focus: "Winter crops and covers protect the slopes", tasks: ["Fertilize wheat/barley by soil test", "Plan next season's rotation and contracts", "Clean and repair terraces and grassed waterways"], harvest: [...cur(SEASONS[3].months), ...harvestIn(SEASONS[3].months)] },
+    };
+  }
   return {
     spring: {
       focus: "Protect bloom from frost, keep soil covered against wind",

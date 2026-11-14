@@ -1,4 +1,4 @@
-import { SITE } from "@/config/site";
+import { siteById } from "@/config/sites";
 import { errorJson, usarSimulado } from "@/lib/cache";
 
 export type Place = { name: string; lat: number; lon: number };
@@ -6,15 +6,18 @@ const UA = { "User-Agent": "Growvia/0.4 (farm decision-support prototype)", "Acc
 
 /** Street / place search biased to Los Antiguos (OpenStreetMap: Nominatim, fallback Photon). */
 export async function GET(req: Request) {
-  const q = new URL(req.url).searchParams.get("q")?.trim() ?? "";
+  const sp = new URL(req.url).searchParams;
+  const q = sp.get("q")?.trim() ?? "";
+  const SITE = siteById(sp.get("site"));
   if (q.length < 3) return Response.json([]);
   if (usarSimulado()) {
     return Response.json([
-      { name: `${q}, Los Antiguos, Santa Cruz (sample)`, lat: -46.5505, lon: -71.6275 },
-      { name: `${q} (rural), Los Antiguos, Santa Cruz (sample)`, lat: -46.556, lon: -71.645 },
+      { name: `${q}, ${SITE.name} (sample)`, lat: SITE.center[1] + 0.004, lon: SITE.center[0] - 0.006 },
+      { name: `${q} (rural), ${SITE.name} (sample)`, lat: SITE.center[1] - 0.006, lon: SITE.center[0] - 0.02 },
     ] satisfies Place[]);
   }
-  const query = /antiguos/i.test(q) ? q : `${q}, Los Antiguos, Santa Cruz`;
+  const town = SITE.zone === "pampa" ? "Pergamino, Buenos Aires" : `${SITE.name}, Santa Cruz`;
+  const query = q.toLowerCase().includes(SITE.name.toLowerCase().split(" ")[0]) ? q : `${q}, ${town}`;
   const [lon0, lat0] = SITE.center;
   try {
     const u = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=ar&viewbox=${SITE.bounds[0][0]},${SITE.bounds[1][1]},${SITE.bounds[1][0]},${SITE.bounds[0][1]}&q=${encodeURIComponent(query)}`;

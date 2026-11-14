@@ -2,7 +2,8 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl, { type Map as MLMap, type Marker } from "maplibre-gl";
 import { useEffect, useRef } from "react";
-import { SITE } from "@/config/site";
+import type { SiteConfig } from "@/lib/types";
+import { WEATHER_VARS, type WeatherGrid, type WeatherVarId } from "@/lib/weathergrid";
 
 export type OverlayId = "latest" | "vegetation" | "evi" | "temperature" | "snow" | "relief" | "salinity";
 
@@ -34,9 +35,58 @@ function shape(lat: number, lon: number, boundary?: [number, number][] | null) {
   return footprint(lat, lon);
 }
 
+// ---------- Weather overlay: interpolated grid painted on a canvas ----------
+const hex = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16), h.length > 7 ? parseInt(h.slice(7, 9), 16) : 255];
+function rampColor(stops: readonly string[], t: number) {
+  const x = Math.max(0, Math.min(1, t)) * (stops.length - 1);
+  const i = Math.min(stops.length - 2, Math.floor(x)), f = x - i;
+  const a = hex(stops[i]), b = hex(stops[i + 1]);
+  return a.map((v, k) => v + (b[k] - v) * f);
+}
+export function renderWeather(g: WeatherGrid, varId: WeatherVarId) {
+  const v = WEATHER_VARS.find((x) => x.id === varId)!;
+  const vals = g.values[v.param] ?? [];
+  const W = 280, H = 200;
+  const cv = document.createElement("canvas");
+  cv.width = W;
+  cv.height = H;
+  const ctx = cv.getContext("2d")!;
+  const img = ctx.createImageData(W, H);
+  const at = (i: number, j: number) => vals[Math.min(g.ny - 1, j) * g.nx + Math.min(g.nx - 1, i)];
+  const fallback = vals.find((x) => x !== null) ?? v.min;
+  for (let y = 0; y < H; y++) {
+    const gy = (y / (H - 1)) * (g.ny - 1), j = Math.floor(gy), fy = gy - j;
+    for (let x = 0; x < W; x++) {
+      const gx = (x / (W - 1)) * (g.nx - 1), i = Math.floor(gx), fx = gx - i;
+      const q = [at(i, j), at(i + 1, j), at(i, j + 1), at(i + 1, j + 1)].map((z) => z ?? fallback) as number[];
+      const val = (q[0] * (1 - fx) + q[1] * fx) * (1 - fy) + (q[2] * (1 - fx) + q[3] * fx) * fy;
+      const c = rampColor(v.stops, (val - v.min) / (v.max - v.min));
+      const k = (y * W + x) * 4;
+      img.data[k] = c[0]; img.data[k + 1] = c[1]; img.data[k + 2] = c[2]; img.data[k + 3] = Math.round(c[3] * 0.62);
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  if (varId === "wind") {
+    // arrows show where the wind blows TO
+    ctx.strokeStyle = "rgba(17,17,17,0.85)";
+    ctx.lineWidth = 2;
+    g.windDir.forEach((d, n) => {
+      if (d === null) return;
+      const cx = ((n % g.nx) / (g.nx - 1)) * (W - 24) + 12, cy = (Math.floor(n / g.nx) / (g.ny - 1)) * (H - 24) + 12;
+      const a = ((d + 180) * Math.PI) / 180, L = 10;
+      const ex = cx + Math.sin(a) * L, ey = cy - Math.cos(a) * L;
+      ctx.beginPath(); ctx.moveTo(cx - Math.sin(a) * L, cy + Math.cos(a) * L); ctx.lineTo(ex, ey); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(ex - Math.sin(a - 0.5) * 5, ey + Math.cos(a - 0.5) * 5); ctx.moveTo(ex, ey); ctx.lineTo(ex - Math.sin(a + 0.5) * 5, ey + Math.cos(a + 0.5) * 5); ctx.stroke();
+    });
+  }
+  return cv.toDataURL("image/png");
+}
+
 export default function MapView({
-  field, onPick, is3D, overlays, boundary,
+  site, field, onPick, is3D, overlays, boundary, weather,
 }: {
+  site: SiteConfig;
+  weather?: { varId: WeatherVarId; grid: WeatherGrid } | null;
   boundary?: [number, number][] | null;
   field: { lat: number; lon: number; name: string };
   onPick: (lat: number, lon: number) => void;
@@ -58,11 +108,7 @@ export default function MapView({
     const m = new maplibregl.Map({
       container: box.current,
       center: [field.lon, field.lat],
-      zoom: SITE.zoom,
-      maxBounds: [
-        [SITE.bounds[0][0] - 0.3, SITE.bounds[0][1] - 0.2],
-        [SITE.bounds[1][0] + 0.3, SITE.bounds[1][1] + 0.2],
-      ],
+      zoom: site.zoom,
       maxPitch: 75,
       attributionControl: { compact: true },
       style: {
@@ -89,17 +135,6 @@ export default function MapView({
       m.addSource("field", { type: "geojson", data: shape(field.lat, field.lon, boundary) });
       m.addLayer({ id: "field-fill", type: "fill", source: "field", paint: { "fill-color": "#ffffff", "fill-opacity": 0.18 } });
       m.addLayer({ id: "field-line", type: "line", source: "field", paint: { "line-color": "#ffffff", "line-width": 2 } });
-      for (const f of SITE.fields) {
-        const el = document.createElement("button");
-        el.className = "rounded-full border border-line bg-surface px-2 py-0.5 text-[11px] font-medium text-ink";
-        el.textContent = f.name;
-        el.title = f.note;
-        el.onclick = (e) => {
-          e.stopPropagation();
-          pick.current(f.lat, f.lon);
-        };
-        new maplibregl.Marker({ element: el, anchor: "bottom", offset: [0, -14] }).setLngLat([f.lon, f.lat]).addTo(m);
-      }
       ready.current = true;
       m.fire("growvia:ready");
     });
@@ -112,6 +147,37 @@ export default function MapView({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- create once
   }, []);
+
+  // Change of site: fly to its valley
+  useEffect(() => {
+    const m = map.current;
+    if (!m) return;
+    m.flyTo({ center: site.center, zoom: site.zoom, duration: 1200 });
+  }, [site.id, site.center, site.zoom]);
+
+  // Weather overlay (image source over the site bounds)
+  useEffect(() => {
+    const m = map.current;
+    if (!m) return;
+    const apply = () => {
+      if (!weather) {
+        if (m.getLayer("weather")) m.setLayoutProperty("weather", "visibility", "none");
+        return;
+      }
+      const [[w, so], [e, n]] = weather.grid.bounds;
+      const coords: [[number, number], [number, number], [number, number], [number, number]] = [[w, n], [e, n], [e, so], [w, so]];
+      const url = renderWeather(weather.grid, weather.varId);
+      const src = m.getSource("weather") as maplibregl.ImageSource | undefined;
+      if (src) src.updateImage({ url, coordinates: coords });
+      else {
+        m.addSource("weather", { type: "image", url, coordinates: coords });
+        m.addLayer({ id: "weather", type: "raster", source: "weather", paint: { "raster-opacity": 0.85, "raster-fade-duration": 0 } }, "field-fill");
+      }
+      m.setLayoutProperty("weather", "visibility", "visible");
+    };
+    if (ready.current) apply();
+    else m.once("growvia:ready", apply);
+  }, [weather]);
 
   // Move the field
   useEffect(() => {

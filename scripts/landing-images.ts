@@ -14,14 +14,14 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fromUrl } from "geotiff";
 import jpeg from "jpeg-js";
-import { SITE } from "../config/site";
+import { SHOWCASE } from "../config/sites";
 
 const args = process.argv.slice(2);
 const arg = (k: string) => {
   const i = args.indexOf(`--${k}`);
   return i >= 0 ? args[i + 1] : undefined;
 };
-const S = SITE.showcase;
+const S = SHOWCASE;
 const lat = Number(arg("lat") ?? S.lat), lon = Number(arg("lon") ?? S.lon);
 const widthM = Number(arg("width") ?? S.widthM), heightM = Number(arg("height") ?? S.heightM);
 const now = new Date();

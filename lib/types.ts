@@ -1,17 +1,20 @@
 // ---------- Site & configuration ----------
-export type FieldPreset = { id: string; name: string; lat: number; lon: number; note: string };
+export type Region = "patagonia" | "pampa";
 export type SiteConfig = {
   id: string;
   name: string;
-  region: string;
+  region: string; // province / country label
+  zone: Region; // agro-ecological zone (selects crops, rotations and hazards)
+  description: string; // one paragraph for the AI and the dashboard
+  systems: FarmSystem[]; // farming systems typical of the site (first = default)
+  busyMonths: number[]; // months when today's main crops are harvested
+  context: string[]; // regional market/agronomy notes (Viability tab)
   timezone: string;
   center: [number, number]; // [lon, lat]
   elevation: number; // typical farm elevation (m), fallback for the temperature correction
-  showcase: { name: string; lat: number; lon: number; widthM: number; heightM: number }; // chacra shown on the landing page
   zoom: number;
   bounds: [[number, number], [number, number]];
-  fields: FieldPreset[];
-  watershed: { name: string; points: [number, number][] }; // [lat, lon]
+  watershed: { name: string; points: [number, number][] } | null; // [lat, lon] — snowmelt that feeds irrigation
   irrigation: { defaultMethod: SistemaRiego; grossSupplyMm: number };
   soilReference: SoilValues;
 };
@@ -39,7 +42,7 @@ export type Crop = {
   kc: number[];
 };
 
-export type FarmSystem = "orchard" | "vegetables" | "forage";
+export type FarmSystem = "orchard" | "vegetables" | "forage" | "grains";
 export type Strategy = {
   id: string;
   system: FarmSystem;
@@ -202,6 +205,7 @@ export type PlotRecord = {
   yieldTHa: number | null;
 };
 export type FarmRegister = {
+  siteId: string;
   farmName: string;
   producer: string;
   address: string;

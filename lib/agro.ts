@@ -90,7 +90,11 @@ export function calcularIndicadores(d: DiarioClima, lat: number, lon: number): I
       const v = d.tmin[i];
       if (v !== null && v <= 0) ultima = iso;
     }
-    if (!completo || !ultima) continue;
+    if (!completo) continue;
+    if (!ultima) {
+      libres.push(365); // no spring frost at all this year
+      continue;
+    }
     ultimas.push(doy(ultima));
     ultimaPorAnio.set(a, mmdd(ultima));
     if (mmdd(ultima) > "11-01") tardias++;

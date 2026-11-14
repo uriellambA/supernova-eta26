@@ -117,23 +117,30 @@ export function Meter({ value, level, className = "" }: { value: number; level?:
 }
 
 // ---------- Theme ----------
+const THEMES = [
+  { id: "light", icon: "☀", label: "Light theme" },
+  { id: "dark", icon: "☾", label: "Dark theme" },
+  { id: "terra", icon: "✋", label: "Terra theme (logo colours)" },
+] as const;
+/** Cycles light → dark → terra (reddish, inspired by the logo). */
 export function ThemeToggle() {
   const [theme, setTheme] = useState<string | null>(null);
   // eslint-disable-next-line react-hooks/set-state-in-effect -- theme only known in the browser
   useEffect(() => setTheme(document.documentElement.dataset.theme ?? "light"), []);
+  const i = Math.max(0, THEMES.findIndex((t) => t.id === theme));
+  const next = THEMES[(i + 1) % THEMES.length];
   const toggle = () => {
-    const t = theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = t;
+    document.documentElement.dataset.theme = next.id;
     try {
-      localStorage.setItem("growvia-theme", t);
+      localStorage.setItem("growvia-theme", next.id);
     } catch {
       /* private mode */
     }
-    setTheme(t);
+    setTheme(next.id);
   };
   return (
-    <button className={`${btnGhost} !px-2.5`} onClick={toggle} aria-label="Toggle dark mode" title="Toggle dark mode">
-      {theme === "dark" ? "☀" : "☾"}
+    <button className={`${btnGhost} !px-2.5`} onClick={toggle} aria-label={`Switch to ${next.label}`} title={`${THEMES[i].label} · switch to ${next.label}`}>
+      <span className={theme === "terra" ? "text-cta" : ""}>{THEMES[i].icon}</span>
     </button>
   );
 }
