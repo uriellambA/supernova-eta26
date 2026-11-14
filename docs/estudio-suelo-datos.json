@@ -1,0 +1,608 @@
+{
+  "generated": "2026-11-14T16:48:52.825Z",
+  "fields": [
+    {
+      "id": "west",
+      "name": "West orchards",
+      "lat": -46.553,
+      "lon": -71.655,
+      "soil": {
+        "sand": 55,
+        "silt": 30,
+        "clay": 15,
+        "soc": 8,
+        "ph": 7.6,
+        "nitrogen": 0.8,
+        "cec": 14,
+        "bulkDensity": 1.35,
+        "source": "reference",
+        "depth": "0–30 cm",
+        "texture": "Sandy loam",
+        "organicMatter": 1.4,
+        "waterHolding": 86,
+        "infiltration": "moderate"
+      },
+      "climate": {
+        "celda": {
+          "lat": -46.6,
+          "lon": -71.7
+        },
+        "periodo": [
+          2006,
+          2025
+        ],
+        "ultimaHeladaMedia": "12-11",
+        "ultimaHeladaP80": "12-23",
+        "aniosHeladaTardia": 20,
+        "libreHeladas": 55,
+        "diasHeladaAnio": 175,
+        "horasFrio": 1303,
+        "gdd10": 149,
+        "lluviaAnual": 436,
+        "et0Anual": 674,
+        "tempMedia": 4.4,
+        "vientoPrimavera": 4.9,
+        "tendencia": {
+          "decada1": 4.27,
+          "decada2": 4.5,
+          "dif": 0.23
+        },
+        "tendenciaLluvia": {
+          "antes": 482,
+          "despues": 390,
+          "difPct": -19
+        }
+      },
+      "monthly": [
+        {
+          "mes": 1,
+          "tmin": 4.8,
+          "tmax": 16.2,
+          "lluvia": 22.7,
+          "et0": 118.1,
+          "viento": 5.3,
+          "humedadRaiz": 0.51,
+          "humedadSup": 0.48,
+          "diasHelada": 0.9,
+          "diasCalor": 0
+        },
+        {
+          "mes": 2,
+          "tmin": 4.8,
+          "tmax": 16.3,
+          "lluvia": 28.2,
+          "et0": 92.9,
+          "viento": 4.7,
+          "humedadRaiz": 0.48,
+          "humedadSup": 0.44,
+          "diasHelada": 0.8,
+          "diasCalor": 0.1
+        },
+        {
+          "mes": 3,
+          "tmin": 3.1,
+          "tmax": 13.1,
+          "lluvia": 32.4,
+          "et0": 66.1,
+          "viento": 4.4,
+          "humedadRaiz": 0.49,
+          "humedadSup": 0.46,
+          "diasHelada": 3.4,
+          "diasCalor": 0
+        },
+        {
+          "mes": 4,
+          "tmin": 1,
+          "tmax": 8.9,
+          "lluvia": 40.5,
+          "et0": 33.3,
+          "viento": 4,
+          "humedadRaiz": 0.51,
+          "humedadSup": 0.5,
+          "diasHelada": 11.3,
+          "diasCalor": 0
+        },
+        {
+          "mes": 5,
+          "tmin": -1.3,
+          "tmax": 4.7,
+          "lluvia": 51.9,
+          "et0": 16.4,
+          "viento": 3.4,
+          "humedadRaiz": 0.56,
+          "humedadSup": 0.56,
+          "diasHelada": 20.6,
+          "diasCalor": 0
+        },
+        {
+          "mes": 6,
+          "tmin": -4.4,
+          "tmax": 1.3,
+          "lluvia": 58.2,
+          "et0": 9.5,
+          "viento": 3.4,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.63,
+          "diasHelada": 27.1,
+          "diasCalor": 0
+        },
+        {
+          "mes": 7,
+          "tmin": -5.5,
+          "tmax": 0.7,
+          "lluvia": 47.3,
+          "et0": 11.1,
+          "viento": 3.3,
+          "humedadRaiz": 0.67,
+          "humedadSup": 0.68,
+          "diasHelada": 28.9,
+          "diasCalor": 0
+        },
+        {
+          "mes": 8,
+          "tmin": -3.8,
+          "tmax": 2.4,
+          "lluvia": 44.6,
+          "et0": 19.1,
+          "viento": 3.7,
+          "humedadRaiz": 0.71,
+          "humedadSup": 0.73,
+          "diasHelada": 29.1,
+          "diasCalor": 0
+        },
+        {
+          "mes": 9,
+          "tmin": -1.8,
+          "tmax": 5.4,
+          "lluvia": 29.2,
+          "et0": 36.2,
+          "viento": 4,
+          "humedadRaiz": 0.73,
+          "humedadSup": 0.74,
+          "diasHelada": 23.6,
+          "diasCalor": 0
+        },
+        {
+          "mes": 10,
+          "tmin": -0.3,
+          "tmax": 8.8,
+          "lluvia": 25.8,
+          "et0": 65.4,
+          "viento": 4.8,
+          "humedadRaiz": 0.69,
+          "humedadSup": 0.69,
+          "diasHelada": 18.3,
+          "diasCalor": 0
+        },
+        {
+          "mes": 11,
+          "tmin": 1.7,
+          "tmax": 12,
+          "lluvia": 29.3,
+          "et0": 91.4,
+          "viento": 5.2,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.62,
+          "diasHelada": 8.4,
+          "diasCalor": 0
+        },
+        {
+          "mes": 12,
+          "tmin": 3.5,
+          "tmax": 14.5,
+          "lluvia": 26.1,
+          "et0": 114.9,
+          "viento": 5.5,
+          "humedadRaiz": 0.55,
+          "humedadSup": 0.54,
+          "diasHelada": 2.5,
+          "diasCalor": 0
+        }
+      ],
+      "ndviLatest": null,
+      "ndviYearAgo": null
+    },
+    {
+      "id": "town",
+      "name": "Town chacras",
+      "lat": -46.556,
+      "lon": -71.612,
+      "soil": {
+        "sand": 55,
+        "silt": 30,
+        "clay": 15,
+        "soc": 8,
+        "ph": 7.6,
+        "nitrogen": 0.8,
+        "cec": 14,
+        "bulkDensity": 1.35,
+        "source": "reference",
+        "depth": "0–30 cm",
+        "texture": "Sandy loam",
+        "organicMatter": 1.4,
+        "waterHolding": 86,
+        "infiltration": "moderate"
+      },
+      "climate": {
+        "celda": {
+          "lat": -46.6,
+          "lon": -71.6
+        },
+        "periodo": [
+          2006,
+          2025
+        ],
+        "ultimaHeladaMedia": "12-11",
+        "ultimaHeladaP80": "12-23",
+        "aniosHeladaTardia": 20,
+        "libreHeladas": 55,
+        "diasHeladaAnio": 175,
+        "horasFrio": 1303,
+        "gdd10": 149,
+        "lluviaAnual": 436,
+        "et0Anual": 674,
+        "tempMedia": 4.4,
+        "vientoPrimavera": 4.9,
+        "tendencia": {
+          "decada1": 4.27,
+          "decada2": 4.5,
+          "dif": 0.23
+        },
+        "tendenciaLluvia": {
+          "antes": 482,
+          "despues": 390,
+          "difPct": -19
+        }
+      },
+      "monthly": [
+        {
+          "mes": 1,
+          "tmin": 4.8,
+          "tmax": 16.2,
+          "lluvia": 22.7,
+          "et0": 118.1,
+          "viento": 5.3,
+          "humedadRaiz": 0.51,
+          "humedadSup": 0.48,
+          "diasHelada": 0.9,
+          "diasCalor": 0
+        },
+        {
+          "mes": 2,
+          "tmin": 4.8,
+          "tmax": 16.3,
+          "lluvia": 28.2,
+          "et0": 92.9,
+          "viento": 4.7,
+          "humedadRaiz": 0.48,
+          "humedadSup": 0.44,
+          "diasHelada": 0.8,
+          "diasCalor": 0.1
+        },
+        {
+          "mes": 3,
+          "tmin": 3.1,
+          "tmax": 13.1,
+          "lluvia": 32.4,
+          "et0": 66.1,
+          "viento": 4.4,
+          "humedadRaiz": 0.49,
+          "humedadSup": 0.46,
+          "diasHelada": 3.4,
+          "diasCalor": 0
+        },
+        {
+          "mes": 4,
+          "tmin": 1,
+          "tmax": 8.9,
+          "lluvia": 40.5,
+          "et0": 33.3,
+          "viento": 4,
+          "humedadRaiz": 0.51,
+          "humedadSup": 0.5,
+          "diasHelada": 11.3,
+          "diasCalor": 0
+        },
+        {
+          "mes": 5,
+          "tmin": -1.3,
+          "tmax": 4.7,
+          "lluvia": 51.9,
+          "et0": 16.4,
+          "viento": 3.4,
+          "humedadRaiz": 0.56,
+          "humedadSup": 0.56,
+          "diasHelada": 20.6,
+          "diasCalor": 0
+        },
+        {
+          "mes": 6,
+          "tmin": -4.4,
+          "tmax": 1.3,
+          "lluvia": 58.2,
+          "et0": 9.5,
+          "viento": 3.4,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.63,
+          "diasHelada": 27.1,
+          "diasCalor": 0
+        },
+        {
+          "mes": 7,
+          "tmin": -5.5,
+          "tmax": 0.7,
+          "lluvia": 47.3,
+          "et0": 11.1,
+          "viento": 3.3,
+          "humedadRaiz": 0.67,
+          "humedadSup": 0.68,
+          "diasHelada": 28.9,
+          "diasCalor": 0
+        },
+        {
+          "mes": 8,
+          "tmin": -3.8,
+          "tmax": 2.4,
+          "lluvia": 44.6,
+          "et0": 19.1,
+          "viento": 3.7,
+          "humedadRaiz": 0.71,
+          "humedadSup": 0.73,
+          "diasHelada": 29.1,
+          "diasCalor": 0
+        },
+        {
+          "mes": 9,
+          "tmin": -1.8,
+          "tmax": 5.4,
+          "lluvia": 29.2,
+          "et0": 36.2,
+          "viento": 4,
+          "humedadRaiz": 0.73,
+          "humedadSup": 0.74,
+          "diasHelada": 23.6,
+          "diasCalor": 0
+        },
+        {
+          "mes": 10,
+          "tmin": -0.3,
+          "tmax": 8.8,
+          "lluvia": 25.8,
+          "et0": 65.4,
+          "viento": 4.8,
+          "humedadRaiz": 0.69,
+          "humedadSup": 0.69,
+          "diasHelada": 18.3,
+          "diasCalor": 0
+        },
+        {
+          "mes": 11,
+          "tmin": 1.7,
+          "tmax": 12,
+          "lluvia": 29.3,
+          "et0": 91.4,
+          "viento": 5.2,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.62,
+          "diasHelada": 8.4,
+          "diasCalor": 0
+        },
+        {
+          "mes": 12,
+          "tmin": 3.5,
+          "tmax": 14.5,
+          "lluvia": 26.1,
+          "et0": 114.9,
+          "viento": 5.5,
+          "humedadRaiz": 0.55,
+          "humedadSup": 0.54,
+          "diasHelada": 2.5,
+          "diasCalor": 0
+        }
+      ],
+      "ndviLatest": null,
+      "ndviYearAgo": null
+    },
+    {
+      "id": "east",
+      "name": "East chacras",
+      "lat": -46.545,
+      "lon": -71.57,
+      "soil": {
+        "sand": 55,
+        "silt": 30,
+        "clay": 15,
+        "soc": 8,
+        "ph": 7.6,
+        "nitrogen": 0.8,
+        "cec": 14,
+        "bulkDensity": 1.35,
+        "source": "reference",
+        "depth": "0–30 cm",
+        "texture": "Sandy loam",
+        "organicMatter": 1.4,
+        "waterHolding": 86,
+        "infiltration": "moderate"
+      },
+      "climate": {
+        "celda": {
+          "lat": -46.5,
+          "lon": -71.6
+        },
+        "periodo": [
+          2006,
+          2025
+        ],
+        "ultimaHeladaMedia": "12-11",
+        "ultimaHeladaP80": "12-23",
+        "aniosHeladaTardia": 20,
+        "libreHeladas": 55,
+        "diasHeladaAnio": 175,
+        "horasFrio": 1303,
+        "gdd10": 149,
+        "lluviaAnual": 436,
+        "et0Anual": 675,
+        "tempMedia": 4.4,
+        "vientoPrimavera": 4.9,
+        "tendencia": {
+          "decada1": 4.27,
+          "decada2": 4.5,
+          "dif": 0.23
+        },
+        "tendenciaLluvia": {
+          "antes": 482,
+          "despues": 390,
+          "difPct": -19
+        }
+      },
+      "monthly": [
+        {
+          "mes": 1,
+          "tmin": 4.8,
+          "tmax": 16.2,
+          "lluvia": 22.7,
+          "et0": 118.1,
+          "viento": 5.3,
+          "humedadRaiz": 0.51,
+          "humedadSup": 0.48,
+          "diasHelada": 0.9,
+          "diasCalor": 0
+        },
+        {
+          "mes": 2,
+          "tmin": 4.8,
+          "tmax": 16.3,
+          "lluvia": 28.2,
+          "et0": 93,
+          "viento": 4.7,
+          "humedadRaiz": 0.48,
+          "humedadSup": 0.44,
+          "diasHelada": 0.8,
+          "diasCalor": 0.1
+        },
+        {
+          "mes": 3,
+          "tmin": 3.1,
+          "tmax": 13.1,
+          "lluvia": 32.4,
+          "et0": 66.2,
+          "viento": 4.4,
+          "humedadRaiz": 0.49,
+          "humedadSup": 0.46,
+          "diasHelada": 3.4,
+          "diasCalor": 0
+        },
+        {
+          "mes": 4,
+          "tmin": 1,
+          "tmax": 8.9,
+          "lluvia": 40.5,
+          "et0": 33.4,
+          "viento": 4,
+          "humedadRaiz": 0.51,
+          "humedadSup": 0.5,
+          "diasHelada": 11.3,
+          "diasCalor": 0
+        },
+        {
+          "mes": 5,
+          "tmin": -1.3,
+          "tmax": 4.7,
+          "lluvia": 51.9,
+          "et0": 16.4,
+          "viento": 3.4,
+          "humedadRaiz": 0.56,
+          "humedadSup": 0.56,
+          "diasHelada": 20.6,
+          "diasCalor": 0
+        },
+        {
+          "mes": 6,
+          "tmin": -4.4,
+          "tmax": 1.3,
+          "lluvia": 58.2,
+          "et0": 9.6,
+          "viento": 3.4,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.63,
+          "diasHelada": 27.1,
+          "diasCalor": 0
+        },
+        {
+          "mes": 7,
+          "tmin": -5.5,
+          "tmax": 0.7,
+          "lluvia": 47.3,
+          "et0": 11.1,
+          "viento": 3.3,
+          "humedadRaiz": 0.67,
+          "humedadSup": 0.68,
+          "diasHelada": 28.9,
+          "diasCalor": 0
+        },
+        {
+          "mes": 8,
+          "tmin": -3.8,
+          "tmax": 2.4,
+          "lluvia": 44.6,
+          "et0": 19.2,
+          "viento": 3.7,
+          "humedadRaiz": 0.71,
+          "humedadSup": 0.73,
+          "diasHelada": 29.1,
+          "diasCalor": 0
+        },
+        {
+          "mes": 9,
+          "tmin": -1.8,
+          "tmax": 5.4,
+          "lluvia": 29.2,
+          "et0": 36.3,
+          "viento": 4,
+          "humedadRaiz": 0.73,
+          "humedadSup": 0.74,
+          "diasHelada": 23.6,
+          "diasCalor": 0
+        },
+        {
+          "mes": 10,
+          "tmin": -0.3,
+          "tmax": 8.8,
+          "lluvia": 25.8,
+          "et0": 65.4,
+          "viento": 4.8,
+          "humedadRaiz": 0.69,
+          "humedadSup": 0.69,
+          "diasHelada": 18.3,
+          "diasCalor": 0
+        },
+        {
+          "mes": 11,
+          "tmin": 1.7,
+          "tmax": 12,
+          "lluvia": 29.3,
+          "et0": 91.4,
+          "viento": 5.2,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.62,
+          "diasHelada": 8.4,
+          "diasCalor": 0
+        },
+        {
+          "mes": 12,
+          "tmin": 3.5,
+          "tmax": 14.5,
+          "lluvia": 26.1,
+          "et0": 114.9,
+          "viento": 5.5,
+          "humedadRaiz": 0.55,
+          "humedadSup": 0.54,
+          "diasHelada": 2.5,
+          "diasCalor": 0
+        }
+      ],
+      "ndviLatest": null,
+      "ndviYearAgo": null
+    }
+  ]
+}
