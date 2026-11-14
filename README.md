@@ -88,9 +88,15 @@ npm run soil-study -- --offline
 `--offline` usa los valores de referencia y un clima simulado: sirve solo para probar.
 
 ## ☁️ Deploy en Vercel
-1. Importar el repo en Vercel (Next.js, sin cambios en la configuración).
-2. Cargar `OPENROUTER_API_KEY` en Settings → Environment Variables.
-3. No cargar `MOCK_DATA` en producción.
+1. En Vercel: **Add New → Project → Import** el repo `supernova-eta26`. El framework se detecta solo: **Next.js**.
+2. **No cambies los comandos.** `vercel.json` ya fija `npm install` y `npm run build`. Nunca uses `npm run dev` como comando de build: es un servidor que no termina y el deploy queda colgado.
+3. Settings → **Environment Variables**: `OPENROUTER_API_KEY` (opcional; sin ella la IA usa la respuesta por reglas). **No** cargues `MOCK_DATA`.
+4. Rama: Vercel publica en producción la rama **main**. Los pushes a otras ramas (por ejemplo `claude/tender-goldberg-h7s3dz`) generan un *Preview* con su propia URL. Para producción, uní la rama a `main` o cambiá la *Production Branch* en Settings → Git.
+
+Si en local aparece un error de *hydration* con textos viejos, limpiá el caché de compilación:
+```bash
+npm run clean
+```
 
 ## 🗂️ Dónde está cada cosa
 ```

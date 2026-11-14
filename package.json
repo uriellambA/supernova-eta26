@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "soil-study": "tsx scripts/soil-study.ts",
-    "landing-images": "tsx scripts/landing-images.ts"
+    "landing-images": "tsx scripts/landing-images.ts",
+    "clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\""
   },
   "dependencies": {
     "@fontsource/instrument-serif": "^5.3.0",
@@ -34,5 +35,8 @@
     "tailwindcss": "4.3.3",
     "tsx": "^4.23.15",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.9"
   }
 }
