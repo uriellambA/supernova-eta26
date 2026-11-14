@@ -8,6 +8,7 @@ export const SITE: SiteConfig = {
   region: "Santa Cruz, Argentina",
   timezone: "America/Argentina/Rio_Gallegos",
   center: [-71.615, -46.55],
+  elevation: 220, // valley floor next to Lake Buenos Aires
   zoom: 12.4,
   bounds: [
     [-71.95, -46.7],

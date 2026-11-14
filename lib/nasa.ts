@@ -1,4 +1,5 @@
 import { calcularIndicadores } from "./agro";
+import { SITE } from "@/config/site";
 import { fetchJson } from "./cache";
 import type { DiarioClima, IndicadoresNasa, NdviResumen, PuntoNdvi } from "./types";
 
@@ -32,12 +33,37 @@ export async function powerDiario(lat: number, lon: number): Promise<DiarioClima
     humedadRel: p.RH2M ? claves.map((k) => val("RH2M", k)) : undefined,
     presion: p.PS ? claves.map((k) => val("PS", k)) : undefined,
     uv: p.ALLSKY_SFC_UV_INDEX ? claves.map((k) => val("ALLSKY_SFC_UV_INDEX", k)) : undefined,
+    elevCelda: typeof j?.geometry?.coordinates?.[2] === "number" ? j.geometry.coordinates[2] : null,
   };
 }
 
+/** Field elevation (m) from a 90 m terrain model; falls back to the site's typical elevation. */
+export async function elevacionCampo(lat: number, lon: number): Promise<number> {
+  try {
+    const j = await fetchJson(`https://api.open-meteo.com/v1/elevation?latitude=${lat}&longitude=${lon}`, 10_000);
+    const e = Number(j?.elevation?.[0]);
+    return Number.isFinite(e) ? e : SITE.elevation;
+  } catch {
+    return SITE.elevation;
+  }
+}
+
+/**
+ * The climate grid cell (~50 km) averages the valley with the Andes, so it is much higher and colder than the farms.
+ * Shift temperatures by the standard lapse rate (6.5 °C per 1000 m) from the cell's mean elevation to the field's.
+ */
+export function corregirAltura(d: DiarioClima, campo: number) {
+  const celda = d.elevCelda;
+  if (celda === null || celda === undefined || Math.abs(celda - campo) < 50) return { d, altura: null };
+  const delta = +(((celda - campo) * 6.5) / 1000).toFixed(2);
+  const shift = (xs: (number | null)[]) => xs.map((t) => (t === null ? null : +(t + delta).toFixed(2)));
+  return { d: { ...d, tmin: shift(d.tmin), tmax: shift(d.tmax) }, altura: { celda: Math.round(celda), campo: Math.round(campo), deltaC: delta } };
+}
+
 export async function indicadoresNasa(lat: number, lon: number): Promise<IndicadoresNasa> {
-  const d = await powerDiario(lat, lon);
-  return calcularIndicadores(d, lat, lon);
+  const [raw, campo] = await Promise.all([powerDiario(lat, lon), elevacionCampo(lat, lon)]);
+  const { d, altura } = corregirAltura(raw, campo);
+  return { ...calcularIndicadores(d, lat, lon), altura };
 }
 
 const ORNL = "https://modis.ornl.gov/rst/api/v1/MOD13Q1";

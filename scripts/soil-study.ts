@@ -18,7 +18,7 @@ import { join } from "node:path";
 import { STRATEGIES } from "../config/rotations";
 import { SITE } from "../config/site";
 import { calcularIndicadores, shortDate } from "../lib/agro";
-import { ndviModis, powerDiario } from "../lib/nasa";
+import { corregirAltura, elevacionCampo, ndviModis, powerDiario } from "../lib/nasa";
 import { compareStrategies } from "../lib/rotation";
 import { diarioSimulado, ndviSimulado } from "../lib/simulado";
 import { SOIL_DEPTHS, deriveSoil, salinityEstimate, saxtonRawls, soilGridsProfile, soilHealth, textureClass, topsoilValues } from "../lib/soil";
@@ -93,7 +93,9 @@ async function study(p: Pt) {
   } catch {
     soil = deriveSoil(SITE.soilReference, "reference", "0–30 cm");
   }
-  const c: IndicadoresNasa = calcularIndicadores(climateRaw.v, p.lat, p.lon);
+  const elev = offline ? SITE.elevation : await elevacionCampo(p.lat, p.lon);
+  const { d: daily, altura } = corregirAltura(climateRaw.v, elev);
+  const c: IndicadoresNasa = { ...calcularIndicadores(daily, p.lat, p.lon), altura };
   const sal = salinityEstimate(soil, c, irrigation, null);
   const results = compareStrategies({ climate: c, soil, snow: null }, farm, DEFAULT_PRIORITIES).sort((a, b) => b.score - a.score);
   const current = results.find((r) => r.strategy.current);
@@ -146,6 +148,7 @@ async function main() {
     md.push("### Soil health", "", ...s.health.parts.map((x) => `- ${x.name}: ${Math.round(x.value * 100)}/100 — ${x.note}`), "", "Salinity indicator:", ...s.sal.reasons.map((r) => `- ${r}`), "");
     const c = s.climate;
     md.push("### Climate (20-year record)", "");
+    if (c.altura) md.push(`- Temperatures corrected ${c.altura.deltaC > 0 ? "+" : ""}${c.altura.deltaC} °C from the climate cell's mean elevation (${c.altura.celda} m) to the field (${c.altura.campo} m).`);
     md.push(`- Frost-free season **${c.libreHeladas} days**; last spring frost on average **${shortDate(c.ultimaHeladaMedia)}** (4 of 5 years before ${shortDate(c.ultimaHeladaP80)}); frost after Nov 1 in ${c.aniosHeladaTardia} years.`);
     md.push(`- Coldest night (yearly average) ${c.minAnual} °C · chill hours ${c.horasFrio} · degree-days (base 10) ${c.gdd10}.`);
     md.push(`- Rain ${c.lluviaAnual} mm vs evaporation ${c.et0Anual} mm · spring wind ${c.vientoPrimavera} m/s · humidity ${c.humedadRelMedia ?? "—"}% · pressure ${c.presionMedia ?? "—"} hPa · summer UV ${c.uvVerano ?? "—"}.`);

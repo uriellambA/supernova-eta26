@@ -6,6 +6,7 @@ export type SiteConfig = {
   region: string;
   timezone: string;
   center: [number, number]; // [lon, lat]
+  elevation: number; // typical farm elevation (m), fallback for the temperature correction
   zoom: number;
   bounds: [[number, number], [number, number]];
   fields: FieldPreset[];
@@ -63,6 +64,7 @@ export type DiarioClima = {
   humedadRel?: (number | null)[]; // relative humidity %
   presion?: (number | null)[]; // surface pressure kPa
   uv?: (number | null)[]; // UV index (daily)
+  elevCelda?: number | null; // mean elevation of the climate grid cell (m)
 };
 
 export type Mensual = {
@@ -108,6 +110,7 @@ export type IndicadoresNasa = {
   presionMedia: number | null;
   uvVerano: number | null;
   minAnual: number; // average of each year's coldest night (°C)
+  altura?: { celda: number; campo: number; deltaC: number } | null; // elevation correction applied to temperatures
 };
 
 export type PuntoNdvi = { fecha: string; ndvi: number; evi?: number };

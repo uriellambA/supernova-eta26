@@ -62,6 +62,7 @@ export function Overview({ c, current, ndvi }: { c: IndicadoresNasa; current: St
               </tbody>
             </table>
           </div>
+          {c.altura && <p className="mt-3 text-[11px] text-blue-fg">Temperatures adjusted {c.altura.deltaC > 0 ? "+" : ""}{c.altura.deltaC} °C: the regional climate record averages terrain at ~{c.altura.celda} m (Andes included); your field is at ~{c.altura.campo} m.</p>}
           <p className="mt-3 text-[11px] text-muted">Darker = higher risk. Hover a cell for the value. Winter months with bare soil and strong spring winds are the best moments for a cover crop.</p>
         </Card>
         <div className="grid gap-4 md:grid-cols-2">
