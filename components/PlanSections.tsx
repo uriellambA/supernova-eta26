@@ -325,7 +325,7 @@ export function Viability({ fits, areaHa }: { fits: SpeciesFit[]; areaHa: number
 
 // ---------------- Contingencies ----------------
 export function Contingency({ list, enso, c }: { list: Hazard[]; enso: EnsoResumen | null; c: IndicadoresNasa }) {
-  const impacts = enso ? ensoImpacts(enso, c.anual) : [];
+  const impacts = enso ? ensoImpacts(enso, c.anual ?? []) : [];
   const [open, setOpen] = useState<string | null>(list.find((h) => h.level !== "good")?.id ?? null);
   return (
     <div className="space-y-4">

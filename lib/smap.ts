@@ -7,13 +7,30 @@
 export const SMAP_LAYERS = [
   { id: "SMAP_L4_Analyzed_Surface_Soil_Moisture", level: 6 },
   { id: "SMAP_L3_Passive_Enhanced_Day_Soil_Moisture", level: 7 },
+  { id: "SMAP_L3_Passive_Enhanced_Night_Soil_Moisture", level: 7 },
   { id: "SMAP_L3_Passive_Day_Soil_Moisture", level: 6 },
+  { id: "SMAP_L4_Analyzed_Root_Zone_Soil_Moisture", level: 6 },
 ] as const;
 
 export const GIBS = "https://gibs.earthdata.nasa.gov";
 export const smapTileUrl = (layer: string, date: string, level: number, z: number, x: number, y: number) =>
   `${GIBS}/wmts/epsg3857/best/${layer}/default/${date}/GoogleMapsCompatible_Level${level}/${z}/${y}/${x}.png`;
-export const smapColormapUrl = (layer: string) => `${GIBS}/colormaps/v1.3/${layer}.xml`;
+export const smapColormapUrl = (layer: string, v = "v1.3") => `${GIBS}/colormaps/${v}/${layer}.xml`;
+
+/**
+ * Fallback when the colormap file is not reachable: read moisture from the color ramp itself
+ * (soil-moisture palettes run from brown/yellow = dry, through green, to blue = wet).
+ */
+export function hueMoisture(r: number, g: number, b: number, a = 255): number | null {
+  if (a < 128) return null;
+  const R = r / 255, G = g / 255, B = b / 255;
+  const mx = Math.max(R, G, B), mn = Math.min(R, G, B), d = mx - mn;
+  if (mx < 0.08 || d / (mx || 1) < 0.15) return null; // black / grey / white = no data
+  let h = mx === R ? ((G - B) / d) % 6 : mx === G ? (B - R) / d + 2 : (R - G) / d + 4;
+  h = (h * 60 + 360) % 360;
+  if (h > 300) h = 0; // magenta/red end = driest
+  return 0.02 + (Math.min(250, Math.max(20, h)) - 20) / 230 * 0.5;
+}
 
 export type ColorEntry = { r: number; g: number; b: number; value: number };
 
@@ -76,6 +93,7 @@ export function riskColor(v: number): [number, number, number] {
 export type SmapResumen = {
   simulado?: boolean;
   layer: string;
+  decoding?: "colormap" | "color-ramp";
   samples: { date: string; sm: number }[];
   mean: number | null; // m³/m³ over the samples
   latest: { date: string; sm: number } | null;

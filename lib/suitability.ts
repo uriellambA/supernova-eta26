@@ -27,8 +27,10 @@ export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, s
   const indoor = !!sp.greenhouse;
 
   // Winter cold
-  const margin = c.minAnual - sp.minWinter;
-  f.push({ name: "Winter cold", score: indoor ? 1 : clamp(0.5 + margin / 8), note: indoor ? "Protected crop" : `Coldest night averages ${c.minAnual} °C; survives ${sp.minWinter} °C` });
+  // older cached climate records may lack minAnual: estimate it from the coldest monthly minimum
+  const minAnual = Number.isFinite(c.minAnual) ? c.minAnual : +(Math.min(...c.mensual.map((m) => m.tmin)) - 9).toFixed(1);
+  const margin = minAnual - sp.minWinter;
+  f.push({ name: "Winter cold", score: indoor ? 1 : clamp(0.5 + margin / 8), note: indoor ? "Protected crop" : `Coldest night averages ${minAnual} °C; survives ${sp.minWinter} °C` });
 
   // Spring frost at a sensitive stage
   if (sp.bloom && !indoor) {
@@ -51,6 +53,7 @@ export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, s
   f.push({ name: "Water", score: clamp(1.15 - sp.water / supply), note: `Needs ~${sp.water} mm/season; useful supply ~${Math.round(supply)} mm` });
   f.push({ name: "Wind", score: indoor ? 1 : clamp(sp.wind + (1 - sp.wind) * (1 - c.vientoPrimavera / 8)), note: `Spring wind ${c.vientoPrimavera} m/s; tolerance ${sp.wind >= 0.8 ? "high" : sp.wind >= 0.5 ? "medium" : "low"}` });
 
+  for (const x of f) if (!Number.isFinite(x.score)) x.score = 0.5; // missing input → neutral, never NaN
   const scores = f.map((x) => x.score);
   const mean = scores.reduce((a, b) => a + b, 0) / scores.length;
   const agro = Math.round(100 * (0.55 * Math.min(...scores) + 0.45 * mean));

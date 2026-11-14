@@ -1,5 +1,5 @@
 // Service worker: offline mode. Bump VERSION to invalidate old caches.
-const VERSION = "v3";
+const VERSION = "v4";
 const SHELL = `shell-${VERSION}`;
 const DATOS = `datos-${VERSION}`;
 const TILES = `tiles-${VERSION}`;

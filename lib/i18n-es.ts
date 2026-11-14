@@ -507,7 +507,12 @@ export const ES: Record<string, string> = {
   "Low risk": "Riesgo bajo", "Moderate risk": "Riesgo moderado", "High risk": "Riesgo alto", "Latest": "Último", "{n}-week mean": "Promedio de {n} semanas", "Risk index": "Índice de riesgo",
   "{n} m³/m³": "{n} m³/m³", "SMAP surface soil moisture": "Humedad superficial del suelo (SMAP)",
   "SMAP measures soil moisture, not salt. In a dry valley, a surface that stays wet while evaporation is high pulls water up from below and leaves salts behind: that is the risk shown here. Confirm with an EC test": "SMAP mide la humedad del suelo, no la sal. En un valle seco, si la superficie se mantiene húmeda con mucha evaporación, el agua sube desde abajo y deja las sales: ese es el riesgo que se muestra acá. Confirmalo con un análisis de CE",
-  "See the salinity risk map": "Ver el mapa de riesgo de salinidad",
+  "See the salinity risk map": "Ver el mapa de riesgo de salinidad", "Loading SMAP soil moisture": "Cargando humedad del suelo SMAP",
+  "SMAP soil moisture {x} · {n} km · green = low salinity risk, red = high. {x}": "Humedad del suelo SMAP {x} · {n} km · verde = riesgo de salinidad bajo, rojo = alto. {x}",
+  "SMAP soil moisture {x} · {n} km · green = low salinity risk, red = high": "Humedad del suelo SMAP {x} · {n} km · verde = riesgo de salinidad bajo, rojo = alto",
+  "Values read from the color ramp (approximate)": "Valores leídos de la escala de colores (aproximados)",
+  "Salinity layer unavailable: {x}": "Capa de salinidad no disponible: {x}", "Could not reach the server": "No se pudo conectar con el servidor",
+  "Sample-data mode: satellite tiles are not loaded": "Modo de datos de muestra: no se cargan imágenes satelitales",
   "SMAP satellite: the surface stays wet ({n} m³/m³ on average over the last weeks). With this much evaporation, water rising from below can leave salts at the surface": "Satélite SMAP: la superficie se mantiene húmeda ({n} m³/m³ en promedio en las últimas semanas). Con tanta evaporación, el agua que sube desde abajo puede dejar sales en la superficie",
   "SMAP satellite: the surface is mostly dry ({n} m³/m³ on average over the last weeks), so salts are not being pulled up from below": "Satélite SMAP: la superficie está mayormente seca ({n} m³/m³ en promedio en las últimas semanas), así que las sales no suben desde abajo",
   // ---------- Report ----------

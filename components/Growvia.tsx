@@ -27,6 +27,7 @@ import { HardwareModal } from "./HardwareModal";
 import type { OverlayId } from "./MapView";
 import { Contingency, NewCrops, Rotations, Viability, YearPlan } from "./PlanSections";
 import { Report } from "./Report";
+import { SmapStatus } from "./SmapStatus";
 import { RotationBuilder, RotationHero, RotationMatrix, RotationMethod } from "./RotationTools";
 import { LangToggle } from "./Translator";
 import { getLang } from "@/lib/i18n";
@@ -70,7 +71,7 @@ export function Growvia() {
   const online = useOnline();
 
   const q = `lat=${field.lat.toFixed(2)}&lon=${field.lon.toFixed(2)}`;
-  const climate = useRecurso<IndicadoresNasa>(`/api/climate?lat=${field.lat.toFixed(1)}&lon=${field.lon.toFixed(1)}`);
+  const climate = useRecurso<IndicadoresNasa>(`/api/climate?v=3&lat=${field.lat.toFixed(1)}&lon=${field.lon.toFixed(1)}`);
   const ndvi = useRecurso<NdviResumen>(`/api/vegetation?${q}`);
   const forecast = useRecurso<ClimaResumen>(`/api/forecast?${q}`);
   const snow = useRecurso<NieveResumen>("/api/snow");
@@ -247,6 +248,7 @@ export function Growvia() {
                   <span className="hidden text-xs text-subtle sm:inline">Tap to place your field</span>
                   <div className="w-full sm:ml-auto sm:w-auto"><FiltersPanel active={overlays} toggle={toggleOverlay} /></div>
                 </div>
+                {overlays.has("salinity") && <SmapStatus />}
                 <div className="h-[46vh] min-h-[340px] lg:h-[560px]">
                   <MapView field={field} onPick={pick} is3D={is3D} overlays={overlays} boundary={register && field.lat === register.lat && field.lon === register.lon ? register.boundary : null} />
                 </div>
