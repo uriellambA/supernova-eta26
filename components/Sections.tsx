@@ -1,214 +1,159 @@
 "use client";
 import { useState } from "react";
-import { CROPS, cropById } from "@/config/crops";
+import { CROPS } from "@/config/crops";
 import { MONTHS, shortDate } from "@/lib/agro";
 import type { Option } from "@/lib/options";
 import { EFFICIENCY, METHOD_NAME, nextDaysNeed, seasonNeed } from "@/lib/riego";
-import type { ClimaResumen, FarmProfile, GroundReading, IndicadoresNasa, NdviResumen, NieveResumen, Priorities, SistemaRiego, SoilResumen, StrategyResult } from "@/lib/types";
-import { LineChart, TempChart, WaterChart, ndviPoints } from "./Charts";
+import type { ClimaResumen, FarmProfile, GroundReading, IndicadoresNasa, NdviResumen, NieveResumen, Salinity, SistemaRiego, SoilHealth, SoilResumen, StrategyResult } from "@/lib/types";
+import { LineChart, TempChart, WaterChart, eviPoints, ndviPoints } from "./Charts";
 import { FrostCalendar } from "./FrostCalendar";
 import { SnowGauge } from "./SnowGauge";
-import { LEVEL_RING, LevelPill, Note, Panel, Stat, input } from "./ui";
+import { Badge, Card, LevelPill, Meter, Note, Stat, input, label } from "./ui";
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 
 // ---------------- Overview ----------------
-export function Overview({ c, current }: { c: IndicadoresNasa; current: StrategyResult | null }) {
+export function Overview({ c, current, ndvi }: { c: IndicadoresNasa; current: StrategyResult | null; ndvi: NdviResumen | null }) {
   const bareWinter = current ? current.metrics.bareMonths >= 3 : false;
-  const rows: { name: string; color: string; v: (m: IndicadoresNasa["mensual"][number]) => number; fmt: (m: IndicadoresNasa["mensual"][number]) => string }[] = [
-    { name: "Frost", color: "251,113,133", v: (m) => Math.min(1, m.diasHelada / 20), fmt: (m) => `${m.diasHelada} frost days` },
-    { name: "Heat", color: "251,146,60", v: (m) => Math.min(1, m.diasCalor / 5), fmt: (m) => `${m.diasCalor} days ≥ 30 °C` },
-    { name: "Water deficit", color: "250,204,21", v: (m) => Math.min(1, Math.max(0, m.et0 - m.lluvia) / 150), fmt: (m) => `${Math.round(m.et0 - m.lluvia)} mm more evaporation than rain` },
-    { name: "Wind", color: "56,189,248", v: (m) => Math.min(1, Math.max(0, m.viento - 3) / 4), fmt: (m) => `${m.viento} m/s average` },
-    { name: "Bare soil", color: "168,162,158", v: (m) => (bareWinter && m.mes >= 5 && m.mes <= 9 ? 0.9 : 0), fmt: (m) => (bareWinter && m.mes >= 5 && m.mes <= 9 ? "field usually empty" : "covered") },
+  type M = IndicadoresNasa["mensual"][number];
+  const rows: { name: string; color: string; v: (m: M) => number; fmt: (m: M) => string }[] = [
+    { name: "Frost", color: "163,48,42", v: (m) => Math.min(1, m.diasHelada / 20), fmt: (m) => `${m.diasHelada} frost days` },
+    { name: "Heat", color: "217,130,74", v: (m) => Math.min(1, m.diasCalor / 5), fmt: (m) => `${m.diasCalor} days ≥ 30 °C` },
+    { name: "Water deficit", color: "196,150,52", v: (m) => Math.min(1, Math.max(0, m.et0 - m.lluvia) / 150), fmt: (m) => `${Math.round(m.et0 - m.lluvia)} mm more evaporation than rain` },
+    { name: "Wind", color: "91,143,201", v: (m) => Math.min(1, Math.max(0, m.viento - 3) / 4), fmt: (m) => `${m.viento} m/s average` },
+    { name: "UV", color: "140,90,170", v: (m) => Math.min(1, (m.uv ?? 0) / 9), fmt: (m) => `UV index ${m.uv ?? "—"}` },
+    { name: "Bare soil", color: "120,113,108", v: (m) => (bareWinter && m.mes >= 5 && m.mes <= 9 ? 0.9 : 0), fmt: (m) => (bareWinter && m.mes >= 5 && m.mes <= 9 ? "field usually empty" : "covered") },
   ];
   return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_1.2fr]">
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-4 lg:grid-cols-12">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:col-span-5 lg:grid-cols-2 xl:grid-cols-3">
         <Stat label="Frost-free days" value={c.libreHeladas} hint="Length of the safe growing season" />
         <Stat label="Last spring frost" value={shortDate(c.ultimaHeladaMedia)} hint={`4 of 5 years before ${shortDate(c.ultimaHeladaP80)}`} />
+        <Stat label="Coldest night" value={c.minAnual} unit="°C" hint="Average of each year's coldest night" />
         <Stat label="Rain" value={c.lluviaAnual} unit="mm/yr" hint="Very dry: irrigation is essential" />
         <Stat label="Evaporation" value={c.et0Anual} unit="mm/yr" hint="Water the air pulls from soil and plants (ET0)" />
+        <Stat label="Humidity" value={c.humedadRelMedia ?? "—"} unit="%" hint="Average relative humidity of the air" />
+        <Stat label="Pressure" value={c.presionMedia ?? "—"} unit="hPa" hint="Surface air pressure (lower with altitude)" />
+        <Stat label="Summer UV" value={c.uvVerano ?? "—"} hint="UV index Dec–Feb: sunburn risk for fruit and people" />
         <Stat label="Spring wind" value={c.vientoPrimavera} unit="m/s" hint="Drives wind erosion of bare soil" />
-        <Stat label="Frost days" value={c.diasHeladaAnio} unit="/yr" />
-        <Stat label="Temperature trend" value={c.tendencia ? `${c.tendencia.dif > 0 ? "+" : ""}${c.tendencia.dif}` : "—"} unit="°C" hint={`Recent vs earlier years (${c.periodo.join("–")})`} />
+        <Stat label="Chill hours" value={c.horasFrio} hint="Winter cold that fruit trees need to bloom well" />
+        <Stat label="Temp. trend" value={c.tendencia ? `${c.tendencia.dif > 0 ? "+" : ""}${c.tendencia.dif}` : "—"} unit="°C" hint={`Recent vs earlier years (${c.periodo.join("–")})`} />
         <Stat label="Rain trend" value={c.tendenciaLluvia ? `${c.tendenciaLluvia.difPct > 0 ? "+" : ""}${c.tendenciaLluvia.difPct}` : "—"} unit="%" hint="Recent vs earlier years" />
       </div>
-      <Panel title="Field calendar: when is the field vulnerable?" className="!p-3">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[460px] border-separate border-spacing-[3px] text-[11px]">
-            <thead>
-              <tr>
-                <th />
-                {MONTHS.map((m) => <th key={m} className="font-medium text-slate-400">{m}</th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r) => (
-                <tr key={r.name}>
-                  <td className="whitespace-nowrap pr-2 text-slate-300">{r.name}</td>
-                  {c.mensual.map((m) => (
-                    <td key={m.mes} title={`${MONTHS[m.mes - 1]}: ${r.fmt(m)}`} className="h-6 rounded" style={{ background: `rgba(${r.color},${0.08 + r.v(m) * 0.85})` }} />
-                  ))}
+      <div className="grid gap-4 lg:col-span-7">
+        <Card title="Field calendar: when is the field vulnerable?" eyebrow="20-year climate record">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[460px] border-separate border-spacing-[3px] text-[11px]">
+              <thead>
+                <tr>
+                  <th />
+                  {MONTHS.map((m) => <th key={m} className="font-medium text-subtle">{m}</th>)}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr key={r.name}>
+                    <td className="whitespace-nowrap pr-2 text-ink-2">{r.name}</td>
+                    {c.mensual.map((m) => (
+                      <td key={m.mes} title={`${MONTHS[m.mes - 1]}: ${r.fmt(m)}`} className="h-6 rounded" style={{ background: `rgba(${r.color},${0.06 + r.v(m) * 0.8})` }} />
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-[11px] text-muted">Darker = higher risk. Hover a cell for the value. Winter months with bare soil and strong spring winds are the best moments for a cover crop.</p>
+        </Card>
+        <div className="grid gap-4 md:grid-cols-2">
+          <Card title="Temperature by month"><TempChart m={c.mensual} /></Card>
+          <Card title="Rain vs evaporation">
+            <WaterChart m={c.mensual} />
+            <p className="text-[11px] text-muted"><span className="text-[#d9a441]">■</span> evaporation (ET0) · <span className="text-[#5b8fc9]">■</span> rain. The gap is what irrigation must supply.</p>
+          </Card>
         </div>
-        <p className="mt-2 text-[11px] text-slate-400">Darker = higher risk. Hover a cell for the value. Winter months with bare soil and strong spring winds are the best moments for a cover crop.</p>
-      </Panel>
-      <Panel title="Temperature by month" className="!p-3"><TempChart m={c.mensual} /></Panel>
-      <Panel title="Rain vs evaporation" className="!p-3">
-        <WaterChart m={c.mensual} />
-        <p className="text-[11px] text-slate-400"><span className="text-amber-400">■</span> evaporation (ET0) · <span className="text-sky-400">■</span> rain. The gap is what irrigation must supply.</p>
-      </Panel>
+        {ndvi && ndvi.serie.length > 1 && <VegetationCard ndvi={ndvi} />}
+      </div>
     </div>
   );
 }
 
+export function VegetationCard({ ndvi }: { ndvi: NdviResumen }) {
+  const hasEvi = ndvi.serie.some((p) => p.evi !== undefined);
+  return (
+    <Card title="Vegetation index · NDVI & EVI" eyebrow="Satellite, 250 m, every 16 days" right={<Badge tone="green">Latest NDVI {ndvi.ultimo?.ndvi}</Badge>}>
+      <LineChart label="NDVI and EVI" points={ndviPoints(ndvi.serie)} second={hasEvi ? { points: eviPoints(ndvi.serie), color: "#b08a3c" } : undefined} />
+      <p className="text-[11px] text-muted">
+        <span className="text-[#3f8f5a]">━</span> NDVI: how green plants are (0 = bare soil, 0.8 = dense crop).{" "}
+        {hasEvi && <><span className="text-[#b08a3c]">╌</span> EVI: like NDVI but does not saturate in dense canopies and corrects for soil and haze. </>}
+        {ndvi.anioAnterior && <>A year ago NDVI was <b className="text-ink">{ndvi.anioAnterior.ndvi}</b>. </>}Low winter values show bare soil.
+      </p>
+    </Card>
+  );
+}
+
 // ---------------- Soil ----------------
-export function Soil({ s, c, ndvi, readings }: { s: SoilResumen; c: IndicadoresNasa | null; ndvi: NdviResumen | null; readings: GroundReading[] }) {
-  const health = s.organicMatter >= 3 ? "good" : s.organicMatter >= 1.5 ? "watch" : "alert";
+export function Soil({ s, c, ndvi, readings, sal, health }: { s: SoilResumen; c: IndicadoresNasa | null; ndvi: NdviResumen | null; readings: GroundReading[]; sal: Salinity; health: SoilHealth }) {
   const last = readings.at(-1);
   return (
     <div className="space-y-4">
       {s.source === "reference" && <Note kind="warn">No soil-map data for this exact point: showing regional reference values for Los Antiguos. A lab soil test will improve every recommendation.</Note>}
-      <div className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">
-        <div className="space-y-3">
+      <div className="grid gap-4 lg:grid-cols-12">
+        <div className="space-y-4 lg:col-span-7">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <Stat label="Texture" value={<span className="text-lg">{s.texture}</span>} hint={`${s.depth}`} />
+            <Stat label="Texture" value={<span className="text-lg">{s.texture}</span>} hint={s.depth} />
             <Stat label="Organic matter" value={s.organicMatter} unit="%" hint="> 3% is healthy; feeds life and holds water" />
             <Stat label="Water holding" value={s.waterHolding} unit="mm" hint="Plant-available water in the top 60 cm" />
             <Stat label="pH" value={s.ph} hint={s.ph > 7.8 ? "Alkaline: watch iron/zinc" : s.ph < 6 ? "Acidic" : "Good range"} />
             <Stat label="Nitrogen" value={s.nitrogen} unit="g/kg" />
             <Stat label="CEC" value={s.cec} unit="cmol/kg" hint="Capacity to hold nutrients" />
             <Stat label="Bulk density" value={s.bulkDensity} unit="g/cm³" hint={s.bulkDensity > 1.5 ? "Compacted" : "OK"} />
-            <Stat label="Infiltration" value={<span className="text-lg capitalize">{s.infiltration}</span>} />
+            <Stat label="Infiltration" value={s.ksat} unit="mm/h" hint={`${s.infiltration[0].toUpperCase()}${s.infiltration.slice(1)} — how fast water soaks in`} />
           </div>
-          <div>
-            <div className="mb-1 flex text-[11px] text-slate-400"><span>Sand {s.sand}%</span><span className="mx-auto">Silt {s.silt}%</span><span>Clay {s.clay}%</span></div>
+          <Card title="Texture and water">
+            <div className="mb-1 flex text-[11px] text-muted"><span>Sand {s.sand}%</span><span className="mx-auto">Silt {s.silt}%</span><span>Clay {s.clay}%</span></div>
             <div className="flex h-3 overflow-hidden rounded-full">
-              <div className="bg-amber-300" style={{ width: `${s.sand}%` }} />
-              <div className="bg-stone-400" style={{ width: `${s.silt}%` }} />
-              <div className="bg-orange-700" style={{ width: `${s.clay}%` }} />
+              <div className="bg-[#e3c995]" style={{ width: `${s.sand}%` }} />
+              <div className="bg-[#b5aca1]" style={{ width: `${s.silt}%` }} />
+              <div className="bg-[#9a5b3c]" style={{ width: `${s.clay}%` }} />
             </div>
-          </div>
-          <Panel className="!p-3">
-            <div className="flex items-center gap-2 text-sm font-semibold text-white">Soil health <LevelPill level={health} /></div>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-300">
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+              <div className="rounded-lg bg-surface-2 p-2"><div className="text-muted">Field capacity</div><div className="font-semibold">{s.fieldCapacity}%</div></div>
+              <div className="rounded-lg bg-surface-2 p-2"><div className="text-muted">Wilting point</div><div className="font-semibold">{s.wiltingPoint}%</div></div>
+              <div className="rounded-lg bg-surface-2 p-2"><div className="text-muted">Days of reserve (Jan)</div><div className="font-semibold">{c ? Math.max(1, Math.round(s.waterHolding / Math.max(1, c.mensual[0].et0 / 31))) : "—"}</div></div>
+            </div>
+            <p className="mt-3 text-[11px] text-muted">Water values from texture and organic matter (Saxton &amp; Rawls pedotransfer equations). Field capacity = water left after drainage; wilting point = water plants cannot pull out.</p>
+          </Card>
+          <Card title="Salinity" right={<Badge tone={sal.cls === "low" ? "green" : sal.cls === "moderate" ? "amber" : "red"} dot>{sal.measured ? "" : "~"}{sal.ece} dS/m · {sal.cls}</Badge>}>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-ink-2">{sal.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
+            {!sal.measured && <p className="mt-2 text-[11px] text-muted">Estimated: soil maps do not measure salt. Add an electrical conductivity (EC) test in your farm register or with the field sensor to replace this estimate.</p>}
+          </Card>
+        </div>
+        <div className="space-y-4 lg:col-span-5">
+          <Card title="Soil health index" right={<LevelPill level={health.level}>{health.score} / 100</LevelPill>}>
+            <div className="space-y-2.5">
+              {health.parts.map((p) => (
+                <div key={p.name}>
+                  <div className="flex justify-between text-xs"><span className="text-ink-2">{p.name}</span><span className="text-muted">{p.note}</span></div>
+                  <Meter value={p.value * 100} level={p.value >= 0.65 ? "good" : p.value >= 0.45 ? "watch" : "alert"} className="mt-1" />
+                </div>
+              ))}
+            </div>
+            <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-ink-2">
               {s.sand >= 50 && <li>Sandy soil: drains fast and blows away when bare. Keep it covered, especially Sep–Dec.</li>}
               {s.organicMatter < 2 && <li>Low organic matter: legumes, covers and manure will raise water holding over the years.</li>}
-              {s.ph > 7.5 && <li>Slightly alkaline: choose tolerant varieties and avoid salt build-up with good irrigation.</li>}
-              <li>Your soil holds ~{s.waterHolding} mm: in January the crop can use that in about {c ? Math.max(1, Math.round(s.waterHolding / Math.max(1, c.mensual[0].et0 / 31))) : "?"} days without irrigation.</li>
+              {s.ph > 7.5 && <li>Alkaline: choose tolerant crops (asparagus, lavender, sea buckthorn) and avoid salt build-up.</li>}
             </ul>
-          </Panel>
-        </div>
-        <div className="space-y-3">
+          </Card>
           {c && c.mensual.some((m) => m.humedadSup !== null) && (
-            <Panel title="Soil moisture through the year" className="!p-3">
-              <LineChart label="Surface soil wetness" points={c.mensual.map((m) => ({ x: MONTHS[m.mes - 1], y: m.humedadSup ?? 0 }))} color="#38bdf8" />
-              <p className="text-[11px] text-slate-400">Satellite soil wetness (0 = dry, 1 = saturated), monthly average. It covers a wide area: a field sensor gives the exact value at your field.</p>
-              {last && (last.moisture !== null) && <p className="mt-1 text-xs text-emerald-300">Your sensor ({last.date}): {last.moisture}% volumetric moisture{last.soilTemp !== null ? `, ${last.soilTemp} °C` : ""}.</p>}
-            </Panel>
+            <Card title="Soil moisture through the year">
+              <LineChart label="Surface soil wetness" points={c.mensual.map((m) => ({ x: MONTHS[m.mes - 1], y: m.humedadSup ?? 0 }))} color="#5b8fc9" />
+              <p className="text-[11px] text-muted">Satellite soil wetness (0 = dry, 1 = saturated), monthly average over a wide area. A field sensor gives the exact value.</p>
+              {last && last.moisture !== null && <p className="mt-1 text-xs text-green-fg">Your sensor ({last.date}): {last.moisture}% moisture{last.soilTemp != null ? `, ${last.soilTemp} °C` : ""}{last.ec != null ? `, EC ${last.ec} dS/m` : ""}.</p>}
+            </Card>
           )}
-          {ndvi && ndvi.serie.length > 1 && (
-            <Panel title="Vegetation health (NDVI)" className="!p-3">
-              <LineChart label="NDVI" points={ndviPoints(ndvi.serie)} />
-              <p className="text-[11px] text-slate-400">
-                NDVI measures how green plants are (0 = bare soil, 0.8 = dense crop). Latest: <b className="text-white">{ndvi.ultimo?.ndvi}</b>
-                {ndvi.anioAnterior && <> · a year ago: <b className="text-white">{ndvi.anioAnterior.ndvi}</b></>}. Low values in winter show bare soil.
-              </p>
-            </Panel>
-          )}
+          {ndvi && ndvi.serie.length > 1 && <VegetationCard ndvi={ndvi} />}
         </div>
       </div>
-    </div>
-  );
-}
-
-// ---------------- Rotations ----------------
-const PRI_LABEL: Record<keyof Priorities, string> = { water: "Save water", income: "Income", soil: "Soil health", forage: "Forage", labor: "Less work" };
-
-export function Rotations({ results, pri, setPri }: { results: StrategyResult[]; pri: Priorities; setPri: (p: Priorities) => void }) {
-  const [open, setOpen] = useState<string | null>(null);
-  const sorted = [...results].sort((a, b) => b.score - a.score);
-  return (
-    <div className="space-y-4">
-      <Panel title="What matters most to you?" className="!p-3">
-        <div className="grid gap-3 sm:grid-cols-5">
-          {(Object.keys(PRI_LABEL) as (keyof Priorities)[]).map((k) => (
-            <label key={k} className="text-xs text-slate-300">
-              <div className="mb-1 flex justify-between"><span>{PRI_LABEL[k]}</span><span className="text-slate-500">{["off", "low", "mid", "high"][pri[k]]}</span></div>
-              <input type="range" min={0} max={3} step={1} value={pri[k]} onChange={(e) => setPri({ ...pri, [k]: Number(e.target.value) })} className="w-full accent-emerald-400" />
-            </label>
-          ))}
-        </div>
-      </Panel>
-      <div className="grid gap-3 md:grid-cols-2">
-        {sorted.map((r, i) => {
-          const isOpen = open === r.strategy.id;
-          return (
-            <article key={r.strategy.id} className={`rounded-2xl border-2 bg-slate-900/80 p-4 ${LEVEL_RING[r.level]}`}>
-              <div className="flex items-start gap-3">
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
-                    <span className="text-slate-500">#{i + 1}</span>
-                    {r.strategy.current && <span className="rounded bg-slate-700 px-1.5 py-0.5 text-slate-200">Current</span>}
-                    {i === 0 && <span className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-emerald-300">Best match</span>}
-                  </div>
-                  <h4 className="mt-1 font-bold leading-tight text-white">{r.strategy.name}</h4>
-                  <p className="mt-1 text-xs text-slate-400">{r.strategy.years.map((y) => `${cropById(y.main)?.name}${y.winter && y.winter !== y.main ? ` + ${cropById(y.winter)?.name.toLowerCase()}` : ""}`).join(" → ")}</p>
-                </div>
-                <div className="text-right">
-                  <div className="text-3xl font-black tabular-nums text-white">{r.score}</div>
-                  <LevelPill level={r.level} />
-                </div>
-              </div>
-              <div className="mt-3 grid grid-cols-4 gap-2 text-center text-[11px]">
-                <div className="rounded-lg bg-white/[0.04] p-1.5"><div className="text-slate-400">Water</div><div className="font-bold text-white">{r.metrics.waterMm} mm</div></div>
-                <div className="rounded-lg bg-white/[0.04] p-1.5"><div className="text-slate-400">Bare</div><div className="font-bold text-white">{r.metrics.bareMonths} mo</div></div>
-                <div className="rounded-lg bg-white/[0.04] p-1.5"><div className="text-slate-400">Erosion</div><div className="font-bold text-white">{pct(r.metrics.erosion)}</div></div>
-                <div className="rounded-lg bg-white/[0.04] p-1.5"><div className="text-slate-400">N added</div><div className="font-bold text-white">{r.metrics.nitrogen} kg</div></div>
-              </div>
-              {r.benefits.length > 0 && <p className="mt-3 text-sm text-emerald-200">✓ {r.benefits.slice(0, 2).join(" · ")}</p>}
-              {r.risks[0] && <p className="mt-1 text-sm text-amber-200">⚠ {r.risks[0]}</p>}
-              <button className="mt-3 text-xs font-semibold text-emerald-300 hover:underline" onClick={() => setOpen(isOpen ? null : r.strategy.id)} aria-expanded={isOpen}>
-                {isOpen ? "Hide details" : "Why? Evidence, gaps and risks"}
-              </button>
-              {isOpen && (
-                <div className="mt-2 space-y-2 text-xs text-slate-300">
-                  <Block title="Why it was suggested" items={r.why} />
-                  <Block title="Evidence" items={r.evidence} />
-                  {r.benefits.length > 0 && <Block title="Benefits" items={r.benefits} />}
-                  <Block title="Information gaps" items={r.gaps} />
-                  <Block title="Risks to review locally" items={r.risks} />
-                  <div className="grid grid-cols-5 gap-1 pt-1">
-                    {(Object.keys(PRI_LABEL) as (keyof Priorities)[]).map((k) => (
-                      <div key={k}>
-                        <div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full bg-emerald-400" style={{ width: pct(r.scores[k]) }} /></div>
-                        <div className="mt-0.5 text-[10px] text-slate-500">{PRI_LABEL[k]}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </article>
-          );
-        })}
-      </div>
-      <Note>
-        <b>Quick guide:</b> legumes (alfalfa, vetch, clover, peas, fava) fix nitrogen from the air · cover crops (rye, oats) protect bare soil from wind and add organic matter · deep roots (alfalfa, rye) open the soil so water soaks in · drought-tolerant crops (garlic, peas) need less irrigation.
-      </Note>
-    </div>
-  );
-}
-
-function Block({ title, items }: { title: string; items: string[] }) {
-  if (!items.length) return null;
-  return (
-    <div>
-      <div className="font-semibold text-slate-100">{title}</div>
-      <ul className="list-disc pl-4">{items.map((t) => <li key={t}>{t}</li>)}</ul>
     </div>
   );
 }
@@ -216,20 +161,15 @@ function Block({ title, items }: { title: string; items: string[] }) {
 // ---------------- What you can do ----------------
 export function Options({ options }: { options: Option[] }) {
   return (
-    <div className="grid gap-3 md:grid-cols-3">
-      {options.map((o) => (
-        <article key={o.id} className={`rounded-2xl border-2 bg-slate-900/80 p-4 ${LEVEL_RING[o.level]}`}>
-          <div className="flex items-center gap-2">
-            <span className="text-3xl">{o.emoji}</span>
-            <h4 className="font-bold text-white">{o.title}</h4>
-            <span className="ml-auto"><LevelPill level={o.level}>{Math.round(o.fit * 100)}% fit</LevelPill></span>
-          </div>
-          <p className="mt-2 text-sm font-medium text-slate-100">{o.headline}</p>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-slate-300">{o.facts.map((f) => <li key={f}>{f}</li>)}</ul>
-          <div className="mt-3 text-xs font-semibold text-slate-200">How to start</div>
-          <ol className="list-decimal pl-5 text-xs text-slate-400">{o.steps.map((s) => <li key={s}>{s}</li>)}</ol>
-          <div className="mt-3 text-[11px] text-slate-500">Cost: {o.cost}</div>
-        </article>
+    <div className="grid gap-4 md:grid-cols-3">
+      {options.map((o, i) => (
+        <Card key={o.id} delay={i * 80} title={<span className="flex items-center gap-2"><span className="text-2xl">{o.emoji}</span>{o.title}</span>} right={<LevelPill level={o.level}>{Math.round(o.fit * 100)}% fit</LevelPill>}>
+          <p className="text-sm font-medium text-ink">{o.headline}</p>
+          <ul className="mt-3 list-disc space-y-1 pl-5 text-xs text-ink-2">{o.facts.map((f) => <li key={f}>{f}</li>)}</ul>
+          <div className="mt-4 text-xs font-semibold text-ink">How to start</div>
+          <ol className="list-decimal pl-5 text-xs text-muted">{o.steps.map((s) => <li key={s}>{s}</li>)}</ol>
+          <div className="mt-4 border-t border-line pt-3 text-[11px] text-muted">Cost: {o.cost}</div>
+        </Card>
       ))}
     </div>
   );
@@ -238,36 +178,49 @@ export function Options({ options }: { options: Option[] }) {
 // ---------------- Forecast ----------------
 export function Forecast({ f }: { f: ClimaResumen }) {
   const next = f.dias.filter((d) => !d.pasado).slice(0, 14);
+  const today = next[0];
   const alerts = next.slice(0, 7).flatMap((d) => {
     const day = new Date(d.fecha + "T12:00:00").toLocaleDateString("en-US", { weekday: "long" });
     const a: string[] = [];
     if (d.tmin <= 0) a.push(`🥶 ${day}: frost ${d.tmin} °C${d.horaMin ? ` around ${d.horaMin}` : ""}. Protect blossoms and seedlings.`);
     if (d.rafagas > 60) a.push(`💨 ${day}: gusts ${Math.round(d.rafagas)} km/h. Don't spray; check windbreaks.`);
     if (d.lluvia > 8) a.push(`🌧️ ${day}: ${d.lluvia} mm rain. You can skip one irrigation.`);
+    if ((d.uv ?? 0) >= 9) a.push(`☀️ ${day}: UV ${d.uv}. Shade for workers and berries at midday.`);
     return a;
   });
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
+      {today && (
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+          <Stat label="Today" value={`${Math.round(today.tmin)}° / ${Math.round(today.tmax)}°`} />
+          <Stat label="Humidity" value={today.humedad ?? "—"} unit="%" />
+          <Stat label="Pressure" value={today.presion ?? "—"} unit="hPa" />
+          <Stat label="UV max" value={today.uv ?? "—"} />
+          <Stat label="Evaporation" value={today.et0} unit="mm" />
+          <Stat label="Gusts" value={Math.round(today.rafagas)} unit="km/h" />
+        </div>
+      )}
       <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
         {next.map((d) => {
           const frost = d.tmin <= 0;
           const dt = new Date(d.fecha + "T12:00:00");
           return (
-            <div key={d.fecha} className={`w-20 shrink-0 rounded-xl border p-2 text-center ${frost ? "border-rose-500/60 bg-rose-500/10" : "border-white/10 bg-white/[0.03]"}`}>
-              <div className="text-[11px] font-semibold text-slate-300">{dt.toLocaleDateString("en-US", { weekday: "short" })}</div>
-              <div className="text-[10px] text-slate-500">{dt.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</div>
+            <div key={d.fecha} className={`w-[5.5rem] shrink-0 rounded-xl border p-2 text-center ${frost ? "border-red-fg/40 bg-red-bg" : "border-line bg-surface"}`}>
+              <div className="text-[11px] font-semibold text-ink-2">{dt.toLocaleDateString("en-US", { weekday: "short" })}</div>
+              <div className="text-[10px] text-subtle">{dt.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</div>
               <div className="my-1 text-lg">{frost ? "🥶" : d.lluvia > 2 ? "🌧️" : d.rafagas > 60 ? "💨" : "☀️"}</div>
-              <div className="text-sm font-bold text-orange-300">{Math.round(d.tmax)}°</div>
-              <div className={`text-sm font-bold ${frost ? "text-rose-300" : "text-sky-300"}`}>{Math.round(d.tmin)}°</div>
-              <div className="mt-1 text-[10px] text-slate-400">💧{d.lluvia} · 💨{Math.round(d.rafagas)}</div>
+              <div className="text-sm font-semibold">{Math.round(d.tmax)}°</div>
+              <div className={`text-sm font-semibold ${frost ? "text-red-fg" : "text-muted"}`}>{Math.round(d.tmin)}°</div>
+              <div className="mt-1 text-[10px] text-muted">💧{d.lluvia} · 💨{Math.round(d.rafagas)}</div>
+              <div className="text-[10px] text-subtle">{d.humedad ?? "—"}% · UV {d.uv ?? "—"}</div>
             </div>
           );
         })}
       </div>
-      <Panel title="This week" className="!p-3">
-        {alerts.length ? <ul className="space-y-1 text-sm text-slate-200">{alerts.map((a) => <li key={a}>{a}</li>)}</ul> : <p className="text-sm text-slate-300">✅ Calm week: no frost, strong wind or heavy rain expected.</p>}
-        {f.elevacion !== null && <p className="mt-2 text-[11px] text-slate-500">Field elevation {Math.round(f.elevacion)} m. Temperatures in °C, rain in mm, gusts in km/h.</p>}
-      </Panel>
+      <Card title="This week">
+        {alerts.length ? <ul className="space-y-1 text-sm text-ink-2">{alerts.map((a) => <li key={a}>{a}</li>)}</ul> : <p className="text-sm text-ink-2">✅ Calm week: no frost, strong wind or heavy rain expected.</p>}
+        {f.elevacion !== null && <p className="mt-3 text-[11px] text-muted">Field elevation {Math.round(f.elevacion)} m. Temperatures in °C, rain in mm, gusts in km/h, pressure in hPa.</p>}
+      </Card>
     </div>
   );
 }
@@ -275,21 +228,21 @@ export function Forecast({ f }: { f: ClimaResumen }) {
 // ---------------- Frost ----------------
 export function Frost({ c }: { c: IndicadoresNasa }) {
   return (
-    <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
-      <Panel title="Spring frost calendar (each row is a year, each cell a day)" className="!p-3"><FrostCalendar c={c} /></Panel>
-      <Panel title="Chance of frost by week" className="!p-3">
+    <div className="grid gap-4 lg:grid-cols-12">
+      <Card className="lg:col-span-8" title="Spring frost calendar" eyebrow="Each row is a year, each cell a day"><FrostCalendar c={c} /></Card>
+      <Card className="lg:col-span-4" title="Chance of frost by week">
         <div className="flex h-36 items-end gap-1">
           {c.probSemanal.map((s) => (
             <div key={s.inicio} className="flex flex-1 flex-col items-center gap-1" title={`Week of ${shortDate(s.inicio)}: ${pct(s.p0)} frost, ${pct(s.p2)} hard frost`}>
-              <div className="relative w-full rounded-t bg-rose-400/70" style={{ height: `${s.p0 * 100}px` }}>
-                <div className="absolute bottom-0 w-full rounded-t bg-rose-700" style={{ height: `${s.p2 * 100}px` }} />
+              <div className="relative w-full rounded-t bg-[#e07a6c]" style={{ height: `${s.p0 * 100}px` }}>
+                <div className="absolute bottom-0 w-full rounded-t bg-[#a3302a]" style={{ height: `${s.p2 * 100}px` }} />
               </div>
-              <span className="text-[8px] text-slate-500">{shortDate(s.inicio).replace(" ", " ")}</span>
             </div>
           ))}
         </div>
-        <p className="mt-2 text-[11px] text-slate-400">Light red: frost (≤ 0 °C). Dark red: hard frost (≤ −2 °C). Frost risk = how often temperatures dropped below freezing in past years.</p>
-      </Panel>
+        <div className="mt-1 flex justify-between text-[10px] text-subtle"><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span></div>
+        <p className="mt-3 text-[11px] text-muted">Light: frost (≤ 0 °C). Dark: hard frost (≤ −2 °C). How often nights dropped below freezing in past years.</p>
+      </Card>
     </div>
   );
 }
@@ -303,45 +256,45 @@ export function Water({ c, f, snow, farm, setFarm }: { c: IndicadoresNasa; f: Cl
   const methods = Object.keys(EFFICIENCY) as SistemaRiego[];
   const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
   return (
-    <div className="grid gap-4 lg:grid-cols-[1.3fr_1fr]">
-      <Panel title="Irrigation calculator" className="!p-3">
-        <div className="mb-3 grid gap-2 sm:grid-cols-3">
-          <label className="text-xs text-slate-400">Crop<select className={input} value={cropId} onChange={(e) => setCropId(e.target.value)}>{CROPS.map((x) => <option key={x.id} value={x.id}>{x.emoji} {x.name}</option>)}</select></label>
-          <label className="text-xs text-slate-400">Area (ha)<input type="number" min={0.1} step={0.5} className={input} value={farm.areaHa} onChange={(e) => setFarm({ ...farm, areaHa: Number(e.target.value) || 1 })} /></label>
-          <label className="text-xs text-slate-400">Method<select className={input} value={farm.irrigation} onChange={(e) => setFarm({ ...farm, irrigation: e.target.value as SistemaRiego })}>{methods.map((m) => <option key={m} value={m}>{METHOD_NAME[m]}</option>)}</select></label>
+    <div className="grid gap-4 lg:grid-cols-12">
+      <Card className="lg:col-span-7" title="Irrigation calculator">
+        <div className="mb-4 grid gap-2 sm:grid-cols-3">
+          <label className={label}>Crop<select className={input} value={cropId} onChange={(e) => setCropId(e.target.value)}>{CROPS.map((x) => <option key={x.id} value={x.id}>{x.emoji} {x.name}</option>)}</select></label>
+          <label className={label}>Area (ha)<input type="number" min={0.1} step={0.5} className={input} value={farm.areaHa} onChange={(e) => setFarm({ ...farm, areaHa: Number(e.target.value) || 1 })} /></label>
+          <label className={label}>Method<select className={input} value={farm.irrigation} onChange={(e) => setFarm({ ...farm, irrigation: e.target.value as SistemaRiego })}>{methods.map((m) => <option key={m} value={m}>{METHOD_NAME[m]}</option>)}</select></label>
         </div>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {week && <Stat label="Next 7 days" value={fmt(week.net / EFFICIENCY[farm.irrigation])} unit="mm" hint={`≈ ${fmt((week.net / EFFICIENCY[farm.irrigation]) * 10 * farm.areaHa)} m³ for ${farm.areaHa} ha`} />}
           <Stat label="Season need (net)" value={fmt(season)} unit="mm" hint="What the crop uses, Sep–Apr" />
           <Stat label="Season, your method" value={fmt((season / EFFICIENCY[farm.irrigation]) * 10 * farm.areaHa)} unit="m³" />
         </div>
-        <div className="mt-3 space-y-1.5">
+        <div className="mt-4 space-y-2">
           {methods.map((m) => {
             const v = (season / EFFICIENCY[m]) * 10 * farm.areaHa;
             const max = (season / EFFICIENCY.flood) * 10 * farm.areaHa;
             return (
               <div key={m} className="flex items-center gap-2 text-xs">
-                <span className={`w-20 ${m === farm.irrigation ? "font-bold text-white" : "text-slate-400"}`}>{METHOD_NAME[m]}</span>
-                <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-white/10"><div className={`h-full ${m === "drip" ? "bg-emerald-400" : "bg-sky-500"}`} style={{ width: `${(v / max) * 100}%` }} /></div>
-                <span className="w-24 text-right tabular-nums text-slate-300">{fmt(v)} m³</span>
+                <span className={`w-20 ${m === farm.irrigation ? "font-semibold text-ink" : "text-muted"}`}>{METHOD_NAME[m]}</span>
+                <div className="h-2 flex-1 overflow-hidden rounded-full bg-surface-2"><div className={`h-full rounded-full ${m === "drip" ? "bg-green-fg" : "bg-ink-2"}`} style={{ width: `${(v / max) * 100}%` }} /></div>
+                <span className="w-24 text-right tabular-nums text-ink-2">{fmt(v)} m³</span>
               </div>
             );
           })}
         </div>
-        <p className="mt-2 text-[11px] text-slate-500">Evapotranspiration (ET0) × crop coefficient − useful rain, divided by the efficiency of each method.</p>
-      </Panel>
-      <Panel title="Snowpack: your summer water" className="!p-3">
+        <p className="mt-3 text-[11px] text-muted">Evapotranspiration (ET0) × crop coefficient − useful rain, divided by the efficiency of each method.</p>
+      </Card>
+      <Card className="lg:col-span-5" title="Snowpack: your summer water">
         {snow ? (
           <>
             <SnowGauge c={snow.cuencas[0]} />
-            <p className="mt-3 text-xs text-slate-300">
+            <p className="mt-3 text-xs text-ink-2">
               {snow.indice >= 0.9 ? "Good snow year: canals should run normally." : snow.indice >= 0.6 ? "Less snow than normal: water may get tight in late summer. Favor drip and low-water crops." : "Low snow: expect irrigation restrictions. Choose the water-saver rotation."}
             </p>
           </>
         ) : (
-          <p className="text-sm text-slate-400">Snowpack data not available right now.</p>
+          <p className="text-sm text-muted">Snowpack data not available right now.</p>
         )}
-      </Panel>
+      </Card>
     </div>
   );
 }

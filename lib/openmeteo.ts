@@ -6,13 +6,23 @@ import type { ClimaResumen, NieveCuenca, NieveResumen } from "./types";
 export async function pronostico(lat: number, lon: number): Promise<ClimaResumen> {
   const url =
     `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
-    `&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_gusts_10m_max,wind_speed_10m_max,et0_fao_evapotranspiration` +
-    `&hourly=temperature_2m&timezone=${encodeURIComponent(SITE.timezone)}&forecast_days=16&past_days=10&wind_speed_unit=kmh`;
+    `&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_gusts_10m_max,wind_speed_10m_max,et0_fao_evapotranspiration,uv_index_max` +
+    `&hourly=temperature_2m,relative_humidity_2m,surface_pressure&timezone=${encodeURIComponent(SITE.timezone)}&forecast_days=16&past_days=10&wind_speed_unit=kmh`;
   const j = await fetchJson(url, 20_000);
   const d = j.daily;
   const hoy = new Date().toLocaleDateString("en-CA", { timeZone: SITE.timezone });
   const horaMin = new Map<string, { t: number; h: string }>();
+  const hr = new Map<string, number[]>(), ps = new Map<string, number[]>();
+  const push = (m: Map<string, number[]>, k: string, v: number | null | undefined) => {
+    if (v === null || v === undefined) return;
+    const a = m.get(k);
+    if (a) a.push(v);
+    else m.set(k, [v]);
+  };
+  const avg = (xs?: number[]) => (xs?.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null);
   (j.hourly?.time ?? []).forEach((iso: string, i: number) => {
+    push(hr, iso.slice(0, 10), j.hourly.relative_humidity_2m?.[i]);
+    push(ps, iso.slice(0, 10), j.hourly.surface_pressure?.[i]);
     const t = j.hourly.temperature_2m[i];
     if (t === null) return;
     const dia = iso.slice(0, 10);
@@ -31,6 +41,9 @@ export async function pronostico(lat: number, lon: number): Promise<ClimaResumen
       et0: d.et0_fao_evapotranspiration[i] ?? 0,
       horaMin: horaMin.get(f)?.h ?? null,
       pasado: f < hoy,
+      humedad: avg(hr.get(f)) === null ? null : Math.round(avg(hr.get(f))!),
+      presion: avg(ps.get(f)) === null ? null : Math.round(avg(ps.get(f))!),
+      uv: d.uv_index_max?.[i] ?? null,
     })),
   };
 }

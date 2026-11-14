@@ -81,7 +81,7 @@ Con internet, en dos terminales:
 npm run dev
 ```
 ```bash
-node scripts/soil-study.mjs http://localhost:3000
+npm run soil-study
 ```
 El script genera `docs/estudio-suelo-datos.json` y `docs/estudio-suelo-datos.md`, con los datos de suelo, clima y NDVI de los tres campos de referencia. Con esos números hay que actualizar la tabla 3 de este documento.
 

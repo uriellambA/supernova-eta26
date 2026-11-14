@@ -633,3 +633,13 @@ Ideas para votar: **Chacra Satelital** · **ValleSat** · **Helada Cero** · **A
 
 ---
 *Documento vivo: actualizarlo a medida que avanza la competencia.*
+
+## 🔄 v0.3: rediseño y nuevas funciones
+- Introducción en `/`, panel bento en `/app` y registro del productor en `/register`.
+- Diseño monocromo cálido (Geist Sans + Instrument Serif), animaciones al hacer scroll, atajos de teclado y modo oscuro.
+- NDVI + EVI. Humedad, presión, UV, evaporación y salinidad (estimada o medida).
+- Suelo: Saxton & Rawls e índice de salud del suelo.
+- Especies nuevas para después de la temporada de cerezas y frutillas, con aptitud y economía (sección Viability).
+- Rotación por estación (primavera, verano, otoño, invierno) y plan anual.
+- Contingencias y El Niño / La Niña con impactos históricos en el campo.
+- Comando `npm run soil-study`: estudio de suelo avanzado por punto o grilla.

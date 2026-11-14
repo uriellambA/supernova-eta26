@@ -60,6 +60,9 @@ export type DiarioClima = {
   viento: (number | null)[];
   humedadRaiz: (number | null)[];
   humedadSup: (number | null)[];
+  humedadRel?: (number | null)[]; // relative humidity %
+  presion?: (number | null)[]; // surface pressure kPa
+  uv?: (number | null)[]; // UV index (daily)
 };
 
 export type Mensual = {
@@ -73,7 +76,12 @@ export type Mensual = {
   humedadSup: number | null;
   diasHelada: number; // average days/month with tmin ≤ 0
   diasCalor: number; // average days/month with tmax ≥ 30
+  humedadRel: number | null; // %
+  presion: number | null; // hPa
+  uv: number | null; // UV index
 };
+
+export type Anual = { anio: number; lluvia: number; diasHelada: number; tMedia: number; heladaTardia: boolean; ultimaHelada: string | null; vientoPrim: number };
 
 export type IndicadoresNasa = {
   simulado?: boolean;
@@ -95,9 +103,14 @@ export type IndicadoresNasa = {
   mensual: Mensual[];
   tendencia: { decada1: number; decada2: number; dif: number } | null;
   tendenciaLluvia: { antes: number; despues: number; difPct: number } | null;
+  anual: Anual[];
+  humedadRelMedia: number | null;
+  presionMedia: number | null;
+  uvVerano: number | null;
+  minAnual: number; // average of each year's coldest night (°C)
 };
 
-export type PuntoNdvi = { fecha: string; ndvi: number };
+export type PuntoNdvi = { fecha: string; ndvi: number; evi?: number };
 export type NdviResumen = { simulado?: boolean; serie: PuntoNdvi[]; ultimo: PuntoNdvi | null; anioAnterior: PuntoNdvi | null };
 
 // ---------- Forecast ----------
@@ -111,6 +124,9 @@ export type DiaPronostico = {
   et0: number;
   horaMin: string | null;
   pasado: boolean;
+  humedad: number | null; // mean relative humidity %
+  presion: number | null; // mean surface pressure hPa
+  uv: number | null; // max UV index
 };
 export type ClimaResumen = { simulado?: boolean; elevacion: number | null; dias: DiaPronostico[] };
 
@@ -137,6 +153,22 @@ export type SoilResumen = SoilValues & {
   organicMatter: number; // %
   waterHolding: number; // mm in top 60 cm
   infiltration: "fast" | "moderate" | "slow";
+  ksat: number; // saturated conductivity mm/h (Saxton & Rawls 2006)
+  fieldCapacity: number; // volumetric %
+  wiltingPoint: number; // volumetric %
+};
+
+// ---------- Soil health & salinity ----------
+export type Salinity = { ece: number; cls: "low" | "moderate" | "high"; measured: boolean; reasons: string[] };
+export type SoilHealth = { score: number; level: Nivel; parts: { name: string; value: number; note: string }[] };
+
+// ---------- Climate oscillation (El Niño / La Niña) ----------
+export type EnsoPhase = "El Niño" | "La Niña" | "Neutral";
+export type EnsoResumen = {
+  simulado?: boolean;
+  live: boolean;
+  current: { season: string; year: number; anomaly: number; phase: EnsoPhase } | null;
+  years: { year: number; phase: EnsoPhase; anomaly: number | null }[];
 };
 
 // ---------- Farmer ----------
@@ -152,7 +184,34 @@ export const DEFAULT_PROFILE: FarmProfile = { system: "orchard", areaHa: 5, irri
 export type Priorities = { water: number; income: number; soil: number; forage: number; labor: number };
 export const DEFAULT_PRIORITIES: Priorities = { water: 3, income: 2, soil: 3, forage: 1, labor: 1 };
 
-export type GroundReading = { date: string; moisture: number | null; soilTemp: number | null };
+export type GroundReading = { date: string; moisture: number | null; soilTemp: number | null; ec?: number | null; airTemp?: number | null; humidity?: number | null };
+
+// ---------- Farm register (stored on the device) ----------
+export type PlotRecord = {
+  id: string;
+  name: string;
+  areaHa: number;
+  crop: string; // species id
+  plantedYear: number | null;
+  history: { spring: string; summer: string; autumn: string; winter: string }; // last 12 months
+  irrigation: SistemaRiego;
+  yieldTHa: number | null;
+};
+export type FarmRegister = {
+  farmName: string;
+  producer: string;
+  lat: number;
+  lon: number;
+  plots: PlotRecord[];
+  water: { source: "canal" | "well" | "river" | "mixed"; turnDays: number | null; shortMonths: number[] };
+  soilTest: { date: string; ph: number | null; ec: number | null; organicMatter: number | null; notes: string };
+  economy: { channel: "export" | "national" | "local" | "tourism" | "processing"; workers: number; budgetUsd: number | null; machinery: string[] };
+  livestock: boolean;
+  interests: string[];
+  priorities: Priorities;
+  notes: string;
+  updated: string;
+};
 
 // ---------- Rotation results ----------
 export type StrategyResult = {
@@ -186,4 +245,6 @@ export type AdvisorResult = {
   voice: string;
   confidence: "high" | "medium" | "low";
   source: "ai" | "rules";
+  seasons?: { spring: string; summer: string; autumn: string; winter: string };
+  newCrops?: { id: string; why: string }[];
 };

@@ -1,9 +1,9 @@
 // Service worker: offline mode. Bump VERSION to invalidate old caches.
-const VERSION = "v2";
+const VERSION = "v3";
 const SHELL = `shell-${VERSION}`;
 const DATOS = `datos-${VERSION}`;
 const TILES = `tiles-${VERSION}`;
-const PRECACHE = ["/", "/manifest.webmanifest", "/icons/icon.svg", "/icons/icon-192.png"];
+const PRECACHE = ["/", "/app", "/register", "/manifest.webmanifest", "/icons/icon.svg", "/icons/icon-192.png"];
 const MAX_TILES = 600;
 
 self.addEventListener("install", (e) => {
@@ -65,7 +65,7 @@ self.addEventListener("fetch", (e) => {
 
   // Páginas: red primero; sin red, la última versión guardada (ignorando ?lat=…)
   if (req.mode === "navigate") {
-    e.respondWith(redPrimero(req, SHELL, { ignoreSearch: true }).catch(() => caches.match("/")));
+    e.respondWith(redPrimero(req, SHELL, { ignoreSearch: true }).catch(() => caches.match("/app")));
     return;
   }
   // Tiles del mapa (satélite, OSM, NASA GIBS)
@@ -75,12 +75,12 @@ self.addEventListener("fetch", (e) => {
   }
   if (url.origin !== self.location.origin) return;
   // Código de la app
-  if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/")) {
+  if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/") || url.pathname.startsWith("/landing/")) {
     e.respondWith(cachePrimero(req, SHELL));
     return;
   }
   // Datos que cambian poco (NASA, nieve): mostrar lo guardado y actualizar en segundo plano
-  if (/^\/api\/(climate|vegetation|snow|soil)/.test(url.pathname)) {
+  if (/^\/api\/(climate|vegetation|snow|soil|enso)/.test(url.pathname)) {
     e.respondWith(staleWhileRevalidate(req, DATOS));
     return;
   }

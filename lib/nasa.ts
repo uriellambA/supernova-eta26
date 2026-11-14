@@ -4,13 +4,15 @@ import type { DiarioClima, IndicadoresNasa, NdviResumen, PuntoNdvi } from "./typ
 
 const POWER = "https://power.larc.nasa.gov/api/temporal/daily/point";
 const PARAMS = ["T2M_MIN", "T2M_MAX", "PRECTOTCORR", "WS2M", "GWETROOT", "GWETTOP"];
+const EXTRA = ["RH2M", "PS", "ALLSKY_SFC_UV_INDEX"];
 
 /** Descarga 20 años de clima diario de NASA POWER (comunidad AG). */
 export async function powerDiario(lat: number, lon: number): Promise<DiarioClima> {
   const fin = new Date().getUTCFullYear() - 1;
   const inicio = fin - 19;
-  const url = `${POWER}?parameters=${PARAMS.join(",")}&community=AG&latitude=${lat}&longitude=${lon}&start=${inicio}0101&end=${fin}1231&format=JSON&time-standard=LST`;
-  const j = await fetchJson(url, 45_000);
+  const url = (ps: string[]) => `${POWER}?parameters=${ps.join(",")}&community=AG&latitude=${lat}&longitude=${lon}&start=${inicio}0101&end=${fin}1231&format=JSON&time-standard=LST`;
+  // Humidity, pressure and UV are extras: if they fail, keep the core record.
+  const j = await fetchJson(url([...PARAMS, ...EXTRA]), 50_000).catch(() => fetchJson(url(PARAMS), 45_000));
   const p = j?.properties?.parameter;
   if (!p?.T2M_MIN) throw new Error("NASA POWER: respuesta sin datos");
   const fill = Number(j?.header?.fill_value ?? -999);
@@ -27,6 +29,9 @@ export async function powerDiario(lat: number, lon: number): Promise<DiarioClima
     viento: claves.map((k) => val("WS2M", k)),
     humedadRaiz: claves.map((k) => val("GWETROOT", k)),
     humedadSup: claves.map((k) => val("GWETTOP", k)),
+    humedadRel: p.RH2M ? claves.map((k) => val("RH2M", k)) : undefined,
+    presion: p.PS ? claves.map((k) => val("PS", k)) : undefined,
+    uv: p.ALLSKY_SFC_UV_INDEX ? claves.map((k) => val("ALLSKY_SFC_UV_INDEX", k)) : undefined,
   };
 }
 
@@ -37,7 +42,7 @@ export async function indicadoresNasa(lat: number, lon: number): Promise<Indicad
 
 const ORNL = "https://modis.ornl.gov/rst/api/v1/MOD13Q1";
 
-/** NDVI MODIS (MOD13Q1, 250 m, 16 días) de los últimos ~2 años vía ORNL DAAC. */
+/** NDVI + EVI MODIS (MOD13Q1, 250 m, 16 días) de los últimos ~2 años vía ORNL DAAC. */
 export async function ndviModis(lat: number, lon: number): Promise<NdviResumen> {
   const h = { headers: { Accept: "application/json" } };
   const fechas = await fetchJson(`${ORNL}/dates?latitude=${lat}&longitude=${lon}`, 20_000, h);
@@ -45,23 +50,29 @@ export async function ndviModis(lat: number, lon: number): Promise<NdviResumen> 
   if (!lista.length) throw new Error("MODIS: sin fechas");
   const lotes: (typeof lista)[] = [];
   for (let i = 0; i < lista.length; i += 10) lotes.push(lista.slice(i, i + 10)); // ORNL: máx. 10 fechas por pedido
-  const partes = await Promise.all(
-    lotes.map((l) =>
-      fetchJson(
-        `${ORNL}/subset?latitude=${lat}&longitude=${lon}&band=250m_16_days_NDVI&startDate=${l[0].modis_date}&endDate=${l[l.length - 1].modis_date}&kmAboveBelow=0&kmLeftRight=0`,
-        30_000,
-        h,
-      ).catch(() => null),
-    ),
-  );
-  const serie: PuntoNdvi[] = [];
-  for (const parte of partes) {
-    for (const s of parte?.subset ?? []) {
-      const raw = Number(s?.data?.[0]);
-      if (!Number.isFinite(raw) || raw <= -2000) continue;
-      serie.push({ fecha: s.calendar_date, ndvi: +(raw * 0.0001).toFixed(3) });
+  const pedir = (band: string) =>
+    Promise.all(
+      lotes.map((l) =>
+        fetchJson(
+          `${ORNL}/subset?latitude=${lat}&longitude=${lon}&band=${band}&startDate=${l[0].modis_date}&endDate=${l[l.length - 1].modis_date}&kmAboveBelow=0&kmLeftRight=0`,
+          30_000,
+          h,
+        ).catch(() => null),
+      ),
+    );
+  const [pn, pe] = await Promise.all([pedir("250m_16_days_NDVI"), pedir("250m_16_days_EVI")]);
+  const leerBanda = (partes: unknown[]) => {
+    const m = new Map<string, number>();
+    for (const parte of partes as { subset?: { calendar_date: string; data: number[] }[] }[]) {
+      for (const s of parte?.subset ?? []) {
+        const raw = Number(s?.data?.[0]);
+        if (Number.isFinite(raw) && raw > -2000) m.set(s.calendar_date, +(raw * 0.0001).toFixed(3));
+      }
     }
-  }
+    return m;
+  };
+  const ndvi = leerBanda(pn), evi = leerBanda(pe);
+  const serie: PuntoNdvi[] = [...ndvi.entries()].map(([fecha, v]) => ({ fecha, ndvi: v, ...(evi.has(fecha) && { evi: evi.get(fecha) }) }));
   serie.sort((a, b) => a.fecha.localeCompare(b.fecha));
   return resumenNdvi(serie);
 }

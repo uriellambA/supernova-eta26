@@ -77,6 +77,7 @@ export function calcularIndicadores(d: DiarioClima, lat: number, lon: number): I
   // Last spring frost (Jul→Dec) and first autumn frost (Jan→Jun next year)
   const ultimas: number[] = [];
   const libres: number[] = [];
+  const ultimaPorAnio = new Map<number, string>();
   let tardias = 0;
   for (const a of anios) {
     let ultima: string | null = null;
@@ -91,6 +92,7 @@ export function calcularIndicadores(d: DiarioClima, lat: number, lon: number): I
     }
     if (!completo || !ultima) continue;
     ultimas.push(doy(ultima));
+    ultimaPorAnio.set(a, mmdd(ultima));
     if (mmdd(ultima) > "11-01") tardias++;
     let primera: string | null = null;
     for (let t = Date.UTC(a + 1, 0, 1); t <= Date.UTC(a + 1, 5, 30); t += DIA_MS) {
@@ -112,7 +114,10 @@ export function calcularIndicadores(d: DiarioClima, lat: number, lon: number): I
   const lluviaPorAnio = new Map<number, number>();
   const et0PorAnio = new Map<number, number>();
   const heladaPorAnio = new Map<number, number>();
-  const acumMes = Array.from({ length: 12 }, () => ({ tmin: [] as number[], tmax: [] as number[], lluvia: 0, et0: 0, viento: [] as number[], hr: [] as number[], hs: [] as number[], helada: 0, calor: 0 }));
+  const acumMes = Array.from({ length: 12 }, () => ({ tmin: [] as number[], tmax: [] as number[], lluvia: 0, et0: 0, viento: [] as number[], hr: [] as number[], hs: [] as number[], rh: [] as number[], ps: [] as number[], uv: [] as number[], helada: 0, calor: 0 }));
+  const tPorAnio = new Map<number, number[]>();
+  const minPorAnio = new Map<number, number>();
+  const vPrimPorAnio = new Map<number, number[]>();
   const mesesContados = Array.from({ length: 12 }, () => new Set<string>());
   const vientoPrim: number[] = [];
 
@@ -127,13 +132,24 @@ export function calcularIndicadores(d: DiarioClima, lat: number, lon: number): I
     }
     if (d.viento[i] !== null) {
       m.viento.push(d.viento[i]!);
-      if (mes >= 9) vientoPrim.push(d.viento[i]!);
+      if (mes >= 9) {
+        vientoPrim.push(d.viento[i]!);
+        vPrimPorAnio.set(anio, [...(vPrimPorAnio.get(anio) ?? []), d.viento[i]!]);
+      }
     }
+    const rh = d.humedadRel?.[i], ps = d.presion?.[i], uv = d.uv?.[i];
+    if (rh != null) m.rh.push(rh);
+    if (ps != null) m.ps.push(ps * 10); // kPa → hPa
+    if (uv != null) m.uv.push(uv);
     if (d.humedadRaiz[i] !== null) m.hr.push(d.humedadRaiz[i]!);
     if (d.humedadSup[i] !== null) m.hs.push(d.humedadSup[i]!);
     if (tn === null || tx === null) return;
     m.tmin.push(tn);
     m.tmax.push(tx);
+    minPorAnio.set(anio, Math.min(minPorAnio.get(anio) ?? 99, tn));
+    const tl = tPorAnio.get(anio);
+    if (tl) tl.push((tn + tx) / 2);
+    else tPorAnio.set(anio, [(tn + tx) / 2]);
     if (tn <= 0) {
       m.helada++;
       heladaPorAnio.set(anio, (heladaPorAnio.get(anio) ?? 0) + 1);
@@ -161,6 +177,9 @@ export function calcularIndicadores(d: DiarioClima, lat: number, lon: number): I
       humedadSup: m.hs.length ? +media(m.hs).toFixed(2) : null,
       diasHelada: +(m.helada / n).toFixed(1),
       diasCalor: +(m.calor / n).toFixed(1),
+      humedadRel: m.rh.length ? Math.round(media(m.rh)) : null,
+      presion: m.ps.length ? Math.round(media(m.ps)) : null,
+      uv: m.uv.length ? +media(m.uv).toFixed(1) : null,
     };
   });
 
@@ -184,6 +203,20 @@ export function calcularIndicadores(d: DiarioClima, lat: number, lon: number): I
 
   const todas = d.fechas.map((_, i) => (d.tmin[i] !== null && d.tmax[i] !== null ? (d.tmin[i]! + d.tmax[i]!) / 2 : null)).filter((v): v is number => v !== null);
 
+  const anual = anios
+    .filter((a) => (tPorAnio.get(a)?.length ?? 0) > 300)
+    .map((a) => ({
+      anio: a,
+      lluvia: Math.round(lluviaPorAnio.get(a) ?? 0),
+      diasHelada: heladaPorAnio.get(a) ?? 0,
+      tMedia: +media(tPorAnio.get(a) ?? []).toFixed(2),
+      heladaTardia: (ultimaPorAnio.get(a) ?? "00") > "11-01",
+      ultimaHelada: ultimaPorAnio.get(a) ?? null,
+      vientoPrim: +media(vPrimPorAnio.get(a) ?? []).toFixed(1),
+    }));
+  const conVal = (k: "humedadRel" | "presion") => mensual.map((m) => m[k]).filter((v): v is number => v !== null);
+  const uvVer = [mensual[11].uv, mensual[0].uv, mensual[1].uv].filter((v): v is number => v !== null);
+
   return {
     celda: { lat, lon },
     periodo: [anios[0], anios[anios.length - 1]],
@@ -203,6 +236,11 @@ export function calcularIndicadores(d: DiarioClima, lat: number, lon: number): I
     mensual,
     tendencia,
     tendenciaLluvia,
+    anual,
+    humedadRelMedia: conVal("humedadRel").length ? Math.round(media(conVal("humedadRel"))) : null,
+    presionMedia: conVal("presion").length ? Math.round(media(conVal("presion"))) : null,
+    uvVerano: uvVer.length ? +media(uvVer).toFixed(1) : null,
+    minAnual: +media(anual.map((a) => minPorAnio.get(a.anio) ?? 0)).toFixed(1),
   };
 }
 
@@ -222,6 +260,14 @@ export function probHeladaVentana(ind: IndicadoresNasa, desde: string, hasta: st
   }
   return n ? c / n : null;
 }
+
+export const SEASONS = [
+  { id: "spring", name: "Spring", months: [9, 10, 11], range: "Sep–Nov" },
+  { id: "summer", name: "Summer", months: [12, 1, 2], range: "Dec–Feb" },
+  { id: "autumn", name: "Autumn", months: [3, 4, 5], range: "Mar–May" },
+  { id: "winter", name: "Winter", months: [6, 7, 8], range: "Jun–Aug" },
+] as const;
+export type SeasonId = (typeof SEASONS)[number]["id"];
 
 export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 export const shortDate = (md: string | null) => (md ? `${MONTHS[+md.slice(0, 2) - 1]} ${+md.slice(3, 5)}` : "—");

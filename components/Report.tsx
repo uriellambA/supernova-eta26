@@ -4,12 +4,13 @@ import { APP_NAME } from "@/config/app";
 import { SITE } from "@/config/site";
 import { shortDate } from "@/lib/agro";
 import type { Option } from "@/lib/options";
+import type { SpeciesFit } from "@/lib/suitability";
 import type { AdvisorResult, FarmProfile, IndicadoresNasa, SoilResumen, StrategyResult } from "@/lib/types";
 
 /** Print-only report (Share → PDF uses window.print). */
-export function Report({ field, farm, c, soil, results, advice, options }: {
+export function Report({ field, farm, c, soil, results, advice, options, fits }: {
   field: { lat: number; lon: number; name: string }; farm: FarmProfile; c: IndicadoresNasa | null; soil: SoilResumen | null;
-  results: StrategyResult[]; advice: AdvisorResult | null; options: Option[];
+  results: StrategyResult[]; advice: AdvisorResult | null; options: Option[]; fits: SpeciesFit[];
 }) {
   const sorted = [...results].sort((a, b) => b.score - a.score);
   const [today, setToday] = useState("");
@@ -17,9 +18,9 @@ export function Report({ field, farm, c, soil, results, advice, options }: {
   useEffect(() => setToday(new Date().toLocaleDateString("en-US", { dateStyle: "long" })), []);
   return (
     <div className="hidden bg-white p-2 text-[11.5px] text-black print:block">
-      <div className="flex items-end justify-between border-b-2 border-emerald-600 pb-2">
+      <div className="flex items-end justify-between border-b-2 border-black pb-2">
         <div>
-          <div className="text-xl font-black">{APP_NAME} · Field report</div>
+          <div className="text-xl font-bold">{APP_NAME} · Field report</div>
           <div>{field.name}, {SITE.name} ({SITE.region}) · {field.lat.toFixed(3)}, {field.lon.toFixed(3)} · {farm.areaHa} ha · {farm.system}, {farm.irrigation} irrigation</div>
         </div>
         <div>{today}</div>
@@ -51,6 +52,21 @@ export function Report({ field, farm, c, soil, results, advice, options }: {
           </div>
         )}
       </div>
+      {advice?.seasons && (
+        <>
+          <h2 className="mt-3 font-bold">Year plan</h2>
+          <ul>{(["spring", "summer", "autumn", "winter"] as const).map((k) => <li key={k}><b className="capitalize">{k}:</b> {advice.seasons![k]}</li>)}</ul>
+        </>
+      )}
+      <h2 className="mt-3 font-bold">New crops ranked for this field</h2>
+      <table className="w-full border-collapse">
+        <thead><tr className="border-b text-left"><th>Species</th><th>Viability</th><th>Soil &amp; climate</th><th>Margin USD/ha</th><th>Payback</th><th>Main limit</th></tr></thead>
+        <tbody>
+          {fits.filter((f) => f.species.status === "new").slice(0, 6).map((f) => (
+            <tr key={f.species.id} className="border-b align-top"><td>{f.species.name}</td><td>{f.viability}</td><td>{f.agro}</td><td>{f.economy.margin.toLocaleString("en-US")}</td><td>{f.economy.paybackYears ?? "—"} yr</td><td>{f.limits[0] ?? "—"}</td></tr>
+          ))}
+        </tbody>
+      </table>
       <h2 className="mt-3 font-bold">What you can do</h2>
       <ul>{options.map((o) => <li key={o.id}>{o.emoji} <b>{o.title}</b> ({Math.round(o.fit * 100)}% fit): {o.headline}</li>)}</ul>
       {advice?.askExpert.length ? <><h2 className="mt-3 font-bold">Check with a local expert</h2><ul>{advice.askExpert.map((a) => <li key={a}>• {a}</li>)}</ul></> : null}

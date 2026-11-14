@@ -14,7 +14,7 @@ const ruido = (r: () => number) => (r() + r() + r() - 1.5) * 2;
 
 export function diarioSimulado(lat: number, lon: number): DiarioClima {
   const r = rng(Math.round(Math.abs(lat * 100 + lon * 10) * 1000) >>> 0);
-  const d: DiarioClima = { fechas: [], tmin: [], tmax: [], lluvia: [], viento: [], humedadRaiz: [], humedadSup: [] };
+  const d: DiarioClima = { fechas: [], tmin: [], tmax: [], lluvia: [], viento: [], humedadRaiz: [], humedadSup: [], humedadRel: [], presion: [], uv: [] };
   const fin = new Date().getUTCFullYear() - 1;
   for (let t = Date.UTC(fin - 19, 0, 1); t <= Date.UTC(fin, 11, 31); t += 86_400_000) {
     const f = new Date(t);
@@ -28,6 +28,9 @@ export function diarioSimulado(lat: number, lon: number): DiarioClima {
     d.viento.push(+(4 + 2.5 * verano + r() * 2.5).toFixed(1));
     d.humedadRaiz.push(+(0.42 - 0.12 * verano + r() * 0.04).toFixed(2));
     d.humedadSup.push(+(0.38 - 0.16 * verano + r() * 0.06).toFixed(2));
+    d.humedadRel!.push(Math.round(68 - 22 * verano + ruido(r) * 4));
+    d.presion!.push(+(97.6 + ruido(r) * 0.5).toFixed(2));
+    d.uv!.push(+(1 + 6.5 * verano + r()).toFixed(1));
   }
   return d;
 }
@@ -41,7 +44,8 @@ export function ndviSimulado() {
     const t = hoy - i * 16 * 86_400_000;
     const f = new Date(t);
     const dia = (t - Date.UTC(f.getUTCFullYear(), 0, 1)) / 86_400_000;
-    serie.push({ fecha: f.toISOString().slice(0, 10), ndvi: +(0.4 + 0.25 * Math.cos((2 * Math.PI * (dia - 30)) / 365)).toFixed(3) });
+    const ndvi = 0.4 + 0.25 * Math.cos((2 * Math.PI * (dia - 30)) / 365);
+    serie.push({ fecha: f.toISOString().slice(0, 10), ndvi: +ndvi.toFixed(3), evi: +(ndvi * 0.62).toFixed(3) });
   }
   return { ...resumenNdvi(serie), simulado: true };
 }
@@ -60,6 +64,9 @@ export function climaSimulado(): ClimaResumen {
       et0: +(3.5 + r() * 2.5).toFixed(1),
       horaMin: "06:00",
       pasado: i < 0,
+      humedad: Math.round(55 + ruido(r) * 8),
+      presion: Math.round(976 + ruido(r) * 5),
+      uv: +(6 + r() * 4).toFixed(1),
     });
   }
   return { simulado: true, elevacion: 225, dias };

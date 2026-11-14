@@ -1,56 +1,103 @@
-import type { ReactNode } from "react";
+"use client";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Nivel } from "@/lib/types";
+import { btnGhost } from "./styles";
 
-export const LEVEL_DOT: Record<Nivel, string> = { good: "bg-emerald-400", watch: "bg-amber-400", alert: "bg-rose-500" };
-export const LEVEL_TEXT: Record<Nivel, string> = { good: "text-emerald-300", watch: "text-amber-300", alert: "text-rose-300" };
-export const LEVEL_RING: Record<Nivel, string> = { good: "border-emerald-500/50", watch: "border-amber-500/50", alert: "border-rose-500/50" };
-const LEVEL_WORD: Record<Nivel, string> = { good: "Good", watch: "Watch", alert: "Alert" };
-
-export function Panel({ title, children, right, className = "" }: { title?: ReactNode; children: ReactNode; right?: ReactNode; className?: string }) {
+// ---------- Scroll-entry animation ----------
+export function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!("IntersectionObserver" in window)) {
+      el.classList.add("in");
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -6% 0px", threshold: 0.05 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   return (
-    <section className={`rounded-2xl border border-white/10 bg-slate-900/80 p-4 ${className}`}>
-      {(title || right) && (
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          {title && <h3 className="text-sm font-bold tracking-wide text-slate-100">{title}</h3>}
+    <div ref={ref} className={`reveal ${inView ? "in" : ""} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
+}
+
+// ---------- Cards ----------
+/** Feature card: 1px warm border, 24px padding, no shadows. */
+export function Card({ title, eyebrow, right, children, className = "", delay = 0, pad = true }: { title?: ReactNode; eyebrow?: ReactNode; right?: ReactNode; children: ReactNode; className?: string; delay?: number; pad?: boolean }) {
+  return (
+    <Reveal delay={delay} className={`rounded-2xl border border-line bg-surface ${pad ? "p-6" : ""} ${className}`}>
+      {(title || eyebrow || right) && (
+        <div className={`mb-4 flex flex-wrap items-start gap-2 ${pad ? "" : "px-6 pt-6"}`}>
+          <div className="min-w-0">
+            {eyebrow && <div className="mb-1 text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">{eyebrow}</div>}
+            {title && <h3 className="text-[15px] font-semibold tracking-tight text-ink">{title}</h3>}
+          </div>
           {right && <div className="ml-auto">{right}</div>}
         </div>
       )}
       {children}
-    </section>
+    </Reveal>
   );
 }
 
 export function Stat({ label, value, unit, hint }: { label: string; value: ReactNode; unit?: string; hint?: string }) {
   return (
-    <div className="rounded-xl bg-white/[0.04] p-3" title={hint}>
-      <div className="text-[11px] font-medium uppercase tracking-wide text-slate-400">{label}</div>
-      <div className="mt-0.5 text-2xl font-bold tabular-nums text-white">
+    <div className="rounded-xl border border-line bg-surface p-3" title={hint}>
+      <div className="text-[11px] font-medium text-muted">{label}</div>
+      <div className="mt-1 text-2xl font-semibold tracking-tight tabular-nums text-ink">
         {value}
-        {unit && <span className="ml-1 text-xs font-medium text-slate-400">{unit}</span>}
+        {unit && <span className="ml-1 text-xs font-normal text-muted">{unit}</span>}
       </div>
-      {hint && <div className="mt-0.5 text-[11px] leading-snug text-slate-500">{hint}</div>}
+      {hint && <div className="mt-0.5 text-[11px] leading-snug text-subtle">{hint}</div>}
     </div>
   );
 }
 
-export function LevelPill({ level, children }: { level: Nivel; children?: ReactNode }) {
+// ---------- Badges ----------
+export type Tone = "blue" | "green" | "amber" | "red" | "neutral";
+const TONE: Record<Tone, string> = {
+  blue: "bg-blue-bg text-blue-fg",
+  green: "bg-green-bg text-green-fg",
+  amber: "bg-amber-bg text-amber-fg",
+  red: "bg-red-bg text-red-fg",
+  neutral: "bg-surface-2 text-ink-2",
+};
+export function Badge({ tone = "neutral", children, dot = false, title }: { tone?: Tone; children: ReactNode; dot?: boolean; title?: string }) {
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2 py-0.5 text-xs font-semibold ${LEVEL_TEXT[level]}`}>
-      <span className={`h-2 w-2 rounded-full ${LEVEL_DOT[level]}`} />
-      {children ?? LEVEL_WORD[level]}
+    <span title={title} className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-medium ${TONE[tone]}`}>
+      {dot && <span className="h-1.5 w-1.5 rounded-full bg-current" />}
+      {children}
     </span>
   );
 }
+export const LEVEL_TONE: Record<Nivel, Tone> = { good: "green", watch: "amber", alert: "red" };
+const LEVEL_WORD: Record<Nivel, string> = { good: "Good", watch: "Watch", alert: "Alert" };
+export function LevelPill({ level, children }: { level: Nivel; children?: ReactNode }) {
+  return <Badge tone={LEVEL_TONE[level]} dot>{children ?? LEVEL_WORD[level]}</Badge>;
+}
+export const LEVEL_BAR: Record<Nivel, string> = { good: "bg-green-fg", watch: "bg-amber-fg", alert: "bg-red-fg" };
 
 export function Note({ kind = "info", children }: { kind?: "info" | "warn"; children: ReactNode }) {
-  const s = kind === "warn" ? "border-amber-500/30 bg-amber-500/10 text-amber-100" : "border-sky-500/20 bg-sky-500/10 text-sky-100";
-  return <div className={`rounded-xl border px-3 py-2 text-sm ${s}`}>{children}</div>;
+  const s = kind === "warn" ? "bg-amber-bg text-amber-fg" : "bg-blue-bg text-blue-fg";
+  return <div className={`rounded-xl px-3 py-2 text-sm ${s}`}>{children}</div>;
 }
 
 export function Spinner({ text = "Loading…" }: { text?: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-dashed border-white/15 p-5 text-sm text-slate-400">
-      <span className="h-4 w-4 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
+    <div className="flex items-center gap-3 rounded-xl border border-dashed border-line-strong p-5 text-sm text-muted">
+      <span className="h-4 w-4 animate-spin rounded-full border-2 border-ink border-t-transparent" />
       {text}
     </div>
   );
@@ -58,12 +105,58 @@ export function Spinner({ text = "Loading…" }: { text?: string }) {
 
 export function DemoBadge({ show }: { show?: boolean }) {
   if (!show) return null;
-  return <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[11px] font-semibold text-amber-300" title="Running with sample data (offline development mode)">Sample data</span>;
+  return <Badge tone="amber" title="Running with sample data (offline development mode)">Sample data</Badge>;
 }
 
-export const btnPrimary =
-  "inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40";
-export const btnGhost =
-  "inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40";
-export const input =
-  "w-full rounded-lg border border-white/10 bg-slate-950/60 px-2.5 py-1.5 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/20";
+export function Meter({ value, level, className = "" }: { value: number; level?: Nivel; className?: string }) {
+  return (
+    <div className={`h-1.5 overflow-hidden rounded-full bg-surface-2 ${className}`}>
+      <div className={`h-full rounded-full ${level ? LEVEL_BAR[level] : "bg-ink"}`} style={{ width: `${Math.max(2, Math.min(100, value))}%` }} />
+    </div>
+  );
+}
+
+// ---------- Theme ----------
+export function ThemeToggle() {
+  const [theme, setTheme] = useState<string | null>(null);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- theme only known in the browser
+  useEffect(() => setTheme(document.documentElement.dataset.theme ?? "light"), []);
+  const toggle = () => {
+    const t = theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = t;
+    try {
+      localStorage.setItem("growvia-theme", t);
+    } catch {
+      /* private mode */
+    }
+    setTheme(t);
+  };
+  return (
+    <button className={`${btnGhost} !px-2.5`} onClick={toggle} aria-label="Toggle dark mode" title="Toggle dark mode">
+      {theme === "dark" ? "☀" : "☾"}
+    </button>
+  );
+}
+
+// ---------- Keyboard shortcuts ----------
+export function useHotkeys(map: Record<string, () => void>) {
+  const ref = useRef(map);
+  useEffect(() => {
+    ref.current = map;
+  });
+  useEffect(() => {
+    const on = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (e.metaKey || e.ctrlKey || e.altKey || !t || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable) return;
+      const fn = ref.current[e.key.toLowerCase()];
+      if (fn) {
+        e.preventDefault();
+        fn();
+      }
+    };
+    window.addEventListener("keydown", on);
+    return () => window.removeEventListener("keydown", on);
+  }, []);
+}
+
+export { btnGhost, btnPrimary, input, label } from "./styles";

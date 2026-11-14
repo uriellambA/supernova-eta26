@@ -16,4 +16,6 @@ export const AdviceSchema = z.object({
   askExpert: z.array(z.string()).catch([]),
   voice: z.string(),
   confidence: z.enum(["high", "medium", "low"]).catch("medium"),
+  seasons: z.object({ spring: z.string(), summer: z.string(), autumn: z.string(), winter: z.string() }).optional().catch(undefined),
+  newCrops: z.array(z.object({ id: z.string(), why: z.string() })).optional().catch(undefined),
 });
