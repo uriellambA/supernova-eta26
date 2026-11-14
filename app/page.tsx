@@ -157,7 +157,7 @@ export default function Landing() {
                 <div className="mt-4 flex flex-wrap gap-1.5"><Badge tone="red" dot>Late frost</Badge><Badge tone="amber" dot>Strong wind</Badge><Badge tone="green" dot>Snowpack</Badge><Badge tone="blue" dot>El Niño</Badge><Badge>Volcanic ash</Badge></div>
               </Feature>
               <Feature className="md:col-span-3 lg:col-span-4" title="Farm register" text="Plots, crops season by season, water, soil test and economy. Stays on your device; export it anytime." />
-              <Feature className="md:col-span-3 lg:col-span-4" title="3D terrain & hardware" delay={70} text="See slopes and cold low spots in 3D, and add a low-cost Field Node for soil, salinity and air readings." />
+              <Feature className="md:col-span-3 lg:col-span-4" title="3D terrain & weather map" delay={70} text="See slopes and cold low spots in 3D, and layer temperature, wind, UV, humidity and rain over your valley." />
               <Feature className="md:col-span-6 lg:col-span-4" title="Voice, offline & share" delay={140} text="Speak your notes, listen to the advice, use it without signal, and share a PDF or WhatsApp summary." />
             </div>
           </div>

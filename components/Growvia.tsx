@@ -25,7 +25,7 @@ import {
 import { AIPanel } from "./AIPanel";
 import { LineChart, ndviPoints } from "./Charts";
 import { FiltersPanel, WeatherLegend, WeatherPicker } from "./FiltersPanel";
-import { HardwareModal } from "./HardwareModal";
+import { Icon } from "./icons";
 import type { OverlayId } from "./MapView";
 import { Contingency, NewCrops, Rotations, Viability, YearPlan } from "./PlanSections";
 import { SessionsModal } from "./SessionsModal";
@@ -42,11 +42,11 @@ const MapView = dynamic(() => import("./MapView"), { ssr: false, loading: () => 
 
 // The dashboard is split in 5 tabs so the farmer sees one topic at a time.
 const TABS = [
-  { id: "home", label: "Overview", icon: "🏠", subs: [] },
-  { id: "plan", label: "Crop rotation", icon: "🔄", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "builder", label: "Build your own" }, { id: "seasons", label: "Year plan" }, { id: "method", label: "How it's scored" }] },
-  { id: "crops", label: "Crops & economy", icon: "🌱", subs: [{ id: "crops", label: "New crops" }, { id: "viability", label: "Viability" }, { id: "options", label: "What you can do" }] },
-  { id: "weather", label: "Weather & risks", icon: "🌦️", subs: [{ id: "forecast", label: "Forecast" }, { id: "risks", label: "Contingencies" }, { id: "frost", label: "Frost" }, { id: "climate", label: "Climate record" }] },
-  { id: "soil", label: "Soil & water", icon: "💧", subs: [{ id: "soil", label: "Soil" }, { id: "water", label: "Irrigation" }] },
+  { id: "home", label: "Overview", icon: "home", blurb: "", tone: "", subs: [] },
+  { id: "plan", label: "Crop rotation", icon: "rotation", blurb: "Compare, design and plan the rotation of your field", tone: "bg-green-bg text-green-fg", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "builder", label: "Build your own" }, { id: "seasons", label: "Year plan" }, { id: "method", label: "How it's scored" }] },
+  { id: "crops", label: "Crops & economy", icon: "sprout", blurb: "New species, costs, margins and what you can do", tone: "bg-amber-bg text-amber-fg", subs: [{ id: "crops", label: "New crops" }, { id: "viability", label: "Viability" }, { id: "options", label: "What you can do" }] },
+  { id: "weather", label: "Weather & risks", icon: "weather", blurb: "Forecast, frost and El Niño / La Niña plans", tone: "bg-blue-bg text-blue-fg", subs: [{ id: "forecast", label: "Forecast" }, { id: "risks", label: "Contingencies" }, { id: "frost", label: "Frost" }, { id: "climate", label: "Climate record" }] },
+  { id: "soil", label: "Soil & water", icon: "drop", blurb: "Soil health, salinity and irrigation needs", tone: "bg-red-bg text-red-fg", subs: [{ id: "soil", label: "Soil" }, { id: "water", label: "Irrigation" }] },
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 
@@ -70,7 +70,6 @@ export function Growvia() {
   }, []);
   const [is3D, setIs3D] = useState(false);
   const [overlays, setOverlays] = useState<Set<OverlayId>>(new Set());
-  const [hw, setHw] = useState(false);
   const [advice, setAdvice] = useState<AdvisorResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -122,7 +121,6 @@ export function Growvia() {
   const setFarm = useCallback((f: FarmProfile) => { setFarmState(f); guardar("farm", f); setAdvice(null); }, []);
   const setPri = useCallback((p: Priorities) => { setPriState(p); guardar("priorities", p); setAdvice(null); }, []);
   const setCustom = useCallback((c: Strategy | null) => { setCustomState(c); guardar("customRotation", c); setAdvice(null); }, []);
-  const addReading = (r: GroundReading) => { const n = [...readings, r]; setReadings(n); guardar("readings", n); };
 
   const pick = useCallback((lat: number, lon: number) => {
     setField({ lat, lon, name: "My field" });
@@ -176,7 +174,6 @@ export function Growvia() {
   useHotkeys({
     a: () => { go("home"); analyze(); },
     d: () => { go("home"); setIs3D((v) => !v); },
-    h: () => setHw(true),
     r: () => router.push("/register"),
     ...Object.fromEntries(TABS.map((t, i) => [String(i + 1), () => go(t.id)])),
   });
@@ -201,7 +198,7 @@ export function Growvia() {
               <Link href="/register" className="rounded-lg px-2 py-1 hover:text-ink">Register</Link>
             </nav>
             <div className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-line bg-surface px-3 py-1.5 text-sm sm:max-w-md">
-              <span className="text-muted">📍</span>
+              <Icon name="pin" className="h-4 w-4 shrink-0 text-muted" />
               <select className="min-w-0 flex-1 bg-transparent font-medium focus:outline-none" aria-label="Satellite map"
                 value={register && field.lat === register.lat && field.lon === register.lon ? "register" : site.id}
                 onChange={(e) => {
@@ -211,14 +208,13 @@ export function Growvia() {
                   }
                   chooseSite(e.target.value);
                 }}>
-                {register && <option value="register">🏠 {register.farmName || "My farm"}</option>}
+                {register && <option value="register">{register.farmName || "My farm"} · my farm</option>}
                 {SITES.map((x) => <option key={x.id} value={x.id}>{x.name} · {x.region.split(",")[0]}</option>)}
               </select>
               <DemoBadge show={simulated} />
             </div>
             <div className="flex gap-2">
               <button className={`${btnGhost} ${is3D ? "!border-ink" : ""}`} onClick={() => { go("home"); setIs3D(!is3D); }} aria-pressed={is3D}>3D View <kbd>D</kbd></button>
-              <button className={btnGhost} onClick={() => setHw(true)}>Hardware <kbd>H</kbd></button>
               <LangToggle />
               <ThemeToggle />
             </div>
@@ -227,7 +223,7 @@ export function Growvia() {
             {TABS.map((t, i) => (
               <button key={t.id} onClick={() => go(t.id)} aria-pressed={tab === t.id}
                 className={`flex shrink-0 items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition ${tab === t.id ? "bg-ink text-canvas" : "text-ink-2 hover:bg-surface-2"}`}>
-                <span>{t.icon}</span>{t.label}{t.id === "plan" && tab !== "plan" && <span className="h-1.5 w-1.5 rounded-full bg-green-fg" aria-hidden />}<kbd className="hidden lg:inline-flex">{i + 1}</kbd>
+                <Icon name={t.icon} />{t.label}{t.id === "plan" && tab !== "plan" && <span className="h-1.5 w-1.5 rounded-full bg-green-fg" aria-hidden />}<kbd className="hidden lg:inline-flex">{i + 1}</kbd>
               </button>
             ))}
           </nav>
@@ -330,13 +326,26 @@ export function Growvia() {
                 ) : <TileEmpty st={climate.estado} />}
               </Tile>
 
-              <Reveal className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 md:col-span-6 lg:col-span-12 lg:grid-cols-4">
-                {TABS.slice(1).map((t) => (
-                  <button key={t.id} onClick={() => go(t.id)} className="group bg-surface p-5 text-left transition hover:bg-surface-2">
-                    <div className="text-xl">{t.icon}</div>
-                    <div className="mt-2 font-medium">{t.label} <span className="text-muted transition group-hover:translate-x-0.5">→</span></div>
-                    <div className="text-xs text-muted">{t.subs.map((x) => x.label).join(" · ")}</div>
-                  </button>
+              <Reveal className="grid gap-3 sm:grid-cols-2 md:col-span-6 lg:col-span-12 lg:grid-cols-4">
+                {TABS.slice(1).map((t, i) => (
+                  <div key={t.id} role="link" tabIndex={0} onClick={() => go(t.id)} onKeyDown={(e) => e.key === "Enter" && go(t.id)}
+                    className="group flex cursor-pointer flex-col rounded-2xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:border-ink">
+                    <div className="flex items-start justify-between">
+                      <span className={`grid h-11 w-11 place-items-center rounded-xl ${t.tone}`}><Icon name={t.icon} className="h-5 w-5" /></span>
+                      <span className="flex items-center gap-2 text-subtle">
+                        <kbd className="hidden lg:inline-flex">{i + 2}</kbd>
+                        <Icon name="arrow" className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:text-ink" />
+                      </span>
+                    </div>
+                    <div className="mt-4 font-medium">{t.label}</div>
+                    <p className="mt-1 text-xs text-muted">{t.blurb}</p>
+                    <div className="mt-4 flex flex-wrap gap-1.5 border-t border-line pt-3">
+                      {t.subs.map((x) => (
+                        <button key={x.id} onClick={(e) => { e.stopPropagation(); go(t.id, x.id); }}
+                          className="rounded-full border border-line px-2.5 py-1 text-[11px] text-ink-2 transition hover:border-ink hover:text-ink">{x.label}</button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </Reveal>
             </div>
@@ -372,11 +381,10 @@ export function Growvia() {
           )}
         </main>
         <footer className="mx-auto w-full max-w-[1500px] px-6 pb-6 text-[11px] text-subtle">
-          {APP_NAME} is a decision-support tool. It does not replace your judgment or local agronomic advice. · Shortcuts: <kbd>A</kbd> analyze · <kbd>D</kbd> 3D · <kbd>H</kbd> hardware · <kbd>R</kbd> register · <kbd>1</kbd>–<kbd>5</kbd> tabs
+          {APP_NAME} is a decision-support tool. It does not replace your judgment or local agronomic advice. · Shortcuts: <kbd>A</kbd> analyze · <kbd>D</kbd> 3D · <kbd>R</kbd> register · <kbd>1</kbd>–<kbd>5</kbd> tabs
         </footer>
       </div>
 
-      <HardwareModal open={hw} onClose={() => setHw(false)} readings={readings} addReading={addReading} />
       <SessionsModal open={sessionsOpen} onClose={() => setSessionsOpen(false)} sessions={sessions} setSessions={setSessions} />
     </>
   );

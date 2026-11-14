@@ -102,6 +102,13 @@ export const SITES: SiteConfig[] = [
 ];
 
 export const DEFAULT_SITE_ID = "los-antiguos";
+/** Area the satellite maps may show for a site: its town and farmland, plus a small margin (never the whole country). */
+export function mapLimits(site: SiteConfig): [[number, number], [number, number]] {
+  const [[w, so], [e, n]] = site.bounds;
+  const px = (e - w) * 0.12, py = (n - so) * 0.12;
+  return [[w - px, so - py], [e + px, n + py]];
+}
+
 export const siteById = (id: string | null | undefined) => SITES.find((s) => s.id === id) ?? SITES[0];
 
 /** Closest supported site to a point (used by the server to pick references, time zone and elevation). */

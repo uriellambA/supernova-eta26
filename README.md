@@ -26,7 +26,7 @@ Growvia es una herramienta de apoyo a la decisión (en inglés) para productores
 | Clima y riesgos | Pronóstico · Contingencias · Heladas · Registro climático |
 | Suelo y agua | Suelo · Riego |
 
-Atajos: `A` analizar con el SI · `D` vista 3D · `H` hardware · `R` registro · `S` guardar registro.
+Atajos: `A` analizar con el SI · `D` vista 3D · `R` registro · `S` guardar registro.
 
 ### Filtro de riesgo de salinidad (SMAP)
 En el mapa, el filtro **Salinity risk · SMAP** pinta el riesgo de acumulación de sales a partir de la humedad del suelo del satélite **SMAP** (primeros 5 cm, 9 km). Las capas se toman de GIBS y se decodifican con su paleta oficial. En la pestaña Suelo, `/api/smap` lee el valor de SMAP en el punto (8 semanas) y lo suma a la estimación de salinidad.
@@ -40,7 +40,7 @@ Ojo: **SMAP no mide sal**, mide humedad. En un valle árido, una superficie que 
 | Gobernador Gregores | Patagonia, valle del río Chico | forraje, hortalizas, huerto | [`docs/estudio-suelo-gobernador-gregores.md`](docs/estudio-suelo-gobernador-gregores.md) |
 | Pampa Ondulada | Pampa húmeda, secano (Pergamino) | granos, forraje | [`docs/estudio-suelo-pampa-ondulada.md`](docs/estudio-suelo-pampa-ondulada.md) |
 
-Cada sitio está en `config/sites.ts`: centro, límites del mapa, altura, cuenca de nieve (si hay), riego, suelo de referencia, sistemas típicos y contexto regional. La Pampa Ondulada suma cultivos (soja, maíz, trigo, cebada, girasol), rotaciones de granos y especies propias (colza, garbanzo, sorgo, pecán), además de contingencias de anegamiento y sequía por La Niña. En el panel se elige el sitio arriba, y al registrar la chacra lo primero es elegir la ubicación. Ya no hay chacras predefinidas.
+Cada sitio está en `config/sites.ts`: centro, límites del mapa (los mapas satelitales solo muestran el pueblo y su zona rural, no se puede alejar a toda la Argentina), altura, cuenca de nieve (si hay), riego, suelo de referencia, sistemas típicos y contexto regional. La Pampa Ondulada suma cultivos (soja, maíz, trigo, cebada, girasol), rotaciones de granos y especies propias (colza, garbanzo, sorgo, pecán), además de contingencias de anegamiento y sequía por La Niña. En el panel se elige el sitio arriba, y al registrar la chacra lo primero es elegir la ubicación. Ya no hay chacras predefinidas.
 
 ### Clima en el mapa
 Debajo de los filtros satelitales, **Weather now** pinta sobre el mapa la temperatura, el UV, el viento (con flechas), la humedad, la lluvia, la presión y las nubes. Usa las condiciones actuales de Open-Meteo en una grilla de 7×5 puntos sobre el sitio (`/api/weather-grid`).
@@ -74,7 +74,6 @@ Mientras esas imágenes no existan, la página arma la imagen satelital real en 
 - **Viabilidad:** rendimiento, precio, margen, inversión y años de recupero, ajustados por la aptitud del lote. Incluye un contexto regional.
 - **Contingencias:** heladas tardías, viento, sequía o poca nieve, calor/UV, granizo y ceniza volcánica, con un plan de antes, durante y después. Suma **El Niño / La Niña** (índice ONI en vivo) y qué significó cada fase en ese campo en los últimos 20 años.
 - **SI:** también usa el registro, las especies, la salud del suelo y la fase del Pacífico. Devuelve un plan por estación y hasta 3 cultivos nuevos.
-- **Hardware:** el Field Node suma sensores de salinidad (EC), aire (temperatura, humedad, presión) y UV.
 
 En la interfaz no aparecen las marcas de las fuentes de datos, para que se vea como un producto real. Las fuentes están en [`docs/estudio-suelo-los-antiguos.md`](docs/estudio-suelo-los-antiguos.md): NASA POWER (temperatura, lluvia, viento, humedad, presión, UV, humedad del suelo), MODIS MOD13Q1 (NDVI/EVI) y capas GIBS, más SoilGrids, Open-Meteo y el índice ONI de NOAA. **Hay que nombrarlas en el pitch y en la página del proyecto para los jueces.**
 
@@ -93,6 +92,13 @@ MOCK_DATA=1 npm run dev
 ```
 
 ## 🧪 Estudio de suelo avanzado (un comando)
+**Todas las ciudades de una vez** (centro + 4 puntos por ciudad, cada una con su sistema y riego):
+```bash
+npm run soil-study:all
+```
+Genera una carpeta por ciudad en `docs/soil-study/<sitio>/` y un resumen comparativo en `docs/soil-study/summary.md` y `summary.csv`. Si una ciudad falla (por ejemplo, sin internet), sigue con las demás. Acepta las mismas opciones, por ejemplo `npm run soil-study:all -- --offline` o `-- --grid 3`.
+
+Una sola ciudad:
 ```bash
 npm run soil-study
 ```
@@ -145,6 +151,7 @@ app/page.tsx           introducción · app/app: panel · app/register: registro
 app/api/*              climate, vegetation, forecast, snow, soil, enso, farm (SI), advisor (SI)
 components/            Growvia (panel bento), PlanSections, Sections, RegisterForm, landing/*, ui
 scripts/soil-study.ts  comando de estudio de suelo avanzado
+scripts/soil-study-all.ts  estudio de suelo de todas las ciudades de una vez + resumen
 ```
 
 ## Pendientes

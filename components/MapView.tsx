@@ -2,6 +2,7 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl, { type Map as MLMap, type Marker } from "maplibre-gl";
 import { useEffect, useRef } from "react";
+import { mapLimits } from "@/config/sites";
 import type { SiteConfig } from "@/lib/types";
 import { WEATHER_VARS, type WeatherGrid, type WeatherVarId } from "@/lib/weathergrid";
 
@@ -109,6 +110,7 @@ export default function MapView({
       container: box.current,
       center: [field.lon, field.lat],
       zoom: site.zoom,
+      maxBounds: mapLimits(site),
       maxPitch: 75,
       attributionControl: { compact: true },
       style: {
@@ -152,8 +154,11 @@ export default function MapView({
   useEffect(() => {
     const m = map.current;
     if (!m) return;
+    // lift the old limit, fly to the new valley, then lock the view to its town and farmland
+    m.setMaxBounds(null);
     m.flyTo({ center: site.center, zoom: site.zoom, duration: 1200 });
-  }, [site.id, site.center, site.zoom]);
+    m.once("moveend", () => m.setMaxBounds(mapLimits(site)));
+  }, [site]);
 
   // Weather overlay (image source over the site bounds)
   useEffect(() => {

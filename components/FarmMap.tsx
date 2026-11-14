@@ -8,6 +8,8 @@ const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services";
 type Props = {
   lat: number;
   lon: number;
+  /** [[west, south], [east, north]]: the map cannot leave this area (town + farmland of the chosen site) */
+  limits: [[number, number], [number, number]];
   boundary: [number, number][];
   drawing: boolean;
   onPick: (lat: number, lon: number) => void;
@@ -24,7 +26,7 @@ function geo(boundary: [number, number][], drawing: boolean) {
 }
 
 /** Satellite map with street names to place the farm and draw its limit (click to add corners). */
-export default function FarmMap({ lat, lon, boundary, drawing, onPick, onAddPoint, onFinish }: Props) {
+export default function FarmMap({ lat, lon, limits, boundary, drawing, onPick, onAddPoint, onFinish }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<MLMap | null>(null);
   const marker = useRef<Marker | null>(null);
@@ -39,6 +41,7 @@ export default function FarmMap({ lat, lon, boundary, drawing, onPick, onAddPoin
       container: box.current,
       center: [lon, lat],
       zoom: 15.5,
+      maxBounds: limits,
       doubleClickZoom: false,
       attributionControl: { compact: true },
       style: {
@@ -85,6 +88,19 @@ export default function FarmMap({ lat, lon, boundary, drawing, onPick, onAddPoin
     return () => m.remove();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- create once
   }, []);
+
+  // Another site chosen: move the allowed area
+  const area = useRef(limits.flat().join());
+  useEffect(() => {
+    const m = map.current;
+    const key = limits.flat().join();
+    if (!m || area.current === key) return;
+    area.current = key;
+    m.setMaxBounds(null);
+    m.jumpTo({ center: [lon, lat], zoom: 13 });
+    m.setMaxBounds(limits);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only when the area changes
+  }, [limits[0][0], limits[0][1], limits[1][0], limits[1][1]]);
 
   // Move marker (and fly there when far away, e.g. after an address search)
   useEffect(() => {

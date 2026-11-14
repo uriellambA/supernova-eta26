@@ -7,7 +7,7 @@ import { LangToggle } from "@/components/Translator";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { APP_NAME } from "@/config/app";
 import { CROPS } from "@/config/crops";
-import { SITES } from "@/config/sites";
+import { SITES, mapLimits, siteById } from "@/config/sites";
 import { SPECIES } from "@/config/species";
 import { MONTHS, SEASONS } from "@/lib/agro";
 import { emptyRegister, newPlot, polygonStats, profileFromRegister } from "@/lib/register";
@@ -220,7 +220,7 @@ export function RegisterForm() {
                 {(r.boundary?.length ?? 0) > 0 && <button className="text-xs text-red-fg hover:underline" onClick={() => setR((x) => ({ ...x, boundary: null, boundaryHa: null }))}>Clear limit</button>}
               </div>
               <div className="h-[380px]">
-                <FarmMap lat={r.lat} lon={r.lon} boundary={r.boundary ?? []} drawing={drawing}
+                <FarmMap lat={r.lat} lon={r.lon} limits={mapLimits(siteById(r.siteId))} boundary={r.boundary ?? []} drawing={drawing}
                   onPick={(lat, lon) => setR((x) => ({ ...x, lat, lon }))}
                   onAddPoint={(pt) => setR((x) => ({ ...x, boundary: [...(x.boundary ?? []), pt] }))}
                   onFinish={finishLimit} />

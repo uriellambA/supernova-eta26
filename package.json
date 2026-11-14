@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "soil-study": "tsx scripts/soil-study.ts",
+    "soil-study:all": "tsx scripts/soil-study-all.ts",
     "landing-images": "tsx scripts/landing-images.ts",
     "clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\""
   },
