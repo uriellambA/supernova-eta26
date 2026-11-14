@@ -236,7 +236,7 @@ kbd {
 }
 
 /* ---------- Pachamama (Growwy's avatar) ---------- */
-.pm { overflow: visible; }
+.pm { overflow: hidden; }
 .pm .pm-breathe { transform-box: view-box; transform-origin: 386px 1327px; animation: pm-breathe 5s ease-in-out infinite; }
 .pm .pm-glow { transform-box: fill-box; transform-origin: center; animation: pm-glow 5s ease-in-out infinite; }
 .pm .pm-lid { transform-box: fill-box; transform-origin: 50% 0%; transform: scaleY(0); animation: pm-blink 5.2s infinite; }

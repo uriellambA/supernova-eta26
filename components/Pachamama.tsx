@@ -8,7 +8,7 @@ import { isSpeaking, voiceLevel } from "@/lib/voz";
 // Coordinates below are pixels of the original illustration (773 × 1327).
 
 const W = 773, H = 1327;
-const LEAVES_AT = { x: 87, y: 129, w: 172, h: 153 };
+const LEAVES_AT = { x: 89, y: 131, w: 168, h: 145 };
 const LEAVES = [
   { x: 141, y: 131, w: 52, h: 43, d: 0 },
   { x: 219, y: 155, w: 38, h: 50, d: 0.7 },
@@ -22,11 +22,11 @@ const EYES = [
   { x: 392, y: 154, rx: 16, ry: 8.5, rot: -14, skin: "#985728" },
 ];
 const VIEW = {
-  bust: "70 70 520 470", // head, shoulders, raised fist and leaves (for the dashboard card)
+  bust: "100 0 460 520", // headdress to waist, raised fist and leaves (for the dashboard card)
   full: `0 0 ${W} ${H}`,
 };
 
-export function Pachamama({ state = "idle", variant = "bust", className = "" }: { state?: "idle" | "thinking" | "speaking"; variant?: "bust" | "full"; className?: string }) {
+export function Pachamama({ state = "idle", variant = "bust", fill = false, className = "" }: { state?: "idle" | "thinking" | "speaking"; variant?: "bust" | "full"; /** cover the whole box (crops the sides), anchored at the bottom */ fill?: boolean; className?: string }) {
   const svg = useRef<SVGSVGElement>(null);
   const mouth = useRef<SVGEllipseElement>(null);
   const jaw = useRef<SVGImageElement>(null);
@@ -54,7 +54,7 @@ export function Pachamama({ state = "idle", variant = "bust", className = "" }: 
 
   const id = `pm-${variant}`;
   return (
-    <svg ref={svg} viewBox={VIEW[variant]} className={`pm ${className}`} data-state={state} role="img" aria-label="Pachamama, Growwy's guide">
+    <svg ref={svg} viewBox={VIEW[variant]} preserveAspectRatio={fill ? "xMidYMax slice" : undefined} className={`pm ${className}`} data-state={state} role="img" aria-label="Pachamama, Growwy's guide">
       <defs>
         <radialGradient id={`${id}-glow`} cx="50%" cy="50%" r="50%">
           <stop offset="0" stopColor="#d9a441" stopOpacity="0.5" />
@@ -76,7 +76,7 @@ export function Pachamama({ state = "idle", variant = "bust", className = "" }: 
         ))}
       </defs>
 
-      <circle cx="350" cy={variant === "full" ? 420 : 290} r={variant === "full" ? 380 : 260} fill={`url(#${id}-glow)`} className="pm-glow" />
+      <circle cx="350" cy={variant === "full" ? 420 : 260} r={variant === "full" ? 380 : 240} fill={`url(#${id}-glow)`} className="pm-glow" />
 
       <g className="pm-breathe">
         <image href="/brand/pachamama/body.webp" width={W} height={H} />
