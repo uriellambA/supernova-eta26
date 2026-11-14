@@ -7,6 +7,7 @@ import { SITES } from "@/config/sites";
 import { SPECIES } from "@/config/species";
 import { STRATEGIES } from "@/config/rotations";
 import { CompareSlider } from "@/components/landing/CompareSlider";
+import { HeroBackdrop } from "@/components/landing/HeroBackdrop";
 import { LangToggle } from "@/components/Translator";
 import { LandingKeys } from "@/components/landing/LandingKeys";
 import { btnGhost, btnPrimary } from "@/components/styles";
@@ -38,9 +39,10 @@ export default function Landing() {
 
       <main>
         {/* ---------- Hero ---------- */}
-        <section className="mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
-          <div className="grid items-center gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-7">
+        <section className="relative isolate overflow-hidden">
+          <HeroBackdrop />
+          <div className="mx-auto max-w-6xl px-4 pb-28 pt-14 sm:px-6 sm:pt-20">
+            <div className="max-w-3xl">
             <Reveal className="flex flex-wrap items-center gap-2">
               {SITES.map((x) => (
                 <Badge key={x.id} tone="green" dot title={x.region}>{x.name}</Badge>
@@ -62,7 +64,8 @@ export default function Landing() {
               <Link href="/app" className={`${btnPrimary} px-5 py-3`}>Compare rotations for my field <kbd>D</kbd></Link>
               <Link href="/register" className={`${btnGhost} px-5 py-3`}>Register your farm <kbd>R</kbd></Link>
             </Reveal>
-            <Reveal delay={280} className="mt-8 max-w-2xl rounded-2xl border border-line bg-surface p-6">
+            <p className="mt-4 text-xs uppercase tracking-[0.14em] text-muted">Guiding growers towards a better future</p>
+            <Reveal delay={280} className="mt-8 max-w-2xl rounded-2xl border border-line bg-surface/80 p-6 backdrop-blur-sm">
               <section id="about" aria-labelledby="about-title" className="scroll-mt-24">
                 <h2 id="about-title" className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">About us</h2>
                 <p className="mt-3 font-serif text-2xl leading-snug">We are high school students from Caleta Olivia taking part in the NASA Space Apps Challenge. We developed Growvia: the path to smarter farming.</p>
@@ -70,17 +73,10 @@ export default function Landing() {
               </section>
             </Reveal>
             </div>
-            <Reveal delay={120} className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
-              <figure className="relative overflow-hidden rounded-3xl border border-line">
-                <Image src="/brand/los-antiguos.jpg" alt="Road into Los Antiguos with Lake Buenos Aires and the snowy Andes behind" width={664} height={462} priority className="h-auto w-full" />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-3 pt-10 text-sm text-white">
-                  <div className="font-medium">Los Antiguos, Santa Cruz</div>
-                  <div className="text-xs text-white/80">Lake Buenos Aires and the Andes</div>
-                </figcaption>
-              </figure>
-              <p className="mt-3 text-center text-xs uppercase tracking-[0.14em] text-subtle">Guiding growers towards a better future</p>
-            </Reveal>
           </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
           <Reveal delay={300} className="mt-12">
             <CompareSlider />
           </Reveal>

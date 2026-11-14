@@ -141,6 +141,17 @@ kbd {
   color: color-mix(in srgb, var(--cta-ink) 75%, transparent);
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Scroll-entry animation for grid items */
 .reveal {
   opacity: 0;

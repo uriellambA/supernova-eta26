@@ -627,6 +627,12 @@ export const ES: Record<string, string> = {
   "Imagery, vegetation, land heat, snow, relief, salinity risk": "Imagen, vegetación, calor del suelo, nieve, relieve, riesgo de salinidad",
   "Light theme": "Tema claro", "Dark theme": "Tema oscuro", "Terra theme (logo colours)": "Tema tierra (colores del logo)", "{x} · switch to {x}": "{x} · cambiar a {x}", "Switch to {x}": "Cambiar a {x}",
   "average last frost": "última helada promedio",
+  // ---------- Hero photos ----------
+  "Lake Buenos Aires and the Andes, at the entrance of the town": "El lago Buenos Aires y la cordillera, a la entrada del pueblo",
+  "The turquoise waters of Lake Buenos Aires and the Andes on the way to Perito Moreno": "Las aguas turquesas del lago Buenos Aires y la cordillera, camino a Perito Moreno",
+  "Flower fields and poplar windbreaks in an irrigated Patagonian valley": "Campos de flores y cortinas de álamos en un valle patagónico regado",
+  "Maize next to a pasture in the rolling fields of Pergamino": "Maíz junto a una pastura en las lomas de Pergamino",
+  "Perito Moreno, Santa Cruz": "Perito Moreno, Santa Cruz", "Gobernador Gregores, Santa Cruz": "Gobernador Gregores, Santa Cruz", "Pampa Ondulada, Buenos Aires": "Pampa Ondulada, Buenos Aires",
   // ---------- About us ----------
   "About us": "Sobre nosotros",
   "We are high school students from Caleta Olivia taking part in the NASA Space Apps Challenge. We developed Growvia: the path to smarter farming": "Somos alumnos de secundaria de la localidad de Caleta Olivia para el NASA Space Apps Challenge, nosotros desarrollamos Growvia: el camino hacia una agricultura más inteligente",
