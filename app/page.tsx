@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Brand } from "@/components/Brand";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { APP_NAME } from "@/config/app";
@@ -19,7 +20,7 @@ export default function Landing() {
       <LandingKeys />
       <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3 sm:px-6">
-          <span className="font-serif text-2xl leading-none">{APP_NAME}</span>
+          <Brand />
           <nav className="hidden gap-1 text-sm text-muted md:flex">
             <a href="#how" className="rounded-lg px-2 py-1 hover:text-ink">How it works</a>
             <a href="#features" className="rounded-lg px-2 py-1 hover:text-ink">Features</a>
@@ -36,25 +37,35 @@ export default function Landing() {
       <main>
         {/* ---------- Hero ---------- */}
         <section className="mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
-          <Reveal className="flex flex-wrap gap-2">
-            <Badge tone="green" dot>Los Antiguos · Santa Cruz, Patagonia</Badge>
-            <Badge tone="blue">Decision support with AI</Badge>
-          </Reveal>
-          <Reveal delay={80}>
-            <h1 className="mt-6 max-w-4xl font-serif text-5xl leading-[0.98] tracking-tight sm:text-7xl">
-              A better crop rotation for your soil, <em className="text-muted">every season.</em>
-            </h1>
-          </Reveal>
-          <Reveal delay={160}>
-            <p className="mt-6 max-w-2xl text-lg text-ink-2">
-              {APP_NAME} compares your current crop rotation with better alternatives for your exact field — using 20 years of climate,
-              satellite vegetation and soil data — explains why, and shows what you could grow when the cherry and strawberry season is over.
-            </p>
-          </Reveal>
-          <Reveal delay={220} className="mt-8 flex flex-wrap gap-3">
-            <Link href="/app" className={`${btnPrimary} px-5 py-3`}>Compare rotations for my field <kbd>D</kbd></Link>
-            <Link href="/register" className={`${btnGhost} px-5 py-3`}>Register your farm <kbd>R</kbd></Link>
-          </Reveal>
+          <div className="grid items-center gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+            <Reveal className="flex flex-wrap gap-2">
+              <Badge tone="green" dot>Los Antiguos · Santa Cruz, Patagonia</Badge>
+              <Badge tone="blue">Decision support with AI</Badge>
+            </Reveal>
+            <Reveal delay={80}>
+              <h1 className="mt-6 max-w-4xl font-serif text-5xl leading-[0.98] tracking-tight sm:text-6xl xl:text-7xl">
+                A better crop rotation for your soil, <em className="text-muted">every season.</em>
+              </h1>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="mt-6 max-w-2xl text-lg text-ink-2">
+                {APP_NAME} compares your current crop rotation with better alternatives for your exact field — using 20 years of climate,
+                satellite vegetation and soil data — explains why, and shows what you could grow when the cherry and strawberry season is over.
+              </p>
+            </Reveal>
+            <Reveal delay={220} className="mt-8 flex flex-wrap gap-3">
+              <Link href="/app" className={`${btnPrimary} px-5 py-3`}>Compare rotations for my field <kbd>D</kbd></Link>
+              <Link href="/register" className={`${btnGhost} px-5 py-3`}>Register your farm <kbd>R</kbd></Link>
+            </Reveal>
+            </div>
+            <Reveal delay={120} className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
+              <figure className="overflow-hidden rounded-3xl border border-line bg-[#f3efe3]">
+                <Image src="/brand/growvia-seal.jpg" alt="Growvia logo: a hand print with a satellite in the palm — Guiding growers towards a better future" width={900} height={964} priority className="h-auto w-full" />
+              </figure>
+              <p className="mt-3 text-center text-xs uppercase tracking-[0.14em] text-subtle">Guiding growers towards a better future</p>
+            </Reveal>
+          </div>
           <Reveal delay={300} className="mt-12">
             <CompareSlider />
           </Reveal>
@@ -185,7 +196,7 @@ export default function Landing() {
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-6xl flex-wrap gap-3 px-4 py-6 text-xs text-subtle sm:px-6">
           <span className="font-serif text-base text-ink">{APP_NAME}</span>
-          <span>Smarter crop rotations for resilient soil · Los Antiguos, Santa Cruz</span>
+          <span>Smarter crop rotations for resilient soil · Los Antiguos, Santa Cruz · Supernovas ETA26</span>
           <span className="ml-auto">Values to validate with local experts</span>
         </div>
       </footer>

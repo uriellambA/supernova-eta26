@@ -1,5 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
+import { Brand } from "@/components/Brand";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LangToggle } from "@/components/Translator";
@@ -149,7 +150,7 @@ export function RegisterForm() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
-          <Link href="/" className="font-serif text-2xl leading-none">{APP_NAME}</Link>
+          <Brand />
           <nav className="hidden gap-1 text-sm text-muted sm:flex">
             <Link href="/app" className="rounded-lg px-2 py-1 hover:text-ink">Dashboard</Link>
             <span className="rounded-lg px-2 py-1 text-ink">Register</span>

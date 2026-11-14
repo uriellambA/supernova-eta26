@@ -441,6 +441,8 @@ export const ES: Record<string, string> = {
   "Your farm register": "Registro de tu chacra", "Plots, history, soil test, water, economy": "Lotes, historial, análisis de suelo, agua, economía", "Personal AI analysis": "Análisis personal con IA",
   "Your field, your priorities,": "Tu campo, tus prioridades,", "Your field, your priorities": "Tu campo, tus prioridades", "your decision": "tu decisión",
   "highlights patterns and trade-offs. It supports your judgment and local agronomic advice; it never replaces them": "muestra patrones y ventajas y desventajas. Apoya tu criterio y el asesoramiento agronómico local; nunca los reemplaza",
+  "Guiding growers towards a better future": "Guiando a los productores hacia un futuro mejor",
+  "Smarter crop rotations for resilient soil · Los Antiguos, Santa Cruz · Supernovas ETA26": "Rotaciones más inteligentes para un suelo resiliente · Los Antiguos, Santa Cruz · Supernovas ETA26",
   "Smarter crop rotations for resilient soil · Los Antiguos, Santa Cruz": "Rotaciones más inteligentes para un suelo resiliente · Los Antiguos, Santa Cruz", "Values to validate with local experts": "Valores para validar con expertos locales",
   "Main canal": "Canal principal", "Vegetation index · NDVI": "Índice de vegetación · NDVI",
   "Satellite image unavailable right now": "Imagen satelital no disponible en este momento", "Dense crop": "Cultivo denso", "Chacras west of Los Antiguos": "Chacras al oeste de Los Antiguos", "Real satellite image of a chacra in Los Antiguos": "Imagen satelital real de una chacra en Los Antiguos",

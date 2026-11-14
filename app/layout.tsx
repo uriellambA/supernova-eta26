@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   description: APP_DESCRIPTION,
   applicationName: APP_NAME,
   appleWebApp: { capable: true, title: APP_NAME, statusBarStyle: "default" },
-  icons: { icon: "/icons/icon.svg", apple: "/icons/icon-192.png" },
 };
 
 export const viewport: Viewport = {

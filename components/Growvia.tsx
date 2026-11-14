@@ -1,5 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
+import { Brand } from "@/components/Brand";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -177,7 +178,7 @@ export function Growvia() {
       <div className="flex min-h-screen flex-col print:hidden">
         <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur">
           <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-3 px-4 py-3 sm:px-6">
-            <Link href="/" className="font-serif text-2xl leading-none tracking-tight">{APP_NAME}</Link>
+            <Brand />
             <nav className="hidden items-center gap-1 text-sm text-muted md:flex">
               <Link href="/" className="rounded-lg px-2 py-1 hover:text-ink">About</Link>
               <span className="rounded-lg px-2 py-1 text-ink">Dashboard</span>

@@ -1,9 +1,9 @@
 // Service worker: offline mode. Bump VERSION to invalidate old caches.
-const VERSION = "v5";
+const VERSION = "v6";
 const SHELL = `shell-${VERSION}`;
 const DATOS = `datos-${VERSION}`;
 const TILES = `tiles-${VERSION}`;
-const PRECACHE = ["/", "/app", "/register", "/manifest.webmanifest", "/icons/icon.svg", "/icons/icon-192.png"];
+const PRECACHE = ["/", "/app", "/register", "/manifest.webmanifest", "/icons/icon-192.png", "/brand/growvia-mark-128.png"];
 const MAX_TILES = 600;
 
 self.addEventListener("install", (e) => {
@@ -79,7 +79,7 @@ self.addEventListener("fetch", (e) => {
   }
   if (url.origin !== self.location.origin) return;
   // Código de la app
-  if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/") || url.pathname.startsWith("/landing/")) {
+  if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/") || url.pathname.startsWith("/landing/") || url.pathname.startsWith("/brand/")) {
     e.respondWith(cachePrimero(req, SHELL));
     return;
   }

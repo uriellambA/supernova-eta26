@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
+import { Brand } from "@/components/Brand";
 import { useEffect, useState } from "react";
-import { APP_NAME } from "@/config/app";
 import { decodeSession, saveSession, type SavedSession } from "@/lib/session";
 import { SessionActions, SessionView } from "./SessionView";
 import { LangToggle } from "./Translator";
@@ -27,7 +27,7 @@ export function SharedSession() {
     <div className="min-h-screen print:bg-white">
       <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur print:hidden">
         <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3 sm:px-6">
-          <Link href="/" className="font-serif text-2xl leading-none">{APP_NAME}</Link>
+          <Brand />
           <span className="text-sm text-muted">Shared report</span>
           <div className="ml-auto flex items-center gap-2"><LangToggle /><ThemeToggle /></div>
         </div>
