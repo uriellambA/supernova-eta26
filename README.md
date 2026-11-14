@@ -28,6 +28,10 @@ Growvia es una herramienta de apoyo a la decisión (en inglés) para productores
 
 Atajos: `A` analizar con IA · `D` vista 3D · `H` hardware · `R` registro · `S` guardar registro.
 
+### Filtro de riesgo de salinidad (SMAP)
+En el mapa, el filtro **Salinity risk · SMAP** pinta el riesgo de acumulación de sales a partir de la humedad del suelo del satélite **SMAP** (primeros 5 cm, 9 km). Las capas se toman de GIBS y se decodifican con su paleta oficial. En la pestaña Suelo, `/api/smap` lee el valor de SMAP en el punto (8 semanas) y lo suma a la estimación de salinidad.
+Ojo: **SMAP no mide sal**, mide humedad. En un valle árido, una superficie que se mantiene húmeda con mucha evaporación hace subir el agua y deja sales: eso es el riesgo. Hay que confirmarlo con un análisis de conductividad eléctrica (CE). La resolución de 9 km muestra tendencias del valle, no el detalle de un lote.
+
 ### Idioma EN / ES
 El botón **EN | ES** de cada encabezado traduce toda la página al español (Argentina) o la deja en inglés. Se recuerda en el dispositivo y la primera vez sigue el idioma del navegador. La IA responde en el idioma elegido, y la voz y el dictado también lo usan. Para traducir un texto nuevo, agregalo a `lib/i18n-es.ts` (`{n}` = número, `{x}` = texto).
 

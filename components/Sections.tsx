@@ -3,6 +3,7 @@ import { useState } from "react";
 import { CROPS } from "@/config/crops";
 import { MONTHS, shortDate } from "@/lib/agro";
 import type { Option } from "@/lib/options";
+import type { SmapResumen } from "@/lib/smap";
 import { EFFICIENCY, METHOD_NAME, nextDaysNeed, seasonNeed } from "@/lib/riego";
 import type { ClimaResumen, FarmProfile, GroundReading, IndicadoresNasa, NdviResumen, NieveResumen, Salinity, SistemaRiego, SoilHealth, SoilResumen, StrategyResult } from "@/lib/types";
 import { LineChart, TempChart, WaterChart, eviPoints, ndviPoints } from "./Charts";
@@ -93,7 +94,7 @@ export function VegetationCard({ ndvi }: { ndvi: NdviResumen }) {
 }
 
 // ---------------- Soil ----------------
-export function Soil({ s, c, ndvi, readings, sal, health }: { s: SoilResumen; c: IndicadoresNasa | null; ndvi: NdviResumen | null; readings: GroundReading[]; sal: Salinity; health: SoilHealth }) {
+export function Soil({ s, c, ndvi, readings, sal, health, smap, onShowMap }: { s: SoilResumen; c: IndicadoresNasa | null; ndvi: NdviResumen | null; readings: GroundReading[]; sal: Salinity; health: SoilHealth; smap?: SmapResumen | null; onShowMap?: () => void }) {
   const last = readings.at(-1);
   return (
     <div className="space-y-4">
@@ -128,6 +129,21 @@ export function Soil({ s, c, ndvi, readings, sal, health }: { s: SoilResumen; c:
             <ul className="list-disc space-y-1 pl-5 text-sm text-ink-2">{sal.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
             {!sal.measured && <p className="mt-2 text-[11px] text-muted">Estimated: soil maps do not measure salt. Add an electrical conductivity (EC) test in your farm register or with the field sensor to replace this estimate.</p>}
           </Card>
+          {smap && smap.mean !== null && smap.risk !== null && (
+            <Card title="Salinity risk from SMAP" eyebrow="Satellite soil moisture, top 5 cm, 9 km" right={<Badge tone={smap.risk < 0.35 ? "green" : smap.risk < 0.65 ? "amber" : "red"} dot>{smap.risk < 0.35 ? "Low risk" : smap.risk < 0.65 ? "Moderate risk" : "High risk"}</Badge>}>
+              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                <div className="rounded-lg bg-surface-2 p-2"><div className="text-muted">Latest</div><div className="font-semibold">{smap.latest?.sm} m³/m³</div></div>
+                <div className="rounded-lg bg-surface-2 p-2"><div className="text-muted">{`${smap.samples.length}-week mean`}</div><div className="font-semibold">{smap.mean} m³/m³</div></div>
+                <div className="rounded-lg bg-surface-2 p-2"><div className="text-muted">Risk index</div><div className="font-semibold">{Math.round(smap.risk * 100)} / 100</div></div>
+              </div>
+              <div className="mt-3 h-2 rounded-full" style={{ background: "linear-gradient(90deg,#2ea05a,#ebcd50,#e6782d,#be2828)" }}>
+                <div className="relative h-2" style={{ width: `${smap.risk * 100}%` }}><span className="absolute -right-1.5 -top-1 h-4 w-3 rounded border-2 border-ink bg-surface" /></div>
+              </div>
+              {smap.samples.length > 1 && <div className="mt-3"><LineChart label="SMAP surface soil moisture" points={[...smap.samples].reverse().map((p) => ({ x: p.date.slice(5), y: p.sm }))} color="#5b8fc9" min={0} max={0.5} /></div>}
+              <p className="mt-2 text-[11px] text-muted">SMAP measures soil moisture, not salt. In a dry valley, a surface that stays wet while evaporation is high pulls water up from below and leaves salts behind: that is the risk shown here. Confirm with an EC test.</p>
+              {onShowMap && <button className="mt-2 text-xs font-medium underline-offset-4 hover:underline" onClick={onShowMap}>See the salinity risk map →</button>}
+            </Card>
+          )}
         </div>
         <div className="space-y-4 lg:col-span-5">
           <Card title="Soil health index" right={<LevelPill level={health.level}>{health.score} / 100</LevelPill>}>

@@ -316,7 +316,7 @@ export const ES: Record<string, string> = {
   "Temperatures adjusted {x} °C: the regional climate record averages terrain at ~{n} m (Andes included); your field is at ~{n} m": "Temperaturas ajustadas {x} °C: el registro climático regional promedia terreno a ~{n} m (incluye la cordillera); tu campo está a ~{n} m",
   "Temperature by month": "Temperatura por mes", "Rain vs evaporation": "Lluvia vs evaporación", "evaporation (ET{n})": "evaporación (ET{n})", "rain. The gap is what irrigation must supply": "lluvia. La diferencia es lo que debe aportar el riego",
   "Average monthly minimum and maximum temperature": "Temperatura mínima y máxima media mensual", "Monthly rain vs evapotranspiration": "Lluvia mensual vs evapotranspiración",
-  "Vegetation index · NDVI & EVI": "Índice de vegetación · NDVI y EVI", "Satellite, {n} m, every {n} days": "Satélite, {n} m, cada {n} días", "Latest NDVI {n}": "Último NDVI {n}",
+  "Vegetation index · NDVI & EVI": "Índice de vegetación · NDVI y EVI", "Satellite, {n} m, every {n} days": "Satélite, {n} m, cada {n} días", "Latest NDVI {n}": "Último NDVI {n}", "Latest NDVI": "Último NDVI",
   "NDVI: how green plants are ({n} = bare soil, {n} = dense crop)": "NDVI: qué tan verdes están las plantas ({n} = suelo desnudo, {n} = cultivo denso)",
   "EVI: like NDVI but does not saturate in dense canopies and corrects for soil and haze": "EVI: como el NDVI pero no se satura en follajes densos y corrige el suelo y la bruma",
   "A year ago NDVI was": "Hace un año el NDVI era", "Low winter values show bare soil": "Los valores bajos en invierno muestran suelo desnudo", "NDVI and EVI": "NDVI y EVI",
@@ -499,6 +499,17 @@ export const ES: Record<string, string> = {
   "compares your current crop rotation with better alternatives for your exact field — using {n} years of climate, satellite vegetation and soil data — explains why, and shows what you could grow when the cherry and strawberry season is over": "compara tu rotación actual con mejores alternativas para tu campo exacto —usando {n} años de clima, vegetación satelital y datos de suelo—, explica por qué y muestra qué podrías producir cuando termina la temporada de cerezas y frutillas",
   "Compare rotations for my field": "Comparar rotaciones para mi campo", "Crop rotation decision system — the heart of Growvia": "Sistema de decisión de rotación de cultivos: el corazón de Growvia",
   "Your rotation vs {n} alternatives": "Tu rotación vs {n} alternativas", "Build your own rotation": "Diseñá tu propia rotación", "Plan by season": "Plan por estación", "Why · evidence · gaps · risks": "Por qué · evidencia · vacíos · riesgos", "Weighted by your priorities": "Según tus prioridades",
+
+  // ---------- SMAP salinity ----------
+  "Salinity risk · SMAP": "Riesgo de salinidad · SMAP",
+  "Where salts can build up: SMAP satellite soil moisture ({n} km) in this dry climate. Wet surface + strong evaporation = higher risk. Confirm with an EC test": "Dónde se pueden acumular sales: humedad del suelo del satélite SMAP ({n} km) en este clima seco. Superficie húmeda + mucha evaporación = más riesgo. Confirmalo con un análisis de CE",
+  "Salinity risk from SMAP": "Riesgo de salinidad según SMAP", "Satellite soil moisture, top {n} cm, {n} km": "Humedad del suelo satelital, primeros {n} cm, {n} km",
+  "Low risk": "Riesgo bajo", "Moderate risk": "Riesgo moderado", "High risk": "Riesgo alto", "Latest": "Último", "{n}-week mean": "Promedio de {n} semanas", "Risk index": "Índice de riesgo",
+  "{n} m³/m³": "{n} m³/m³", "SMAP surface soil moisture": "Humedad superficial del suelo (SMAP)",
+  "SMAP measures soil moisture, not salt. In a dry valley, a surface that stays wet while evaporation is high pulls water up from below and leaves salts behind: that is the risk shown here. Confirm with an EC test": "SMAP mide la humedad del suelo, no la sal. En un valle seco, si la superficie se mantiene húmeda con mucha evaporación, el agua sube desde abajo y deja las sales: ese es el riesgo que se muestra acá. Confirmalo con un análisis de CE",
+  "See the salinity risk map": "Ver el mapa de riesgo de salinidad",
+  "SMAP satellite: the surface stays wet ({n} m³/m³ on average over the last weeks). With this much evaporation, water rising from below can leave salts at the surface": "Satélite SMAP: la superficie se mantiene húmeda ({n} m³/m³ en promedio en las últimas semanas). Con tanta evaporación, el agua que sube desde abajo puede dejar sales en la superficie",
+  "SMAP satellite: the surface is mostly dry ({n} m³/m³ on average over the last weeks), so salts are not being pulled up from below": "Satélite SMAP: la superficie está mayormente seca ({n} m³/m³ en promedio en las últimas semanas), así que las sales no suben desde abajo",
   // ---------- Report ----------
   "frost-free days · last spring frost": "días libres de heladas · última helada de primavera", "mm rain vs": "mm de lluvia vs", "mm evaporation · spring wind": "mm de evaporación · viento de primavera",
   "· water holding": "· retención de agua", "new species": "especies nuevas", "Field elevation": "Altura del campo", "Field": "Campo", "Soil ({n}–{n} cm": "Suelo ({n}–{n} cm",

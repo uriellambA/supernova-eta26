@@ -3,15 +3,64 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl, { type Map as MLMap, type Marker } from "maplibre-gl";
 import { useEffect, useRef } from "react";
 import { SITE } from "@/config/site";
+import { SMAP_LAYERS, colorLookup, parseColormap, riskColor, salinityRisk, smapColormapUrl, smapTileUrl } from "@/lib/smap";
 
-export type OverlayId = "latest" | "vegetation" | "evi" | "temperature" | "snow" | "relief";
+export type OverlayId = "latest" | "vegetation" | "evi" | "temperature" | "snow" | "relief" | "salinity";
 
 const day = (back: number) => new Date(Date.now() - back * 86_400_000).toISOString().slice(0, 10);
 const eo = (layer: string, date: string, level: number, ext: "png" | "jpg") =>
   `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/${layer}/default/${date}/GoogleMapsCompatible_Level${level}/{z}/{y}/{x}.${ext}`;
 const TERRAIN = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
 
-const OVERLAYS: Record<Exclude<OverlayId, "relief">, { url: string; maxzoom: number; opacity: number }> = {
+// ---------- Salinity risk layer: SMAP soil-moisture tiles decoded with their colormap and recolored as risk ----------
+type SmapSrc = { lookup: ReturnType<typeof colorLookup>; layer: string; level: number };
+let smapSrc: Promise<SmapSrc> | null = null;
+async function loadSmap(): Promise<SmapSrc> {
+  for (const L of SMAP_LAYERS) {
+    try {
+      const r = await fetch(smapColormapUrl(L.id));
+      if (!r.ok) continue;
+      return { lookup: colorLookup(parseColormap(await r.text())), layer: L.id, level: L.level };
+    } catch {
+      /* try next */
+    }
+  }
+  throw new Error("SMAP colormap unavailable");
+}
+let protocolReady = false;
+function registerSalinityProtocol() {
+  if (protocolReady) return;
+  protocolReady = true;
+  maplibregl.addProtocol("salinity", async (params, ac) => {
+    const m = params.url.match(/salinity:\/\/(\d+)\/(\d+)\/(\d+)/);
+    if (!m) throw new Error("bad tile");
+    const [z, x, y] = [+m[1], +m[2], +m[3]];
+    smapSrc ??= loadSmap().catch((e) => { smapSrc = null; throw e; });
+    const src = await smapSrc;
+    let res: Response | null = null;
+    for (const back of [4, 6, 9]) {
+      res = await fetch(smapTileUrl(src.layer, day(back), src.level, z, x, y), { signal: ac.signal });
+      if (res.ok) break;
+    }
+    if (!res?.ok) throw new Error("SMAP tile unavailable");
+    const bmp = await createImageBitmap(await res.blob());
+    const cv = new OffscreenCanvas(bmp.width, bmp.height);
+    const ctx = cv.getContext("2d")!;
+    ctx.drawImage(bmp, 0, 0);
+    const img = ctx.getImageData(0, 0, bmp.width, bmp.height);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const v = src.lookup(d[i], d[i + 1], d[i + 2], d[i + 3]);
+      if (v === null) { d[i + 3] = 0; continue; }
+      const [r, g, b] = riskColor(salinityRisk(v));
+      d[i] = r; d[i + 1] = g; d[i + 2] = b; d[i + 3] = 210;
+    }
+    ctx.putImageData(img, 0, 0);
+    return { data: await (await cv.convertToBlob({ type: "image/png" })).arrayBuffer() };
+  });
+}
+
+const OVERLAYS: Record<Exclude<OverlayId, "relief" | "salinity">, { url: string; maxzoom: number; opacity: number }> = {
   latest: { url: eo("MODIS_Terra_CorrectedReflectance_TrueColor", day(2), 9, "jpg"), maxzoom: 9, opacity: 0.85 },
   vegetation: { url: eo("MODIS_Terra_NDVI_8Day", day(10), 9, "png"), maxzoom: 9, opacity: 0.7 },
   evi: { url: eo("MODIS_Terra_EVI_8Day", day(10), 9, "png"), maxzoom: 9, opacity: 0.7 },
@@ -82,6 +131,9 @@ export default function MapView({
         m.addSource(id, { type: "raster", tiles: [o.url], tileSize: 256, maxzoom: o.maxzoom });
         m.addLayer({ id, type: "raster", source: id, layout: { visibility: "none" }, paint: { "raster-opacity": o.opacity } });
       }
+      registerSalinityProtocol();
+      m.addSource("salinity", { type: "raster", tiles: ["salinity://{z}/{x}/{y}"], tileSize: 256, maxzoom: 6, attribution: "Soil moisture: SMAP" });
+      m.addLayer({ id: "salinity", type: "raster", source: "salinity", layout: { visibility: "none" }, paint: { "raster-opacity": 0.7, "raster-resampling": "nearest" } });
       m.addLayer({ id: "relief", type: "hillshade", source: "demShade", layout: { visibility: "none" }, paint: { "hillshade-exaggeration": 0.6, "hillshade-shadow-color": "#020617" } });
       m.addSource("field", { type: "geojson", data: shape(field.lat, field.lon, boundary) });
       m.addLayer({ id: "field-fill", type: "fill", source: "field", paint: { "fill-color": "#ffffff", "fill-opacity": 0.18 } });
@@ -126,7 +178,7 @@ export default function MapView({
     const m = map.current;
     if (!m) return;
     const apply = () => {
-      for (const id of ["latest", "vegetation", "evi", "temperature", "snow", "relief"] as OverlayId[]) {
+      for (const id of ["latest", "vegetation", "evi", "temperature", "snow", "relief", "salinity"] as OverlayId[]) {
         if (m.getLayer(id)) m.setLayoutProperty(id, "visibility", overlays.has(id) ? "visible" : "none");
       }
     };

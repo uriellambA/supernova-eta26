@@ -1,5 +1,6 @@
 import { SITE } from "@/config/site";
 import { fetchJson } from "./cache";
+import type { SmapResumen } from "./smap";
 import type { FarmProfile, IndicadoresNasa, Nivel, NdviResumen, Salinity, SoilHealth, SoilResumen, SoilValues } from "./types";
 
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
@@ -114,7 +115,7 @@ export const soilReference = () => deriveSoil(SITE.soilReference, "reference", "
  * Salinity estimate (ECe, dS/m). Global soil maps do not include salinity, so this is an
  * INDICATOR built from aridity, pH, drainage and irrigation method — or the farmer's own test.
  */
-export function salinityEstimate(s: SoilResumen, c: IndicadoresNasa, irrigation: FarmProfile["irrigation"], measured?: number | null): Salinity {
+export function salinityEstimate(s: SoilResumen, c: IndicadoresNasa, irrigation: FarmProfile["irrigation"], measured?: number | null, smap?: SmapResumen | null): Salinity {
   if (measured !== null && measured !== undefined && measured >= 0) {
     return { ece: measured, cls: measured < 2 ? "low" : measured < 4 ? "moderate" : "high", measured: true, reasons: ["From your own soil test (electrical conductivity)."] };
   }
@@ -127,6 +128,13 @@ export function salinityEstimate(s: SoilResumen, c: IndicadoresNasa, irrigation:
   if (s.infiltration === "fast") { ece -= 0.3; reasons.push("Fast drainage helps irrigation water flush salts below the roots."); }
   if (irrigation === "drip") { ece += 0.3; reasons.push("Drip wets a small bulb: salts gather at its edges (flush once a season)."); }
   if (irrigation === "flood" || irrigation === "furrow") reasons.push("Surface irrigation leaches salts if fields drain well; watch low, wet corners.");
+  if (smap?.mean != null && smap.risk != null) {
+    // Wet surface under strong evaporation → capillary rise brings salts up (SMAP, top 5 cm)
+    ece += (smap.risk - 0.3) * 1.5;
+    reasons.push(smap.risk >= 0.5
+      ? `SMAP satellite: the surface stays wet (${smap.mean} m³/m³ on average over the last weeks). With this much evaporation, water rising from below can leave salts at the surface.`
+      : `SMAP satellite: the surface is mostly dry (${smap.mean} m³/m³ on average over the last weeks), so salts are not being pulled up from below.`);
+  }
   ece = +clamp(ece, 0.3, 8).toFixed(1);
   return { ece, cls: ece < 2 ? "low" : ece < 4 ? "moderate" : "high", measured: false, reasons };
 }

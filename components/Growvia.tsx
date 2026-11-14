@@ -8,6 +8,7 @@ import { SITE } from "@/config/site";
 import { useOnline } from "@/hooks/useOnline";
 import { useRecurso } from "@/hooks/useRecurso";
 import { buildContext, localAdvice } from "@/lib/advisor";
+import type { SmapResumen } from "@/lib/smap";
 import { hazards } from "@/lib/contingency";
 import { farmOptions } from "@/lib/options";
 import { profileFromRegister } from "@/lib/register";
@@ -75,6 +76,7 @@ export function Growvia() {
   const snow = useRecurso<NieveResumen>("/api/snow");
   const soil = useRecurso<SoilResumen>(`/api/soil?${q}`);
   const enso = useRecurso<EnsoResumen>("/api/enso");
+  const smap = useRecurso<SmapResumen>(`/api/smap?${q}`);
 
   // Restore saved farm data (stored on this device)
   useEffect(() => {
@@ -109,7 +111,7 @@ export function Growvia() {
   );
   const current = results.find((r) => r.strategy.current) ?? null;
   const measuredEc = register?.soilTest.ec ?? [...readings].reverse().find((r) => r.ec != null)?.ec ?? null;
-  const sal = useMemo(() => (climate.data && soil.data ? salinityEstimate(soil.data, climate.data, farm.irrigation, measuredEc) : null), [climate.data, soil.data, farm.irrigation, measuredEc]);
+  const sal = useMemo(() => (climate.data && soil.data ? salinityEstimate(soil.data, climate.data, farm.irrigation, measuredEc, smap.data) : null), [climate.data, soil.data, farm.irrigation, measuredEc, smap.data]);
   const health = useMemo(() => (soil.data && sal && climate.data ? soilHealth(soil.data, sal, current?.metrics.bareMonths ?? 0, climate.data.vientoPrimavera, ndvi.data) : null), [soil.data, sal, climate.data, current, ndvi.data]);
   const fits = useMemo(() => (climate.data && soil.data && sal ? rankSpecies(climate.data, soil.data, sal, farm) : []), [climate.data, soil.data, sal, farm]);
   const risks = useMemo(() => (climate.data ? hazards(climate.data, forecast.data, snow.data, enso.data) : []), [climate.data, forecast.data, snow.data, enso.data]);
@@ -337,7 +339,7 @@ export function Growvia() {
               {sub === "risks" && <Contingency list={risks} enso={enso.data} c={climate.data!} />}
               {sub === "frost" && <Frost c={climate.data!} />}
               {sub === "climate" && <Overview c={climate.data!} current={current} ndvi={ndvi.data} />}
-              {sub === "soil" && <Soil s={soil.data!} c={climate.data} ndvi={ndvi.data} readings={readings} sal={sal!} health={health!} />}
+              {sub === "soil" && <Soil s={soil.data!} c={climate.data} ndvi={ndvi.data} readings={readings} sal={sal!} health={health!} smap={smap.data} onShowMap={() => { setOverlays(new Set(["salinity"])); go("home"); }} />}
               {sub === "water" && <Water c={climate.data!} f={forecast.data} snow={snow.data} farm={farm} setFarm={setFarm} />}
             </div>
           )}
