@@ -23,6 +23,7 @@ import {
   type GroundReading, type IndicadoresNasa, type NdviResumen, type NieveResumen, type Priorities, type SoilResumen, type Strategy,
 } from "@/lib/types";
 import { AIPanel } from "./AIPanel";
+import { desbloquearAudio } from "@/hooks/useLeer";
 import { LineChart, ndviPoints } from "./Charts";
 import { FiltersPanel, WeatherLegend, WeatherPicker } from "./FiltersPanel";
 import { Icon } from "./icons";
@@ -140,12 +141,14 @@ export function Growvia() {
   const options = useMemo(() => (climate.data ? farmOptions(climate.data, farm) : []), [climate.data, farm]);
   const simulated = climate.data?.simulado || soil.data?.simulado;
 
-  async function analyze(question = "") {
+  async function analyze(question = "", history: { q: string; a: string }[] = []) {
     if (!climate.data || !soil.data || !results.length || !health || !sal) return;
+    desbloquearAudio(); // still inside the tap / key press: lets Growwy speak as soon as the answer arrives
     const ctx = {
       ...buildContext(field.name, farm, pri, climate.data, soil.data, forecast.data, ndvi.data, results, { fits, health, sal, enso: enso.data, register, site }),
       language: getLang() === "es" ? ("Spanish (Argentina)" as const) : ("English" as const),
       question: question.trim() || undefined,
+      history: history.length ? history.slice(-4) : undefined,
     };
     setBusy(true);
     setAiError(null);

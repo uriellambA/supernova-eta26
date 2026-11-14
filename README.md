@@ -52,6 +52,8 @@ Growwy es el SI de Growvia y aparece como la **Pachamama**, con la ilustración 
 - **Boca con la voz:** al escucharla, la mandíbula baja y se abre la boca siguiendo la voz (volumen real con la voz del servidor; cada palabra con la voz del dispositivo, `lib/voz.ts`).
 - **Panel:** sale debajo de "Analizar mi campo" con un globo que muestra la respuesta completa (se desliza si es larga) y el botón **Escuchar a Growwy**.
 - **Página de inicio:** sección **¿Qué es Growwy?** con la Pachamama de cuerpo entero, qué hace, en qué se basa y que la decisión final es del productor; también puede presentarse en voz alta.
+- **Voz sin espera:** apenas llega la respuesta se genera el audio en partes (la primera frase primero, el resto en paralelo) y, con **Voz automática: sí**, Growwy empieza a hablar sola. El audio se habilita en el mismo toque de "Analizar" o "Enviar", así los celulares no lo bloquean. El botón **Escuchar** reutiliza el audio ya generado.
+- **Responder:** debajo de la respuesta, **Responder** abre un campo (escribir o dictar) para contestarle a Growwy; la conversación anterior viaja con la pregunta, así el SI sigue el hilo.
 - Con "reducir movimiento" activado en el sistema queda quieta.
 
 ### Temas

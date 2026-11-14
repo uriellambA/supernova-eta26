@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { getLang, translate } from "@/lib/i18n";
 import { pulse, setAnalyser, setPaused, setSpeaking } from "@/lib/voz";
 
@@ -44,114 +44,233 @@ function trozos(t: string) {
 
 let serverTts: boolean | null = null; // null = not tried yet
 
+// ---------------- shared state (every Listen button shows the same playback) ----------------
+type Estado = { hablando: boolean; pausado: boolean; cargando: boolean };
+const INICIAL: Estado = { hablando: false, pausado: false, cargando: false };
+let estado = INICIAL;
+const subs = new Set<() => void>();
+const actualizar = (p: Partial<Estado>) => {
+  estado = { ...estado, ...p };
+  subs.forEach((f) => f());
+};
+
+/** Final text to read: rules-based answers are written in English, read them in Spanish when the page is in Spanish. */
+const textoFinal = (original: string | string[]) =>
+  limpiarParaVoz((Array.isArray(original) ? original : [original]).filter(Boolean).map((p) => (getLang() === "es" ? translate(p) ?? p : p)).join(" "));
+
+/** Audio blocks: the first sentence alone (so the voice starts fast), then ~350-character groups. */
+function bloques(t: string) {
+  const frases = t.split(/(?<=[.!?;:])\s+/).filter(Boolean);
+  if (!frases.length) return [];
+  // first block: the first sentences up to ~80 characters (fast to generate, so she starts talking quickly)
+  const out = [frases[0]];
+  let i = 1;
+  while (i < frases.length && out[0].length < 80) out[0] += " " + frases[i++];
+  for (const f of frases.slice(i)) {
+    if (out.length > 1 && (out[out.length - 1] + " " + f).length < 350) out[out.length - 1] += " " + f;
+    else out.push(f);
+  }
+  return out;
+}
+
+// ---------------- pre-generated server audio ----------------
+const cache = new Map<string, Promise<string | null>[]>(); // text → one promise per block (object URL, or null)
+
+function pedirBloque(texto: string): Promise<string | null> {
+  if (serverTts === false) return Promise.resolve(null);
+  return fetch("/api/tts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: texto, lang: getLang() }) })
+    .then(async (r) => {
+      if (r.status === 501) serverTts = false;
+      if (!r.ok) return null;
+      serverTts = true;
+      return URL.createObjectURL(await r.blob());
+    })
+    .catch(() => null);
+}
+
+function bloquesDe(original: string | string[]) {
+  const t = textoFinal(original);
+  const key = `${getLang()}|${t}`;
+  let ps = cache.get(key);
+  if (!ps) {
+    const partes = bloques(t);
+    const primero = pedirBloque(partes[0] ?? t);
+    // the first block tells us whether the server voice exists; the rest are generated in parallel
+    ps = [primero, ...partes.slice(1).map((p) => primero.then((u) => (u ? pedirBloque(p) : null)))];
+    cache.set(key, ps);
+    if (cache.size > 6) {
+      const [viejo, bloquesViejos] = cache.entries().next().value!;
+      cache.delete(viejo);
+      bloquesViejos.forEach((b) => b.then((u) => u && URL.revokeObjectURL(u)));
+    }
+  }
+  return { texto: t, bloques: ps };
+}
+
+/** Starts generating the server voice for a text in the background, so Listen plays at once. */
+export function prepararVoz(original: string | string[]) {
+  if (typeof window === "undefined" || serverTts === false || !String(original).trim()) return;
+  bloquesDe(original);
+}
+
+// ---------------- one audio player for the whole app ----------------
+const SILENCIO = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=";
+let el: HTMLAudioElement | null = null;
+let ctx: AudioContext | null = null;
+let analizador: AnalyserNode | null = null;
+let vozDesbloqueada = false;
+let turno = 0; // each new reading cancels the previous one
+let alTerminarBloque: ((ok: boolean) => void) | null = null;
+
 /**
- * Reads text aloud. Uses the server voice when configured (louder: boosted ×2.5 with a compressor),
- * otherwise the device voice at maximum volume.
+ * Must run inside a tap/click: browsers (above all on phones) only allow sound that starts from a user gesture.
+ * Creates the player and plays a tiny silence so that later audio is allowed even after waiting for the server.
  */
+export function desbloquearAudio() {
+  if (typeof window === "undefined") return;
+  try {
+    if (!el) {
+      el = new Audio();
+      el.preload = "auto";
+    }
+    if (!ctx && "AudioContext" in window) {
+      ctx = new AudioContext();
+      const gain = ctx.createGain();
+      gain.gain.value = 2.5; // louder than the device voice
+      const comp = ctx.createDynamicsCompressor(); // keeps the boost from distorting
+      comp.threshold.value = -12;
+      comp.ratio.value = 6;
+      analizador = ctx.createAnalyser(); // loudness for the avatar's mouth
+      analizador.fftSize = 512;
+      ctx.createMediaElementSource(el).connect(gain).connect(comp).connect(ctx.destination);
+      comp.connect(analizador);
+    }
+    ctx?.resume().catch(() => {});
+    if (!estado.hablando) {
+      el.src = SILENCIO;
+      el.play().catch(() => {});
+    }
+    if (!vozDesbloqueada && "speechSynthesis" in window) {
+      const u = new SpeechSynthesisUtterance(" ");
+      u.volume = 0;
+      window.speechSynthesis.speak(u);
+      vozDesbloqueada = true;
+    }
+  } catch {
+    /* sound stays locked; the device voice may still work */
+  }
+}
+
+function terminar(t: number) {
+  if (t !== turno) return;
+  setSpeaking(false);
+  actualizar(INICIAL);
+}
+
+function reproducir(url: string, t: number) {
+  return new Promise<boolean>((res) => {
+    if (!el || t !== turno) return res(false);
+    alTerminarBloque = res;
+    el.onended = () => res(true);
+    el.onerror = () => res(false);
+    el.src = url;
+    el.play().catch(() => res(false));
+  });
+}
+
+function leerDispositivo(texto: string, t: number) {
+  const s = window.speechSynthesis;
+  s.cancel();
+  setSpeaking(true);
+  setAnalyser(null);
+  const v = elegirVoz();
+  const partes = trozos(texto);
+  actualizar({ cargando: false });
+  partes.forEach((p, i) => {
+    const u = new SpeechSynthesisUtterance(p);
+    if (v) u.voice = v;
+    u.lang = v?.lang ?? (getLang() === "es" ? "es-AR" : "en-US");
+    u.volume = 1; // maximum the browser allows
+    u.rate = 0.95;
+    u.onstart = pulse;
+    u.onboundary = pulse; // moves the avatar's mouth on every word
+    if (i === partes.length - 1) {
+      u.onend = () => terminar(t);
+      u.onerror = () => terminar(t);
+    }
+    s.speak(u);
+  });
+}
+
+/** Reads a text aloud: pre-generated server voice when available (block by block), otherwise the device voice. */
+export async function leerTexto(original: string | string[]) {
+  detenerVoz();
+  const t = ++turno;
+  desbloquearAudio(); // still inside the tap that called us
+  actualizar({ hablando: true, pausado: false, cargando: true });
+  const { texto, bloques: ps } = bloquesDe(original);
+  if (serverTts !== false && el && ctx) {
+    let sonó = false;
+    for (const p of ps) {
+      const url = await p;
+      if (t !== turno) return;
+      if (!url) break;
+      if (!sonó) {
+        sonó = true;
+        actualizar({ cargando: false });
+        setSpeaking(true); // the mouth moves only once there is sound
+        setAnalyser(analizador);
+      }
+      if (!(await reproducir(url, t))) break;
+    }
+    if (sonó) return terminar(t);
+  }
+  if (t !== turno) return;
+  if ("speechSynthesis" in window) leerDispositivo(texto, t);
+  else terminar(t);
+}
+
+export function pausarVoz() {
+  if (!estado.hablando) return;
+  const pausar = !estado.pausado;
+  const servidor = el && el.src && !el.src.startsWith("data:") && !el.ended;
+  if (servidor) {
+    if (pausar) el!.pause();
+    else el!.play().catch(() => {});
+  }
+  const s = window.speechSynthesis;
+  if (s?.speaking) {
+    if (pausar) s.pause();
+    else s.resume();
+  }
+  setPaused(pausar);
+  actualizar({ pausado: pausar });
+}
+
+export function detenerVoz() {
+  turno++;
+  window.speechSynthesis?.cancel();
+  el?.pause();
+  alTerminarBloque?.(false);
+  alTerminarBloque = null;
+  setSpeaking(false);
+  actualizar(INICIAL);
+}
+
+const suscribir = (f: () => void) => {
+  subs.add(f);
+  return () => subs.delete(f);
+};
+
+/** Read-aloud controls. All instances share one player and one state. */
 export function useLeer() {
   const [soportado, setSoportado] = useState(false);
-  const [hablando, setHablando] = useState(false);
-  const [pausado, setPausado] = useState(false);
-  const audio = useRef<{ el: HTMLAudioElement; ctx: AudioContext; url: string } | null>(null);
-
+  const e = useSyncExternalStore(suscribir, () => estado, () => INICIAL);
   useEffect(() => {
     if (!("speechSynthesis" in window) && !("AudioContext" in window)) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- browser capability check
     setSoportado(true);
     window.speechSynthesis?.getVoices(); // preload (Chrome)
-    return () => {
-      window.speechSynthesis?.cancel();
-      audio.current?.el.pause();
-    };
   }, []);
-
-  const terminar = useCallback(() => {
-    setSpeaking(false);
-    setHablando(false);
-    setPausado(false);
-    if (audio.current) {
-      URL.revokeObjectURL(audio.current.url);
-      audio.current.ctx.close().catch(() => {});
-      audio.current = null;
-    }
-  }, []);
-
-  const leerDispositivo = useCallback((texto: string) => {
-    const s = window.speechSynthesis;
-    s.cancel();
-    const v = elegirVoz();
-    const partes = trozos(limpiarParaVoz(texto));
-    partes.forEach((p, i) => {
-      const u = new SpeechSynthesisUtterance(p);
-      if (v) u.voice = v;
-      u.lang = v?.lang ?? (getLang() === "es" ? "es-AR" : "en-US");
-      u.volume = 1; // maximum the browser allows
-      u.rate = 0.95;
-      u.onstart = pulse;
-      u.onboundary = pulse; // moves the avatar's mouth on every word
-      if (i === partes.length - 1) {
-        u.onend = terminar;
-        u.onerror = terminar;
-      }
-      s.speak(u);
-    });
-  }, [terminar]);
-
-  const leer = useCallback(async (original: string) => {
-    // rules-based answers are written in English: read them in Spanish when the page is in Spanish
-    const texto = getLang() === "es" ? translate(original) ?? original : original;
-    window.speechSynthesis?.cancel();
-    audio.current?.el.pause();
-    setHablando(true);
-    setPausado(false);
-    setSpeaking(true);
-    if (serverTts !== false && "AudioContext" in window) {
-      try {
-        const r = await fetch("/api/tts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: limpiarParaVoz(texto), lang: getLang() }) });
-        if (r.status === 501) serverTts = false;
-        if (!r.ok) throw new Error("tts");
-        serverTts = true;
-        const url = URL.createObjectURL(await r.blob());
-        const el = new Audio(url);
-        const ctx = new AudioContext();
-        const gain = ctx.createGain();
-        gain.gain.value = 2.5; // louder than the device voice
-        const comp = ctx.createDynamicsCompressor(); // keeps the boost from distorting
-        comp.threshold.value = -12;
-        comp.ratio.value = 6;
-        ctx.createMediaElementSource(el).connect(gain).connect(comp).connect(ctx.destination);
-        const an = ctx.createAnalyser(); // loudness for the avatar's mouth
-        an.fftSize = 512;
-        comp.connect(an);
-        setAnalyser(an);
-        el.onended = terminar;
-        el.onerror = terminar;
-        audio.current = { el, ctx, url };
-        await el.play();
-        return;
-      } catch {
-        /* fall back to the device voice */
-      }
-    }
-    if ("speechSynthesis" in window) leerDispositivo(texto);
-    else terminar();
-  }, [leerDispositivo, terminar]);
-
-  const pausar = useCallback(() => {
-    const a = audio.current;
-    if (a) {
-      if (a.el.paused) { a.el.play(); setPausado(false); setPaused(false); } else { a.el.pause(); setPausado(true); setPaused(true); }
-      return;
-    }
-    const s = window.speechSynthesis;
-    if (s.paused) { s.resume(); setPausado(false); setPaused(false); } else { s.pause(); setPausado(true); setPaused(true); }
-  }, []);
-
-  const detener = useCallback(() => {
-    window.speechSynthesis?.cancel();
-    audio.current?.el.pause();
-    terminar();
-  }, [terminar]);
-
-  return { soportado, hablando, pausado, leer, pausar, detener };
+  return { soportado, ...e, leer: leerTexto, pausar: pausarVoz, detener: detenerVoz, preparar: prepararVoz };
 }

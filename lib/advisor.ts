@@ -9,6 +9,8 @@ export type AdvisorContext = {
   language?: "English" | "Spanish (Argentina)";
   site?: { name: string; zone: string; description: string };
   question?: string;
+  /** earlier turns of the conversation with Growwy (oldest first) */
+  history?: { q: string; a: string }[];
   place: string;
   farm: FarmProfile;
   priorities: Priorities;

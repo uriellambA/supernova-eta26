@@ -21,7 +21,7 @@ export function AIPanel({
   results: StrategyResult[];
   advice: AdvisorResult | null;
   busy: boolean;
-  onAnalyze: (question: string) => void;
+  onAnalyze: (question: string, history?: { q: string; a: string }[]) => void;
   error: string | null;
   registered: boolean;
   session: SavedSession | null;
@@ -40,6 +40,19 @@ export function AIPanel({
   const dict = useDictado((t) => setText((base.current ? base.current + " " : "") + t), lang);
   const best = advice ? results.find((r) => r.strategy.id === advice.best) : null;
 
+  // Conversation with Growwy: each question/reply and her answer, sent back with the next reply
+  const [thread, setThread] = useState<{ q: string; a: string }[]>([]);
+  const [asked, setAsked] = useState<{ q: string; reply: boolean } | null>(null);
+  const [seen, setSeen] = useState(advice);
+  if (advice !== seen) {
+    setSeen(advice);
+    if (advice && asked?.q) setThread((t) => [...(asked.reply ? t : []), { q: asked.q, a: advice.answer || advice.summary }]);
+  }
+  function ask(q: string, reply = false) {
+    setAsked({ q: q.trim(), reply });
+    onAnalyze(q, reply ? thread : []);
+  }
+
   async function readNotes() {
     if (text.trim().length < 3) return;
     setReading(true);
@@ -57,12 +70,12 @@ export function AIPanel({
 
   return (
     <div className="flex h-full flex-col gap-3">
-      <button className={`${btnPrimary} w-full py-3`} onClick={() => onAnalyze(text)} disabled={busy || !results.length}>
+      <button className={`${btnPrimary} w-full py-3`} onClick={() => ask(text)} disabled={busy || !results.length}>
         {busy ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-cta-ink border-t-transparent" /> : "✨"} {busy ? "Analyzing…" : "Analyze my field"}
         {!busy && <kbd>A</kbd>}
       </button>
 
-      <Growwy busy={busy} advice={advice} />
+      <Growwy busy={busy} advice={advice} question={asked?.q || null} isReply={!!asked?.reply} onReply={(q) => ask(q, true)} />
 
       <div className="space-y-2 rounded-xl border border-line p-3">
         <div className="flex items-center text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Your farm<Link href="/register" className="ml-auto normal-case tracking-normal text-ink underline-offset-4 hover:underline">{registered ? "Edit register" : "Register farm"} <kbd>R</kbd></Link></div>
