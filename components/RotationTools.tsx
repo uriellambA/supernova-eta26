@@ -185,7 +185,7 @@ export function RotationBuilder({ system, custom, setCustom, result, rank, total
           </div>
         )}
         <div className="mt-5"><div className="mb-1 text-[11px] font-medium text-muted">Season by season</div>{result && <SeasonStrip r={result} />}</div>
-        <p className="mt-3 text-[11px] text-subtle">Saved on this device. Your design also appears in the comparison and in the AI analysis.</p>
+        <p className="mt-3 text-[11px] text-subtle">Saved on this device. Your design also appears in the comparison and in the SI analysis.</p>
       </Card>
       <Card className="lg:col-span-5" title="How your design scores" right={result && <LevelPill level={result.level}>{result.score} / 100</LevelPill>}>
         {result ? (
@@ -230,11 +230,11 @@ export function RotationMethod() {
         <ol className="list-decimal space-y-2 pl-5 text-sm text-ink-2">
           <li><b>Water:</b> each crop&apos;s monthly need (crop coefficient × evaporation − useful rain) on your field, plus covers and alleys, compared with what your irrigation can deliver.</li>
           <li><b>Soil health:</b> bare months × spring wind × soil texture (erosion), organic matter added by each crop, nitrogen fixed by legumes and how many plant families break pest cycles.</li>
-          <li><b>Income, forage and work:</b> relative value, forage produced and labor of each crop.</li>
+          <li><b>Income, market, forage and work:</b> relative value, how many outlets the rotation sells into, forage produced and labor of each crop.</li>
           <li><b>Your priorities</b> (0–3) weight the five criteria. Each criterion mixes an absolute value with how the option ranks among those compared, so differences are visible.</li>
           <li><b>Penalties</b> when a crop needs more frost-free days than your field has, when frost hits its sensitive stage in half of the years, or when water use exceeds supply.</li>
         </ol>
-        <p className="mt-4 text-sm text-ink-2">Every strategy lists <b>why</b> it is suggested, the <b>evidence</b> (climate record, soil, snowpack), <b>benefits</b>, <b>information gaps</b> and <b>risks</b> to check with a local expert. The AI explains the result in plain words; it does not change the scores.</p>
+        <p className="mt-4 text-sm text-ink-2">Every strategy lists <b>why</b> it is suggested, the <b>evidence</b> (climate record, soil, snowpack), <b>benefits</b>, <b>information gaps</b> and <b>risks</b> to check with a local expert. The SI explains the result in plain words; it does not change the scores.</p>
         <Note kind="warn">Values come from regional references and satellite records. Validate with your own yields, a soil test and local advice (INTA, cooperatives) before changing your rotation.</Note>
       </Card>
       <Card className="lg:col-span-5" title="Words used here">

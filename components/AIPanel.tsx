@@ -146,7 +146,7 @@ export function AIPanel({
               <button className="ml-auto font-medium text-ink underline-offset-4 hover:underline" onClick={onOpenSessions}>Saved sessions ({savedCount})</button>
             </div>
             <p className="text-[10px] text-subtle">
-              {advice.source === "ai" ? "AI explanation · scores from the rotation model" : "Rotation model (AI offline)"} · confidence {advice.confidence}. Decision support only: your judgment comes first.
+              {advice.source === "ai" ? "SI explanation · scores from the rotation model" : "Rotation model (SI offline)"} · confidence {advice.confidence}. Decision support only: your judgment comes first.
             </p>
           </div>
         )}

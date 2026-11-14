@@ -45,7 +45,7 @@ export function profileFromRegister(r: FarmRegister): FarmProfile {
   return { system, areaHa: +total.toFixed(1), irrigation: main?.irrigation ?? "furrow", water, notes: r.notes };
 }
 
-/** Compact text summary for the AI. */
+/** Compact text summary for the SI. */
 export function registerSummary(r: FarmRegister) {
   return {
     farm: r.farmName || "Unnamed farm",

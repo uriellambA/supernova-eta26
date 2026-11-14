@@ -47,7 +47,7 @@ export default function Landing() {
               {SITES.map((x) => (
                 <Badge key={x.id} tone="green" dot title={x.region}>{x.name}</Badge>
               ))}
-              <Badge tone="blue">Decision support with AI</Badge>
+              <Badge tone="blue">Decision support with SI</Badge>
             </Reveal>
             <Reveal delay={80}>
               <h1 className="mt-6 max-w-4xl font-serif text-5xl leading-[0.98] tracking-tight sm:text-6xl xl:text-7xl">
@@ -117,7 +117,7 @@ export default function Landing() {
           <div className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 sm:px-6">
             <SectionTitle eyebrow="Features" title="Everything a small farm needs to plan the year" />
             <div className="mt-10 grid gap-4 md:grid-cols-6 lg:grid-cols-12">
-              <Feature className="md:col-span-6 lg:col-span-12" title="Crop rotation decision system — the heart of Growvia" badge={<Badge tone="blue">AI + rules</Badge>}
+              <Feature className="md:col-span-6 lg:col-span-12" title="Crop rotation decision system — the heart of Growvia" badge={<Badge tone="blue">SI + rules</Badge>}
                 text="Compares your existing rotation with three alternatives using water, bare-soil months, wind erosion, nitrogen, organic matter, pests, forage, income and labor — weighted by your priorities.">
                 <div className="mt-5 grid grid-cols-4 gap-1 text-[10.5px]">
                   {["Spring", "Summer", "Autumn", "Winter"].map((s) => <div key={s} className="text-subtle">{s}</div>)}
@@ -183,7 +183,7 @@ export default function Landing() {
                     ["Satellite map layers", "Imagery, vegetation, land heat, snow, relief, salinity risk", "4 sites", "Map filters and 3D view"],
                     ["Weather map", "Temperature, UV, wind, humidity, rain, pressure, clouds", "Grid over each site, now", "Weather filters on the map"],
                     ["Crop & species library", `${SPECIES.length} species, 15 traits each + economics`, "Patagonia and Pampa", "New crops and viability"],
-                    ["Your farm register", "Plots, history, soil test, water, economy", "Your farm", "Personal AI analysis"],
+                    ["Your farm register", "Plots, history, soil test, water, economy", "Your farm", "Personal SI analysis"],
                   ].map(([a, b, c, d]) => (
                     <tr key={a} className="border-b border-line last:border-0"><td className="px-6 py-3 font-medium text-ink">{a}</td><td>{b}</td><td className="whitespace-nowrap pr-4">{c}</td><td className="px-6">{d}</td></tr>
                   ))}

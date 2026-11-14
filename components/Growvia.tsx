@@ -32,6 +32,7 @@ import { SessionsModal } from "./SessionsModal";
 import { buildSession, listSessions, saveSession, sessionLink, type SavedSession } from "@/lib/session";
 import { SmapStatus } from "./SmapStatus";
 import { RotationBuilder, RotationHero, RotationMatrix, RotationMethod } from "./RotationTools";
+import { RotationExplorer } from "./RotationExplorer";
 import { LangToggle } from "./Translator";
 import { getLang } from "@/lib/i18n";
 import { Forecast, Frost, Options, Overview, Soil, Water } from "./Sections";
@@ -155,7 +156,7 @@ export function Growvia() {
       if (!online) throw new Error("Offline: showing the rules-based answer.");
       const r = await fetch("/api/advisor", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(ctx) });
       const j = await r.json();
-      if (!r.ok) throw new Error(r.status === 501 ? "AI key not configured: showing the rules-based answer." : "AI unavailable: showing the rules-based answer.");
+      if (!r.ok) throw new Error(r.status === 501 ? "SI key not configured: showing the rules-based answer." : "SI unavailable: showing the rules-based answer.");
       adv = j;
     } catch (e) {
       adv = localAdvice(ctx, results, fits);
@@ -280,7 +281,7 @@ export function Growvia() {
               <Reveal delay={80} className="flex flex-col rounded-2xl border border-line bg-surface p-6 md:col-span-6 lg:col-span-4">
                 <div className="mb-4 flex items-center gap-2">
                   <span className="font-serif text-2xl leading-none">Decision support</span>
-                  <Badge tone="blue">AI</Badge>
+                  <Badge tone="blue">SI</Badge>
                 </div>
                 <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems} />
                 {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => go("plan", "seasons")}>See the year plan →</button>}
@@ -348,6 +349,7 @@ export function Growvia() {
               {sub === "rotations" && (
                 <Rotations results={results} pri={pri} setPri={setPri}>
                   <RotationMatrix results={results} />
+                  <RotationExplorer results={results} site={site} />
                 </Rotations>
               )}
               {sub === "builder" && (() => {

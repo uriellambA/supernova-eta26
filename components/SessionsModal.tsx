@@ -4,7 +4,7 @@ import { deleteSession, sessionLink, type SavedSession } from "@/lib/session";
 import { SessionActions, SessionView } from "./SessionView";
 import { Badge, btnGhost } from "./ui";
 
-/** Every AI analysis saved on this device: open, share again or delete. */
+/** Every SI analysis saved on this device: open, share again or delete. */
 export function SessionsModal({ open, onClose, sessions, setSessions }: { open: boolean; onClose: () => void; sessions: SavedSession[]; setSessions: (s: SavedSession[]) => void }) {
   const [sel, setSel] = useState<SavedSession | null>(null);
   const [link, setLink] = useState<string | null>(null);

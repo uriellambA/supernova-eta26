@@ -37,7 +37,7 @@ export function SessionActions({ s, link, compact = false }: { s: SavedSession; 
   );
 }
 
-/** A saved AI session, readable on screen and printable as the PDF report. */
+/** A saved SI session, readable on screen and printable as the PDF report. */
 export function SessionView({ s, link }: { s: SavedSession; link: string | null }) {
   const [qr, setQr] = useState<string | null>(null);
   useEffect(() => {
@@ -156,7 +156,7 @@ export function SessionView({ s, link }: { s: SavedSession; link: string | null 
       </div>
 
       <footer className="border-t border-line pt-3 text-[11px] text-muted">
-        {`${s.advice.source === "ai" ? "AI explanation · scores from the rotation model" : "Rotation model (AI offline)"} · confidence ${s.advice.confidence}.`}
+        {`${s.advice.source === "ai" ? "SI explanation · scores from the rotation model" : "Rotation model (SI offline)"} · confidence ${s.advice.confidence}.`}
         {" "}Decision-support tool: it highlights patterns and options, it does not replace the farmer&apos;s judgment or local agronomic advice.
         {link && <span className="hidden break-all print:block">{link.length < 400 ? link : ""}</span>}
       </footer>

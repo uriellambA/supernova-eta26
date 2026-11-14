@@ -74,7 +74,13 @@ function evaluate(s: Strategy, site: SiteData) {
   const income = clamp(avg(mains.map((c) => c.income)) * (mono ? 0.82 : 1));
   const labor = clamp(avg(mains.map((c) => c.labor)) + (winters.some((w) => w && w.kind === "cover") ? 0.05 : 0));
 
-  return { mains, alley, metrics: { waterMm, bareMonths, erosion, nitrogen: Math.round(nitrogen), organicMatter, pestBreak, forage, income, labor } };
+  // Market: distinct outlets that bring money (sales or hay/grazing) spread price and buyer risk
+  const used = [...new Map([...mains, ...winters, alley].filter((c): c is Crop => !!c).map((c) => [c.id, c])).values()];
+  const outlets = [...new Set(used.filter((c) => c.income >= 0.3 || c.forage >= 0.75).map((c) => c.market))];
+  const market = clamp(0.3 + (outlets.length - 1) * 0.25 + avg(mains.map((c) => c.income)) * 0.2 - (mono ? 0.15 : 0));
+  const deepRoots = used.length ? used.filter((c) => c.root === "deep").length / used.length : 0;
+
+  return { mains, alley, metrics: { waterMm, bareMonths, erosion, nitrogen: Math.round(nitrogen), organicMatter, pestBreak, forage, income, labor, market, outlets, deepRoots } };
 }
 
 export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priorities, extra: Strategy[] = []): StrategyResult[] {
@@ -160,6 +166,7 @@ export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priori
       if (m.forage > c0.forage + 0.1) benefits.push("Produces forage for livestock");
       if (m.income > c0.income + 0.05) benefits.push("Adds a higher-value or second income");
       if (m.income < c0.income - 0.1) risks.push("Lower income per hectare in some years");
+      if (m.outlets.length > c0.outlets.length) benefits.push(`Sells into ${m.outlets.length} markets instead of ${c0.outlets.length}: less exposed to one price`);
     } else {
       why.push("This is your existing rotation: the baseline to compare against.");
     }

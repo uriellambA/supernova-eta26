@@ -5,7 +5,7 @@ export type SiteConfig = {
   name: string;
   region: string; // province / country label
   zone: Region; // agro-ecological zone (selects crops, rotations and hazards)
-  description: string; // one paragraph for the AI and the dashboard
+  description: string; // one paragraph for the SI and the dashboard
   systems: FarmSystem[]; // farming systems typical of the site (first = default)
   busyMonths: number[]; // months when today's main crops are harvested
   context: string[]; // regional market/agronomy notes (Viability tab)
@@ -39,6 +39,7 @@ export type Crop = {
   income: number;
   labor: number;
   market: string;
+  drought?: boolean; // tolerates dry spells once established
   kc: number[];
 };
 
@@ -239,6 +240,9 @@ export type StrategyResult = {
     forage: number;
     income: number;
     labor: number;
+    market: number; // 0..1: how many outlets the rotation sells into (spreads price risk)
+    outlets: string[];
+    deepRoots: number; // 0..1 share of crops with deep roots
   };
   scores: Record<keyof Priorities, number>;
   why: string[];

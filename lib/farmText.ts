@@ -1,6 +1,6 @@
 import type { FarmProfile } from "./types";
 
-/** Rule-based reading of the farmer's description (fallback when AI is not available). English + Spanish keywords. */
+/** Rule-based reading of the farmer's description (fallback when SI is not available). English + Spanish keywords. */
 export function readFarmText(text: string): Partial<FarmProfile> & { followUp: string[] } {
   const t = text.toLowerCase();
   const out: Partial<FarmProfile> & { followUp: string[] } = { followUp: [], notes: text.slice(0, 400) };

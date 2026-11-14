@@ -50,6 +50,6 @@ export async function POST(req: Request) {
     throw last;
   } catch (e) {
     const noKey = e instanceof SinClaveError;
-    return Response.json({ error: noKey ? "AI not configured" : `AI unavailable: ${(e as Error).message}` }, { status: noKey ? 501 : 502 });
+    return Response.json({ error: noKey ? "SI not configured" : `SI unavailable: ${(e as Error).message}` }, { status: noKey ? 501 : 502 });
   }
 }

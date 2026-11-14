@@ -74,7 +74,7 @@ export function buildContext(
   };
 }
 
-/** Rule-based explanation (offline or without an AI key). */
+/** Rule-based explanation (offline or without an SI key). */
 /** Rules-based answer to a free question: picks the season mentioned and lists what fits it. */
 function localAnswer(q: string, ctx: AdvisorContext, res?: StrategyResult[], fits?: SpeciesFit[]) {
   const t = q.toLowerCase();

@@ -14,19 +14,19 @@ Growvia es una herramienta de apoyo a la decisión (en inglés) para productores
 | Ruta | Qué es |
 |---|---|
 | `/` | **Introducción**: qué es Growvia, comparador "índice de vegetación vs imagen original", cómo funciona (con capturas reales), funciones en bento y **la base de datos** que usa |
-| `/app` | **Panel** dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, IA y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
+| `/app` | **Panel** dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, SI y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
 | `/register` | **Registro del productor**: chacra (con **búsqueda por calle**, ubicación en el mapa satelital y **dibujo del límite** que calcula hectáreas y perímetro), lotes, qué hubo en cada estación, agua, análisis de suelo, economía y objetivos. Se guarda en el dispositivo y se puede exportar o importar en JSON |
 
 ### Pestañas del panel (atajos `1`–`5`)
 | Pestaña | Sub-pestañas |
 |---|---|
-| Resumen | **la mejor rotación para tu campo arriba de todo** (puntaje vs la actual, ranking, estaciones), mapa satelital con el límite de la chacra, IA, vegetación, clima de hoy, salud del suelo, alertas |
-| **Rotación de cultivos** (lo central) | Comparar rotaciones (tabla lado a lado + tarjetas con por qué, evidencia, beneficios, vacíos y riesgos) · **Diseñar la tuya** (armás tu rotación año por año, o partís del registro, y se puntúa junto a las demás) · Plan del año · Cómo se calcula (método y glosario) |
+| Resumen | **la mejor rotación para tu campo arriba de todo** (puntaje vs la actual, ranking, estaciones), mapa satelital con el límite de la chacra, SI, vegetación, clima de hoy, salud del suelo, alertas |
+| **Rotación de cultivos** (lo central) | Comparar rotaciones (tabla lado a lado, **explorador de 2 escenarios** con ciclo de nutrientes, erosión, materia orgánica, plagas, agua, forraje y mercado, **mapa de qué idea sirve para cada objetivo**, **cómo ayuda al suelo cada tipo de cultivo** + tarjetas con por qué, evidencia, beneficios, vacíos y riesgos) · **Diseñar la tuya** (armás tu rotación año por año, o partís del registro, y se puntúa junto a las demás) · Plan del año · Cómo se calcula (método y glosario) |
 | Cultivos y economía | Cultivos nuevos · Viabilidad · Qué podés hacer (geotermia, hidroponía, goteo) |
 | Clima y riesgos | Pronóstico · Contingencias · Heladas · Registro climático |
 | Suelo y agua | Suelo · Riego |
 
-Atajos: `A` analizar con IA · `D` vista 3D · `H` hardware · `R` registro · `S` guardar registro.
+Atajos: `A` analizar con el SI · `D` vista 3D · `H` hardware · `R` registro · `S` guardar registro.
 
 ### Filtro de riesgo de salinidad (SMAP)
 En el mapa, el filtro **Salinity risk · SMAP** pinta el riesgo de acumulación de sales a partir de la humedad del suelo del satélite **SMAP** (primeros 5 cm, 9 km). Las capas se toman de GIBS y se decodifican con su paleta oficial. En la pestaña Suelo, `/api/smap` lee el valor de SMAP en el punto (8 semanas) y lo suma a la estimación de salinidad.
@@ -56,7 +56,7 @@ El botón de tema alterna **claro → oscuro → tierra**. El tema tierra es roj
 - **Voz:** usa la voz más natural del dispositivo al máximo volumen y lee frase por frase. Para una voz más fuerte y clara, cargá `TTS_API_KEY` (API compatible con OpenAI): esa voz se amplifica ×2,5 con compresor.
 
 ### Idioma EN / ES
-El botón **EN | ES** de cada encabezado traduce toda la página al español (Argentina) o la deja en inglés. Se recuerda en el dispositivo y la primera vez sigue el idioma del navegador. La IA responde en el idioma elegido, y la voz y el dictado también lo usan. Para traducir un texto nuevo, agregalo a `lib/i18n-es.ts` (`{n}` = número, `{x}` = texto).
+El botón **EN | ES** de cada encabezado traduce toda la página al español (Argentina) o la deja en inglés. Se recuerda en el dispositivo y la primera vez sigue el idioma del navegador. El SI responde en el idioma elegido, y la voz y el dictado también lo usan. Para traducir un texto nuevo, agregalo a `lib/i18n-es.ts` (`{n}` = número, `{x}` = texto).
 
 ### Imagen satelital real de una chacra (introducción)
 El comparador de la introducción muestra una **chacra real de Los Antiguos**: a la derecha, la foto satelital de alta resolución; a la izquierda, el **NDVI**. Para generar las imágenes definitivas (hace falta internet, no hace falta ninguna clave):
@@ -73,7 +73,7 @@ Mientras esas imágenes no existan, la página arma la imagen satelital real en 
 - **Cultivos nuevos:** `config/species.ts` reúne 20 especies (cereza y frutilla actuales más haskap, calafate, rosa mosqueta, espino amarillo, azafrán, lavanda, lúpulo, ruibarbo, espárrago, saúco, avellano, quinoa, verduras en túnel, manzana, arándano, nogal). Cada una se evalúa contra la helada en floración, el frío invernal, el calor, las horas de frío, el pH, la salinidad, el agua y el viento.
 - **Viabilidad:** rendimiento, precio, margen, inversión y años de recupero, ajustados por la aptitud del lote. Incluye un contexto regional.
 - **Contingencias:** heladas tardías, viento, sequía o poca nieve, calor/UV, granizo y ceniza volcánica, con un plan de antes, durante y después. Suma **El Niño / La Niña** (índice ONI en vivo) y qué significó cada fase en ese campo en los últimos 20 años.
-- **IA:** también usa el registro, las especies, la salud del suelo y la fase del Pacífico. Devuelve un plan por estación y hasta 3 cultivos nuevos.
+- **SI:** también usa el registro, las especies, la salud del suelo y la fase del Pacífico. Devuelve un plan por estación y hasta 3 cultivos nuevos.
 - **Hardware:** el Field Node suma sensores de salinidad (EC), aire (temperatura, humedad, presión) y UV.
 
 En la interfaz no aparecen las marcas de las fuentes de datos, para que se vea como un producto real. Las fuentes están en [`docs/estudio-suelo-los-antiguos.md`](docs/estudio-suelo-los-antiguos.md): NASA POWER (temperatura, lluvia, viento, humedad, presión, UV, humedad del suelo), MODIS MOD13Q1 (NDVI/EVI) y capas GIBS, más SoilGrids, Open-Meteo y el índice ONI de NOAA. **Hay que nombrarlas en el pitch y en la página del proyecto para los jueces.**
@@ -85,7 +85,7 @@ npm install
 ```bash
 npm run dev
 ```
-Abrir http://localhost:3000 (introducción) o http://localhost:3000/app (panel). Para activar la IA, copiar `.env.example` a `.env.local` y cargar `OPENROUTER_API_KEY`.
+Abrir http://localhost:3000 (introducción) o http://localhost:3000/app (panel). Para activar el SI, copiar `.env.example` a `.env.local` y cargar `OPENROUTER_API_KEY`.
 
 Sin internet, con datos de muestra:
 ```bash
@@ -119,7 +119,7 @@ npm run soil-study -- --offline
 ## ☁️ Deploy en Vercel
 1. En Vercel: **Add New → Project → Import** el repo `supernova-eta26`. El framework se detecta solo: **Next.js**.
 2. **No cambies los comandos.** `vercel.json` ya fija `npm install` y `npm run build`. Nunca uses `npm run dev` como comando de build: es un servidor que no termina y el deploy queda colgado.
-3. Settings → **Environment Variables**: `OPENROUTER_API_KEY` (opcional; sin ella la IA usa la respuesta por reglas). **No** cargues `MOCK_DATA`.
+3. Settings → **Environment Variables**: `OPENROUTER_API_KEY` (opcional; sin ella el SI usa la respuesta por reglas). **No** cargues `MOCK_DATA`.
 4. Rama: Vercel publica en producción la rama **main**. Los pushes a otras ramas (por ejemplo `claude/tender-goldberg-h7s3dz`) generan un *Preview* con su propia URL. Para producción, uní la rama a `main` o cambiá la *Production Branch* en Settings → Git.
 
 Si en local aparece un error de *hydration* con textos viejos, limpiá el caché de compilación:
@@ -134,14 +134,15 @@ config/crops.ts        cultivos de las rotaciones (Kc mensual, N, cobertura…)
 config/species.ts      20 especies: actuales y nuevas, rasgos agronómicos y economía
 config/rotations.ts    estrategias de rotación por sistema
 lib/rotation.ts        motor de comparación de rotaciones
+components/RotationExplorer.tsx  explorador: 2 escenarios × 7 miradas, mapa de ajuste idea↔objetivo, rol de cada tipo de cultivo
 lib/seasons.ts         grilla por estación y plan anual
 lib/suitability.ts     aptitud + viabilidad de especies, cobertura de cosecha por mes
 lib/soil.ts            SoilGrids, Saxton & Rawls, salinidad, salud del suelo
 lib/enso.ts            El Niño / La Niña (ONI) e impactos por fase en el campo
 lib/contingency.ts     contingencias con estado en vivo y planes
-lib/register.ts        registro del productor → perfil para el motor y la IA
+lib/register.ts        registro del productor → perfil para el motor y el SI
 app/page.tsx           introducción · app/app: panel · app/register: registro
-app/api/*              climate, vegetation, forecast, snow, soil, enso, farm (IA), advisor (IA)
+app/api/*              climate, vegetation, forecast, snow, soil, enso, farm (SI), advisor (SI)
 components/            Growvia (panel bento), PlanSections, Sections, RegisterForm, landing/*, ui
 scripts/soil-study.ts  comando de estudio de suelo avanzado
 ```

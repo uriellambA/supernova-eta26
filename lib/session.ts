@@ -1,5 +1,5 @@
 "use client";
-// A "session" = one AI analysis of a field, saved on the device and shareable as a link.
+// A "session" = one SI analysis of a field, saved on the device and shareable as a link.
 // The link carries the whole session compressed in the URL hash (#…), so nothing is stored on a server.
 import { speciesById } from "@/config/species";
 import { SEASONS, shortDate } from "./agro";

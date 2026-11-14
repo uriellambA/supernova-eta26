@@ -215,7 +215,7 @@ export function NewCrops({ fits, advice, site }: { fits: SpeciesFit[]; advice: A
                   <div className="mt-1.5 flex flex-wrap gap-1">
                     <Badge tone={s.status === "current" ? "blue" : "neutral"}>{s.status === "current" ? "Grown today" : s.group}</Badge>
                     {s.status === "new" && f.fillsGap && <Badge tone="green">Fills off-season</Badge>}
-                    {picked.has(s.id) && <Badge tone="blue">✨ AI pick</Badge>}
+                    {picked.has(s.id) && <Badge tone="blue">✨ SI pick</Badge>}
                   </div>
                 </div>
                 <div className="text-right">

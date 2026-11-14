@@ -164,7 +164,7 @@ export function RegisterForm() {
       <main className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <h1 className="font-serif text-4xl leading-none">Farm register</h1>
-          <p className="mt-3 text-sm text-muted">Tell {APP_NAME} about your farm once. The AI uses it to compare rotations, plan the seasons and suggest new crops.</p>
+          <p className="mt-3 text-sm text-muted">Tell {APP_NAME} about your farm once. The SI uses it to compare rotations, plan the seasons and suggest new crops.</p>
           <ol className="mt-6 hidden space-y-1 lg:block">
             {STEPS.map((s, i) => (
               <li key={s.id}>
