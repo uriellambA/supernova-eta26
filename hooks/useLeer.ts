@@ -7,19 +7,19 @@ export function limpiarParaVoz(t: string) {
     .replace(/\[[^\]]*\]/g, "")
     .replace(/[*_#>`]/g, "")
     .replace(/\p{Extended_Pictographic}/gu, "")
-    .replace(/°C/g, " grados")
+    .replace(/°C/g, " degrees")
     .replace(/\s+/g, " ")
     .trim();
 }
 
 function elegirVoz(): SpeechSynthesisVoice | null {
   const voces = window.speechSynthesis.getVoices();
-  const pref = ["es-AR", "es-419", "es-US", "es-MX", "es-ES"];
+  const pref = ["en-US", "en-GB", "en-AU", "en-CA"];
   for (const p of pref) {
     const v = voces.find((x) => x.lang.replace("_", "-").toLowerCase() === p.toLowerCase());
     if (v) return v;
   }
-  return voces.find((x) => x.lang.toLowerCase().startsWith("es")) ?? null;
+  return voces.find((x) => x.lang.toLowerCase().startsWith("en")) ?? null;
 }
 
 /** Lectura en voz alta con las voces del dispositivo (funciona sin conexión). */
@@ -42,7 +42,7 @@ export function useLeer() {
     const u = new SpeechSynthesisUtterance(limpiarParaVoz(texto));
     const v = elegirVoz();
     if (v) u.voice = v;
-    u.lang = v?.lang ?? "es-AR";
+    u.lang = v?.lang ?? "en-US";
     u.rate = 0.95;
     u.onend = () => {
       setHablando(false);

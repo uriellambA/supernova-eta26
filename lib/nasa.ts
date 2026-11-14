@@ -3,7 +3,7 @@ import { fetchJson } from "./cache";
 import type { DiarioClima, IndicadoresNasa, NdviResumen, PuntoNdvi } from "./types";
 
 const POWER = "https://power.larc.nasa.gov/api/temporal/daily/point";
-const PARAMS = ["T2M_MIN", "T2M_MAX", "PRECTOTCORR", "WS2M", "GWETROOT"];
+const PARAMS = ["T2M_MIN", "T2M_MAX", "PRECTOTCORR", "WS2M", "GWETROOT", "GWETTOP"];
 
 /** Descarga 20 años de clima diario de NASA POWER (comunidad AG). */
 export async function powerDiario(lat: number, lon: number): Promise<DiarioClima> {
@@ -26,12 +26,13 @@ export async function powerDiario(lat: number, lon: number): Promise<DiarioClima
     lluvia: claves.map((k) => val("PRECTOTCORR", k)),
     viento: claves.map((k) => val("WS2M", k)),
     humedadRaiz: claves.map((k) => val("GWETROOT", k)),
+    humedadSup: claves.map((k) => val("GWETTOP", k)),
   };
 }
 
 export async function indicadoresNasa(lat: number, lon: number): Promise<IndicadoresNasa> {
   const d = await powerDiario(lat, lon);
-  return calcularIndicadores(d, lat, lon, "NASA POWER (LaRC) — comunidad AG, diario");
+  return calcularIndicadores(d, lat, lon);
 }
 
 const ORNL = "https://modis.ornl.gov/rst/api/v1/MOD13Q1";
@@ -62,10 +63,10 @@ export async function ndviModis(lat: number, lon: number): Promise<NdviResumen> 
     }
   }
   serie.sort((a, b) => a.fecha.localeCompare(b.fecha));
-  return resumenNdvi(serie, "NASA MODIS MOD13Q1 (ORNL DAAC) — NDVI 250 m, 16 días");
+  return resumenNdvi(serie);
 }
 
-export function resumenNdvi(serie: PuntoNdvi[], fuente: string): NdviResumen {
+export function resumenNdvi(serie: PuntoNdvi[]): NdviResumen {
   const ultimo = serie.at(-1) ?? null;
   let anioAnterior: PuntoNdvi | null = null;
   if (ultimo) {
@@ -75,5 +76,5 @@ export function resumenNdvi(serie: PuntoNdvi[], fuente: string): NdviResumen {
       return dif < 20 * 86_400_000 && (!mejor || dif < Math.abs(Date.parse(mejor.fecha) - objetivo)) ? p : mejor;
     }, null);
   }
-  return { fuente, serie, ultimo, anioAnterior };
+  return { serie, ultimo, anioAnterior };
 }

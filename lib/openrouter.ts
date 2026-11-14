@@ -2,7 +2,7 @@ import { APP_NAME } from "@/config/app";
 
 export class SinClaveError extends Error {
   constructor() {
-    super("Falta OPENROUTER_API_KEY");
+    super("Missing OPENROUTER_API_KEY");
   }
 }
 

@@ -1,9 +1,9 @@
-// Service worker: modo offline. Sube VERSION para invalidar caches viejos.
-const VERSION = "v1";
+// Service worker: offline mode. Bump VERSION to invalidate old caches.
+const VERSION = "v2";
 const SHELL = `shell-${VERSION}`;
 const DATOS = `datos-${VERSION}`;
 const TILES = `tiles-${VERSION}`;
-const PRECACHE = ["/", "/chacra", "/manifest.webmanifest", "/icons/icon.svg", "/icons/icon-192.png"];
+const PRECACHE = ["/", "/manifest.webmanifest", "/icons/icon.svg", "/icons/icon-192.png"];
 const MAX_TILES = 600;
 
 self.addEventListener("install", (e) => {
@@ -69,7 +69,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
   // Tiles del mapa (satélite, OSM, NASA GIBS)
-  if (/arcgisonline\.com|tile\.openstreetmap\.org|gibs\.earthdata\.nasa\.gov/.test(url.host)) {
+  if (/arcgisonline\.com|elevation-tiles-prod|gibs\.earthdata\.nasa\.gov/.test(url.host)) {
     e.respondWith(cachePrimero(req, TILES));
     return;
   }
@@ -80,12 +80,12 @@ self.addEventListener("fetch", (e) => {
     return;
   }
   // Datos que cambian poco (NASA, nieve): mostrar lo guardado y actualizar en segundo plano
-  if (/^\/api\/(nasa|ndvi|nieve)/.test(url.pathname)) {
+  if (/^\/api\/(climate|vegetation|snow|soil)/.test(url.pathname)) {
     e.respondWith(staleWhileRevalidate(req, DATOS));
     return;
   }
   // Pronóstico: red primero, con respaldo
-  if (url.pathname.startsWith("/api/weather")) {
+  if (url.pathname.startsWith("/api/forecast")) {
     e.respondWith(redPrimero(req, DATOS));
     return;
   }

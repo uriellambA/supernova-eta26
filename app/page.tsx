@@ -1,5 +1,5 @@
-import { Inicio } from "@/components/Inicio";
+import { Growvia } from "@/components/Growvia";
 
 export default function Page() {
-  return <Inicio />;
+  return <Growvia />;
 }

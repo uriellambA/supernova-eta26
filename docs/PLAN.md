@@ -9,11 +9,13 @@
 
 ---
 
-## 🟢 Estado (v0.1 construida)
-La primera versión ya está en el repo. Ver el [README](../README.md) para correrla.
-- ✅ Hechas: S2, S6, A1, A3, A4, A5, A6, B1, B2, B3, C1, C2, C3, D1, E2a, E6a, E5a, E1b, E3a, E3b, E4a, E4b, E8a (SW propio en lugar de Serwist), E8b, E7a.
-- 🟡 Parciales: E1a (nieve con ERA5 como plan B; falta MODIS Snow vía AppEEARS) · B4 (no hay datos precacheados de las zonas; el SW y IndexedDB guardan lo consultado).
-- ⬜ Pendientes: S1 (leer la página del desafío), S3 (conectar a Vercel), S4 (clave de OpenRouter), S5 (Earthdata/AppEEARS), A2 (polígono), C4 (chat), C5 (respuestas cacheadas para la demo), D2 (ajustar coordenadas), D3–D6 (textos y pitch).
+## 🔄 Cambio de enfoque (v0.2: Growvia)
+El equipo redefinió el proyecto. **Este plan queda como historial; la versión vigente está en el [README](../README.md).**
+- Nombre: **Growvia** · app en **inglés** · **tema oscuro** · diseño según el prototipo (IA a la izquierda, mapa, filtros a la derecha, estadísticas abajo).
+- Zona: **Los Antiguos (Santa Cruz)**, en lugar del Alto Valle.
+- Foco del desafío: **comparar estrategias de rotación** (la actual + 3 alternativas) para la salud del suelo y el agua.
+- Nuevo: estudio de suelo ([`estudio-suelo-los-antiguos.md`](estudio-suelo-los-antiguos.md)), "What you can do" (geotermia, hidroponía, goteo), **3D View**, **Hardware** (sensores en el campo).
+- En la interfaz no aparecen las marcas de las fuentes de datos; se documentan para el pitch.
 
 ## Índice
 1. [Alcance final (qué entra y qué no)](#1-alcance-final)

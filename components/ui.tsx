@@ -1,43 +1,18 @@
 import type { ReactNode } from "react";
 import type { Nivel } from "@/lib/types";
 
-export const ICONO_NIVEL: Record<Nivel, string> = { verde: "🟢", amarillo: "🟡", rojo: "🔴" };
-const PALABRA: Record<Nivel, string> = { verde: "Bien", amarillo: "Atención", rojo: "Alerta" };
-const ESTILO: Record<Nivel, string> = {
-  verde: "border-emerald-300 bg-emerald-50 text-emerald-950",
-  amarillo: "border-amber-300 bg-amber-50 text-amber-950",
-  rojo: "border-red-300 bg-red-50 text-red-950",
-};
+export const LEVEL_DOT: Record<Nivel, string> = { good: "bg-emerald-400", watch: "bg-amber-400", alert: "bg-rose-500" };
+export const LEVEL_TEXT: Record<Nivel, string> = { good: "text-emerald-300", watch: "text-amber-300", alert: "text-rose-300" };
+export const LEVEL_RING: Record<Nivel, string> = { good: "border-emerald-500/50", watch: "border-amber-500/50", alert: "border-rose-500/50" };
+const LEVEL_WORD: Record<Nivel, string> = { good: "Good", watch: "Watch", alert: "Alert" };
 
-export function Semaforo({ nivel, titulo, texto, fuente }: { nivel: Nivel; titulo: string; texto: string; fuente?: string }) {
+export function Panel({ title, children, right, className = "" }: { title?: ReactNode; children: ReactNode; right?: ReactNode; className?: string }) {
   return (
-    <div className={`rounded-2xl border-2 p-3 ${ESTILO[nivel]}`} role="status">
-      <div className="flex items-center gap-2 font-semibold">
-        <span aria-hidden className="text-xl">{ICONO_NIVEL[nivel]}</span>
-        <span>{titulo}</span>
-        <span className="ml-auto rounded-full bg-white/70 px-2 py-0.5 text-xs font-bold uppercase tracking-wide">{PALABRA[nivel]}</span>
-      </div>
-      <p className="mt-1 text-sm leading-snug">{texto}</p>
-      {fuente && <Fuente>{fuente}</Fuente>}
-    </div>
-  );
-}
-
-export function Fuente({ children }: { children: ReactNode }) {
-  return (
-    <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-slate-900/5 px-2 py-0.5 text-[11px] font-medium text-slate-600">
-      📡 {children}
-    </span>
-  );
-}
-
-export function Tarjeta({ titulo, children, extra, className = "" }: { titulo?: ReactNode; children: ReactNode; extra?: ReactNode; className?: string }) {
-  return (
-    <section className={`rounded-2xl border border-slate-200 bg-white p-4 shadow-sm ${className}`}>
-      {(titulo || extra) && (
+    <section className={`rounded-2xl border border-white/10 bg-slate-900/80 p-4 ${className}`}>
+      {(title || right) && (
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          {titulo && <h3 className="text-base font-bold text-slate-900">{titulo}</h3>}
-          {extra && <div className="ml-auto">{extra}</div>}
+          {title && <h3 className="text-sm font-bold tracking-wide text-slate-100">{title}</h3>}
+          {right && <div className="ml-auto">{right}</div>}
         </div>
       )}
       {children}
@@ -45,36 +20,50 @@ export function Tarjeta({ titulo, children, extra, className = "" }: { titulo?: 
   );
 }
 
-export function Dato({ etiqueta, valor, unidad, ayuda }: { etiqueta: string; valor: ReactNode; unidad?: string; ayuda?: string }) {
+export function Stat({ label, value, unit, hint }: { label: string; value: ReactNode; unit?: string; hint?: string }) {
   return (
-    <div className="rounded-xl bg-slate-50 p-3" title={ayuda}>
-      <div className="text-xs font-medium text-slate-500">{etiqueta}</div>
-      <div className="mt-0.5 text-2xl font-bold tabular-nums text-slate-900">
-        {valor}
-        {unidad && <span className="ml-1 text-sm font-medium text-slate-500">{unidad}</span>}
+    <div className="rounded-xl bg-white/[0.04] p-3" title={hint}>
+      <div className="text-[11px] font-medium uppercase tracking-wide text-slate-400">{label}</div>
+      <div className="mt-0.5 text-2xl font-bold tabular-nums text-white">
+        {value}
+        {unit && <span className="ml-1 text-xs font-medium text-slate-400">{unit}</span>}
       </div>
-      {ayuda && <div className="mt-0.5 text-xs leading-snug text-slate-500">{ayuda}</div>}
+      {hint && <div className="mt-0.5 text-[11px] leading-snug text-slate-500">{hint}</div>}
     </div>
   );
 }
 
-export function Aviso({ tipo = "info", children }: { tipo?: "info" | "alerta" | "error"; children: ReactNode }) {
-  const s = { info: "border-sky-200 bg-sky-50 text-sky-900", alerta: "border-amber-300 bg-amber-50 text-amber-900", error: "border-red-200 bg-red-50 text-red-900" }[tipo];
+export function LevelPill({ level, children }: { level: Nivel; children?: ReactNode }) {
+  return (
+    <span className={`inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2 py-0.5 text-xs font-semibold ${LEVEL_TEXT[level]}`}>
+      <span className={`h-2 w-2 rounded-full ${LEVEL_DOT[level]}`} />
+      {children ?? LEVEL_WORD[level]}
+    </span>
+  );
+}
+
+export function Note({ kind = "info", children }: { kind?: "info" | "warn"; children: ReactNode }) {
+  const s = kind === "warn" ? "border-amber-500/30 bg-amber-500/10 text-amber-100" : "border-sky-500/20 bg-sky-500/10 text-sky-100";
   return <div className={`rounded-xl border px-3 py-2 text-sm ${s}`}>{children}</div>;
 }
 
-export function Cargando({ texto = "Cargando datos…" }: { texto?: string }) {
+export function Spinner({ text = "Loading…" }: { text?: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-dashed border-slate-300 p-6 text-slate-500">
-      <span className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 border-t-transparent" />
-      {texto}
+    <div className="flex items-center gap-3 rounded-xl border border-dashed border-white/15 p-5 text-sm text-slate-400">
+      <span className="h-4 w-4 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
+      {text}
     </div>
   );
 }
 
-export const botonPrimario =
-  "inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-3 font-semibold text-white shadow-sm transition hover:bg-emerald-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50";
-export const botonSecundario =
-  "inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50";
-export const campo =
-  "w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/30";
+export function DemoBadge({ show }: { show?: boolean }) {
+  if (!show) return null;
+  return <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[11px] font-semibold text-amber-300" title="Running with sample data (offline development mode)">Sample data</span>;
+}
+
+export const btnPrimary =
+  "inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40";
+export const btnGhost =
+  "inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40";
+export const input =
+  "w-full rounded-lg border border-white/10 bg-slate-950/60 px-2.5 py-1.5 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/20";

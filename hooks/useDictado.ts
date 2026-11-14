@@ -23,7 +23,7 @@ const ctor = (): CtorReconocedor | null => {
 };
 
 /** Dictado por voz en español rioplatense. onTexto recibe la transcripción completa de la sesión. */
-export function useDictado(onTexto: (texto: string) => void, lang = "es-AR") {
+export function useDictado(onTexto: (texto: string) => void, lang = "en-US") {
   const [soportado, setSoportado] = useState(false);
   const [escuchando, setEscuchando] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,7 +53,7 @@ export function useDictado(onTexto: (texto: string) => void, lang = "es-AR") {
     };
     r.onend = () => setEscuchando(false);
     r.onerror = (e) => {
-      setError(e.error === "not-allowed" ? "Permití el micrófono para dictar" : e.error === "network" ? "El dictado necesita conexión" : "No se pudo escuchar");
+      setError(e.error === "not-allowed" ? "Allow microphone access to dictate" : e.error === "network" ? "Dictation needs an internet connection" : "Could not hear you, try again");
       setEscuchando(false);
     };
     rec.current = r;

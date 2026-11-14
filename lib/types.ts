@@ -1,113 +1,106 @@
-export type Zona = {
+// ---------- Site & configuration ----------
+export type FieldPreset = { id: string; name: string; lat: number; lon: number; note: string };
+export type SiteConfig = {
   id: string;
-  nombre: string;
-  lat: number;
-  lon: number;
-  perfil: string;
-  demo?: boolean;
-};
-
-export type Cuenca = {
-  id: string;
-  nombre: string;
-  peso: number; // importancia para el riego de la región (suman 1)
-  puntos: [number, number][]; // [lat, lon] de muestreo en la cordillera
-};
-
-export type RegionConfig = {
-  id: string;
-  nombre: string;
-  idioma: string;
+  name: string;
+  region: string;
   timezone: string;
-  centro: [number, number];
+  center: [number, number]; // [lon, lat]
   zoom: number;
-  zonas: Zona[];
-  cuencasNieve: Cuenca[];
-  riego: {
-    sistemaDefault: SistemaRiego;
-    turnoDefaultDias: number;
-    dotacionBrutaMm: number; // agua bruta que entrega el sistema por temporada
-    organismo: string;
-  };
-  fuentesLocales: string[];
+  bounds: [[number, number], [number, number]];
+  fields: FieldPreset[];
+  watershed: { name: string; points: [number, number][] }; // [lat, lon]
+  irrigation: { defaultMethod: SistemaRiego; grossSupplyMm: number };
+  soilReference: SoilValues;
 };
 
-export type SistemaRiego = "manto" | "surco" | "aspersion" | "goteo";
-export type Nivel = "verde" | "amarillo" | "rojo";
+export type SistemaRiego = "flood" | "furrow" | "sprinkler" | "drip";
+export type Nivel = "good" | "watch" | "alert";
 
-export type Cultivo = {
+export type Crop = {
   id: string;
-  nombre: string;
+  name: string;
   emoji: string;
-  tipo: "perenne" | "anual" | "forraje";
-  horasFrio: { min: number; opt: number } | null;
-  ventanaCritica: { desde: string; hasta: string; etapa: string } | null; // MM-DD
-  umbralHelada: number; // °C que daña en la etapa crítica
-  sensibilidad: number; // 0..1
-  libreHeladasMin: number; // días
-  gddMin: number | null; // grados-día base 10 °C, sep→abr
-  agua: "alta" | "media" | "baja";
-  salinidad: "alta" | "media" | "baja"; // tolerancia
-  raizProfunda: boolean;
-  aniosProduccion: number;
-  inversion: "alta" | "media" | "baja";
-  kc: number[]; // 12 valores, enero..diciembre
-  adaptaciones: string[];
+  family: string;
+  kind: "perennial" | "annual" | "forage" | "cover";
+  sensitive: { from: string; to: string; stage: string; threshold: number } | null; // MM-DD window
+  minFrostFree: number;
+  water: number;
+  nFix: number;
+  root: "shallow" | "medium" | "deep";
+  cover: number;
+  organicMatter: number;
+  forage: number;
+  income: number;
+  labor: number;
+  market: string;
+  kc: number[];
 };
 
-// ---------- Pilar 1: NASA ----------
+export type FarmSystem = "orchard" | "vegetables" | "forage";
+export type Strategy = {
+  id: string;
+  system: FarmSystem;
+  current?: boolean;
+  name: string;
+  short: string;
+  years: { main: string; winter: string | null }[];
+  alley?: string | null;
+  idea: string;
+  gaps: string[];
+  risks: string[];
+};
+
+// ---------- Climate record (daily, 20 years) ----------
 export type DiarioClima = {
-  fechas: string[]; // YYYY-MM-DD
+  fechas: string[];
   tmin: (number | null)[];
   tmax: (number | null)[];
   lluvia: (number | null)[];
   viento: (number | null)[];
   humedadRaiz: (number | null)[];
+  humedadSup: (number | null)[];
 };
 
 export type Mensual = {
   mes: number;
   tmin: number;
   tmax: number;
-  lluvia: number; // mm/mes
-  et0: number; // mm/mes (Hargreaves con datos POWER)
+  lluvia: number;
+  et0: number;
   viento: number;
   humedadRaiz: number | null;
+  humedadSup: number | null;
+  diasHelada: number; // average days/month with tmin ≤ 0
+  diasCalor: number; // average days/month with tmax ≥ 30
 };
 
 export type IndicadoresNasa = {
-  fuente: string;
   simulado?: boolean;
   celda: { lat: number; lon: number };
   periodo: [number, number];
-  calendario: {
-    anios: number[];
-    dias: string[]; // MM-DD del 01-09 al 30-11
-    tmin: (number | null)[][]; // [anio][dia]
-  };
+  calendario: { anios: number[]; dias: string[]; tmin: (number | null)[][] };
   probSemanal: { inicio: string; p0: number; p2: number }[];
-  ultimaHeladaMedia: string | null; // MM-DD
+  ultimaHeladaMedia: string | null;
   ultimaHeladaP80: string | null;
-  aniosHeladaTardia: number; // helada (≤0) después del 10/10
-  libreHeladas: number; // días, promedio
-  horasFrio: number; // promedio anual (modelo 0-7,2 °C)
-  gdd10: number; // sep→abr
+  aniosHeladaTardia: number; // frost after Nov 1
+  libreHeladas: number;
+  diasHeladaAnio: number;
+  horasFrio: number;
+  gdd10: number;
   lluviaAnual: number;
   et0Anual: number;
+  tempMedia: number;
+  vientoPrimavera: number; // m/s Sep–Dec
   mensual: Mensual[];
   tendencia: { decada1: number; decada2: number; dif: number } | null;
+  tendenciaLluvia: { antes: number; despues: number; difPct: number } | null;
 };
 
 export type PuntoNdvi = { fecha: string; ndvi: number };
-export type NdviResumen = {
-  fuente: string;
-  simulado?: boolean;
-  serie: PuntoNdvi[];
-  ultimo: PuntoNdvi | null;
-  anioAnterior: PuntoNdvi | null;
-};
+export type NdviResumen = { simulado?: boolean; serie: PuntoNdvi[]; ultimo: PuntoNdvi | null; anioAnterior: PuntoNdvi | null };
 
-// ---------- Pilar 3: Open-Meteo ----------
+// ---------- Forecast ----------
 export type DiaPronostico = {
   fecha: string;
   tmin: number;
@@ -116,105 +109,81 @@ export type DiaPronostico = {
   rafagas: number;
   viento: number;
   et0: number;
-  horaMin: string | null; // HH:MM de la mínima
+  horaMin: string | null;
   pasado: boolean;
 };
-export type ClimaResumen = {
-  fuente: string;
+export type ClimaResumen = { simulado?: boolean; elevacion: number | null; dias: DiaPronostico[] };
+
+// ---------- Snowpack ----------
+export type NieveCuenca = { id: string; nombre: string; temporada: number; actualCm: number; promedioCm: number; pct: number; serie: { anio: number; cm: number }[] };
+export type NieveResumen = { simulado?: boolean; hasta: string; cuencas: NieveCuenca[]; indice: number };
+
+// ---------- Soil ----------
+export type SoilValues = {
+  sand: number; // %
+  silt: number; // %
+  clay: number; // %
+  soc: number; // g/kg
+  ph: number;
+  nitrogen: number; // g/kg
+  cec: number; // cmol(+)/kg
+  bulkDensity: number; // g/cm³
+};
+export type SoilResumen = SoilValues & {
   simulado?: boolean;
-  elevacion: number | null;
-  dias: DiaPronostico[];
+  source: "soil-map" | "reference";
+  depth: string;
+  texture: string;
+  organicMatter: number; // %
+  waterHolding: number; // mm in top 60 cm
+  infiltration: "fast" | "moderate" | "slow";
 };
 
-// ---------- Nieve ----------
-export type NieveCuenca = {
-  id: string;
-  nombre: string;
-  temporada: number;
-  actualCm: number;
-  promedioCm: number;
-  pct: number; // actual / promedio
-  serie: { anio: number; cm: number }[];
+// ---------- Farmer ----------
+export type FarmProfile = {
+  system: FarmSystem;
+  areaHa: number;
+  irrigation: SistemaRiego;
+  water: "low" | "medium" | "high";
+  notes: string;
 };
-export type NieveResumen = {
-  fuente: string;
-  simulado?: boolean;
-  hasta: string;
-  cuencas: NieveCuenca[];
-  indice: number; // ponderado
+export const DEFAULT_PROFILE: FarmProfile = { system: "orchard", areaHa: 5, irrigation: "furrow", water: "medium", notes: "" };
+
+export type Priorities = { water: number; income: number; soil: number; forage: number; labor: number };
+export const DEFAULT_PRIORITIES: Priorities = { water: 3, income: 2, soil: 3, forage: 1, labor: 1 };
+
+export type GroundReading = { date: string; moisture: number | null; soilTemp: number | null };
+
+// ---------- Rotation results ----------
+export type StrategyResult = {
+  strategy: Strategy;
+  score: number;
+  level: Nivel;
+  metrics: {
+    waterMm: number;
+    bareMonths: number;
+    erosion: number; // 0..1
+    nitrogen: number; // kg/ha/yr
+    organicMatter: number; // 0..1
+    pestBreak: number; // 0..1
+    forage: number;
+    income: number;
+    labor: number;
+  };
+  scores: Record<keyof Priorities, number>;
+  why: string[];
+  evidence: string[];
+  benefits: string[];
+  gaps: string[];
+  risks: string[];
 };
 
-// ---------- Pilar 2: chacrero ----------
-export type DatosChacrero = {
-  superficieHa: number | null;
-  usoActual: string | null;
-  edadMonte: number | null;
-  riego: SistemaRiego | null;
-  turnoDias: number | null;
-  diasDesdeRiego: number | null;
-  pozo: boolean | null;
-  defensaHeladas: "ninguna" | "aspersion" | "calefactores" | "ventiladores" | null;
-  mallaAntigranizo: boolean | null;
-  cortinas: boolean | null;
-  textura: "arenoso" | "franco" | "arcilloso" | null;
-  salinidad: "no" | "algo" | "mucha" | null;
-  napaAlta: boolean | null;
-  bajoHeladizo: boolean | null;
-  presupuesto: "bajo" | "medio" | "alto" | null;
-  plazoAnios: number | null;
-  destino: string | null;
-  notas: string | null;
-};
-
-export const CHACRERO_VACIO: DatosChacrero = {
-  superficieHa: null,
-  usoActual: null,
-  edadMonte: null,
-  riego: null,
-  turnoDias: null,
-  diasDesdeRiego: null,
-  pozo: null,
-  defensaHeladas: null,
-  mallaAntigranizo: null,
-  cortinas: null,
-  textura: null,
-  salinidad: null,
-  napaAlta: null,
-  bajoHeladizo: null,
-  presupuesto: null,
-  plazoAnios: null,
-  destino: null,
-  notas: null,
-};
-
-// ---------- Puntaje e IA ----------
-export type Factor = { id: string; nombre: string; valor: number; peso: number; motivo: string };
-export type CultivoPuntaje = {
-  id: string;
-  nombre: string;
-  emoji: string;
-  puntaje: number;
-  semaforo: Nivel;
-  factores: Factor[];
-  riesgos: string[];
-  adaptaciones: string[];
-  aniosProduccion: number;
-  inversion: string;
-};
-
-export type RecomendacionIA = {
-  recomendaciones: {
-    id: string;
-    cultivo: string;
-    porQue: string[];
-    riesgos: string[];
-    adaptaciones: string[];
-    calendario: string;
-  }[];
-  alertaCortoPlazo: string | null;
-  agua: string | null;
-  resumenVoz: string;
-  datosFaltantes: string[];
-  confianza: "alta" | "media" | "baja";
-  generadoPor: "ia" | "reglas";
+export type AdvisorResult = {
+  summary: string;
+  best: string; // strategy id
+  notes: { id: string; text: string }[];
+  askExpert: string[];
+  voice: string;
+  confidence: "high" | "medium" | "low";
+  source: "ai" | "rules";
 };
