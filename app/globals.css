@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  --fondo: #f3f7f4;
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--fondo);
+  color: #0f172a;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Leaflet dentro de tarjetas redondeadas */
+.leaflet-container {
+  font: inherit;
+  background: #dfe8e2;
+}
+.leaflet-control-layers-expanded {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  body {
+    background: #fff;
+  }
+}

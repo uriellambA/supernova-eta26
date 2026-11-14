@@ -9,6 +9,12 @@
 
 ---
 
+## 🟢 Estado (v0.1 construida)
+La primera versión ya está en el repo. Ver el [README](../README.md) para correrla.
+- ✅ Hechas: S2, S6, A1, A3, A4, A5, A6, B1, B2, B3, C1, C2, C3, D1, E2a, E6a, E5a, E1b, E3a, E3b, E4a, E4b, E8a (SW propio en lugar de Serwist), E8b, E7a.
+- 🟡 Parciales: E1a (nieve con ERA5 como plan B; falta MODIS Snow vía AppEEARS) · B4 (no hay datos precacheados de las zonas; el SW y IndexedDB guardan lo consultado).
+- ⬜ Pendientes: S1 (leer la página del desafío), S3 (conectar a Vercel), S4 (clave de OpenRouter), S5 (Earthdata/AppEEARS), A2 (polígono), C4 (chat), C5 (respuestas cacheadas para la demo), D2 (ajustar coordenadas), D3–D6 (textos y pitch).
+
 ## Índice
 1. [Alcance final (qué entra y qué no)](#1-alcance-final)
 2. [El problema en el Alto Valle](#2-el-problema-en-el-alto-valle)
