@@ -8,6 +8,7 @@ import { SPECIES } from "@/config/species";
 import { STRATEGIES } from "@/config/rotations";
 import { CompareSlider } from "@/components/landing/CompareSlider";
 import { HeroBackdrop } from "@/components/landing/HeroBackdrop";
+import { GrowwyIntro } from "@/components/landing/GrowwyIntro";
 import { LangToggle } from "@/components/Translator";
 import { LandingKeys } from "@/components/landing/LandingKeys";
 import { btnGhost, btnPrimary } from "@/components/styles";
@@ -24,6 +25,7 @@ export default function Landing() {
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3 sm:px-6">
           <Brand />
           <nav className="hidden gap-1 text-sm text-muted md:flex">
+            <a href="#growwy" className="rounded-lg px-2 py-1 hover:text-ink">Growwy</a>
             <a href="#how" className="rounded-lg px-2 py-1 hover:text-ink">How it works</a>
             <a href="#features" className="rounded-lg px-2 py-1 hover:text-ink">Features</a>
             <a href="#data" className="rounded-lg px-2 py-1 hover:text-ink">Our data</a>
@@ -99,6 +101,9 @@ export default function Landing() {
             ))}
           </div>
         </section>
+
+        {/* ---------- Growwy, the Pachamama ---------- */}
+        <GrowwyIntro />
 
         {/* ---------- How it works ---------- */}
         <section id="how" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 sm:px-6">
