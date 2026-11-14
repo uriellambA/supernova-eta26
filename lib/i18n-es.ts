@@ -515,6 +515,28 @@ export const ES: Record<string, string> = {
   "Sample-data mode: satellite tiles are not loaded": "Modo de datos de muestra: no se cargan imágenes satelitales",
   "SMAP satellite: the surface stays wet ({n} m³/m³ on average over the last weeks). With this much evaporation, water rising from below can leave salts at the surface": "Satélite SMAP: la superficie se mantiene húmeda ({n} m³/m³ en promedio en las últimas semanas). Con tanta evaporación, el agua que sube desde abajo puede dejar sales en la superficie",
   "SMAP satellite: the surface is mostly dry ({n} m³/m³ on average over the last weeks), so salts are not being pulled up from below": "Satélite SMAP: la superficie está mayormente seca ({n} m³/m³ en promedio en las últimas semanas), así que las sales no suben desde abajo",
+  // ---------- Direct answers (rules) ----------
+  "For {x}: {x}": "En {x}: {x}", "Crops that fit your field and give a harvest then: {x}": "Cultivos que se adaptan a tu campo y dan cosecha en ese momento: {x}",
+  "Keep the rotation \"{x}\": {x}": "Mantené la rotación \"{x}\": {x}",
+  "Based on your field: the rotation that fits your priorities best is \"{x}\" ({n}/{n})": "Según tu campo, la rotación que mejor se ajusta a tus prioridades es \"{x}\" ({n}/{n})",
+  "A new crop worth a small trial: {x}": "Un cultivo nuevo para probar en una parcela chica: {x}",
+
+  // ---------- Sessions & sharing ----------
+  "Ask a question or tell Growvia about your farm. E.g.: What can I plant for summer? · {n} ha of cherries, furrow irrigation, water gets short in February": "Hacé una pregunta o contale a Growvia sobre tu chacra. Ej.: ¿Qué puedo plantar para verano? · {n} ha de cerezos, riego por surco, falta agua en febrero",
+  "Answer to your question": "Respuesta a tu pregunta", "Saved on this device": "Guardado en este dispositivo", "Saved sessions ({n})": "Sesiones guardadas ({n})", "Saved sessions": "Sesiones guardadas",
+  "WhatsApp: summary": "WhatsApp: resumen", "WhatsApp: tasks for the team": "WhatsApp: tareas para el equipo", "Copy link": "Copiar link", "Link copied": "Link copiado", "Share…": "Compartir…",
+  "Resume": "Seguir", "Pause": "Pausa", "Session": "Sesión", "All sessions": "Todas las sesiones", "Open": "Abrir", "Delete": "Borrar",
+  "No sessions yet. Each time you press “Analyze my field” the result is saved here so you can share it later": "Todavía no hay sesiones. Cada vez que tocás “Analizar mi campo” el resultado se guarda acá para compartirlo después",
+  "Field report": "Informe del campo", "{x} · Field report": "{x} · Informe del campo", "Scan to open this report": "Escaneá para abrir este informe", "Your question": "Tu pregunta",
+  "Furrow irrigation": "Riego por surco", "Flood irrigation": "Riego por inundación", "Sprinkler irrigation": "Riego por aspersión",
+  "Tasks for this week": "Tareas para esta semana", "Field data": "Datos del campo", "(current)": "(actual)",
+  "{n} frost-free days · last spring frost {x}": "{n} días libres de heladas · última helada de primavera {x}", "{n} mm rain vs {n} mm evaporation per year": "{n} mm de lluvia vs {n} mm de evaporación por año",
+  "{x} · organic matter {n}% · pH {n}": "{x} · materia orgánica {n}% · pH {n}",
+  "Shared report": "Informe compartido", "Opening the report": "Abriendo el informe", "Save on this device": "Guardar en este dispositivo", "Open Growvia": "Abrir Growvia",
+  "This link is incomplete or damaged. Ask the sender to share it again": "Este link está incompleto o dañado. Pedile a quien te lo mandó que lo comparta de nuevo",
+  "AI explanation · scores from the rotation model · confidence {x}": "Explicación de IA · puntajes del modelo de rotación · confianza {x}",
+  "Rotation model (AI offline) · confidence {x}": "Modelo de rotación (IA sin conexión) · confianza {x}",
+  "Decision-support tool: it highlights patterns and options, it does not replace the farmer's judgment or local agronomic advice": "Herramienta de apoyo a la decisión: muestra patrones y opciones, no reemplaza el criterio del productor ni el asesoramiento agronómico local",
   // ---------- Report ----------
   "frost-free days · last spring frost": "días libres de heladas · última helada de primavera", "mm rain vs": "mm de lluvia vs", "mm evaporation · spring wind": "mm de evaporación · viento de primavera",
   "· water holding": "· retención de agua", "new species": "especies nuevas", "Field elevation": "Altura del campo", "Field": "Campo", "Soil ({n}–{n} cm": "Suelo ({n}–{n} cm",
@@ -522,7 +544,6 @@ export const ES: Record<string, string> = {
   "Climate (record": "Clima (registro", "% / silt": "% / limo", "% / clay": "% / arcilla", "% · organic matter": "% · materia orgánica", "· sand": "· arena", ", regional reference": ", referencia regional",
   "· Field report": "· Informe del campo", "Rotation strategies compared": "Estrategias de rotación comparadas", "Strategy": "Estrategia", "Score": "Puntaje", "Water mm/yr": "Agua mm/año",
   "Bare months": "Meses desnudo", "N kg/ha": "N kg/ha", "Main benefit / risk": "Principal beneficio / riesgo", "New crops ranked for this field": "Cultivos nuevos ordenados para este campo", "Main limit": "Principal limitante", "Margin USD/ha": "Margen USD/ha",
-  "Decision-support tool: it highlights patterns and options, it does not replace the farmer's judgment or local agronomic advice": "Herramienta de apoyo a la decisión: muestra patrones y opciones, no reemplaza el criterio del productor ni el asesoramiento agronómico local",
 };
 
 /** Month and weekday words translated inside any remaining text. */

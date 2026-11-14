@@ -2,26 +2,30 @@
 import { useRef, useState } from "react";
 import { SYSTEMS } from "@/config/rotations";
 import { useDictado } from "@/hooks/useDictado";
-import { getLang, translate, useLang } from "@/lib/i18n";
-import { useLeer } from "@/hooks/useLeer";
+import { useLang } from "@/lib/i18n";
 import { METHOD_NAME } from "@/lib/riego";
 import type { AdvisorResult, FarmProfile, SistemaRiego, StrategyResult } from "@/lib/types";
 import Link from "next/link";
 import { speciesById } from "@/config/species";
+import type { SavedSession } from "@/lib/session";
+import { SessionActions } from "./SessionView";
 import { Badge, btnGhost, btnPrimary, input, label, LevelPill } from "./ui";
 
 export function AIPanel({
-  farm, setFarm, results, advice, busy, onAnalyze, onShare, error, registered,
+  farm, setFarm, results, advice, busy, onAnalyze, error, registered, session, link, savedCount, onOpenSessions,
 }: {
   farm: FarmProfile;
   setFarm: (f: FarmProfile) => void;
   results: StrategyResult[];
   advice: AdvisorResult | null;
   busy: boolean;
-  onAnalyze: () => void;
-  onShare: () => void;
+  onAnalyze: (question: string) => void;
   error: string | null;
   registered: boolean;
+  session: SavedSession | null;
+  link: string | null;
+  savedCount: number;
+  onOpenSessions: () => void;
 }) {
   const [text, setText] = useState("");
   const [reading, setReading] = useState(false);
@@ -32,7 +36,6 @@ export function AIPanel({
   const setLang = setPick;
   const base = useRef("");
   const dict = useDictado((t) => setText((base.current ? base.current + " " : "") + t), lang);
-  const tts = useLeer();
   const best = advice ? results.find((r) => r.strategy.id === advice.best) : null;
 
   async function readNotes() {
@@ -52,7 +55,7 @@ export function AIPanel({
 
   return (
     <div className="flex h-full flex-col gap-3">
-      <button className={`${btnPrimary} w-full py-3`} onClick={onAnalyze} disabled={busy || !results.length}>
+      <button className={`${btnPrimary} w-full py-3`} onClick={() => onAnalyze(text)} disabled={busy || !results.length}>
         {busy ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-cta-ink border-t-transparent" /> : "✨"} {busy ? "Analyzing…" : "Analyze my field"}
         {!busy && <kbd>A</kbd>}
       </button>
@@ -71,7 +74,7 @@ export function AIPanel({
           <label className={label}>Irrigation<select className={input} value={farm.irrigation} onChange={(e) => setFarm({ ...farm, irrigation: e.target.value as SistemaRiego })}>{(Object.keys(METHOD_NAME) as SistemaRiego[]).map((m) => <option key={m} value={m}>{METHOD_NAME[m]}</option>)}</select></label>
           <label className={label}>Water<select className={input} value={farm.water} onChange={(e) => setFarm({ ...farm, water: e.target.value as FarmProfile["water"] })}><option value="low">Short</option><option value="medium">Normal</option><option value="high">Plenty</option></select></label>
         </div>
-        <textarea className={`${input} min-h-20 resize-y`} value={text} onChange={(e) => setText(e.target.value)} placeholder="Tell Growvia about your farm, in your words. E.g.: 4 ha of cherries, furrow irrigation, alleys are bare, water gets short in February…" />
+        <textarea className={`${input} min-h-20 resize-y`} value={text} onChange={(e) => setText(e.target.value)} placeholder="Ask a question or tell Growvia about your farm. E.g.: What can I plant for summer? · 4 ha of cherries, furrow irrigation, water gets short in February…" />
         <div className="flex flex-wrap items-center gap-2">
           {dict.soportado && (
             <button
@@ -100,9 +103,10 @@ export function AIPanel({
         )}
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto">
+      <div className="min-w-0 break-words">
         {!advice && !busy && (
-          <div className="text-sm text-muted">
+          <div className="space-y-2 text-sm text-muted">
+            {savedCount > 0 && <button className="text-xs font-medium text-ink underline-offset-4 hover:underline" onClick={onOpenSessions}>Saved sessions ({savedCount}) →</button>}
             <p>Compares your current rotation with three alternatives, plans the four seasons and suggests new crops for the months without income, using your field&apos;s climate, soil, water and farm register.</p>
           </div>
         )}
@@ -114,6 +118,12 @@ export function AIPanel({
                 <div className="text-[11px] font-medium uppercase tracking-[0.08em]">Recommended rotation</div>
                 <div className="font-semibold">{best.strategy.name}</div>
                 <div className="mt-1"><LevelPill level={best.level}>{best.score} / 100</LevelPill></div>
+              </div>
+            )}
+            {advice.answer && (
+              <div className="rounded-xl border border-line p-3">
+                <div className="text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Answer to your question</div>
+                <p className="mt-1 text-ink">{advice.answer}</p>
               </div>
             )}
             <p className="text-ink-2">{advice.summary}</p>
@@ -129,10 +139,10 @@ export function AIPanel({
                 <ul className="list-disc pl-4 text-xs text-muted">{advice.askExpert.map((a) => <li key={a}>{a}</li>)}</ul>
               </div>
             )}
-            <div className="flex flex-wrap gap-2">
-              {tts.soportado && (tts.hablando ? <button className={`${btnGhost} !py-1.5 text-xs`} onClick={tts.detener}>⏹ Stop</button> : <button className={`${btnGhost} !py-1.5 text-xs`} onClick={() => tts.leer(getLang() === "es" && advice.source === "rules" ? translate(advice.voice) ?? advice.voice : advice.voice)}>🔊 Listen</button>)}
-              <button className={`${btnGhost} !py-1.5 text-xs`} onClick={onShare}>Share</button>
-              <button className={`${btnGhost} !py-1.5 text-xs`} onClick={() => window.print()}>PDF</button>
+            {session && <SessionActions s={session} link={link} compact />}
+            <div className="flex items-center gap-2 text-[11px] text-muted">
+              {session && <span>💾 Saved on this device</span>}
+              <button className="ml-auto font-medium text-ink underline-offset-4 hover:underline" onClick={onOpenSessions}>Saved sessions ({savedCount})</button>
             </div>
             <p className="text-[10px] text-subtle">
               {advice.source === "ai" ? "AI explanation · scores from the rotation model" : "Rotation model (AI offline)"} · confidence {advice.confidence}. Decision support only: your judgment comes first.

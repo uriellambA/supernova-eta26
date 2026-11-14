@@ -7,6 +7,7 @@ import { registerSummary } from "./register";
 
 export type AdvisorContext = {
   language?: "English" | "Spanish (Argentina)";
+  question?: string;
   place: string;
   farm: FarmProfile;
   priorities: Priorities;
@@ -72,6 +73,21 @@ export function buildContext(
 }
 
 /** Rule-based explanation (offline or without an AI key). */
+/** Rules-based answer to a free question: picks the season mentioned and lists what fits it. */
+function localAnswer(q: string, ctx: AdvisorContext, res?: StrategyResult[], fits?: SpeciesFit[]) {
+  const t = q.toLowerCase();
+  const id = /verano|summer/.test(t) ? "summer" : /oto[ñn]o|autumn|fall/.test(t) ? "autumn" : /invierno|winter/.test(t) ? "winter" : /primavera|spring/.test(t) ? "spring" : null;
+  const plan = yearPlan(res ? [...res].sort((a, b) => b.score - a.score)[0] : undefined, fits ?? []);
+  const months: Record<string, number[]> = { spring: [9, 10, 11], summer: [12, 1, 2], autumn: [3, 4, 5], winter: [6, 7, 8] };
+  const names: Record<string, string> = { spring: "spring", summer: "summer", autumn: "autumn", winter: "winter" };
+  const best = [...ctx.strategies].sort((a, b) => b.score - a.score)[0];
+  if (id) {
+    const crops = (fits ?? []).filter((f) => f.viability >= 50 && f.species.harvest.some((m) => months[id].includes(m))).slice(0, 4).map((f) => f.species.name);
+    return `For ${names[id]}: ${plan[id as keyof typeof plan].focus}. ${crops.length ? `Crops that fit your field and give a harvest then: ${crops.join(", ")}. ` : ""}Keep the rotation "${best?.name}": ${plan[id as keyof typeof plan].tasks[0]}.`;
+  }
+  return `Based on your field: the rotation that fits your priorities best is "${best?.name}" (${best?.score}/100). ${ctx.newCrops[0] ? `A new crop worth a small trial: ${ctx.newCrops[0].name}.` : ""}`;
+}
+
 export function localAdvice(ctx: AdvisorContext, res?: StrategyResult[], fits?: SpeciesFit[]): AdvisorResult {
   const sorted = [...ctx.strategies].sort((a, b) => b.score - a.score);
   const best = sorted[0];
@@ -89,6 +105,7 @@ export function localAdvice(ctx: AdvisorContext, res?: StrategyResult[], fits?: 
       : `Your current rotation is the best match, with ${best?.score} points.`,
     confidence: "medium",
     source: "rules",
+    answer: ctx.question?.trim() ? localAnswer(ctx.question, ctx, res, fits) : undefined,
     newCrops: ctx.newCrops.filter((n) => n.viability >= 55).slice(0, 3).map((n) => ({
       id: n.id, why: `${n.viability}/100 fit; harvest in ${n.harvestMonths.map((m) => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]).join("/")}${n.limits[0] ? `. Watch: ${n.limits[0]}` : ""}.`,
     })),

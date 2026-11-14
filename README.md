@@ -32,6 +32,13 @@ Atajos: `A` analizar con IA · `D` vista 3D · `H` hardware · `R` registro · `
 En el mapa, el filtro **Salinity risk · SMAP** pinta el riesgo de acumulación de sales a partir de la humedad del suelo del satélite **SMAP** (primeros 5 cm, 9 km). Las capas se toman de GIBS y se decodifican con su paleta oficial. En la pestaña Suelo, `/api/smap` lee el valor de SMAP en el punto (8 semanas) y lo suma a la estimación de salinidad.
 Ojo: **SMAP no mide sal**, mide humedad. En un valle árido, una superficie que se mantiene húmeda con mucha evaporación hace subir el agua y deja sales: eso es el riesgo. Hay que confirmarlo con un análisis de conductividad eléctrica (CE). La resolución de 9 km muestra tendencias del valle, no el detalle de un lote.
 
+### Sesiones, WhatsApp y PDF
+- Cada vez que tocás **Analizar mi campo** (podés escribir o dictar una pregunta, por ejemplo "¿Qué puedo plantar para verano?"), el resultado se guarda como **sesión** en el dispositivo. Desde **Sesiones guardadas** se vuelve a abrir, compartir o borrar.
+- **Compartir:** cada sesión tiene un **link** (`/s#…`). La sesión entera va comprimida dentro del link: no se guarda nada en un servidor. Quien lo abre ve el informe completo y puede guardarlo en su teléfono.
+- **WhatsApp:** dos mensajes distintos. *Resumen* (para socios o asesores: pregunta y respuesta, rotación recomendada contra la actual, plan por estación, cultivos nuevos) y *Tareas para el equipo* (para trabajadores: alertas de la semana y tareas de la estación). Los dos incluyen el link.
+- **PDF:** informe A4 con un **código QR** que abre el mismo informe en el celular.
+- **Voz:** usa la voz más natural del dispositivo al máximo volumen y lee frase por frase. Para una voz más fuerte y clara, cargá `TTS_API_KEY` (API compatible con OpenAI): esa voz se amplifica ×2,5 con compresor.
+
 ### Idioma EN / ES
 El botón **EN | ES** de cada encabezado traduce toda la página al español (Argentina) o la deja en inglés. Se recuerda en el dispositivo y la primera vez sigue el idioma del navegador. La IA responde en el idioma elegido, y la voz y el dictado también lo usan. Para traducir un texto nuevo, agregalo a `lib/i18n-es.ts` (`{n}` = número, `{x}` = texto).
 

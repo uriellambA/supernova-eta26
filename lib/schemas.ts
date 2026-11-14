@@ -11,6 +11,7 @@ export const FarmSchema = z.object({
 
 export const AdviceSchema = z.object({
   summary: z.string(),
+  answer: z.string().optional().catch(undefined),
   best: z.string(),
   notes: z.array(z.object({ id: z.string(), text: z.string() })).catch([]),
   askExpert: z.array(z.string()).catch([]),

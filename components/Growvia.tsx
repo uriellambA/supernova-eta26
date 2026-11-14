@@ -26,7 +26,8 @@ import { FiltersPanel } from "./FiltersPanel";
 import { HardwareModal } from "./HardwareModal";
 import type { OverlayId } from "./MapView";
 import { Contingency, NewCrops, Rotations, Viability, YearPlan } from "./PlanSections";
-import { Report } from "./Report";
+import { SessionsModal } from "./SessionsModal";
+import { buildSession, listSessions, saveSession, sessionLink, type SavedSession } from "@/lib/session";
 import { SmapStatus } from "./SmapStatus";
 import { RotationBuilder, RotationHero, RotationMatrix, RotationMethod } from "./RotationTools";
 import { LangToggle } from "./Translator";
@@ -68,6 +69,11 @@ export function Growvia() {
   const [advice, setAdvice] = useState<AdvisorResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
+  const [session, setSession] = useState<SavedSession | null>(null);
+  const [link, setLink] = useState<string | null>(null);
+  const [sessions, setSessions] = useState<SavedSession[]>([]);
+  const [sessionsOpen, setSessionsOpen] = useState(false);
+  useEffect(() => { listSessions().then(setSessions); }, []);
   const online = useOnline();
 
   const q = `lat=${field.lat.toFixed(2)}&lon=${field.lon.toFixed(2)}`;
@@ -119,37 +125,33 @@ export function Growvia() {
   const options = useMemo(() => (climate.data ? farmOptions(climate.data, farm) : []), [climate.data, farm]);
   const simulated = climate.data?.simulado || soil.data?.simulado;
 
-  async function analyze() {
+  async function analyze(question = "") {
     if (!climate.data || !soil.data || !results.length || !health || !sal) return;
-    const ctx = { ...buildContext(field.name, farm, pri, climate.data, soil.data, forecast.data, ndvi.data, results, { fits, health, sal, enso: enso.data, register }), language: getLang() === "es" ? ("Spanish (Argentina)" as const) : ("English" as const) };
+    const ctx = {
+      ...buildContext(field.name, farm, pri, climate.data, soil.data, forecast.data, ndvi.data, results, { fits, health, sal, enso: enso.data, register }),
+      language: getLang() === "es" ? ("Spanish (Argentina)" as const) : ("English" as const),
+      question: question.trim() || undefined,
+    };
     setBusy(true);
     setAiError(null);
+    let adv: AdvisorResult;
     try {
       if (!online) throw new Error("Offline: showing the rules-based answer.");
       const r = await fetch("/api/advisor", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(ctx) });
       const j = await r.json();
       if (!r.ok) throw new Error(r.status === 501 ? "AI key not configured: showing the rules-based answer." : "AI unavailable: showing the rules-based answer.");
-      setAdvice(j);
+      adv = j;
     } catch (e) {
-      setAdvice(localAdvice(ctx, results, fits));
+      adv = localAdvice(ctx, results, fits);
       setAiError((e as Error).message);
-    } finally {
-      setBusy(false);
     }
-  }
-
-  function share() {
-    const top = [...results].sort((a, b) => b.score - a.score).slice(0, 3);
-    const text = [
-      `🌱 ${APP_NAME} · ${field.name}, ${SITE.name}`,
-      advice?.summary ?? "",
-      ...top.map((r, i) => `${i + 1}) ${r.strategy.name}: ${r.score}/100${r.strategy.current ? " (current)" : ""}`),
-      fits.length ? `New crops: ${fits.filter((f) => f.species.status === "new").slice(0, 3).map((f) => f.species.name).join(", ")}` : "",
-      climate.data ? `❄️ ${climate.data.libreHeladas} frost-free days · 💧 ${climate.data.lluviaAnual} mm rain/yr` : "",
-      window.location.origin,
-    ].filter(Boolean).join("\n");
-    if (navigator.share && /Android|iPhone|iPad/i.test(navigator.userAgent)) navigator.share({ title: APP_NAME, text }).catch(() => {});
-    else window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+    setAdvice(adv);
+    setBusy(false);
+    // Save this analysis as a session (on the device) and prepare its share link
+    const ses = buildSession({ place: field.name, lat: field.lat, lon: field.lon, farm, question, advice: adv, results, fits, risks, forecast: forecast.data, climate: climate.data, soil: soil.data });
+    setSession(ses);
+    setSessions(await saveSession(ses));
+    setLink(await sessionLink(ses));
   }
 
   const toggleOverlay = (id: OverlayId) => setOverlays((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
@@ -254,12 +256,12 @@ export function Growvia() {
                 </div>
               </Reveal>
 
-              <Reveal delay={80} className="flex flex-col rounded-2xl border border-line bg-surface p-6 md:col-span-6 lg:col-span-4 lg:max-h-[620px]">
+              <Reveal delay={80} className="flex flex-col rounded-2xl border border-line bg-surface p-6 md:col-span-6 lg:col-span-4">
                 <div className="mb-4 flex items-center gap-2">
                   <span className="font-serif text-2xl leading-none">Decision support</span>
                   <Badge tone="blue">AI</Badge>
                 </div>
-                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} onShare={share} error={aiError} registered={!!register} />
+                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} />
                 {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => go("plan", "seasons")}>See the year plan →</button>}
               </Reveal>
 
@@ -352,7 +354,7 @@ export function Growvia() {
       </div>
 
       <HardwareModal open={hw} onClose={() => setHw(false)} readings={readings} addReading={addReading} />
-      <Report field={field} farm={farm} c={climate.data} soil={soil.data} results={results} advice={advice} options={options} fits={fits} />
+      <SessionsModal open={sessionsOpen} onClose={() => setSessionsOpen(false)} sessions={sessions} setSessions={setSessions} />
     </>
   );
 }

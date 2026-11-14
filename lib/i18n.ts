@@ -78,6 +78,14 @@ function core(s: string, depth: number): string | null {
   if (!s || !/\p{L}{2,}/u.test(s)) return s;
   const hit = exact.get(s);
   if (hit !== undefined) return hit;
+  // Several sentences: translate each one when all of them can be translated
+  if (depth < 3 && /[.!?] \p{Lu}/u.test(s)) {
+    const parts = s.split(/(?<=[.!?]) (?=[\p{Lu}"¿¡])/u);
+    if (parts.length > 1) {
+      const tr = parts.map((p) => translate(p, depth + 1));
+      if (tr.every((t) => t !== null)) return tr.join(" ");
+    }
+  }
   for (const p of patterns) {
     const m = s.match(p.re);
     if (!m) continue;
@@ -104,7 +112,7 @@ export function translate(text: string, depth = 0): string | null {
   let out: string | null = null;
   if (m) {
     const c = core(m[2], depth);
-    if (c !== null && c !== m[2]) out = m[1] + c + m[3];
+    if (c !== null) out = m[1] + c + m[3]; // identical = known word (e.g. "Calafate")
   }
   if (depth === 0) cache.set(text, out);
   return out;

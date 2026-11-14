@@ -13,6 +13,8 @@ soil properties and a soil-health score (salinity is estimated unless measured),
 (agronomic fit + economics). Today the town mostly grows cherries and strawberries: the farmer wants income after their season ends.
 RULES:
 - Write every text field in the "language" given in the input (default English). Keep strategy/species ids unchanged.
+- If the input has a "question" from the farmer, "answer" it FIRST and directly (2–4 sentences, concrete crops, months and actions for Los Antiguos), using the data. Otherwise omit "answer".
+- Never write internal ids (like o-rye, v-current) in any text: use the strategy and crop names in the output language.
 - Use only the numbers provided. Do not change scores. Plain, friendly language for a farmer (no jargon; explain terms briefly if used).
 - "summary": 2–3 sentences: which strategy fits the priorities best and why, compared with the current rotation.
 - "best": the id of the recommended strategy (normally the highest score; you may pick another if a risk is serious, and say why).
@@ -22,7 +24,7 @@ RULES:
 - "seasons": one short line each for spring (Sep–Nov), summer (Dec–Feb), autumn (Mar–May), winter (Jun–Aug): what grows/covers the field and the key task.
 - "newCrops": up to 3 {id, why} from the newCrops list (ids must match) that best fill the months without income and suit the soil.
 - This is decision SUPPORT: it never replaces the farmer's judgment.
-Return ONLY JSON: {"summary": "...", "best": "...", "notes": [{"id": "...", "text": "..."}], "askExpert": ["..."], "voice": "...", "confidence": "high"|"medium"|"low",
+Return ONLY JSON: {"answer": "..." (only if there is a question), "summary": "...", "best": "...", "notes": [{"id": "...", "text": "..."}], "askExpert": ["..."], "voice": "...", "confidence": "high"|"medium"|"low",
 "seasons": {"spring": "...", "summer": "...", "autumn": "...", "winter": "..."}, "newCrops": [{"id": "...", "why": "..."}]}`;
 
 export async function POST(req: Request) {
@@ -36,6 +38,9 @@ export async function POST(req: Request) {
         const r = AdviceSchema.parse(await chatJSON([{ role: "system", content: SYSTEM }, { role: "user", content: JSON.stringify(ctx) }], 0.4));
         if (!ids.has(r.best)) throw new Error("unknown strategy id");
         const cropIds = new Set((ctx.newCrops ?? []).map((n) => n.id));
+        const clean = (t?: string) => t?.replace(/\b[ovf]-(current|clover|rye|diverse|cover|legume|water|break|mixed|cash)\b/g, (id) => ctx.strategies.find((x) => x.id === id)?.name ?? id);
+        r.summary = clean(r.summary)!;
+        r.answer = clean(r.answer);
         return Response.json({ ...r, notes: r.notes.filter((n) => ids.has(n.id)), newCrops: r.newCrops?.filter((n) => cropIds.has(n.id)), source: "ai" });
       } catch (e) {
         if (e instanceof SinClaveError) throw e;

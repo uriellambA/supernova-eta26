@@ -246,6 +246,7 @@ export type StrategyResult = {
 
 export type AdvisorResult = {
   summary: string;
+  answer?: string; // direct answer to the farmer's question, if any
   best: string; // strategy id
   notes: { id: string; text: string }[];
   askExpert: string[];
