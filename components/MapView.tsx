@@ -29,9 +29,15 @@ function footprint(lat: number, lon: number, r = 0.0018) {
   return { type: "Feature" as const, properties: {}, geometry: { type: "Polygon" as const, coordinates: [pts] } };
 }
 
+function shape(lat: number, lon: number, boundary?: [number, number][] | null) {
+  if (boundary && boundary.length >= 3) return { type: "Feature" as const, properties: {}, geometry: { type: "Polygon" as const, coordinates: [[...boundary, boundary[0]]] } };
+  return footprint(lat, lon);
+}
+
 export default function MapView({
-  field, onPick, is3D, overlays,
+  field, onPick, is3D, overlays, boundary,
 }: {
+  boundary?: [number, number][] | null;
   field: { lat: number; lon: number; name: string };
   onPick: (lat: number, lon: number) => void;
   is3D: boolean;
@@ -77,7 +83,7 @@ export default function MapView({
         m.addLayer({ id, type: "raster", source: id, layout: { visibility: "none" }, paint: { "raster-opacity": o.opacity } });
       }
       m.addLayer({ id: "relief", type: "hillshade", source: "demShade", layout: { visibility: "none" }, paint: { "hillshade-exaggeration": 0.6, "hillshade-shadow-color": "#020617" } });
-      m.addSource("field", { type: "geojson", data: footprint(field.lat, field.lon) });
+      m.addSource("field", { type: "geojson", data: shape(field.lat, field.lon, boundary) });
       m.addLayer({ id: "field-fill", type: "fill", source: "field", paint: { "fill-color": "#ffffff", "fill-opacity": 0.18 } });
       m.addLayer({ id: "field-line", type: "line", source: "field", paint: { "line-color": "#ffffff", "line-width": 2 } });
       for (const f of SITE.fields) {
@@ -109,11 +115,11 @@ export default function MapView({
     const m = map.current;
     if (!m) return;
     marker.current?.setLngLat([field.lon, field.lat]);
-    const apply = () => (m.getSource("field") as maplibregl.GeoJSONSource | undefined)?.setData(footprint(field.lat, field.lon));
+    const apply = () => (m.getSource("field") as maplibregl.GeoJSONSource | undefined)?.setData(shape(field.lat, field.lon, boundary));
     if (ready.current) apply();
     else m.once("growvia:ready", apply);
     m.easeTo({ center: [field.lon, field.lat], duration: 700 });
-  }, [field.lat, field.lon]);
+  }, [field.lat, field.lon, boundary]);
 
   // Overlays
   useEffect(() => {

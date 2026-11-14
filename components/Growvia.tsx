@@ -17,7 +17,7 @@ import { rankSpecies } from "@/lib/suitability";
 import { guardar, leer } from "@/lib/storage";
 import {
   DEFAULT_PRIORITIES, DEFAULT_PROFILE, type AdvisorResult, type ClimaResumen, type EnsoResumen, type FarmProfile, type FarmRegister,
-  type GroundReading, type IndicadoresNasa, type NdviResumen, type NieveResumen, type Priorities, type SoilResumen,
+  type GroundReading, type IndicadoresNasa, type NdviResumen, type NieveResumen, type Priorities, type SoilResumen, type Strategy,
 } from "@/lib/types";
 import { AIPanel } from "./AIPanel";
 import { LineChart, ndviPoints } from "./Charts";
@@ -26,6 +26,7 @@ import { HardwareModal } from "./HardwareModal";
 import type { OverlayId } from "./MapView";
 import { Contingency, NewCrops, Rotations, Viability, YearPlan } from "./PlanSections";
 import { Report } from "./Report";
+import { RotationBuilder, RotationHero, RotationMatrix, RotationMethod } from "./RotationTools";
 import { LangToggle } from "./Translator";
 import { getLang } from "@/lib/i18n";
 import { Forecast, Frost, Options, Overview, Soil, Water } from "./Sections";
@@ -36,7 +37,7 @@ const MapView = dynamic(() => import("./MapView"), { ssr: false, loading: () => 
 // The dashboard is split in 5 tabs so the farmer sees one topic at a time.
 const TABS = [
   { id: "home", label: "Overview", icon: "🏠", subs: [] },
-  { id: "plan", label: "Rotation plan", icon: "🔄", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "seasons", label: "Year plan" }] },
+  { id: "plan", label: "Crop rotation", icon: "🔄", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "builder", label: "Build your own" }, { id: "seasons", label: "Year plan" }, { id: "method", label: "How it's scored" }] },
   { id: "crops", label: "Crops & economy", icon: "🌱", subs: [{ id: "crops", label: "New crops" }, { id: "viability", label: "Viability" }, { id: "options", label: "What you can do" }] },
   { id: "weather", label: "Weather & risks", icon: "🌦️", subs: [{ id: "forecast", label: "Forecast" }, { id: "risks", label: "Contingencies" }, { id: "frost", label: "Frost" }, { id: "climate", label: "Climate record" }] },
   { id: "soil", label: "Soil & water", icon: "💧", subs: [{ id: "soil", label: "Soil" }, { id: "water", label: "Irrigation" }] },
@@ -51,6 +52,7 @@ export function Growvia() {
   const [pri, setPriState] = useState<Priorities>(DEFAULT_PRIORITIES);
   const [register, setRegister] = useState<FarmRegister | null>(null);
   const [readings, setReadings] = useState<GroundReading[]>([]);
+  const [custom, setCustomState] = useState<Strategy | null>(null);
   const [tab, setTab] = useState<TabId>("home");
   const [subs, setSubs] = useState<Record<string, string>>({ plan: "rotations", crops: "crops", weather: "forecast", soil: "soil" });
   const go = useCallback((t: TabId, sub?: string) => {
@@ -88,9 +90,11 @@ export function Growvia() {
       setField({ lat: r.v.lat, lon: r.v.lon, name: r.v.farmName || "My farm" });
     });
     leer<GroundReading[]>("readings").then((r) => r && setReadings(r.v));
+    leer<Strategy | null>("customRotation").then((r) => r?.v && setCustomState(r.v));
   }, []);
   const setFarm = useCallback((f: FarmProfile) => { setFarmState(f); guardar("farm", f); setAdvice(null); }, []);
   const setPri = useCallback((p: Priorities) => { setPriState(p); guardar("priorities", p); setAdvice(null); }, []);
+  const setCustom = useCallback((c: Strategy | null) => { setCustomState(c); guardar("customRotation", c); setAdvice(null); }, []);
   const addReading = (r: GroundReading) => { const n = [...readings, r]; setReadings(n); guardar("readings", n); };
 
   const pick = useCallback((lat: number, lon: number) => {
@@ -100,8 +104,8 @@ export function Growvia() {
   }, []);
 
   const results = useMemo(
-    () => (climate.data && soil.data ? compareStrategies({ climate: climate.data, soil: soil.data, snow: snow.data }, farm, pri) : []),
-    [climate.data, soil.data, snow.data, farm, pri],
+    () => (climate.data && soil.data ? compareStrategies({ climate: climate.data, soil: soil.data, snow: snow.data }, farm, pri, custom ? [custom] : []) : []),
+    [climate.data, soil.data, snow.data, farm, pri, custom],
   );
   const current = results.find((r) => r.strategy.current) ?? null;
   const measuredEc = register?.soilTest.ec ?? [...readings].reverse().find((r) => r.ec != null)?.ec ?? null;
@@ -201,7 +205,7 @@ export function Growvia() {
             {TABS.map((t, i) => (
               <button key={t.id} onClick={() => go(t.id)} aria-pressed={tab === t.id}
                 className={`flex shrink-0 items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition ${tab === t.id ? "bg-ink text-canvas" : "text-ink-2 hover:bg-surface-2"}`}>
-                <span>{t.icon}</span>{t.label}<kbd className="hidden lg:inline-flex">{i + 1}</kbd>
+                <span>{t.icon}</span>{t.label}{t.id === "plan" && tab !== "plan" && <span className="h-1.5 w-1.5 rounded-full bg-green-fg" aria-hidden />}<kbd className="hidden lg:inline-flex">{i + 1}</kbd>
               </button>
             ))}
           </nav>
@@ -232,6 +236,9 @@ export function Growvia() {
 
           {tab === "home" ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
+              {ready ? (
+                <RotationHero results={results} onCompare={() => go("plan", "rotations")} onBuild={() => go("plan", "builder")} onYear={() => go("plan", "seasons")} />
+              ) : !failed && <div className="md:col-span-6 lg:col-span-12"><Spinner text="Comparing crop rotations for your field…" /></div>}
               <Reveal className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface md:col-span-6 lg:col-span-8">
                 <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-3">
                   <span className="text-sm font-medium">Satellite map</span>
@@ -239,7 +246,7 @@ export function Growvia() {
                   <div className="w-full sm:ml-auto sm:w-auto"><FiltersPanel active={overlays} toggle={toggleOverlay} /></div>
                 </div>
                 <div className="h-[46vh] min-h-[340px] lg:h-[560px]">
-                  <MapView field={field} onPick={pick} is3D={is3D} overlays={overlays} />
+                  <MapView field={field} onPick={pick} is3D={is3D} overlays={overlays} boundary={register && field.lat === register.lat && field.lon === register.lon ? register.boundary : null} />
                 </div>
               </Reveal>
 
@@ -311,7 +318,17 @@ export function Growvia() {
             <Spinner text="Reading 20 years of climate records and the soil map for your field… (first time ~20 s)" />
           ) : (
             <div key={`${tab}-${sub}`}>
-              {sub === "rotations" && <Rotations results={results} pri={pri} setPri={setPri} />}
+              {sub === "rotations" && (
+                <Rotations results={results} pri={pri} setPri={setPri}>
+                  <RotationMatrix results={results} />
+                </Rotations>
+              )}
+              {sub === "builder" && (() => {
+                const list = [...results].sort((a, b) => b.score - a.score);
+                const mine = list.find((r) => r.strategy.id === "custom") ?? null;
+                return <RotationBuilder system={farm.system} custom={custom} setCustom={setCustom} result={mine} rank={mine ? list.indexOf(mine) + 1 : 0} total={list.length} register={register} />;
+              })()}
+              {sub === "method" && <RotationMethod />}
               {sub === "seasons" && <YearPlan results={results} fits={fits} advice={advice} />}
               {sub === "crops" && <NewCrops fits={fits} advice={advice} />}
               {sub === "viability" && <Viability fits={fits} areaHa={farm.areaHa} />}

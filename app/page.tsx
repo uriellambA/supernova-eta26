@@ -42,17 +42,17 @@ export default function Landing() {
           </Reveal>
           <Reveal delay={80}>
             <h1 className="mt-6 max-w-4xl font-serif text-5xl leading-[0.98] tracking-tight sm:text-7xl">
-              A better plan for your soil, <em className="text-muted">every season.</em>
+              A better crop rotation for your soil, <em className="text-muted">every season.</em>
             </h1>
           </Reveal>
           <Reveal delay={160}>
             <p className="mt-6 max-w-2xl text-lg text-ink-2">
-              {APP_NAME} reads 20 years of climate, satellite vegetation and soil data for your exact field, compares your current
-              crop rotation with better alternatives, and shows what you could grow when the cherry and strawberry season is over.
+              {APP_NAME} compares your current crop rotation with better alternatives for your exact field — using 20 years of climate,
+              satellite vegetation and soil data — explains why, and shows what you could grow when the cherry and strawberry season is over.
             </p>
           </Reveal>
           <Reveal delay={220} className="mt-8 flex flex-wrap gap-3">
-            <Link href="/app" className={`${btnPrimary} px-5 py-3`}>Analyze a field <kbd>D</kbd></Link>
+            <Link href="/app" className={`${btnPrimary} px-5 py-3`}>Compare rotations for my field <kbd>D</kbd></Link>
             <Link href="/register" className={`${btnGhost} px-5 py-3`}>Register your farm <kbd>R</kbd></Link>
           </Reveal>
           <Reveal delay={300} className="mt-12">
@@ -95,16 +95,19 @@ export default function Landing() {
           <div className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 sm:px-6">
             <SectionTitle eyebrow="Features" title="Everything a small farm needs to plan the year" />
             <div className="mt-10 grid gap-4 md:grid-cols-6 lg:grid-cols-12">
-              <Feature className="md:col-span-6 lg:col-span-7" title="Crop rotation decision system" badge={<Badge tone="blue">AI + rules</Badge>}
+              <Feature className="md:col-span-6 lg:col-span-12" title="Crop rotation decision system — the heart of Growvia" badge={<Badge tone="blue">AI + rules</Badge>}
                 text="Compares your existing rotation with three alternatives using water, bare-soil months, wind erosion, nitrogen, organic matter, pests, forage, income and labor — weighted by your priorities.">
                 <div className="mt-5 grid grid-cols-4 gap-1 text-[10.5px]">
                   {["Spring", "Summer", "Autumn", "Winter"].map((s) => <div key={s} className="text-subtle">{s}</div>)}
                   {["Cherry + clover", "Cherry harvest", "Rye sown in alleys", "Rye cover"].map((c, i) => <div key={c} className={`rounded-md px-1.5 py-1 ${i >= 2 ? "bg-green-bg text-green-fg" : "bg-surface-2 text-ink-2"}`}>{c}</div>)}
                   {["Potato", "Potato", "Oats + vetch", "Bare soil"].map((c, i) => <div key={c + i} className={`rounded-md px-1.5 py-1 ${i === 3 ? "bg-red-bg text-red-fg" : i === 2 ? "bg-green-bg text-green-fg" : "bg-blue-bg text-blue-fg"}`}>{c}</div>)}
                 </div>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {["Your rotation vs 3 alternatives", "Build your own rotation", "Plan by season", "Why · evidence · gaps · risks", "Weighted by your priorities"].map((x) => <Badge key={x} tone="green" dot>{x}</Badge>)}
+                </div>
                 <p className="mt-3 text-xs text-muted">{STRATEGIES.length} strategies across orchards, vegetables and forage.</p>
               </Feature>
-              <Feature className="md:col-span-6 lg:col-span-5" title="Vegetation index · NDVI & EVI" delay={70} text="Plant vigor every 16 days at 250 m, and how it compares with last year.">
+              <Feature className="md:col-span-6 lg:col-span-6" title="Vegetation index · NDVI & EVI" delay={70} text="Plant vigor every 16 days at 250 m, and how it compares with last year.">
                 <svg viewBox="0 0 300 80" className="mt-5 w-full" aria-hidden>
                   <path d="M0,60 C30,58 50,30 80,22 S130,40 160,58 S220,26 250,20 S290,40 300,46" fill="none" stroke="#3f8f5a" strokeWidth="2" />
                   <path d="M0,68 C30,66 50,46 80,40 S130,52 160,66 S220,44 250,38 S290,52 300,56" fill="none" stroke="#b08a3c" strokeWidth="1.6" strokeDasharray="4 3" />

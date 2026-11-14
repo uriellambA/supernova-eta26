@@ -75,8 +75,8 @@ function evaluate(s: Strategy, site: SiteData) {
   return { mains, alley, metrics: { waterMm, bareMonths, erosion, nitrogen: Math.round(nitrogen), organicMatter, pestBreak, forage, income, labor } };
 }
 
-export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priorities): StrategyResult[] {
-  const list = STRATEGIES.filter((s) => s.system === farm.system);
+export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priorities, extra: Strategy[] = []): StrategyResult[] {
+  const list = [...STRATEGIES.filter((s) => s.system === farm.system), ...extra.filter((s) => s.system === farm.system && s.years.length && s.years.every((y) => cropById(y.main)))];
   const evals = list.map((s) => ({ s, ...evaluate(s, site) }));
   const current = evals.find((e) => e.s.current) ?? evals[0];
   const supply = SITE.irrigation.grossSupplyMm * EFFICIENCY[farm.irrigation] * WATER_SUPPLY[farm.water] * (site.snow ? clamp(0.8 + 0.2 * site.snow.indice, 0.7, 1.05) : 1);

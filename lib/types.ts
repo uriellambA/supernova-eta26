@@ -204,8 +204,11 @@ export type PlotRecord = {
 export type FarmRegister = {
   farmName: string;
   producer: string;
+  address: string;
   lat: number;
   lon: number;
+  boundary: [number, number][] | null; // [lon, lat] vertices of the farm limit
+  boundaryHa: number | null;
   plots: PlotRecord[];
   water: { source: "canal" | "well" | "river" | "mixed"; turnDays: number | null; shortMonths: number[] };
   soilTest: { date: string; ph: number | null; ec: number | null; organicMatter: number | null; notes: string };

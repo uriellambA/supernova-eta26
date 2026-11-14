@@ -46,7 +46,7 @@ export function SeasonStrip({ r }: { r: StrategyResult }) {
   );
 }
 
-export function Rotations({ results, pri, setPri }: { results: StrategyResult[]; pri: Priorities; setPri: (p: Priorities) => void }) {
+export function Rotations({ results, pri, setPri, children }: { results: StrategyResult[]; pri: Priorities; setPri: (p: Priorities) => void; children?: React.ReactNode }) {
   const [open, setOpen] = useState<string | null>(null);
   const sorted = [...results].sort((a, b) => b.score - a.score);
   return (
@@ -61,6 +61,7 @@ export function Rotations({ results, pri, setPri }: { results: StrategyResult[];
           ))}
         </div>
       </Card>
+      {children}
       <div className="grid gap-4 md:grid-cols-2">
         {sorted.map((r, i) => {
           const isOpen = open === r.strategy.id;
@@ -71,6 +72,7 @@ export function Rotations({ results, pri, setPri }: { results: StrategyResult[];
                   <div className="flex flex-wrap items-center gap-1.5">
                     <span className="text-[11px] text-subtle">#{i + 1}</span>
                     {r.strategy.current && <Badge tone="blue">Current rotation</Badge>}
+                    {r.strategy.id === "custom" && <Badge tone="amber">Your design</Badge>}
                     {i === 0 && <Badge tone="green" dot>Best match</Badge>}
                   </div>
                   <h4 className="mt-1.5 font-semibold leading-tight tracking-tight">{r.strategy.name}</h4>

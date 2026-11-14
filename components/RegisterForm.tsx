@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LangToggle } from "@/components/Translator";
@@ -8,14 +9,60 @@ import { CROPS } from "@/config/crops";
 import { SITE } from "@/config/site";
 import { SPECIES } from "@/config/species";
 import { MONTHS, SEASONS } from "@/lib/agro";
-import { emptyRegister, newPlot, profileFromRegister } from "@/lib/register";
+import { emptyRegister, newPlot, polygonStats, profileFromRegister } from "@/lib/register";
 import { METHOD_NAME } from "@/lib/riego";
 import { guardar, leer } from "@/lib/storage";
 import type { FarmRegister, PlotRecord, Priorities, SistemaRiego } from "@/lib/types";
 import { Badge, Reveal, ThemeToggle, btnGhost, btnPrimary, input, label, useHotkeys } from "./ui";
 
+const FarmMap = dynamic(() => import("./FarmMap"), { ssr: false, loading: () => <div className="grid h-full place-items-center text-sm text-muted">Loading map…</div> });
+
+type Place = { name: string; lat: number; lon: number };
+/** Street or place search (OpenStreetMap), biased to Los Antiguos. */
+function AddressSearch({ value, onChange, onPick }: { value: string; onChange: (v: string) => void; onPick: (p: Place) => void }) {
+  const [res, setRes] = useState<Place[] | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  async function search() {
+    if (value.trim().length < 3) return;
+    setBusy(true);
+    setErr(null);
+    try {
+      const r = await fetch(`/api/geocode?q=${encodeURIComponent(value)}`);
+      const j = await r.json();
+      if (!r.ok) throw new Error(j?.error);
+      setRes(j);
+      if (!j.length) setErr("No results. Try the street and number, or click your farm on the map.");
+    } catch {
+      setErr("Address search is not available right now. Click your farm on the map instead.");
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="mt-3">
+      <label className={label}>Street address or place
+        <div className="flex gap-2">
+          <input className={input} value={value} onChange={(e) => { onChange(e.target.value); setRes(null); }} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), search())} placeholder="e.g. Av. 11 de Julio 1200, or Ruta 43 km 5" />
+          <button className={`${btnGhost} !py-1.5 shrink-0`} onClick={search} disabled={busy || value.trim().length < 3}>{busy ? "Searching…" : "Search"}</button>
+        </div>
+      </label>
+      {err && <p className="mt-1 text-xs text-amber-fg">{err}</p>}
+      {res && res.length > 0 && (
+        <ul className="mt-1 divide-y divide-line overflow-hidden rounded-lg border border-line bg-surface text-sm">
+          {res.map((p) => (
+            <li key={`${p.lat},${p.lon}`}>
+              <button className="w-full px-3 py-2 text-left hover:bg-surface-2" onClick={() => { onPick(p); setRes(null); }}>📍 {p.name}</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 const STEPS = [
-  { id: "farm", title: "Farm", hint: "Name and location" },
+  { id: "farm", title: "Farm", hint: "Name, location and limit" },
   { id: "plots", title: "Plots", hint: "What grows where, season by season" },
   { id: "water", title: "Water & soil", hint: "Irrigation and your last soil test" },
   { id: "economy", title: "Economy", hint: "Sales, workers, machinery" },
@@ -69,6 +116,16 @@ export function RegisterForm() {
   const total = r.plots.reduce((s, p) => s + (p.areaHa || 0), 0);
   const done = [!!r.farmName, r.plots.length > 0 && r.plots.every((p) => p.crop), r.soilTest.ph !== null || r.soilTest.ec !== null, r.economy.workers > 0, Object.values(r.priorities).some((v) => v > 0)];
   const finish = () => router.push("/app");
+  const [drawing, setDrawing] = useState(false);
+  const stats = r.boundary && r.boundary.length >= 3 ? polygonStats(r.boundary) : null;
+  function finishLimit() {
+    setDrawing(false);
+    setR((x) => {
+      if (!x.boundary || x.boundary.length < 3) return x;
+      const st = polygonStats(x.boundary);
+      return { ...x, boundaryHa: st.ha, ...(st.center && { lon: +st.center[0].toFixed(5), lat: +st.center[1].toFixed(5) }) };
+    });
+  }
 
   useHotkeys({ s: finish });
 
@@ -129,10 +186,50 @@ export function RegisterForm() {
         </aside>
 
         <div className="space-y-6">
-          <Step id="farm" n={1} title="Farm" hint="Name and location">
+          <Step id="farm" n={1} title="Farm" hint="Name, location and limit">
             <div className="grid gap-3 sm:grid-cols-2">
               <label className={label}>Farm name<input className={input} value={r.farmName} onChange={(e) => set("farmName", e.target.value)} placeholder="e.g. Chacra Los Álamos" /></label>
               <label className={label}>Producer<input className={input} value={r.producer} onChange={(e) => set("producer", e.target.value)} placeholder="Your name (optional)" /></label>
+            </div>
+            <AddressSearch value={r.address} onChange={(v) => set("address", v)} onPick={(pl) => setR((x) => ({ ...x, address: pl.name, lat: +pl.lat.toFixed(5), lon: +pl.lon.toFixed(5) }))} />
+
+            <div className="mt-4 overflow-hidden rounded-xl border border-line">
+              <div className="flex flex-wrap items-center gap-2 border-b border-line bg-surface px-3 py-2">
+                <div className="flex rounded-lg border border-line p-0.5" role="group" aria-label="Map mode">
+                  <button onClick={() => setDrawing(false)} aria-pressed={!drawing} className={`rounded-md px-2.5 py-1 text-xs font-medium ${!drawing ? "bg-ink text-canvas" : "text-ink-2"}`}>📍 Place farm</button>
+                  <button onClick={() => { setDrawing(true); if (!drawing && (r.boundary?.length ?? 0) >= 3) set("boundary", []); }} aria-pressed={drawing} className={`rounded-md px-2.5 py-1 text-xs font-medium ${drawing ? "bg-ink text-canvas" : "text-ink-2"}`}>✏️ Draw limit</button>
+                </div>
+                {drawing && (
+                  <>
+                    <button className={`${btnGhost} !px-2.5 !py-1 text-xs`} disabled={!r.boundary?.length} onClick={() => set("boundary", (r.boundary ?? []).slice(0, -1))}>↶ Undo point</button>
+                    <button className={`${btnGhost} !px-2.5 !py-1 text-xs`} disabled={(r.boundary?.length ?? 0) < 3} onClick={finishLimit}>✓ Close limit</button>
+                  </>
+                )}
+                {(r.boundary?.length ?? 0) > 0 && <button className="text-xs text-red-fg hover:underline" onClick={() => setR((x) => ({ ...x, boundary: null, boundaryHa: null }))}>Clear limit</button>}
+              </div>
+              <div className="h-[380px]">
+                <FarmMap lat={r.lat} lon={r.lon} boundary={r.boundary ?? []} drawing={drawing}
+                  onPick={(lat, lon) => setR((x) => ({ ...x, lat, lon }))}
+                  onAddPoint={(pt) => setR((x) => ({ ...x, boundary: [...(x.boundary ?? []), pt] }))}
+                  onFinish={finishLimit} />
+              </div>
+              <div className="border-t border-line bg-surface px-3 py-2 text-xs text-muted">
+                {drawing ? (r.boundary?.length ? `${r.boundary.length} corners · click the first corner (green) or double-click to close` : "Click each corner of your farm on the map") : "Click the map or drag the pin to place your farm"}
+              </div>
+            </div>
+            {stats && stats.ha > 0 && !drawing && (
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+                <Badge tone="green" dot>Farm limit: {stats.ha} ha</Badge>
+                <Badge>Perimeter {stats.perimeterM.toLocaleString("en-US")} m</Badge>
+                {Math.abs(total - stats.ha) > 0.2 && (
+                  <button className="text-xs underline-offset-4 hover:underline" onClick={() => set("plots", r.plots.length === 1 ? [{ ...r.plots[0], areaHa: stats.ha }] : r.plots)} disabled={r.plots.length !== 1}>
+                    {r.plots.length === 1 ? `Use ${stats.ha} ha as the plot area` : `Plots add up to ${total.toFixed(1)} ha`}
+                  </button>
+                )}
+              </div>
+            )}
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <label className={label}>Area near
                 <select className={input} value={SITE.fields.find((f) => f.lat === r.lat && f.lon === r.lon)?.id ?? "custom"} onChange={(e) => { const f = SITE.fields.find((x) => x.id === e.target.value); if (f) setR((x) => ({ ...x, lat: f.lat, lon: f.lon })); }}>
                   {SITE.fields.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
@@ -142,7 +239,7 @@ export function RegisterForm() {
               <div className="grid grid-cols-[1fr_1fr_auto] items-end gap-2">
                 <label className={label}>Latitude<input type="number" step={0.0001} className={input} value={r.lat} onChange={(e) => set("lat", Number(e.target.value))} /></label>
                 <label className={label}>Longitude<input type="number" step={0.0001} className={input} value={r.lon} onChange={(e) => set("lon", Number(e.target.value))} /></label>
-                <button className={`${btnGhost} !py-1.5`} title="Use my location" onClick={() => navigator.geolocation?.getCurrentPosition((p) => setR((x) => ({ ...x, lat: +p.coords.latitude.toFixed(4), lon: +p.coords.longitude.toFixed(4) })))}>📍</button>
+                <button className={`${btnGhost} !py-1.5`} title="Use my location" onClick={() => navigator.geolocation?.getCurrentPosition((p) => setR((x) => ({ ...x, lat: +p.coords.latitude.toFixed(5), lon: +p.coords.longitude.toFixed(5) })))}>📍</button>
               </div>
             </div>
           </Step>

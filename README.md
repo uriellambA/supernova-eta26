@@ -15,13 +15,13 @@ Growvia es una herramienta de apoyo a la decisión (en inglés) para productores
 |---|---|
 | `/` | **Introducción**: qué es Growvia, comparador "índice de vegetación vs imagen original", cómo funciona (con capturas reales), funciones en bento y **la base de datos** que usa |
 | `/app` | **Panel** dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, IA y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
-| `/register` | **Registro del productor**: chacra, lotes, qué hubo en cada estación, agua, análisis de suelo, economía y objetivos. Se guarda en el dispositivo y se puede exportar o importar en JSON |
+| `/register` | **Registro del productor**: chacra (con **búsqueda por calle**, ubicación en el mapa satelital y **dibujo del límite** que calcula hectáreas y perímetro), lotes, qué hubo en cada estación, agua, análisis de suelo, economía y objetivos. Se guarda en el dispositivo y se puede exportar o importar en JSON |
 
 ### Pestañas del panel (atajos `1`–`5`)
 | Pestaña | Sub-pestañas |
 |---|---|
-| Resumen | mapa satelital con filtros y 3D, apoyo a la decisión con IA, vegetación, clima de hoy, salud del suelo, alertas |
-| Plan de rotación | Comparar rotaciones · Plan del año (primavera, verano, otoño, invierno) |
+| Resumen | **la mejor rotación para tu campo arriba de todo** (puntaje vs la actual, ranking, estaciones), mapa satelital con el límite de la chacra, IA, vegetación, clima de hoy, salud del suelo, alertas |
+| **Rotación de cultivos** (lo central) | Comparar rotaciones (tabla lado a lado + tarjetas con por qué, evidencia, beneficios, vacíos y riesgos) · **Diseñar la tuya** (armás tu rotación año por año, o partís del registro, y se puntúa junto a las demás) · Plan del año · Cómo se calcula (método y glosario) |
 | Cultivos y economía | Cultivos nuevos · Viabilidad · Qué podés hacer (geotermia, hidroponía, goteo) |
 | Clima y riesgos | Pronóstico · Contingencias · Heladas · Registro climático |
 | Suelo y agua | Suelo · Riego |

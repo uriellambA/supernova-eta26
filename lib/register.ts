@@ -16,6 +16,9 @@ export const newPlot = (n: number): PlotRecord => ({
 export const emptyRegister = (): FarmRegister => ({
   farmName: "",
   producer: "",
+  address: "",
+  boundary: null,
+  boundaryHa: null,
   lat: SITE.fields[0].lat,
   lon: SITE.fields[0].lon,
   plots: [newPlot(1)],
@@ -53,4 +56,24 @@ export function registerSummary(r: FarmRegister) {
     interests: r.interests,
     notes: r.notes,
   };
+}
+
+/** Area (ha) and perimeter (m) of a [lon, lat] polygon (local planar approximation, fine for a farm). */
+export function polygonStats(pts: [number, number][]) {
+  if (pts.length < 3) return { ha: 0, perimeterM: 0, center: pts[0] ?? null };
+  const lat0 = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+  const kx = 111320 * Math.cos((lat0 * Math.PI) / 180), ky = 110540;
+  const xy = pts.map(([lo, la]) => [lo * kx, la * ky]);
+  let a = 0, per = 0, cx = 0, cy = 0;
+  for (let i = 0; i < xy.length; i++) {
+    const [x1, y1] = xy[i], [x2, y2] = xy[(i + 1) % xy.length];
+    const cr = x1 * y2 - x2 * y1;
+    a += cr;
+    cx += (x1 + x2) * cr;
+    cy += (y1 + y2) * cr;
+    per += Math.hypot(x2 - x1, y2 - y1);
+  }
+  a /= 2;
+  const center: [number, number] = a ? [cx / (6 * a) / kx, cy / (6 * a) / ky] : pts[0];
+  return { ha: +(Math.abs(a) / 10000).toFixed(2), perimeterM: Math.round(per), center };
 }
