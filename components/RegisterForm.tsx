@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { LangToggle } from "@/components/Translator";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { APP_NAME } from "@/config/app";
 import { CROPS } from "@/config/crops";
@@ -97,6 +98,7 @@ export function RegisterForm() {
             <span className="rounded-lg px-2 py-1 text-ink">Register</span>
           </nav>
           <span className="ml-auto text-xs text-subtle">{saved ? `Saved on this device · ${saved}` : "Not saved yet"}</span>
+          <LangToggle />
           <ThemeToggle />
         </div>
       </header>
@@ -197,7 +199,7 @@ export function RegisterForm() {
 
           <Step id="economy" n={4} title="Economy" hint="Sales, workers, machinery">
             <div className="grid gap-3 sm:grid-cols-3">
-              <label className={label}>Main sales channel<select className={input} value={r.economy.channel} onChange={(e) => set("economy", { ...r.economy, channel: e.target.value as FarmRegister["economy"]["channel"] })}><option value="export">Export</option><option value="national">National market</option><option value="local">Local shops</option><option value="tourism">Tourism / farm stand</option><option value="processing">Processing (jams, frozen)</option></select></label>
+              <label className={label}>Main sales channel<select className={input} value={r.economy.channel} onChange={(e) => set("economy", { ...r.economy, channel: e.target.value as FarmRegister["economy"]["channel"] })}><option value="export">Export market</option><option value="national">National market</option><option value="local">Local shops</option><option value="tourism">Tourism / farm stand</option><option value="processing">Processing (jams, frozen)</option></select></label>
               <label className={label}>People working (avg.)<input type="number" min={0} max={200} className={input} value={r.economy.workers} onChange={(e) => set("economy", { ...r.economy, workers: Number(e.target.value) })} /></label>
               <label className={label}>Budget for changes (USD)<input type="number" min={0} step={500} className={input} value={r.economy.budgetUsd ?? ""} onChange={(e) => set("economy", { ...r.economy, budgetUsd: e.target.value ? Number(e.target.value) : null })} /></label>
             </div>

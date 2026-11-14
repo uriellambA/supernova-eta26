@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { SYSTEMS } from "@/config/rotations";
 import { useDictado } from "@/hooks/useDictado";
+import { getLang, translate, useLang } from "@/lib/i18n";
 import { useLeer } from "@/hooks/useLeer";
 import { METHOD_NAME } from "@/lib/riego";
 import type { AdvisorResult, FarmProfile, SistemaRiego, StrategyResult } from "@/lib/types";
@@ -25,7 +26,10 @@ export function AIPanel({
   const [text, setText] = useState("");
   const [reading, setReading] = useState(false);
   const [follow, setFollow] = useState<string[]>([]);
-  const [lang, setLang] = useState<"en-US" | "es-AR">("en-US");
+  const ui = useLang();
+  const [pick, setPick] = useState<"en-US" | "es-AR" | null>(null);
+  const lang = pick ?? (ui === "es" ? "es-AR" : "en-US");
+  const setLang = setPick;
   const base = useRef("");
   const dict = useDictado((t) => setText((base.current ? base.current + " " : "") + t), lang);
   const tts = useLeer();
@@ -126,7 +130,7 @@ export function AIPanel({
               </div>
             )}
             <div className="flex flex-wrap gap-2">
-              {tts.soportado && (tts.hablando ? <button className={`${btnGhost} !py-1.5 text-xs`} onClick={tts.detener}>⏹ Stop</button> : <button className={`${btnGhost} !py-1.5 text-xs`} onClick={() => tts.leer(advice.voice)}>🔊 Listen</button>)}
+              {tts.soportado && (tts.hablando ? <button className={`${btnGhost} !py-1.5 text-xs`} onClick={tts.detener}>⏹ Stop</button> : <button className={`${btnGhost} !py-1.5 text-xs`} onClick={() => tts.leer(getLang() === "es" && advice.source === "rules" ? translate(advice.voice) ?? advice.voice : advice.voice)}>🔊 Listen</button>)}
               <button className={`${btnGhost} !py-1.5 text-xs`} onClick={onShare}>Share</button>
               <button className={`${btnGhost} !py-1.5 text-xs`} onClick={() => window.print()}>PDF</button>
             </div>

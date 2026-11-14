@@ -12,7 +12,8 @@ soil properties and a soil-health score (salinity is estimated unless measured),
 4 rotation strategies (one is the CURRENT rotation) with scores computed by a rules engine, and new crop species ranked by viability
 (agronomic fit + economics). Today the town mostly grows cherries and strawberries: the farmer wants income after their season ends.
 RULES:
-- Use only the numbers provided. Do not change scores. Plain, friendly English for a farmer (no jargon; explain terms briefly if used).
+- Write every text field in the "language" given in the input (default English). Keep strategy/species ids unchanged.
+- Use only the numbers provided. Do not change scores. Plain, friendly language for a farmer (no jargon; explain terms briefly if used).
 - "summary": 2–3 sentences: which strategy fits the priorities best and why, compared with the current rotation.
 - "best": the id of the recommended strategy (normally the highest score; you may pick another if a risk is serious, and say why).
 - "notes": one short line per strategy id with its key trade-off.

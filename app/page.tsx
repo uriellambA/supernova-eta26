@@ -5,6 +5,7 @@ import { APP_NAME } from "@/config/app";
 import { SPECIES } from "@/config/species";
 import { STRATEGIES } from "@/config/rotations";
 import { CompareSlider } from "@/components/landing/CompareSlider";
+import { LangToggle } from "@/components/Translator";
 import { LandingKeys } from "@/components/landing/LandingKeys";
 import { btnGhost, btnPrimary } from "@/components/styles";
 import { Badge, Reveal, ThemeToggle } from "@/components/ui";
@@ -25,6 +26,7 @@ export default function Landing() {
             <a href="#data" className="rounded-lg px-2 py-1 hover:text-ink">Our data</a>
           </nav>
           <div className="ml-auto flex items-center gap-2">
+            <LangToggle />
             <ThemeToggle />
             <Link href="/app" className={btnPrimary}>Open dashboard <kbd>D</kbd></Link>
           </div>
@@ -55,7 +57,6 @@ export default function Landing() {
           </Reveal>
           <Reveal delay={300} className="mt-12">
             <CompareSlider />
-            <p className="mt-3 text-center text-sm text-muted">Satellites see plant health that is invisible to the naked eye. Drag to compare.</p>
           </Reveal>
         </section>
 

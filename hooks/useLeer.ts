@@ -1,4 +1,5 @@
 "use client";
+import { getLang } from "@/lib/i18n";
 import { useCallback, useEffect, useState } from "react";
 
 /** Limpia el texto para leerlo en voz alta (sin fuentes entre corchetes, emojis ni markdown). */
@@ -7,19 +8,20 @@ export function limpiarParaVoz(t: string) {
     .replace(/\[[^\]]*\]/g, "")
     .replace(/[*_#>`]/g, "")
     .replace(/\p{Extended_Pictographic}/gu, "")
-    .replace(/°C/g, " degrees")
+    .replace(/°C/g, getLang() === "es" ? " grados" : " degrees")
     .replace(/\s+/g, " ")
     .trim();
 }
 
 function elegirVoz(): SpeechSynthesisVoice | null {
   const voces = window.speechSynthesis.getVoices();
-  const pref = ["en-US", "en-GB", "en-AU", "en-CA"];
+  const es = getLang() === "es";
+  const pref = es ? ["es-AR", "es-US", "es-MX", "es-ES"] : ["en-US", "en-GB", "en-AU", "en-CA"];
   for (const p of pref) {
     const v = voces.find((x) => x.lang.replace("_", "-").toLowerCase() === p.toLowerCase());
     if (v) return v;
   }
-  return voces.find((x) => x.lang.toLowerCase().startsWith("en")) ?? null;
+  return voces.find((x) => x.lang.toLowerCase().startsWith(es ? "es" : "en")) ?? null;
 }
 
 /** Lectura en voz alta con las voces del dispositivo (funciona sin conexión). */
@@ -42,7 +44,7 @@ export function useLeer() {
     const u = new SpeechSynthesisUtterance(limpiarParaVoz(texto));
     const v = elegirVoz();
     if (v) u.voice = v;
-    u.lang = v?.lang ?? "en-US";
+    u.lang = v?.lang ?? (getLang() === "es" ? "es-AR" : "en-US");
     u.rate = 0.95;
     u.onend = () => {
       setHablando(false);

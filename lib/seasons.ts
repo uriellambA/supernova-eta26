@@ -15,7 +15,7 @@ export function seasonGrid(s: Strategy): SeasonCell[][] {
       const active = se.months.filter((m) => (main.kc[m - 1] ?? 0) > 0).length;
       if (s.system === "orchard") {
         const alley = cropById(s.alley ?? null);
-        if (se.id === "winter") return alley ? { crop: alley.id, label: `${alley.name} in alleys`, kind: "cover" as const } : { crop: null, label: "Dormant trees, bare alleys", kind: "bare" as const };
+        if (se.id === "winter") return alley ? { crop: alley.id, label: /alleys/i.test(alley.name) ? alley.name : `${alley.name} in alleys`, kind: "cover" as const } : { crop: null, label: "Dormant trees, bare alleys", kind: "bare" as const };
         return { crop: main.id, label: `${main.name}${alley ? ` + ${alley.name.toLowerCase()}` : ""}`, kind: "tree" as const };
       }
       if (active >= 2) return { crop: main.id, label: main.name, kind: main.kind === "cover" ? ("cover" as const) : ("crop" as const) };

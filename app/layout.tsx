@@ -5,6 +5,7 @@ import "@fontsource/instrument-serif/400.css";
 import "@fontsource/instrument-serif/400-italic.css";
 import { APP_DESCRIPTION, APP_NAME, APP_TAGLINE } from "@/config/app";
 import { RegistrarSW } from "@/components/RegistrarSW";
+import { Translator } from "@/components/Translator";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full">
         {children}
         <RegistrarSW />
+        <Translator />
       </body>
     </html>
   );

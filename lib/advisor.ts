@@ -6,6 +6,7 @@ import type { AdvisorResult, ClimaResumen, EnsoResumen, FarmProfile, FarmRegiste
 import { registerSummary } from "./register";
 
 export type AdvisorContext = {
+  language?: "English" | "Spanish (Argentina)";
   place: string;
   farm: FarmProfile;
   priorities: Priorities;

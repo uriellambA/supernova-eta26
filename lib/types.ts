@@ -7,6 +7,7 @@ export type SiteConfig = {
   timezone: string;
   center: [number, number]; // [lon, lat]
   elevation: number; // typical farm elevation (m), fallback for the temperature correction
+  showcase: { name: string; lat: number; lon: number; widthM: number; heightM: number }; // chacra shown on the landing page
   zoom: number;
   bounds: [[number, number], [number, number]];
   fields: FieldPreset[];

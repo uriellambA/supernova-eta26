@@ -9,6 +9,8 @@ export const SITE: SiteConfig = {
   timezone: "America/Argentina/Rio_Gallegos",
   center: [-71.615, -46.55],
   elevation: 220, // valley floor next to Lake Buenos Aires
+  // Chacras shown on the landing page (real satellite image + vegetation index). Move it to frame the orchards you want.
+  showcase: { name: "Chacras west of Los Antiguos", lat: -46.5525, lon: -71.648, widthM: 1400, heightM: 790 },
   zoom: 12.4,
   bounds: [
     [-71.95, -46.7],

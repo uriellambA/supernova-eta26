@@ -14,13 +14,30 @@ Growvia es una herramienta de apoyo a la decisión (en inglés) para productores
 | Ruta | Qué es |
 |---|---|
 | `/` | **Introducción**: qué es Growvia, comparador "índice de vegetación vs imagen original", cómo funciona (con capturas reales), funciones en bento y **la base de datos** que usa |
-| `/app` | **Panel** en grilla bento: mapa satelital con filtros y 3D, IA de decisión, mosaicos de vegetación (NDVI/EVI), clima de hoy, salud del suelo y contingencias, y 11 secciones |
+| `/app` | **Panel** dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, IA y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
 | `/register` | **Registro del productor**: chacra, lotes, qué hubo en cada estación, agua, análisis de suelo, economía y objetivos. Se guarda en el dispositivo y se puede exportar o importar en JSON |
 
-### Secciones del panel (atajos `1`–`0`)
-Climate · Soil · Rotations · **Year plan** (primavera, verano, otoño, invierno) · **New crops** · **Viability** · **Contingencies** · What you can do (geotermia, hidroponía, goteo) · Forecast · Frost · Water
+### Pestañas del panel (atajos `1`–`5`)
+| Pestaña | Sub-pestañas |
+|---|---|
+| Resumen | mapa satelital con filtros y 3D, apoyo a la decisión con IA, vegetación, clima de hoy, salud del suelo, alertas |
+| Plan de rotación | Comparar rotaciones · Plan del año (primavera, verano, otoño, invierno) |
+| Cultivos y economía | Cultivos nuevos · Viabilidad · Qué podés hacer (geotermia, hidroponía, goteo) |
+| Clima y riesgos | Pronóstico · Contingencias · Heladas · Registro climático |
+| Suelo y agua | Suelo · Riego |
 
 Atajos: `A` analizar con IA · `D` vista 3D · `H` hardware · `R` registro · `S` guardar registro.
+
+### Idioma EN / ES
+El botón **EN | ES** de cada encabezado traduce toda la página al español (Argentina) o la deja en inglés. Se recuerda en el dispositivo y la primera vez sigue el idioma del navegador. La IA responde en el idioma elegido, y la voz y el dictado también lo usan. Para traducir un texto nuevo, agregalo a `lib/i18n-es.ts` (`{n}` = número, `{x}` = texto).
+
+### Imagen satelital real de una chacra (introducción)
+El comparador de la introducción muestra una **chacra real de Los Antiguos**: a la derecha, la foto satelital de alta resolución; a la izquierda, el **NDVI**. Para generar las imágenes definitivas (hace falta internet, no hace falta ninguna clave):
+```bash
+npm run landing-images
+```
+Baja la foto satelital (Esri World Imagery, ~1 m) y calcula el NDVI real con las bandas roja (B04) e infrarroja cercana (B08) de **Sentinel-2** (10 m, la escena de verano con menos nubes). Las guarda en `public/landing/` (`chacra-color.jpg`, `chacra-ndvi.jpg`, `chacra.json`). Después hay que commitear esa carpeta. La zona se elige en `config/site.ts` → `showcase` (o con `--lat --lon --width --height`).
+Mientras esas imágenes no existan, la página arma la imagen satelital real en vivo en el navegador, con un índice de vegetación de bandas visibles (VARI), porque la foto común no trae infrarrojo.
 
 ### Lo nuevo en v0.3
 - **Diseño:** paleta monocroma cálida y grilla bento asimétrica. Tarjetas con borde de 1 px `#EAEAEA` y 24 px de padding, CTA `#111111`, badges en azul y verde pastel. Títulos en Instrument Serif y texto en Geist Sans. Animaciones al hacer scroll, atajos `<kbd>`, sin sombras y modo oscuro opcional.
