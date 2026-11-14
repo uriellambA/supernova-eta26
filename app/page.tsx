@@ -3,6 +3,7 @@ import { Brand } from "@/components/Brand";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { APP_NAME } from "@/config/app";
+import { SITES } from "@/config/sites";
 import { SPECIES } from "@/config/species";
 import { STRATEGIES } from "@/config/rotations";
 import { CompareSlider } from "@/components/landing/CompareSlider";
@@ -40,8 +41,10 @@ export default function Landing() {
         <section className="mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
           <div className="grid items-center gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
-            <Reveal className="flex flex-wrap gap-2">
-              <Badge tone="green" dot>Santa Cruz · Pampa Ondulada</Badge>
+            <Reveal className="flex flex-wrap items-center gap-2">
+              {SITES.map((x) => (
+                <Badge key={x.id} tone="green" dot title={x.region}>{x.name}</Badge>
+              ))}
               <Badge tone="blue">Decision support with AI</Badge>
             </Reveal>
             <Reveal delay={80}>
