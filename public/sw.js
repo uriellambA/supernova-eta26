@@ -1,5 +1,5 @@
 // Service worker: offline mode. Bump VERSION to invalidate old caches.
-const VERSION = "v4";
+const VERSION = "v5";
 const SHELL = `shell-${VERSION}`;
 const DATOS = `datos-${VERSION}`;
 const TILES = `tiles-${VERSION}`;
@@ -60,6 +60,10 @@ async function staleWhileRevalidate(req, cache) {
 
 self.addEventListener("fetch", (e) => {
   const req = e.request;
+  // Never cache app code on a local development machine
+  if (self.location.hostname === "localhost" || self.location.hostname === "127.0.0.1") {
+    if (new URL(req.url).pathname.startsWith("/_next/")) return;
+  }
   if (req.method !== "GET") return; // la IA (POST) siempre va a la red
   const url = new URL(req.url);
 
