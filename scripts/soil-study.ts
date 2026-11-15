@@ -6,6 +6,7 @@
  *   npm run soil-study -- --all                 # one point per site
  *   npm run soil-study -- --lat -46.55 --lon -71.62 --name "My chacra"
  *   npm run soil-study -- --grid 3              # 3×3 grid around the valley centre (~1 km spacing)
+ *   npm run soil-study -- --timeout 10           # wait up to 10 min per data source (default 5) and retry 3 times
  *   npm run soil-study -- --offline             # no internet: regional reference + simulated climate
  *   npm run soil-study -- --out docs/soil-study --system vegetables --irrigation drip
  *
@@ -63,16 +64,29 @@ if (grid > 1) {
   }
 }
 
+// Patience with slow sources (SoilGrids, NASA): each request waits up to --timeout minutes (default 5)
+// and a failed source is retried --retries times (default 3), pausing longer each time.
+const timeoutMin = Number(arg("timeout") ?? 5), retries = Number(arg("retries") ?? 3);
+process.env.GROWVIA_MIN_TIMEOUT_MS = String(Math.round(timeoutMin * 60_000));
+const pause = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 const farm: FarmProfile = { system, areaHa: 5, irrigation, water: "medium", notes: "" };
 const log = (...a: unknown[]) => console.log("·", ...a);
 
 async function tryOr<T>(label: string, fn: () => Promise<T>, fb: () => T): Promise<{ v: T; live: boolean }> {
   if (offline) return { v: fb(), live: false };
-  try {
-    return { v: await fn(), live: true };
-  } catch (e) {
-    log(`${label}: ${(e as Error).message} → fallback`);
-    return { v: fb(), live: false };
+  for (let k = 1; ; k++) {
+    try {
+      return { v: await fn(), live: true };
+    } catch (e) {
+      if (k > retries) {
+        log(`${label}: ${(e as Error).message} → fallback`);
+        return { v: fb(), live: false };
+      }
+      const wait = 30 * k;
+      log(`${label}: ${(e as Error).message} → retry ${k}/${retries} in ${wait} s`);
+      await pause(wait * 1000);
+    }
   }
 }
 

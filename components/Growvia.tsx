@@ -4,6 +4,7 @@ import { Brand } from "@/components/Brand";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { ndviInBrowser } from "@/lib/map-probe";
 import { APP_NAME } from "@/config/app";
 import { DEFAULT_SITE_ID, SITES, siteById } from "@/config/sites";
 import type { WeatherGrid, WeatherVarId } from "@/lib/weathergrid";
@@ -95,7 +96,10 @@ export function Growvia() {
 
   const q = `lat=${field.lat.toFixed(2)}&lon=${field.lon.toFixed(2)}`;
   const climate = useRecurso<IndicadoresNasa>(`/api/climate?v=3&lat=${field.lat.toFixed(1)}&lon=${field.lon.toFixed(1)}`);
-  const ndvi = useRecurso<NdviResumen>(`/api/vegetation?${q}`);
+  // if our server could not reach NASA in time, the browser reads the same NASA images directly
+  const qLat = +field.lat.toFixed(2), qLon = +field.lon.toFixed(2);
+  const ndviDirect = useCallback(() => ndviInBrowser(qLat, qLon), [qLat, qLon]);
+  const ndvi = useRecurso<NdviResumen>(`/api/vegetation?${q}`, ndviDirect);
   const forecast = useRecurso<ClimaResumen>(`/api/forecast?${q}`);
   const snow = useRecurso<NieveResumen>(site.watershed ? `/api/snow?site=${site.id}` : null);
   const wgrid = useRecurso<WeatherGrid>(weatherVar ? `/api/weather-grid?site=${site.id}` : null);
