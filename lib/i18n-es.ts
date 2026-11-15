@@ -25,7 +25,7 @@ export const ES: Record<string, string> = {
   "is a decision-support tool. It does not replace your judgment or local agronomic advice. · Shortcuts": "es una herramienta de apoyo a la decisión. No reemplaza tu criterio ni el asesoramiento agronómico local. · Atajos",
   "analyze ·": "analizar ·", "analyze": "analizar", "farm data ·": "datos ·", "hardware ·": "hardware ·",
   "Climate history {n}–{n}": "Historial climático {n}–{n}", "Soil map {n} m": "Mapa de suelos {n} m", "Soil: regional reference": "Suelo: referencia regional",
-  "Farm dataed": "Datos cargados", "Load your farm data": "Cargá los datos de tu chacra", "Load farm data": "Cargar datos", "Edit farm data": "Editar datos",
+  "Farm dataed": "Datos cargados", "Load your farm data": "Cargá los datos de tu chacra", "Load farm data": "Cargar chacra", "Edit farm data": "Editar chacra",
 
   // ---------- Overview tiles ----------
   "Satellite map": "Mapa satelital", "Tap to place your field": "Tocá para ubicar tu campo", "Decision support": "Apoyo a la decisión",

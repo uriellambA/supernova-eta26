@@ -69,7 +69,7 @@ pub fn setup(app: &mut App, shared: &Arc<alerts::Shared>) -> Result<(), Box<dyn 
             let growvia = SubmenuBuilder::new(app, "Growvia")
                 .item(&MenuItemBuilder::with_id("home", "Inicio · Home").accelerator("CmdOrCtrl+1").build(app)?)
                 .item(&MenuItemBuilder::with_id("dashboard", "Panel · Dashboard").accelerator("CmdOrCtrl+2").build(app)?)
-                .item(&MenuItemBuilder::with_id("register", "Datos de la chacra · Farm data").accelerator("CmdOrCtrl+3").build(app)?)
+                .item(&MenuItemBuilder::with_id("register", "Cargar chacra · Load farm").accelerator("CmdOrCtrl+3").build(app)?)
                 .separator()
                 .item(&MenuItemBuilder::with_id("print", "Imprimir / Guardar PDF · Print / Save PDF").accelerator("CmdOrCtrl+P").build(app)?)
                 .item(&MenuItemBuilder::with_id("reload", "Recargar · Reload").accelerator("CmdOrCtrl+R").build(app)?)
