@@ -7,6 +7,7 @@ import { Brand } from "./Brand";
 import { desktopInfo } from "@/lib/desktop";
 import { getLang } from "@/lib/i18n";
 import { Pachamama } from "./Pachamama";
+import { SignInButton } from "@/components/landing/SignInButton";
 import { LangToggle } from "./Translator";
 import { btnGhost, btnPrimary } from "./styles";
 import { ThemeToggle } from "./ui";
@@ -64,9 +65,10 @@ export function DownloadView() {
       <header className="border-b border-line">
         <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3 sm:px-6">
           <Brand />
-          <div className="ml-auto flex items-center gap-2"><LangToggle /><ThemeToggle /><Link href="/app" className={btnGhost}>Open dashboard</Link></div>
+          <div className="ml-auto flex items-center gap-2"><LangToggle /><SignInButton /></div>
         </div>
       </header>
+      <div className="fixed bottom-5 left-5 z-40"><ThemeToggle /></div>
       <main className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
         <div className="grid items-center gap-8 md:grid-cols-12">
           <div className="md:col-span-8">

@@ -47,78 +47,143 @@ export function SeasonStrip({ r }: { r: StrategyResult }) {
   );
 }
 
+/** Color of a rotation in one column, compared with the others: green the best, red the worst, amber in between. */
+function dot(v: number, all: number[]): [string, string] {
+  const hi = Math.max(...all), lo = Math.min(...all);
+  if (hi - lo < 0.05) return ["bg-line-strong", "Same"];
+  if (v >= hi - 0.02) return ["bg-green-fg", "Best"];
+  if (v <= lo + 0.02) return ["bg-red-fg", "Worst"];
+  return ["bg-amber-fg", "In between"];
+}
+const COLS: [keyof Priorities, string][] = [["water", "Water"], ["soil", "Soil"], ["income", "Income"], ["labor", "Work"], ["forage", "Forage"]];
+
 export function Rotations({ results, pri, setPri, children }: { results: StrategyResult[]; pri: Priorities; setPri: (p: Priorities) => void; children?: React.ReactNode }) {
   const [open, setOpen] = useState<string | null>(null);
   const sorted = [...results].sort((a, b) => b.score - a.score);
   return (
     <div className="space-y-4">
-      <Card title="What matters most to you?" eyebrow="Your priorities re-rank the strategies instantly">
-        <div className="grid gap-4 sm:grid-cols-5">
-          {(Object.keys(PRI_LABEL) as (keyof Priorities)[]).map((k) => (
-            <label key={k} className="text-xs text-ink-2">
-              <div className="mb-1 flex justify-between"><span>{PRI_LABEL[k]}</span><span className="text-subtle">{["off", "low", "mid", "high"][pri[k]]}</span></div>
-              <input type="range" min={0} max={3} step={1} value={pri[k]} onChange={(e) => setPri({ ...pri, [k]: Number(e.target.value) })} className="w-full accent-[var(--ink)]" />
-            </label>
+      {/* 1. ranking as a bar chart */}
+      <Card title="Which rotation suits your field best?" eyebrow="Score out of 100">
+        <ol className="space-y-3">
+          {sorted.map((r, i) => (
+            <li key={r.strategy.id} className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1 sm:grid-cols-[minmax(0,16rem)_1fr_auto]">
+              <div className="flex min-w-0 items-center gap-1.5 text-sm">
+                <span className="truncate font-medium">{r.strategy.name}</span>
+                {i === 0 && <Badge tone="green" dot>Best</Badge>}
+                {r.strategy.current && <Badge tone="blue">Today</Badge>}
+              </div>
+              <div className="order-3 col-span-2 h-3 overflow-hidden rounded-full bg-surface-2 sm:order-none sm:col-span-1">
+                <div className={`h-full rounded-full ${i === 0 ? "bg-green-fg" : r.strategy.current ? "bg-blue-fg" : "bg-line-strong"}`} style={{ width: `${r.score}%` }} />
+              </div>
+              <span className="w-8 text-right font-serif text-2xl leading-none tabular-nums">{r.score}</span>
+            </li>
           ))}
+        </ol>
+      </Card>
+
+      {/* 2. traffic lights: how each rotation does on what matters */}
+      <Card title="At a glance" eyebrow="Green the best · amber in between · red the worst · grey all the same" pad={false}>
+        <div className="overflow-x-auto px-6 pb-6">
+          <table className="w-full min-w-[560px] text-left text-sm">
+            <thead className="text-xs text-muted">
+              <tr className="border-b border-line">
+                <th className="py-2 font-medium">Rotation</th>
+                {COLS.map(([k, l]) => <th key={k} className="py-2 text-center font-medium">{l}</th>)}
+                <th className="py-2 text-center font-medium">Bare soil</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map((r) => (
+                <tr key={r.strategy.id} className="border-b border-line last:border-0">
+                  <td className="py-2.5 pr-3 font-medium">{r.strategy.name}{r.strategy.current && <span className="ml-1.5 text-xs font-normal text-muted">(today)</span>}</td>
+                  {COLS.map(([k]) => {
+                    const [c, t] = dot(r.scores[k], sorted.map((x) => x.scores[k]));
+                    return <td key={k} className="py-2.5 text-center"><span className={`inline-block h-3 w-3 rounded-full ${c}`} title={t} aria-label={t} /></td>;
+                  })}
+                  <td className="py-2.5 text-center text-xs tabular-nums text-ink-2">{`${r.metrics.bareMonths} mo`}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </Card>
-      {children}
-      <div className="grid gap-4 md:grid-cols-2">
-        {sorted.map((r, i) => {
-          const isOpen = open === r.strategy.id;
-          return (
-            <Reveal key={r.strategy.id} delay={i * 70} className="rounded-2xl border border-line bg-surface p-6">
-              <div className="flex items-start gap-3">
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="text-[11px] text-subtle">#{i + 1}</span>
-                    {r.strategy.current && <Badge tone="blue">Current rotation</Badge>}
-                    {r.strategy.id === "custom" && <Badge tone="amber">Your design</Badge>}
-                    {i === 0 && <Badge tone="green" dot>Best match</Badge>}
+
+      {/* 3. the rest, only for whoever wants it */}
+      <details className="group rounded-2xl border border-line bg-surface">
+        <summary className="cursor-pointer list-none px-6 py-4 font-medium">Adjust my priorities <span className="text-xs font-normal text-muted">· the ranking changes as you move them</span></summary>
+        <div className="px-6 pb-6">
+          <div className="grid gap-4 sm:grid-cols-5">
+            {(Object.keys(PRI_LABEL) as (keyof Priorities)[]).map((k) => (
+              <label key={k} className="text-xs text-ink-2">
+                <div className="mb-1 flex justify-between"><span>{PRI_LABEL[k]}</span><span className="text-subtle">{["off", "low", "mid", "high"][pri[k]]}</span></div>
+                <input type="range" min={0} max={3} step={1} value={pri[k]} onChange={(e) => setPri({ ...pri, [k]: Number(e.target.value) })} className="w-full accent-[var(--ink)]" />
+              </label>
+            ))}
+          </div>
+        </div>
+      </details>
+      <details className="rounded-2xl border border-line bg-surface">
+        <summary className="cursor-pointer list-none px-6 py-4 font-medium">See every rotation in detail <span className="text-xs font-normal text-muted">· seasons, evidence and risks</span></summary>
+        <div className="space-y-4 px-4 pb-6 sm:px-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            {sorted.map((r, i) => {
+              const isOpen = open === r.strategy.id;
+              return (
+                <Reveal key={r.strategy.id} delay={i * 70} className="rounded-2xl border border-line bg-surface p-6">
+                  <div className="flex items-start gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="text-[11px] text-subtle">#{i + 1}</span>
+                        {r.strategy.current && <Badge tone="blue">Current rotation</Badge>}
+                        {r.strategy.id === "custom" && <Badge tone="amber">Your design</Badge>}
+                        {i === 0 && <Badge tone="green" dot>Best match</Badge>}
+                      </div>
+                      <h4 className="mt-1.5 font-semibold leading-tight tracking-tight">{r.strategy.name}</h4>
+                      <p className="mt-1 text-xs text-muted">{r.strategy.years.map((y) => `${cropById(y.main)?.name}${y.winter && y.winter !== y.main ? ` + ${cropById(y.winter)?.name.toLowerCase()}` : ""}`).join(" → ")}</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-serif text-4xl leading-none tabular-nums">{r.score}</div>
+                      <div className="mt-1"><LevelPill level={r.level} /></div>
+                    </div>
                   </div>
-                  <h4 className="mt-1.5 font-semibold leading-tight tracking-tight">{r.strategy.name}</h4>
-                  <p className="mt-1 text-xs text-muted">{r.strategy.years.map((y) => `${cropById(y.main)?.name}${y.winter && y.winter !== y.main ? ` + ${cropById(y.winter)?.name.toLowerCase()}` : ""}`).join(" → ")}</p>
-                </div>
-                <div className="text-right">
-                  <div className="font-serif text-4xl leading-none tabular-nums">{r.score}</div>
-                  <div className="mt-1"><LevelPill level={r.level} /></div>
-                </div>
-              </div>
-              <div className="mt-4"><SeasonStrip r={r} /></div>
-              <div className="mt-3 grid grid-cols-4 gap-2 text-center text-[11px]">
-                {[["Water", `${r.metrics.waterMm} mm`], ["Bare", `${r.metrics.bareMonths} mo`], ["Erosion", pct(r.metrics.erosion)], ["N added", `${r.metrics.nitrogen} kg`]].map(([k, v]) => (
-                  <div key={k} className="rounded-lg bg-surface-2 p-1.5"><div className="text-muted">{k}</div><div className="font-semibold">{v}</div></div>
-                ))}
-              </div>
-              {r.benefits.length > 0 && <p className="mt-3 text-sm text-green-fg">✓ {r.benefits.slice(0, 2).join(" · ")}</p>}
-              {r.risks[0] && <p className="mt-1 text-sm text-amber-fg">⚠ {r.risks[0]}</p>}
-              <button className="mt-3 text-xs font-medium text-ink underline-offset-4 hover:underline" onClick={() => setOpen(isOpen ? null : r.strategy.id)} aria-expanded={isOpen}>
-                {isOpen ? "Hide details" : "Why? Evidence, gaps and risks →"}
-              </button>
-              {isOpen && (
-                <div className="mt-3 space-y-2 border-t border-line pt-3 text-xs text-ink-2">
-                  <Block title="Why it was suggested" items={r.why} />
-                  <Block title="Evidence" items={r.evidence} />
-                  {r.benefits.length > 0 && <Block title="Benefits" items={r.benefits} />}
-                  <Block title="Information gaps" items={r.gaps} />
-                  <Block title="Risks to review locally" items={r.risks} />
-                  <div className="grid grid-cols-5 gap-1.5 pt-1">
-                    {(Object.keys(PRI_LABEL) as (keyof Priorities)[]).map((k) => (
-                      <div key={k}><Meter value={r.scores[k] * 100} /><div className="mt-0.5 text-[10px] text-subtle">{PRI_LABEL[k]}</div></div>
+                  <div className="mt-4"><SeasonStrip r={r} /></div>
+                  <div className="mt-3 grid grid-cols-4 gap-2 text-center text-[11px]">
+                    {[["Water", `${r.metrics.waterMm} mm`], ["Bare", `${r.metrics.bareMonths} mo`], ["Erosion", pct(r.metrics.erosion)], ["N added", `${r.metrics.nitrogen} kg`]].map(([k, v]) => (
+                      <div key={k} className="rounded-lg bg-surface-2 p-1.5"><div className="text-muted">{k}</div><div className="font-semibold">{v}</div></div>
                     ))}
                   </div>
-                </div>
-              )}
-            </Reveal>
-          );
-        })}
-      </div>
-      <div className="flex flex-wrap gap-2 text-[11px]">
-        <Badge tone="blue">Crop</Badge><Badge tone="green">Cover / forage</Badge><Badge tone="neutral">Orchard</Badge><Badge tone="red">Bare soil</Badge>
-      </div>
-      <Note>
-        <b>Quick guide:</b> legumes (alfalfa, vetch, clover, peas, fava) fix nitrogen from the air · cover crops (rye, oats) protect bare soil from wind and add organic matter · deep roots (alfalfa, rye) open the soil so water soaks in · drought-tolerant crops (garlic, peas) need less irrigation.
-      </Note>
+                  {r.benefits.length > 0 && <p className="mt-3 text-sm text-green-fg">✓ {r.benefits.slice(0, 2).join(" · ")}</p>}
+                  {r.risks[0] && <p className="mt-1 text-sm text-amber-fg">⚠ {r.risks[0]}</p>}
+                  <button className="mt-3 text-xs font-medium text-ink underline-offset-4 hover:underline" onClick={() => setOpen(isOpen ? null : r.strategy.id)} aria-expanded={isOpen}>
+                    {isOpen ? "Hide details" : "Why? Evidence, gaps and risks →"}
+                  </button>
+                  {isOpen && (
+                    <div className="mt-3 space-y-2 border-t border-line pt-3 text-xs text-ink-2">
+                      <Block title="Why it was suggested" items={r.why} />
+                      <Block title="Evidence" items={r.evidence} />
+                      {r.benefits.length > 0 && <Block title="Benefits" items={r.benefits} />}
+                      <Block title="Information gaps" items={r.gaps} />
+                      <Block title="Risks to review locally" items={r.risks} />
+                      <div className="grid grid-cols-5 gap-1.5 pt-1">
+                        {(Object.keys(PRI_LABEL) as (keyof Priorities)[]).map((k) => (
+                          <div key={k}><Meter value={r.scores[k] * 100} /><div className="mt-0.5 text-[10px] text-subtle">{PRI_LABEL[k]}</div></div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </Reveal>
+              );
+            })}
+          </div>
+          {children}
+          <div className="flex flex-wrap gap-2 text-[11px]">
+            <Badge tone="blue">Crop</Badge><Badge tone="green">Cover / forage</Badge><Badge tone="neutral">Orchard</Badge><Badge tone="red">Bare soil</Badge>
+          </div>
+          <Note>
+            <b>Quick guide:</b> legumes (alfalfa, vetch, clover, peas, fava) fix nitrogen from the air · cover crops (rye, oats) protect bare soil from wind and add organic matter · deep roots (alfalfa, rye) open the soil so water soaks in · drought-tolerant crops (garlic, peas) need less irrigation.
+          </Note>
+        </div>
+      </details>
     </div>
   );
 }

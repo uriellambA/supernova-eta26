@@ -51,12 +51,12 @@ const MapView = dynamic(() => import("./MapView"), { ssr: false, loading: () => 
 
 // The dashboard is split in 5 tabs so the farmer sees one topic at a time.
 const TABS = [
-  { id: "home", label: "Overview", short: "Summary", icon: "home", blurb: "", tone: "", subs: [] },
-  { id: "map", label: "Map", short: "Map", icon: "map", blurb: "", tone: "", subs: [] },
   { id: "plan", label: "Crop rotation", short: "Rotation", icon: "rotation", blurb: "Compare, design and plan the rotation of your field", tone: "bg-green-bg text-green-fg", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "effect", label: "Effectiveness" }, { id: "builder", label: "Build your own" }, { id: "seasons", label: "Year plan" }, { id: "method", label: "How it's scored" }] },
+  { id: "map", label: "Map", short: "Map", icon: "map", blurb: "", tone: "", subs: [] },
   { id: "crops", label: "Crops & economy", short: "Crops", icon: "sprout", blurb: "New species, costs, margins and what you can do", tone: "bg-amber-bg text-amber-fg", subs: [{ id: "crops", label: "New crops" }, { id: "viability", label: "Viability" }, { id: "options", label: "What you can do" }] },
   { id: "weather", label: "Weather & risks", short: "Weather", icon: "weather", blurb: "Forecast, frost and El Niño / La Niña plans", tone: "bg-blue-bg text-blue-fg", subs: [{ id: "forecast", label: "Forecast" }, { id: "risks", label: "Contingencies" }, { id: "frost", label: "Frost" }, { id: "climate", label: "Climate record" }] },
   { id: "soil", label: "Soil & water", short: "Soil", icon: "drop", blurb: "Soil health, salinity and irrigation needs", tone: "bg-red-bg text-red-fg", subs: [{ id: "soil", label: "Soil" }, { id: "water", label: "Irrigation" }] },
+  { id: "home", label: "General overview", short: "General", icon: "home", blurb: "", tone: "", subs: [] },
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 
@@ -71,7 +71,7 @@ export function Growvia() {
   const [register, setRegister] = useState<FarmRegister | null>(null);
   const [readings, setReadings] = useState<GroundReading[]>([]);
   const [custom, setCustomState] = useState<Strategy | null>(null);
-  const [tab, setTab] = useState<TabId>("home");
+  const [tab, setTab] = useState<TabId>("plan");
   const [subs, setSubs] = useState<Record<string, string>>({ plan: "rotations", crops: "crops", weather: "forecast", soil: "soil" });
   const go = useCallback((t: TabId, sub?: string) => {
     setTab(t);
@@ -252,11 +252,6 @@ export function Growvia() {
         <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur">
           <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-3 px-4 py-3 sm:px-6">
             <Brand />
-            <nav className="hidden items-center gap-1 text-sm text-muted md:flex">
-              <Link href="/" className="rounded-lg px-2 py-1 hover:text-ink">About</Link>
-              <span className="rounded-lg px-2 py-1 text-ink">Dashboard</span>
-              <Link href="/register" className="rounded-lg px-2 py-1 hover:text-ink">Register</Link>
-            </nav>
             <div data-tour="place" className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-line bg-surface px-3 py-1.5 text-sm sm:max-w-md">
               <Icon name="pin" className="h-4 w-4 shrink-0 text-muted" />
               <select className="min-w-0 flex-1 bg-transparent font-medium focus:outline-none" aria-label="Satellite map"
@@ -273,12 +268,10 @@ export function Growvia() {
               </select>
               <DemoBadge show={simulated} />
             </div>
-            <div data-tour="tools" className="flex gap-2">
+            <div data-tour="tools" className="flex gap-2 sm:ml-auto">
               <AccountButton />
               <button className={btnGhost} onClick={() => setTourOpen(true)} title="Tutorial" aria-label="Tutorial">?</button>
-              <button className={`${btnGhost} ${is3D ? "!border-ink" : ""}`} onClick={() => { go("map"); setIs3D(!is3D); }} aria-pressed={is3D}>3D View <kbd>D</kbd></button>
               <LangToggle />
-              <ThemeToggle />
             </div>
           </div>
           <nav data-tour="tabs" className="mx-auto hidden max-w-[1500px] gap-1 overflow-x-auto px-4 pb-2 sm:flex sm:px-6" aria-label="Dashboard tabs">
@@ -299,9 +292,7 @@ export function Growvia() {
             </div>
             {tab === "home" && (
               <div className="flex flex-wrap gap-1.5 sm:ml-auto">
-                {climate.data && <Badge tone="blue">Climate record {climate.data.periodo.join("–")}</Badge>}
-                {soil.data && <Badge tone={soil.data.source === "soil-map" ? "green" : "amber"}>{soil.data.source === "soil-map" ? "Soil map 250 m" : "Soil: regional reference"}</Badge>}
-                {register ? <Badge tone="green" dot>Farm registered</Badge> : <Link href="/register"><Badge tone="amber">Register your farm →</Badge></Link>}
+                {!register && <Link href="/register"><Badge tone="amber">Register your farm →</Badge></Link>}
               </div>
             )}
             {current_tab.subs.length > 0 && (
@@ -324,7 +315,6 @@ export function Growvia() {
                   <>
                     <div className="flex items-baseline gap-2">
                       <span className="font-serif text-4xl">{ndvi.data.aproximado ? "≈" : ""}{ndvi.data.ultimo.ndvi}</span><span className="text-xs text-muted">NDVI</span>
-                      {ndvi.data.ultimo.evi !== undefined && <span className="ml-auto text-xs text-muted">EVI {ndvi.data.ultimo.evi}</span>}
                     </div>
                     <div className="-mx-1 mt-1"><LineChart label="NDVI" points={ndviPoints(ndvi.data.serie.slice(-23))} /></div>
                   </>
@@ -334,11 +324,7 @@ export function Growvia() {
                 {today ? (
                   <>
                     <div className="font-serif text-4xl">{Math.round(today.tmin)}° <span className="text-ink-2">/ {Math.round(today.tmax)}°</span></div>
-                    <div className="mt-3 grid grid-cols-3 gap-2 text-center text-[11px]">
-                      <div><div className="text-muted">Humidity</div><div className="font-medium">{today.humedad ?? "—"}%</div></div>
-                      <div><div className="text-muted">UV</div><div className="font-medium">{today.uv ?? "—"}</div></div>
-                      <div><div className="text-muted">Gusts</div><div className="font-medium">{Math.round(today.rafagas)}</div></div>
-                    </div>
+                    <div className="mt-2 text-xs text-muted">{`Min / max · gusts ${Math.round(today.rafagas)} km/h`}</div>
                   </>
                 ) : <TileEmpty st={forecast.estado} why={forecast.error} />}
               </Tile>
@@ -347,7 +333,6 @@ export function Growvia() {
                   <>
                     <div className="flex items-baseline gap-2"><span className="font-serif text-4xl">{health.score}</span><LevelPill level={health.level} /></div>
                     <Meter value={health.score} level={health.level} className="mt-3" />
-                    <div className="mt-3 text-xs text-muted">Salinity {sal.measured ? "" : "~"}{sal.ece} dS/m · pH {soil.data?.ph}</div>
                   </>
                 ) : <TileEmpty st={soil.estado} />}
               </Tile>
@@ -356,7 +341,7 @@ export function Growvia() {
                   <>
                     <div className="flex items-baseline gap-2"><span className="font-serif text-4xl">{alerts.length}</span><span className="text-xs text-muted">{alerts.length === 1 ? "alert" : "alerts"}</span></div>
                     <ul className="mt-2 space-y-1 text-xs">
-                      {(alerts.length ? alerts : risks).slice(0, 2).map((h) => <li key={h.id} className="flex items-center gap-1.5"><span>{h.emoji}</span><span className="truncate">{h.name}</span></li>)}
+                      {(alerts.length ? alerts : risks).slice(0, 1).map((h) => <li key={h.id} className="flex items-center gap-1.5"><span>{h.emoji}</span><span className="truncate">{h.name}</span></li>)}
                     </ul>
                   </>
                 ) : <TileEmpty st={climate.estado} />}
@@ -368,6 +353,7 @@ export function Growvia() {
                 <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-3">
                   <span className="text-sm font-medium">Satellite map</span>
                   <span className="hidden text-xs text-subtle sm:inline">Tap to place your field · move the cursor to read the exact value</span>
+                  <button className={`${btnGhost} !py-1 text-xs ${is3D ? "!border-ink" : ""}`} onClick={() => setIs3D(!is3D)} aria-pressed={is3D}>3D</button>
                   <div className="w-full sm:ml-auto sm:w-auto"><FiltersPanel active={overlays} toggle={toggleOverlay} /></div>
                 </div>
                 <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-2">
@@ -416,6 +402,9 @@ export function Growvia() {
           {APP_NAME} is a decision-support tool. It does not replace your judgment or local agronomic advice. · Shortcuts: <kbd>A</kbd> analyze · <kbd>D</kbd> 3D · <kbd>R</kbd> register · <kbd>1</kbd>–<kbd>6</kbd> tabs
         </footer>
       </div>
+
+      {/* theme switch: bottom left, out of the way (above the phone tab bar) */}
+      <div className="fixed bottom-20 left-4 z-40 sm:bottom-5 sm:left-5 print:hidden"><ThemeToggle /></div>
 
       {/* Growwy: always at hand, in a side panel */}
       <button data-tour="growwy" onClick={() => setGrowwyOpen(true)} aria-label="Ask Growwy"

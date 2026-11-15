@@ -12,13 +12,13 @@ const find = (id: string) => (id ? [...document.querySelectorAll(`[data-tour="${
 const STEPS: Step[] = [
   { id: "", title: "Welcome to Growvia", text: "A quick tour of your dashboard: what each part shows and how to use it. It takes one minute." },
   { id: "place", title: "Your farm or a place", text: "Choose your registered farm or one of the places. Everything on the dashboard changes to that spot." },
-  { id: "tabs", title: "Six tabs", text: "Summary is the short version. Map, Crop rotation, Crops and economy, Climate and risks and Soil and water have the details." },
+  { id: "tabs", title: "Six tabs", text: "It starts with Crop rotation, the main decision. Then Map, Crops, Climate and Soil. General overview, at the end, sums everything up." },
   { id: "rotation", title: "The best rotation for your field", text: "Growvia compares your current rotation with the others and scores them with your priorities: water, income, soil, forage and work." },
   { id: "effect", title: "How effective it will be", text: "How much the recommended rotation improves on what you do today. \"Why it works\" shows each aspect, why, and when you will notice it." },
   { id: "tiles", title: "Quick summary", text: "Vegetation, today's weather, soil health and alerts. \"Details\" opens the full tab." },
   { id: "map", title: "Satellite map", text: "Turn on NASA layers (vegetation, soil temperature, salinity, snow) or the weather. Move the cursor over the map to see the exact value at each point. Tap to place your field." },
   { id: "growwy", title: "Growwy, your SI", text: "Always here, on every tab. Ask anything about your farm, by writing or by voice. \"Analyze my field\" gives you a full plan with the year by seasons." },
-  { id: "tools", title: "3D, language and theme", text: "3D view of the terrain, Spanish or English, light or dark. The \"?\" button opens this tour again." },
+  { id: "tools", title: "Account and language", text: "Your account, Spanish or English, and the \"?\" button to see this tour again. Light or dark mode is at the bottom left; the 3D view is on the map." },
 ];
 
 type Box = { x: number; y: number; w: number; h: number };

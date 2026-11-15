@@ -19,36 +19,53 @@ export function RotationSummary({ results, eff, onCompare, onEffect }: { results
   const best = list[0];
   const cur = results.find((r) => r.strategy.current) ?? best;
   const same = best.strategy.id === cur.strategy.id;
-  const chips = [
-    !same && best.metrics.waterMm < cur.metrics.waterMm - 20 && `💧 −${cur.metrics.waterMm - best.metrics.waterMm} mm water/yr`,
-    !same && best.metrics.bareMonths < cur.metrics.bareMonths - 0.5 && `🌱 bare soil ${cur.metrics.bareMonths} → ${best.metrics.bareMonths} months`,
-    !same && best.metrics.erosion < cur.metrics.erosion - 0.05 && `💨 erosion ${pct(cur.metrics.erosion)} → ${pct(best.metrics.erosion)}`,
-  ].filter(Boolean) as string[];
+  const bars: [string, number, string][] = same ? [["Your rotation", best.score, "bg-green-fg"]] : [["Today", cur.score, "bg-blue-fg"], ["Recommended", best.score, "bg-green-fg"]];
   return (
     <Reveal tour="rotation" className="rounded-2xl border border-ink bg-surface p-6 md:col-span-6 lg:col-span-12">
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">Crop rotation</span>
-        <Badge tone="blue">Core decision</Badge>
-      </div>
-      <h2 className="mt-2 font-serif text-3xl leading-tight sm:text-4xl">
-        {same ? "Your current rotation is the best fit" : <>Best for your field: <em>{best.strategy.name}</em></>}
-      </h2>
-      <div className="mt-4 flex flex-wrap items-end gap-x-8 gap-y-4">
-        <div><div className="font-serif text-6xl leading-none">{best.score}</div><div className="mt-1 text-xs text-muted">score / 100</div></div>
-        {!same && <div><div className="font-serif text-4xl leading-none text-subtle">{cur.score}</div><div className="mt-1 text-xs text-muted">your current rotation</div></div>}
+      <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">Recommended rotation</div>
+      <div className="mt-2 grid items-center gap-6 lg:grid-cols-12">
+        <div className="lg:col-span-7">
+          <h2 className="font-serif text-3xl leading-tight sm:text-4xl">{same ? "Keep your current rotation" : best.strategy.name}</h2>
+          {/* today vs recommended, as two bars */}
+          <div className="mt-5 space-y-2.5">
+            {bars.map(([l, v, c]) => (
+              <div key={l} className="grid grid-cols-[6.5rem_1fr_2.5rem] items-center gap-3 text-sm">
+                <span className="text-muted">{l}</span>
+                <div className="h-3 overflow-hidden rounded-full bg-surface-2"><div className={`h-full rounded-full ${c}`} style={{ width: `${v}%` }} /></div>
+                <span className="text-right font-semibold tabular-nums">{v}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button className={btnPrimary} onClick={onEffect}>Why it works →</button>
+            <button className={btnGhost} onClick={onCompare}>Compare rotations</button>
+          </div>
+        </div>
         {eff && (
-          <div data-tour="effect">
-            <div className="font-serif text-6xl leading-none">{eff.score}<span className="text-2xl text-muted">%</span></div>
-            <div className="mt-1 flex items-center gap-1.5 text-xs text-muted">effective <span className={`rounded-full px-2 py-0.5 font-medium ${effTone(eff.level)}`}>{EFF_LEVEL[eff.level]}</span></div>
+          <div data-tour="effect" className="flex items-center gap-4 lg:col-span-5 lg:justify-end">
+            <Ring value={eff.score} />
+            <div>
+              <div className="text-sm text-muted">How effective</div>
+              <span className={`mt-1 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${effTone(eff.level)}`}>{EFF_LEVEL[eff.level]}</span>
+              <div className="mt-1 text-xs text-muted">{`Improves ${eff.improved} of ${eff.aspects.length} aspects`}</div>
+            </div>
           </div>
         )}
-        <div className="flex flex-wrap gap-1.5">{chips.map((c) => <Badge key={c} tone="green">{c}</Badge>)}</div>
-      </div>
-      <div className="mt-5 flex flex-wrap gap-2">
-        <button className={btnPrimary} onClick={onEffect}>Why it works →</button>
-        <button className={btnGhost} onClick={onCompare}>Compare rotations</button>
       </div>
     </Reveal>
+  );
+}
+
+/** A percentage as a ring (0–100). */
+function Ring({ value }: { value: number }) {
+  const r = 34, c = 2 * Math.PI * r;
+  return (
+    <svg viewBox="0 0 80 80" className="h-24 w-24 shrink-0" role="img" aria-label={`${value}%`}>
+      <circle cx="40" cy="40" r={r} fill="none" stroke="currentColor" strokeWidth="8" className="text-surface-2" />
+      <circle cx="40" cy="40" r={r} fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" className="text-green-fg"
+        strokeDasharray={`${(c * value) / 100} ${c}`} transform="rotate(-90 40 40)" />
+      <text x="40" y="45" textAnchor="middle" className="fill-[var(--ink)] font-serif" fontSize="20">{`${value}%`}</text>
+    </svg>
   );
 }
 
