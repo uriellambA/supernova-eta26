@@ -1,0 +1,22 @@
+name: auth-probe
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          SITE=https://growvia-coral.vercel.app
+          curl -s -o home.html -w "home %{http_code}\n" $SITE/account
+          for js in $(grep -o '/_next/static/[^"]*\.js' home.html | sort -u); do curl -s "$SITE$js" >> all.js; done
+          echo "chunks bytes: $(wc -c < all.js)"
+          URL=$(grep -o 'https://[a-z0-9]*\.supabase\.co' all.js | head -1)
+          KEY=$(grep -oE 'sb_publishable_[A-Za-z0-9_-]+|eyJhbGciOi[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+' all.js | head -1)
+          echo "supabase url in site: ${URL:-NOT FOUND}"
+          echo "key in site: ${KEY:0:16}… (${#KEY} chars)"
+          grep -o 'Accounts are not set up yet' all.js | head -1 || true
+          if [ -n "$URL" ]; then
+            curl -s -w "\nsettings %{http_code}\n" -H "apikey: $KEY" "$URL/auth/v1/settings"
+            curl -s -w "\nhealth %{http_code}\n" -H "apikey: $KEY" "$URL/auth/v1/health"
+            curl -s -o /dev/null -w "farms table %{http_code}\n" -H "apikey: $KEY" "$URL/rest/v1/farms?select=id&limit=1"
+            curl -s -w "\nrpc %{http_code}\n" -X POST -H "apikey: $KEY" -H "content-type: application/json" "$URL/rest/v1/rpc/delete_my_account" -d '{}' | head -c 300
+          fi
