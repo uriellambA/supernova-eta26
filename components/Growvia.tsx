@@ -25,6 +25,7 @@ import {
 } from "@/lib/types";
 import { AIPanel } from "./AIPanel";
 import { Tour } from "./Tour";
+import { farmIsRegistered } from "./RequireFarm";
 import { EffectivenessCard } from "./EffectivenessCard";
 import { effectiveness } from "@/lib/effectiveness";
 import { syncFarm } from "@/lib/desktop";
@@ -43,7 +44,7 @@ import { RotationExplorer } from "./RotationExplorer";
 import { LangToggle } from "./Translator";
 import { getLang, useLang } from "@/lib/i18n";
 import { Forecast, Frost, Options, Overview, Soil, Water } from "./Sections";
-import { Badge, DemoBadge, LevelPill, Meter, Note, Reveal, Spinner, ThemeToggle, btnGhost, useHotkeys } from "./ui";
+import { Badge, DemoBadge, LevelPill, Meter, Note, Reveal, Spinner, ThemeToggle, btnGhost, btnPrimary, useHotkeys } from "./ui";
 
 const MapView = dynamic(() => import("./MapView"), { ssr: false, loading: () => <div className="grid h-full place-items-center text-sm text-muted">Loading map…</div> });
 
@@ -217,8 +218,11 @@ export function Growvia() {
 
   const toggleOverlay = (id: OverlayId) => setOverlays((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
 
+  // Growwy (the SI) only works with the farm data loaded
+  const hasData = farmIsRegistered(register);
+
   useHotkeys({
-    a: () => { setGrowwyOpen(true); analyze(); },
+    a: () => { setGrowwyOpen(true); if (hasData) analyze(); },
     d: () => { go("map"); setIs3D((v) => !v); },
     r: () => router.push("/datos"),
     ...Object.fromEntries(TABS.map((t, i) => [String(i + 1), () => go(t.id)])),
@@ -398,7 +402,7 @@ export function Growvia() {
       <button data-tour="growwy" onClick={() => setGrowwyOpen(true)} aria-label="Ask Growwy"
         className={`fixed bottom-20 right-4 z-40 flex items-center gap-2 rounded-full border border-line bg-surface p-1 shadow-xl sm:py-1.5 sm:pl-1.5 sm:pr-4 transition hover:border-ink sm:bottom-6 sm:right-6 print:hidden ${growwyOpen ? "hidden" : ""}`}>
         <span className="h-11 w-11 overflow-hidden rounded-full bg-surface-2"><Pachamama fill className="h-full w-full" /></span>
-        <span className="hidden text-sm font-medium sm:inline">Ask Growwy</span>
+        <span className="hidden text-sm font-medium sm:inline">{hasData ? "Ask Growwy" : "Growwy 🔒"}</span>
       </button>
       {growwyOpen && (
         <div className="fixed inset-0 z-50 print:hidden" role="dialog" aria-modal="true" aria-label="Growwy">
@@ -409,9 +413,19 @@ export function Growvia() {
               <Badge tone="blue">SI</Badge>
               <button className={`${btnGhost} ml-auto`} onClick={() => setGrowwyOpen(false)} aria-label="Close">✕</button>
             </div>
+            {!hasData ? (
+              <div className="rounded-2xl border border-line bg-surface p-6 text-center">
+                <div className="mx-auto h-28 w-28 overflow-hidden rounded-full bg-surface-2 opacity-60 grayscale"><Pachamama fill className="h-full w-full" /></div>
+                <div className="mt-4 text-3xl" aria-hidden>🔒</div>
+                <h3 className="mt-2 font-serif text-2xl">Growwy is locked</h3>
+                <p className="mt-2 text-sm text-ink-2">Growwy, our SI, answers once your farm data is loaded: she needs to know where your farm is and what you grow.</p>
+                <Link href="/datos?next=%2Fapp" className={`${btnPrimary} mt-5`}>Load farm data</Link>
+              </div>
+            ) : (<>
             <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems} autoAsk={autoAsk}
                   growwy={{ fits, climate: climate.data ?? null, soil: soil.data ?? null, sal: sal ?? null, risks, register, site, place: field.name }} />
                 {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => { setGrowwyOpen(false); go("plan", "seasons"); }}>See the year plan →</button>}
+            </>)}
           </aside>
         </div>
       )}

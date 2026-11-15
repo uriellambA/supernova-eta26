@@ -183,7 +183,7 @@ export function RegisterForm() {
         <aside className="lg:sticky lg:top-24 lg:self-start">
           {(next || needName) && (
             <div role="status" className="mb-4 rounded-xl border border-amber-fg/40 bg-amber-bg p-3 text-sm text-amber-fg">
-              Growwy and the dashboard open once your farm data is loaded: its name and location are enough to start. You can complete the rest later.
+              Growwy unlocks once your farm data is loaded: its name and location are enough to start. You can complete the rest later.
             </div>
           )}
           <h1 className="font-serif text-4xl leading-none">Farm data</h1>
