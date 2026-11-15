@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Brand } from "@/components/Brand";
 import { DownloadButton } from "@/components/DownloadButton";
-import { btnGhost } from "@/components/styles";
+import { btnGhost, btnPrimary } from "@/components/styles";
 import { LangToggle } from "@/components/Translator";
 import { ThemeToggle } from "@/components/ui";
 import { APP_NAME } from "@/config/app";
@@ -26,8 +26,9 @@ export function SiteHeader() {
           <div className="ml-auto flex items-center gap-2">
             <LangToggle />
             <ThemeToggle />
-            <span className="hidden sm:block"><DownloadButton /></span>
+            <span className="hidden sm:block"><DownloadButton ghost /></span>
             <span className="hidden lg:block"><Link href="/app" className={btnGhost}>Dashboard</Link></span>
+            <Link href="/#try" className={btnPrimary}>Try it</Link>
           </div>
         </div>
       </header>

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { HeroBackdrop } from "@/components/landing/HeroBackdrop";
 import { HeroGrowwy } from "@/components/landing/HeroGrowwy";
 import { MobileBar } from "@/components/landing/MobileBar";
@@ -12,11 +11,6 @@ const MEASURES: [string, string][] = [
   ["Moisture", "M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"],
   ["Soil", "M3 10h18M3 15h18M3 20h18M8 10V6m8 4V5m-4 5V3"],
   ["Crop rotation", "M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"],
-];
-const LINKS: [string, string, string][] = [
-  ["Try it", "#try", "M5 12h14m-6-6 6 6-6 6"],
-  ["About Growwy", "/growwy", "M12 21v-9m0 0c0-4 2.5-7 8-7 0 4.5-3 7-8 7Zm0 2c0-3.2-2-5.5-7-5.5 0 3.6 2.5 5.5 7 5.5Z"],
-  ["About us", "/about", "M9 11.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4ZM3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3 3 0 0 1 0 6M21 20c0-2.6-1.6-4.8-4-5.6"],
 ];
 
 /** Landing: the promise, what we measure, Growwy's quick questions and the live demo. */
@@ -38,8 +32,7 @@ export default function Landing() {
             <Reveal delay={100}>
               <p className="mt-6 max-w-2xl text-lg text-ink-2">Cutting-edge technology backed by more than 20 years of satellite data</p>
             </Reveal>
-            <p className="mt-10 text-xs uppercase tracking-[0.14em] text-muted">What Growvia measures</p>
-            <Reveal delay={160} className="mt-3 grid max-w-2xl grid-cols-2 gap-2 sm:grid-cols-4">
+            <Reveal delay={160} className="mt-10 grid max-w-2xl grid-cols-2 gap-2 sm:grid-cols-4">
               {MEASURES.map(([label, path]) => (
                 <div key={label} className="flex items-center gap-3 rounded-2xl border border-line bg-surface/80 p-4 backdrop-blur-sm">
                   <svg viewBox="0 0 24 24" className="h-6 w-6 shrink-0 text-cta" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d={path} /></svg>
@@ -48,15 +41,6 @@ export default function Landing() {
               ))}
             </Reveal>
             <p className="mt-8 text-xs uppercase tracking-[0.14em] text-muted">Guiding growers towards a better future</p>
-            <Reveal delay={220} className="mt-3 grid max-w-2xl grid-cols-3 gap-2">
-              {LINKS.map(([label, href, path]) => (
-                <Link key={href} href={href} className="group flex items-center gap-3 rounded-2xl border border-line bg-surface/80 p-4 backdrop-blur-sm transition hover:border-ink">
-                  <svg viewBox="0 0 24 24" className="hidden h-6 w-6 shrink-0 text-cta sm:block" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d={path} /></svg>
-                  <span className="min-w-0 flex-1 font-medium leading-tight">{label}</span>
-                  <span className="text-subtle transition group-hover:translate-x-0.5 group-hover:text-ink">→</span>
-                </Link>
-              ))}
-            </Reveal>
             </div>
             <Reveal delay={200} className="lg:col-span-5 lg:pt-6">
               <HeroGrowwy />
