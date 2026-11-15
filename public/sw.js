@@ -1,5 +1,5 @@
 // Service worker: offline mode. Bump VERSION to invalidate old caches.
-const VERSION = "v6";
+const VERSION = "v7";
 const SHELL = `shell-${VERSION}`;
 const DATOS = `datos-${VERSION}`;
 const TILES = `tiles-${VERSION}`;
@@ -24,10 +24,17 @@ async function recortar(nombre, max) {
   for (let i = 0; i < ks.length - max; i++) await c.delete(ks[i]);
 }
 
+// Safari refuses a page answered by a service worker with a redirected response: give it a clean copy
+async function limpia(res) {
+  if (!res.redirected) return res;
+  const body = await res.blob();
+  return new Response(body, { status: res.status, statusText: res.statusText, headers: res.headers });
+}
+
 async function redPrimero(req, cache, opciones) {
   try {
-    const res = await fetch(req);
-    if (res.ok) (await caches.open(cache)).put(req, res.clone());
+    const res = await limpia(await fetch(req));
+    if (res.ok) (await caches.open(cache)).put(req, res.clone()).catch(() => {});
     return res;
   } catch {
     const hit = await caches.match(req, opciones);
@@ -35,6 +42,15 @@ async function redPrimero(req, cache, opciones) {
     throw new Error("offline");
   }
 }
+
+// Never answer a page with "nothing" (Safari then shows "Safari can't open the page")
+const SIN_RED = () => new Response(
+  '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Growvia</title>' +
+  '<body style="font-family:system-ui;padding:2rem;background:#141413;color:#eee"><h1>Growvia</h1>' +
+  "<p>No hay conexión y esta página todavía no está guardada en este aparato. Probá de nuevo cuando tengas internet.</p>" +
+  '<p><a style="color:#9fd8a0" href="/">Reintentar</a></p>',
+  { status: 503, headers: { "content-type": "text/html; charset=utf-8" } },
+);
 
 async function cachePrimero(req, cache) {
   const hit = await caches.match(req);
@@ -65,11 +81,15 @@ self.addEventListener("fetch", (e) => {
     if (new URL(req.url).pathname.startsWith("/_next/")) return;
   }
   if (req.method !== "GET") return; // la IA (POST) siempre va a la red
+  if (req.headers.has("range")) return; // audio / video: Safari pide por partes, que lo atienda la red
   const url = new URL(req.url);
 
   // Páginas: red primero; sin red, la última versión guardada (ignorando ?lat=…)
   if (req.mode === "navigate") {
-    e.respondWith(redPrimero(req, SHELL, { ignoreSearch: true }).catch(() => caches.match("/app")));
+    e.respondWith(
+      redPrimero(req, SHELL, { ignoreSearch: true })
+        .catch(async () => (await caches.match("/app")) || (await caches.match("/")) || SIN_RED()),
+    );
     return;
   }
   // Tiles del mapa (satélite, OSM, NASA GIBS)
@@ -93,5 +113,5 @@ self.addEventListener("fetch", (e) => {
     e.respondWith(redPrimero(req, DATOS));
     return;
   }
-  e.respondWith(redPrimero(req, SHELL).catch(() => Response.error()));
+  // Lo demás (datos de navegación de Next, cuentas, etc.): directo a la red, sin guardar
 });

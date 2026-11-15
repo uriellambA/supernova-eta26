@@ -58,12 +58,13 @@ export async function sendCode(email: string) {
 }
 export async function verifyCode(email: string, code: string) {
   const sb = await cloud();
-  const { error } = await sb.auth.verifyOtp({ email, token: code.trim(), type: "email" });
+  const { data, error } = await sb.auth.verifyOtp({ email, token: code.trim(), type: "email" });
   if (error) throw error;
+  emit({ session: data.session });
 }
 export async function signInWithGoogle() {
   const sb = await cloud();
-  const { error } = await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${location.origin}/account` } });
+  const { error } = await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${location.origin}/account${location.search}` } });
   if (error) throw error;
 }
 export async function signOut() {

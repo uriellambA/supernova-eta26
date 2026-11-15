@@ -31,10 +31,13 @@ function elegirVoz(): SpeechSynthesisVoice | null {
   return voces.sort((a, b) => score(b) - score(a))[0] ?? null;
 }
 
+/** Sentences, keeping the punctuation (no lookbehind: older Safari cannot load code that has one). */
+const sentences = (t: string) => t.replace(/([.!?;:])\s+/g, "$1\u0000").split("\u0000");
+
 /** Splits into sentences of ≤ ~200 characters (Chrome stops long utterances after ~15 s). */
 function trozos(t: string) {
   const out: string[] = [];
-  for (const s of t.split(/(?<=[.!?;:])\s+/)) {
+  for (const s of sentences(t)) {
     if (!s) continue;
     if (out.length && (out[out.length - 1] + " " + s).length < 200) out[out.length - 1] += " " + s;
     else out.push(s);
@@ -60,7 +63,7 @@ const textoFinal = (original: string | string[]) =>
 
 /** Audio blocks: the first sentence alone (so the voice starts fast), then ~350-character groups. */
 function bloques(t: string) {
-  const frases = t.split(/(?<=[.!?;:])\s+/).filter(Boolean);
+  const frases = sentences(t).filter(Boolean);
   if (!frases.length) return [];
   // first block: the first sentences up to ~80 characters (fast to generate, so she starts talking quickly)
   const out = [frases[0]];

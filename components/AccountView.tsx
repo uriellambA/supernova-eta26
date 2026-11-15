@@ -38,6 +38,14 @@ export function AccountView() {
   const [current, setCurrent] = useState<string | undefined>();
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+  // signed in and sent here by the dashboard: bring the farms, then go back
+  useEffect(() => {
+    if (!session || !next) return;
+    let alive = true;
+    syncNow().then(() => alive && router.replace(next));
+    return () => { alive = false; };
+  }, [session, next, router]);
+
   // the farm list follows each sync
   useEffect(() => {
     if (!session) return;
@@ -105,7 +113,7 @@ export function AccountView() {
                 <button className={btnPrimary} disabled={busy || !email.includes("@")}>Send me a code</button>
               </form>
             ) : (
-              <form className="mt-4 grid gap-3" onSubmit={(e) => { e.preventDefault(); run(() => verifyCode(email.trim(), code).then(() => next && router.push(next))); }}>
+              <form className="mt-4 grid gap-3" onSubmit={(e) => { e.preventDefault(); run(() => verifyCode(email.trim(), code)); }}>
                 <p className="text-sm text-ink-2">{`We sent a code to ${email}. Type it here (or open the link in the e-mail).`}</p>
                 <label className={label}>Code<input className={`${input} tracking-[0.3em]`} inputMode="numeric" autoComplete="one-time-code" maxLength={10} required value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder="123456" /></label>
                 <button className={btnPrimary} disabled={busy || code.length < 6}>Sign in</button>

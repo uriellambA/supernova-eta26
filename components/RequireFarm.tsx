@@ -2,6 +2,8 @@
 // The dashboard needs a registered farm: without one, go to the register first (and come back after).
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { useAccount } from "@/hooks/useAccount";
+import { accountsEnabled } from "@/lib/account";
 import { leer } from "@/lib/storage";
 import type { FarmRegister } from "@/lib/types";
 
@@ -10,7 +12,16 @@ export const farmIsRegistered = (r: FarmRegister | null | undefined) => !!r?.far
 export function RequireFarm({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [ok, setOk] = useState(false);
+  const { session, ready } = useAccount();
   useEffect(() => {
+    // with accounts turned on, the dashboard is only for signed-in people
+    if (accountsEnabled) {
+      if (!ready) return;
+      if (!session) {
+        router.replace(`/account?next=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+        return;
+      }
+    }
     let alive = true;
     leer<FarmRegister>("register").then((r) => {
       if (!alive) return;
@@ -22,7 +33,7 @@ export function RequireFarm({ children }: { children: ReactNode }) {
     return () => {
       alive = false;
     };
-  }, [router]);
+  }, [router, session, ready]);
   if (!ok) {
     return (
       <div className="grid min-h-screen place-items-center text-sm text-muted">

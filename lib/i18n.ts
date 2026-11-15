@@ -99,7 +99,8 @@ function core(s: string, depth: number): string | null {
   if (sp !== null) return sp;
   // 2) several sentences: translate each one when all of them have a real translation
   if (depth < 3 && /[.!?] \p{Lu}/u.test(s)) {
-    const parts = s.split(/(?<=[.!?]) (?=[\p{Lu}"¿¡])/u);
+    // (no lookbehind: older Safari cannot even load a page whose code has one)
+    const parts = s.replace(/([.!?]) (?=[\p{Lu}"¿¡])/gu, "$1\u0000").split("\u0000");
     if (parts.length > 1) {
       const tr = parts.map((p) => translate(p, depth + 1));
       if (tr.every((t, j) => t !== null && t !== parts[j])) return tr.join(" ");

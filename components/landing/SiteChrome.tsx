@@ -2,12 +2,12 @@
 import Link from "next/link";
 import { Brand } from "@/components/Brand";
 import { DownloadButton } from "@/components/DownloadButton";
-import { btnGhost, btnPrimary } from "@/components/styles";
 import { LangToggle } from "@/components/Translator";
 import { ThemeToggle } from "@/components/ui";
 import { APP_NAME } from "@/config/app";
 import { RELEASES_URL } from "@/config/downloads";
 import { LandingKeys } from "./LandingKeys";
+import { SignInButton } from "./SignInButton";
 
 const REPO_URL = RELEASES_URL.replace(/\/releases\/latest$/, "");
 
@@ -25,13 +25,13 @@ export function SiteHeader() {
           </nav>
           <div className="ml-auto flex items-center gap-2">
             <LangToggle />
-            <ThemeToggle />
             <span className="hidden sm:block"><DownloadButton ghost /></span>
-            <span className="hidden lg:block"><Link href="/app" className={btnGhost}>Dashboard</Link></span>
-            <Link href="/#try" className={btnPrimary}>Try it</Link>
+            <SignInButton />
           </div>
         </div>
       </header>
+      {/* theme switch: bottom left, out of the way (above the phone action bar) */}
+      <div className="fixed bottom-20 left-4 z-40 sm:bottom-5 sm:left-5"><ThemeToggle /></div>
     </>
   );
 }
