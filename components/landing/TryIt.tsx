@@ -73,7 +73,6 @@ export function TryIt() {
               <button key={s.id} onClick={() => pickSite(s.id)} aria-pressed={siteId === s.id}
                 className={`rounded-xl border p-3 text-left transition ${siteId === s.id ? "border-ink bg-surface-2" : "border-line hover:bg-surface-2"}`}>
                 <div className="font-medium">{s.name}</div>
-                <div className="text-xs text-muted">{s.region.split(",")[0]}</div>
               </button>
             ))}
           </div>
@@ -90,7 +89,7 @@ export function TryIt() {
             </label>
           </div>
           <button className={`${btnPrimary} mt-4 w-full py-3 text-base`} onClick={run} disabled={state === "loading"}>
-            {state === "loading" ? <><span className="h-4 w-4 animate-spin rounded-full border-2 border-cta-ink border-t-transparent" /> Reading 20 years of climate…</> : "Show my result"}
+            {state === "loading" ? <><span className="h-4 w-4 animate-spin rounded-full border-2 border-cta-ink border-t-transparent" /> Reading 20 years of climate…</> : "See result"}
           </button>
           {state === "error" && <p className="mt-2 text-sm text-red-fg">We couldn&apos;t load the data right now. Try again in a minute.</p>}
         </Reveal>

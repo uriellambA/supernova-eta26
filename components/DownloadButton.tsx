@@ -7,11 +7,11 @@ import { btnGhost, btnPrimary } from "./styles";
 
 const noop = () => () => {};
 const LABEL: Record<Platform, string> = {
-  windows: "Download Growvia Desktop",
-  mac: "Download Growvia Desktop",
-  linux: "Download Growvia Desktop",
-  android: "Download for Android",
-  iphone: "Install on iPhone",
+  windows: "Download",
+  mac: "Download",
+  linux: "Download",
+  android: "Download",
+  iphone: "Install",
 };
 
 /** The official-app button: "Download Growvia Desktop" on computers, the APK on Android, the web app on iPhone. */

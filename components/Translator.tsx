@@ -99,13 +99,13 @@ export function Translator() {
 
 export function LangToggle({ className = "" }: { className?: string }) {
   const lang = useLang();
-  const opt = (l: Lang, label: string) => (
-    <button onClick={() => setLang(l)} aria-pressed={lang === l} className={`rounded-md px-2 py-1 text-xs font-medium transition ${lang === l ? "bg-ink text-canvas" : "text-muted hover:text-ink"}`}>{label}</button>
-  );
+  const next: Lang = lang === "es" ? "en" : "es";
+  // one button: shows the current language, a click switches to the other
   return (
-    <div data-no-translate className={`inline-flex items-center gap-0.5 rounded-xl border border-line bg-surface p-1 ${className}`} role="group" aria-label="Language">
-      {opt("en", "EN")}
-      {opt("es", "ES")}
-    </div>
+    <button data-no-translate onClick={() => setLang(next)} title={next === "en" ? "Switch to English" : "Cambiar a español"} aria-label={next === "en" ? "Switch to English" : "Cambiar a español"}
+      className={`inline-flex h-9 items-center gap-1.5 rounded-xl border border-line bg-surface px-2.5 text-xs font-semibold text-ink transition hover:border-ink ${className}`}>
+      <svg viewBox="0 0 24 24" className="h-4 w-4 text-muted" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z" /></svg>
+      {lang.toUpperCase()}
+    </button>
   );
 }

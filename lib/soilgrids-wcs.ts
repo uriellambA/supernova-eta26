@@ -1,7 +1,6 @@
 // SoilGrids (ISRIC, CC BY 4.0) read from its open map service (WCS) instead of the REST API.
 // Same 250 m maps, another ISRIC server: used when rest.isric.org is down (it often answers 504).
 // Each request returns a tiny GeoTIFF around the point; the value under the point is used.
-import { fromArrayBuffer } from "geotiff";
 
 const WCS = "https://maps.isric.org/mapserv";
 // SoilGrids stores integers: value / factor = conventional unit (same conversion as the REST API's d_factor)
@@ -24,6 +23,8 @@ async function wcsBox(prop: string, depth: string, stat: string, lat: number, lo
   if (!r.ok) throw new Error(`maps.isric.org respondió ${r.status}`);
   const buf = await r.arrayBuffer();
   if (new Uint8Array(buf, 0, 2).every((b, i) => b === [0x3c, 0x3f][i])) throw new Error("maps.isric.org: no image (service error)");
+  // loaded only when needed (server side): the library must not run while a page is being built
+  const { fromArrayBuffer } = await import("geotiff");
   const img = await (await fromArrayBuffer(buf)).getImage();
   const [band] = (await img.readRasters()) as unknown as ArrayLike<number>[];
   const w = img.getWidth(), h = img.getHeight();
