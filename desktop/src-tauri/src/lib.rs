@@ -10,6 +10,8 @@
 //! Phase 5: the same project builds the Android app (APK); PC-only parts live in `pc.rs`.
 
 mod alerts;
+#[allow(dead_code)] // the check itself only runs on Android; the parsing is tested everywhere
+mod apk_update;
 #[cfg(desktop)]
 mod pc;
 
@@ -157,6 +159,10 @@ pub fn run() {
             pc::setup(app, &shared)?;
 
             // Android 13+: ask once for permission to show notifications (frost / wind alerts)
+            // Android: look for a newer APK on GitHub Releases (PC updates through the updater plugin)
+            #[cfg(mobile)]
+            apk_update::spawn_check(app.handle().clone());
+
             #[cfg(mobile)]
             {
                 let handle = app.handle().clone();

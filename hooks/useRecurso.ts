@@ -18,6 +18,7 @@ export function useRecurso<T>(url: string | null): Estado<T> {
         const r = await fetch(url);
         const j = await r.json();
         if (!r.ok) throw new Error(j?.error ?? `Error ${r.status}`);
+        if (j?.sinDatos) throw new Error(j.motivo ?? "no data this time"); // keep the last saved values instead
         if (!vivo) return;
         setSt({ data: j as T, estado: "ok", t: Date.now() });
         guardar(clave, j);

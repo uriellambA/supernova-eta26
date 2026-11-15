@@ -9,6 +9,7 @@ export async function GET(req: Request) {
     if (usarSimulado()) return jsonCacheado(climaSimulado(), 60);
     return jsonCacheado(await conCache(`fc:${p.lat}:${p.lon}`, 30 * 60_000, () => pronostico(p.lat, p.lon)), 1800);
   } catch (e) {
-    return errorJson(`Forecast unavailable: ${(e as Error).message}`);
+    // the source did not answer: no error for the browser; the page keeps the last saved values and asks again in 5 minutes
+    return jsonCacheado({ sinDatos: true, motivo: `Forecast unavailable: ${(e as Error).message}` }, 300);
   }
 }

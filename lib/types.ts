@@ -119,7 +119,7 @@ export type IndicadoresNasa = {
 };
 
 export type PuntoNdvi = { fecha: string; ndvi: number; evi?: number };
-export type NdviResumen = { simulado?: boolean; serie: PuntoNdvi[]; ultimo: PuntoNdvi | null; anioAnterior: PuntoNdvi | null };
+export type NdviResumen = { simulado?: boolean; serie: PuntoNdvi[]; ultimo: PuntoNdvi | null; anioAnterior: PuntoNdvi | null; /** the source did not answer this time */ sinDatos?: boolean };
 
 // ---------- Forecast ----------
 export type DiaPronostico = {

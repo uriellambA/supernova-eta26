@@ -1,5 +1,5 @@
 import { siteById } from "@/config/sites";
-import { conCache, errorJson, fetchJson, jsonCacheado, usarSimulado } from "@/lib/cache";
+import { conCache, fetchJson, jsonCacheado, usarSimulado } from "@/lib/cache";
 import { WEATHER_VARS, type WeatherGrid } from "@/lib/weathergrid";
 
 export const maxDuration = 30;
@@ -49,6 +49,7 @@ export async function GET(req: Request) {
     if (usarSimulado()) return jsonCacheado(simulated(id), 60);
     return jsonCacheado(await conCache(`wgrid:${id}`, 30 * 60_000, () => grid(id)), 1800);
   } catch (e) {
-    return errorJson(`Weather map unavailable: ${(e as Error).message}`);
+    // the source did not answer: no error for the browser; the page keeps the last saved values and asks again in 5 minutes
+    return jsonCacheado({ sinDatos: true, motivo: `Weather map unavailable: ${(e as Error).message}` }, 300);
   }
 }

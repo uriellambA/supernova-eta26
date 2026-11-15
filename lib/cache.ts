@@ -35,3 +35,11 @@ export async function fetchJson(url: string, timeoutMs = 25_000, init?: RequestI
   if (!res.ok) throw new Error(`${new URL(url).host} respondió ${res.status}`);
   return res.json();
 }
+
+/** Rejects if the promise takes longer than ms (so the route can answer with a fallback before the platform times out). */
+export function conDeadline<T>(p: Promise<T>, ms: number, what = "source"): Promise<T> {
+  return new Promise<T>((ok, fail) => {
+    const t = setTimeout(() => fail(new Error(`${what} did not answer in ${Math.round(ms / 1000)} s`)), ms);
+    p.then((v) => { clearTimeout(t); ok(v); }, (e) => { clearTimeout(t); fail(e); });
+  });
+}

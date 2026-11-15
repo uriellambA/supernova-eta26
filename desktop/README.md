@@ -49,7 +49,7 @@ GROWVIA_URL=https://your-app.vercel.app npm run build   # installers in src-taur
 It takes ~15–20 minutes. Installed apps find the new version by themselves (`latest.json` in the Release).
 
 ## Android (APK)
-The same Rust project builds the Android app. PC-only parts (menu, tray, close to background, updater, window state) are in `src-tauri/src/pc.rs` (`#[cfg(desktop)]`); alerts, the bridge with the web and the loading screen are shared. On Android the frost / wind alerts run while the app is open, and Android 13+ asks once for permission to show notifications.
+The same Rust project builds the Android app. PC-only parts (menu, tray, close to background, updater, window state) are in `src-tauri/src/pc.rs` (`#[cfg(desktop)]`); alerts, the bridge with the web and the loading screen are shared. On Android the frost / wind alerts run while the app is open, and Android 13+ asks once for permission to show notifications. A sideloaded APK has no store behind it, so the app checks GitHub Releases a few seconds after opening (`src-tauri/src/apk_update.rs`): if a newer `desktop-vX.Y.Z` has an APK it asks to download it, and the phone installs it over the old one (same signing key, data kept).
 
 `.github/workflows/android.yml` builds and signs the APK on GitHub (the Android SDK and NDK are there): on every push to `desktop/` it is attached to the run as an artifact; on a `desktop-v*` tag it is also added to the Release, and `/download` shows it.
 

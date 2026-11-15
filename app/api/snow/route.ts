@@ -13,6 +13,7 @@ export async function GET(req: Request) {
     if (usarSimulado()) return jsonCacheado({ ...nieveSimulada(), cuencas: nieveSimulada().cuencas.map((c) => ({ ...c, id: site.id, nombre: site.watershed!.name })) }, 60);
     return jsonCacheado(await conCache(`snow:${site.id}`, 12 * 3_600_000, () => nieveCuencas(site)), 12 * 3600);
   } catch (e) {
-    return errorJson(`Snowpack unavailable: ${(e as Error).message}`);
+    // the source did not answer: no error for the browser; the page keeps the last saved values and asks again in 5 minutes
+    return jsonCacheado({ sinDatos: true, motivo: `Snowpack unavailable: ${(e as Error).message}` }, 300);
   }
 }
