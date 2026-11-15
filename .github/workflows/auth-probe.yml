@@ -1,0 +1,25 @@
+name: auth-probe
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          SITE=https://growvia-coral.vercel.app
+          curl -s -o cfg.json -w "account-config %{http_code}\n" "$SITE/api/account-config"
+          python3 -c "
+          import json; j=json.load(open('cfg.json'))
+          print('enabled:', j.get('enabled'), '| problem:', j.get('problem'))
+          if j.get('enabled'):
+              print('url:', j['url']); k=j['key']; print('key kind:', 'publishable' if k.startswith('sb_publishable_') else 'jwt' if k.startswith('eyJ') else 'other', len(k), 'chars')
+          "
+          URL=$(python3 -c "import json;print(json.load(open('cfg.json')).get('url',''))")
+          KEY=$(python3 -c "import json;print(json.load(open('cfg.json')).get('key',''))")
+          if [ -n "$URL" ]; then
+            curl -s -o s.json -w "auth settings %{http_code}\n" -H "apikey: $KEY" "$URL/auth/v1/settings"
+            python3 -c "
+          import json; s=json.load(open('s.json')); print('email enabled:', s.get('external',{}).get('email'), '| google:', s.get('external',{}).get('google'), '| signup disabled:', s.get('disable_signup'), '| autoconfirm:', s.get('mailer_autoconfirm'))" || head -c 300 s.json
+            curl -s -o /dev/null -w "farms table %{http_code}\n" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" "$URL/rest/v1/farms?select=id&limit=1"
+            curl -s -o /dev/null -w "sessions table %{http_code}\n" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" "$URL/rest/v1/saved_sessions?select=id&limit=1"
+          fi
+          curl -sI "$SITE/" | grep -i "x-vercel-id\|age\|date" || true
