@@ -1,4 +1,4 @@
-# Growvia Desktop (Rust + Tauri 2)
+# Growvia Desktop and Android (Rust + Tauri 2)
 
 The official Growvia app for Windows, macOS and Linux (and, in phase 5, Android). The core is Rust; the window
 shows the official Growvia web app, so the SI, the voice and the NASA data keep running on the server.
@@ -47,3 +47,15 @@ GROWVIA_URL=https://your-app.vercel.app npm run build   # installers in src-taur
    (or Actions → "Growvia Desktop release" → Run workflow, with the tag name).
 
 It takes ~15–20 minutes. Installed apps find the new version by themselves (`latest.json` in the Release).
+
+## Android (APK)
+The same Rust project builds the Android app. PC-only parts (menu, tray, close to background, updater, window state) are in `src-tauri/src/pc.rs` (`#[cfg(desktop)]`); alerts, the bridge with the web and the loading screen are shared. On Android the frost / wind alerts run while the app is open, and Android 13+ asks once for permission to show notifications.
+
+`.github/workflows/android.yml` builds and signs the APK on GitHub (the Android SDK and NDK are there): on every push to `desktop/` it is attached to the run as an artifact; on a `desktop-v*` tag it is also added to the Release, and `/download` shows it.
+
+Signing (Settings → Secrets and variables → Actions):
+- `ANDROID_KEYSTORE_BASE64`: content of `ANDROID_KEYSTORE_BASE64.txt` (the keystore `growvia-android.jks` in base64).
+- `ANDROID_KEYSTORE_PASSWORD`: content of `ANDROID_KEYSTORE_PASSWORD.txt`.
+Keep the keystore safe: every future APK must be signed with it, or phones will not install the update over the old version.
+
+Locally (needs Android Studio / SDK + NDK, `NDK_HOME`): `npx tauri android init`, then `npx tauri android build --apk`.

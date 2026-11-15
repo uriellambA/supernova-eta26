@@ -1,0 +1,114 @@
+# Growvia for Android: builds the APK with Tauri 2 (same Rust project as Growvia Desktop) and signs it.
+#
+# Runs on every push that touches desktop/ (the APK is attached to the run as an artifact, to try it),
+# and on desktop-v* tags, where the APK is also added to the GitHub Release (the /download page shows it).
+#
+# Secrets (Settings → Secrets and variables → Actions):
+#   ANDROID_KEYSTORE_BASE64    the signing keystore (growvia-android.jks) in base64
+#   ANDROID_KEYSTORE_PASSWORD  its password
+# Without them the APK is signed with a temporary key: it installs, but later versions will not
+# install over it (uninstall first). Always use the same keystore for public releases.
+name: Growvia Android (APK)
+
+on:
+  push:
+    paths:
+      - "desktop/**"
+      - ".github/workflows/android.yml"
+    tags: ["desktop-v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    env:
+      GROWVIA_URL: https://growvia-coral.vercel.app
+      NDK_VERSION: 27.2.12479018
+      BUILD_TOOLS: 34.0.0
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Android NDK and build tools
+        run: |
+          sdkmanager --install "ndk;${NDK_VERSION}" "platforms;android-34" "build-tools;${BUILD_TOOLS}" > /dev/null
+          echo "NDK_HOME=$ANDROID_HOME/ndk/${NDK_VERSION}" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri -> target
+          key: android
+
+      - name: Tauri CLI
+        working-directory: desktop
+        run: npm ci
+
+      - name: Android project and icons
+        working-directory: desktop
+        run: |
+          npx tauri android init --ci
+          npx tauri icon ../public/brand/growvia-mark.png -o src-tauri/icons
+
+      - name: Build the APK (arm64 + armv7)
+        working-directory: desktop
+        run: npx tauri android build --apk --ci --target aarch64 --target armv7
+
+      - name: Sign the APK
+        env:
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          VERSION=$(jq -r .version desktop/src-tauri/tauri.conf.json)
+          UNSIGNED=$(find desktop/src-tauri/gen/android -name "*-release-unsigned.apk" | head -1)
+          echo "Unsigned APK: $UNSIGNED"
+          BT="$ANDROID_HOME/build-tools/${BUILD_TOOLS}"
+          "$BT/zipalign" -p -f 4 "$UNSIGNED" aligned.apk
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > release.jks
+          else
+            echo "::warning::No ANDROID_KEYSTORE_BASE64 secret: signing with a temporary key"
+            KS_PASS=temporary-pass
+            keytool -genkeypair -keystore release.jks -storetype PKCS12 -alias growvia -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass "$KS_PASS" -keypass "$KS_PASS" -dname "CN=Growvia temporary"
+          fi
+          export KS_PASS
+          "$BT/apksigner" sign --ks release.jks --ks-key-alias growvia --ks-pass env:KS_PASS --key-pass env:KS_PASS \
+            --out "Growvia_${VERSION}_android.apk" aligned.apk
+          "$BT/apksigner" verify --print-certs "Growvia_${VERSION}_android.apk" | head -3
+          rm -f release.jks aligned.apk
+          echo "APK=Growvia_${VERSION}_android.apk" >> "$GITHUB_ENV"
+          ls -la Growvia_*_android.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: growvia-android-apk
+          path: ${{ env.APK }}
+
+      - name: Add to the GitHub Release
+        if: startsWith(github.ref, 'refs/tags/desktop-v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.APK }}

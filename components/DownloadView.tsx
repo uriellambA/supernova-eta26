@@ -50,6 +50,7 @@ export function DownloadView() {
   }, []);
   const list = mine ? [mine, ...ORDER.filter((p) => p !== mine)] : ORDER;
   const app = useSyncExternalStore(noop, () => desktopInfo()?.version ?? null, () => null);
+  const appOs = useSyncExternalStore(noop, () => desktopInfo()?.platform ?? null, () => null);
 
   const install = async () => {
     if (!prompt) return;
@@ -78,7 +79,7 @@ export function DownloadView() {
         </div>
 
         {app && (
-          <div className="mt-8 rounded-2xl border border-green-fg/40 bg-green-bg p-4 text-green-fg">{`You are already using Growvia Desktop ${app}.`}</div>
+          <div className="mt-8 rounded-2xl border border-green-fg/40 bg-green-bg p-4 text-green-fg">{appOs === "android" ? `You are already using the Growvia app ${app}.` : `You are already using Growvia Desktop ${app}.`}</div>
         )}
         <div className="mt-10 grid gap-3">
           {list.map((p, i) => {
