@@ -123,7 +123,7 @@ jobs:
           files: ${{ env.APK }}
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           # the APK is usually ready first: create the Release with the same name and text as the desktop workflow
-          name: Growvia Desktop ${{ env.VERSION }}
+          name: Growvia ${{ env.VERSION }}
           body: |
             Official Growvia app: Growwy, your crop rotation plan and frost / wind alerts on your computer and phone.
 

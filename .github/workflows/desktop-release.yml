@@ -86,7 +86,7 @@ jobs:
         with:
           projectPath: desktop
           tagName: ${{ github.event.inputs.tag || github.ref_name }}
-          releaseName: "Growvia Desktop __VERSION__"
+          releaseName: "Growvia __VERSION__"
           releaseBody: |
             Official Growvia app: Growwy, your crop rotation plan and frost / wind alerts on your computer and phone.
 

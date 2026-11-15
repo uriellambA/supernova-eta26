@@ -646,6 +646,11 @@ export const ES: Record<string, string> = {
   "Bare months": "Meses desnudo", "N kg/ha": "N kg/ha", "Main benefit / risk": "Principal beneficio / riesgo", "New crops ranked for this field": "Cultivos nuevos ordenados para este campo", "Main limit": "Principal limitante", "Margin USD/ha": "Margen USD/ha",
   // ---------- Rotation explorer ----------
   "in {n}": "en {n}",
+  "About Growwy": "Sobre Growwy",
+  "The team, how it works and what you get": "El equipo, cómo funciona y qué te llevás",
+  "The Pachamama that guides your decisions": "La Pachamama que guía tus decisiones",
+  "First register your farm: its name and location are enough to start. You can complete the rest later": "Primero registrá tu chacra: con el nombre y la ubicación alcanza para empezar. El resto lo podés completar después",
+  "Who we are, how Growvia works and what it gives each farmer": "Quiénes somos, cómo funciona Growvia y qué le da a cada productor",
   "You are already using the Growvia app {x}": "Ya estás usando la app de Growvia {x}",
   "Version {x} · {x}": "Versión {x} · {x}",
   "Looking for the latest version": "Buscando la última versión",

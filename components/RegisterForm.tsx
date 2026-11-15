@@ -4,7 +4,9 @@ import { Brand } from "@/components/Brand";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LangToggle } from "@/components/Translator";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+
+const noop = () => () => {};
 import { APP_NAME } from "@/config/app";
 import { CROPS } from "@/config/crops";
 import { SITES, mapLimits, siteById } from "@/config/sites";
@@ -116,7 +118,20 @@ export function RegisterForm() {
   const setPlot = (id: string, p: Partial<PlotRecord>) => setR((x) => ({ ...x, plots: x.plots.map((q) => (q.id === id ? { ...q, ...p } : q)) }));
   const total = r.plots.reduce((s, p) => s + (p.areaHa || 0), 0);
   const done = [!!r.farmName, r.plots.length > 0 && r.plots.every((p) => p.crop), r.soilTest.ph !== null || r.soilTest.ec !== null, r.economy.workers > 0, Object.values(r.priorities).some((v) => v > 0)];
-  const finish = () => router.push("/app");
+  // where to go after registering (the dashboard, or the link that sent the farmer here)
+  const next = useSyncExternalStore(noop, () => {
+    const n = new URLSearchParams(window.location.search).get("next");
+    return n && n.startsWith("/") && !n.startsWith("//") ? n : null;
+  }, () => null);
+  const [needName, setNeedName] = useState(false);
+  const finish = () => {
+    if (!r.farmName.trim()) {
+      setNeedName(true);
+      document.getElementById("farmName")?.focus();
+      return;
+    }
+    router.push(next ?? "/app");
+  };
   const [drawing, setDrawing] = useState(false);
   const stats = r.boundary && r.boundary.length >= 3 ? polygonStats(r.boundary) : null;
   function finishLimit() {
@@ -163,6 +178,11 @@ export function RegisterForm() {
 
       <main className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="lg:sticky lg:top-24 lg:self-start">
+          {(next || needName) && (
+            <div role="status" className="mb-4 rounded-xl border border-amber-fg/40 bg-amber-bg p-3 text-sm text-amber-fg">
+              First register your farm: its name and location are enough to start. You can complete the rest later.
+            </div>
+          )}
           <h1 className="font-serif text-4xl leading-none">Farm register</h1>
           <p className="mt-3 text-sm text-muted">Tell {APP_NAME} about your farm once. The SI uses it to compare rotations, plan the seasons and suggest new crops.</p>
           <ol className="mt-6 hidden space-y-1 lg:block">
@@ -200,7 +220,7 @@ export function RegisterForm() {
               ))}
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <label className={label}>Farm name<input className={input} value={r.farmName} onChange={(e) => set("farmName", e.target.value)} placeholder="e.g. Chacra Los Álamos" /></label>
+              <label className={label}>Farm name<input id="farmName" required className={`${input} ${needName && !r.farmName.trim() ? "!border-red-fg" : ""}`} value={r.farmName} onChange={(e) => set("farmName", e.target.value)} placeholder="e.g. Chacra Los Álamos" /></label>
               <label className={label}>Producer<input className={input} value={r.producer} onChange={(e) => set("producer", e.target.value)} placeholder="Your name (optional)" /></label>
             </div>
             <AddressSearch siteId={r.siteId} value={r.address} onChange={(v) => set("address", v)} onPick={(pl) => setR((x) => ({ ...x, address: pl.name, lat: +pl.lat.toFixed(5), lon: +pl.lon.toFixed(5) }))} />

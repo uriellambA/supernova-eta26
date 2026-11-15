@@ -66,7 +66,9 @@
 
     const invoke = window.__TAURI__ && window.__TAURI__.core && window.__TAURI__.core.invoke;
     const info = window.__GROWVIA_DESKTOP__;
-    if (info) document.getElementById("ver").textContent = "Growvia Desktop " + info.version;
+    // "Growvia Desktop" only on computers; on phones it is just "Growvia"
+    const mobile = info && (info.platform === "android" || info.platform === "ios");
+    if (info) document.getElementById("ver").textContent = (mobile ? "Growvia " : "Growvia Desktop ") + info.version;
     let base = "https://growvia-coral.vercel.app";
 
     function show(id) {

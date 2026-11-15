@@ -13,11 +13,13 @@ Growvia es una herramienta de apoyo a la decisión (en inglés) para productores
 ## Páginas
 | Ruta | Qué es |
 |---|---|
-| `/` | **Portada que vende**: título sobre plata y agua, 3 datos, botón **Download Growvia Desktop** (detecta PC, Android o iPhone), Growwy arriba con 3 preguntas rápidas (abren el panel con la respuesta en pantalla completa), **Probalo sin registrarte** (elegís lugar, sistema y hectáreas y ves la mejor rotación con datos reales), plan PDF de ejemplo, ¿Qué es Growwy?, cómo funciona y sobre nosotros. En el celular, barra fija con "Hablá con Growwy" y descarga. Arranca en español |
+| `/` | **Portada**: título sobre plata y agua, 3 datos, botón **Download Growvia Desktop**, Growwy con 3 preguntas rápidas, botones **Sobre nosotros** y **Sobre Growwy**, y la demo **Probalo ahora** (sin registrarte). Arranca en español |
+| `/growwy` | **Sobre Growwy**: qué es Growwy, la Pachamama, en qué se basa y cómo ayuda a decidir |
+| `/about` | **Sobre nosotros**: el equipo, el comparador satelital (NDVI vs imagen), cómo funciona, qué te llevás y plan PDF de ejemplo |
 | `/download` | **Descargas**: app oficial para Windows, macOS, Linux y Android (Rust/Tauri, se completa en `config/downloads.ts` al publicar) e instrucciones para instalar la app web en iPhone o cualquier equipo |
 | `/data` | **Datos técnicos**: las capas satelitales, climáticas y de suelo detrás de cada recomendación (antes estaba en la portada) |
 | `/plan` | **Plan de acción** de Growwy para guardar como PDF |
-| `/app` | **Panel** dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, SI y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
+| `/app` | **Panel** (pide registrar la chacra primero: con nombre y ubicación alcanza; después vuelve solo, con la pregunta que traías) dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, SI y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
 | `/register` | **Registro del productor**: chacra (con **búsqueda por calle**, ubicación en el mapa satelital y **dibujo del límite** que calcula hectáreas y perímetro), lotes, qué hubo en cada estación, agua, análisis de suelo, economía y objetivos. Se guarda en el dispositivo y se puede exportar o importar en JSON |
 
 ### Pestañas del panel (atajos `1`–`5`)

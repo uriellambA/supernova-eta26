@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* the Rust app (desktop/) is not part of the web: do not scan it for classes */
+@source not "../desktop";
 
 /* ---------- Warm monochrome design tokens ---------- */
 :root {
