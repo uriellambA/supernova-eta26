@@ -665,6 +665,8 @@ export const ES: Record<string, string> = {
   "It starts with Crop rotation, the main decision. Then Map, Crops, Climate and Soil. General overview, at the end, sums everything up.": "Empieza por Rotación de cultivos, la decisión principal. Después Mapa, Cultivos, Clima y Suelo. Visión general, al final, resume todo.",
   "Account and language": "Cuenta e idioma", "Your account, Spanish or English, and the \"?\" button to see this tour again. Light or dark mode is at the bottom left; the 3D view is on the map.": "Tu cuenta, español o inglés, y el botón \"?\" para volver a ver este recorrido. El modo claro u oscuro está abajo a la izquierda; la vista 3D, en el mapa.",
   "Green the best · amber in between · red the worst · grey all the same": "Verde la mejor · amarillo en el medio · rojo la peor · gris todas iguales", "Same": "Igual", "Worst": "La peor", "In between": "En el medio",
+  "Save": "Guardar", "Your profile": "Tu perfil", "The name shown for you in the app.": "El nombre que se muestra para vos en la app.", "User name": "Nombre de usuario", "Profile saved.": "Perfil guardado.",
+  "Your farms and your sessions with Growwy, on every device.": "Tus chacras y tus sesiones con Growwy, en todos tus aparatos.",
   "Sign in": "Iniciar sesión", "Account": "Cuenta", "My account": "Mi cuenta", "Optional": "Opcional", "Your account": "Tu cuenta",
   "Keep your farms and the sessions with Growwy on every device. Without an account everything keeps working on this device.": "Tené tus chacras y las sesiones con Growwy en todos tus aparatos. Sin cuenta, todo sigue funcionando en este aparato.",
   "Accounts are not turned on yet on this server.": "Las cuentas todavía no están activadas en este servidor.", "Loading…": "Cargando…",

@@ -269,9 +269,9 @@ export function Growvia() {
               <DemoBadge show={simulated} />
             </div>
             <div data-tour="tools" className="flex gap-2 sm:ml-auto">
-              <AccountButton />
               <button className={btnGhost} onClick={() => setTourOpen(true)} title="Tutorial" aria-label="Tutorial">?</button>
               <LangToggle />
+              <AccountButton />
             </div>
           </div>
           <nav data-tour="tabs" className="mx-auto hidden max-w-[1500px] gap-1 overflow-x-auto px-4 pb-2 sm:flex sm:px-6" aria-label="Dashboard tabs">

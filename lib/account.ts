@@ -12,11 +12,17 @@ import type { FarmRegister } from "./types";
 const BUILD_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").trim().replace(/\/+$/, "");
 const BUILD_KEY = (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || "").trim();
 type Config = { url: string; key: string } | null;
+/** Why accounts are off (shown on the account page): the variable names the server saw, never their values. */
+export let configProblem: { problem: string; seen: string[] } | null = null;
 let config: Promise<Config> | null = null;
 function getConfig(): Promise<Config> {
   config ??= BUILD_URL && BUILD_KEY
     ? Promise.resolve({ url: BUILD_URL, key: BUILD_KEY })
-    : fetch("/api/account-config", { cache: "no-store" }).then((r) => r.json()).then((j) => (j?.enabled ? { url: j.url, key: j.key } : null)).catch(() => null);
+    : fetch("/api/account-config", { cache: "no-store" }).then((r) => r.json()).then((j) => {
+        if (j?.enabled) return { url: j.url, key: j.key };
+        configProblem = { problem: j?.problem ?? "missing", seen: j?.seen ?? [] };
+        return null;
+      }).catch(() => null);
   return config;
 }
 
@@ -83,6 +89,22 @@ export async function signInWithGoogle() {
   const { error } = await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${location.origin}/account${location.search}` } });
   if (error) throw error;
 }
+/** The name shown for the person: the one they chose, else the part of the e-mail before the @. */
+export function displayName(session: Session | null) {
+  const meta = session?.user.user_metadata as { name?: string } | undefined;
+  return meta?.name?.trim() || session?.user.email?.split("@")[0] || "";
+}
+
+/** Saves the profile (kept with the account itself, no extra table). */
+export async function updateProfile(p: { name: string }) {
+  const sb = await cloud();
+  const { data, error } = await sb.auth.updateUser({ data: { name: p.name.trim().slice(0, 60) } });
+  if (error) throw error;
+  const { data: s } = await sb.auth.getSession();
+  emit({ session: s.session ?? state.session });
+  return data.user;
+}
+
 export async function signOut() {
   const sb = await cloud();
   await sb.auth.signOut();
