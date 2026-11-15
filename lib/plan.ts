@@ -7,7 +7,8 @@ import { SEASONS } from "./agro";
 import type { Hazard } from "./contingency";
 import { yearPlan } from "./seasons";
 import type { SpeciesFit } from "./suitability";
-import type { AdvisorResult, FarmProfile, FarmRegister, Salinity, SiteConfig, SoilResumen, StrategyResult } from "./types";
+import { effectiveness, type Effectiveness } from "./effectiveness";
+import type { AdvisorResult, FarmProfile, FarmRegister, IndicadoresNasa, Salinity, SiteConfig, SoilResumen, StrategyResult } from "./types";
 
 export type PlanPlot = {
   id: string;
@@ -45,6 +46,8 @@ export type ActionPlan = {
   check: string[];
   contacts: string[];
   conversation: { q: string; a: string }[];
+  /** how effective the recommended combination will be, and why */
+  effectiveness?: Effectiveness;
 };
 
 const r2 = (x: number) => Math.round(x * 100) / 100;
@@ -65,6 +68,7 @@ export function buildPlan(o: {
   sal: Salinity | null;
   risks: Hazard[];
   conversation: { q: string; a: string }[];
+  climate?: IndicadoresNasa | null;
 }): ActionPlan {
   const { farm, site, advice } = o;
   const zone = site.zone === "pampa" ? "pampa" : "patagonia";
@@ -202,6 +206,7 @@ export function buildPlan(o: {
     check: advice.askExpert,
     contacts: ADVICE_CONTACTS[zone],
     conversation: o.conversation,
+    effectiveness: effectiveness(best, cur, { soil: o.soil, climate: o.climate ?? null, sal: o.sal, register: o.register, simulated: !!(o.climate?.simulado || o.soil?.simulado) }),
   };
 }
 

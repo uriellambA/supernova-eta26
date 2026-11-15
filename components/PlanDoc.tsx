@@ -1,6 +1,7 @@
 "use client";
 // Growwy's action plan, laid out to be saved as PDF (A4) or read on screen.
 import { Brand } from "./Brand";
+import { EffectivenessView } from "./EffectivenessCard";
 import { Pachamama } from "./Pachamama";
 import { Calendar, CashChart, FieldMap } from "./growwy/Visuals";
 import type { ActionPlan } from "@/lib/plan";
@@ -61,6 +62,15 @@ export function PlanDoc({ p }: { p: ActionPlan }) {
           ))}
         </ol>
       </section>
+
+      {/* ---------- how effective ---------- */}
+      {p.effectiveness && (
+        <section className={card}>
+          <div className={eyebrow}>How effective will it be?</div>
+          <h2 className={h2}>What changes on your farm and why</h2>
+          <div className="mt-3"><EffectivenessView e={p.effectiveness} name={p.rotation.name} print /></div>
+        </section>
+      )}
 
       {/* ---------- distribution ---------- */}
       <section className={`${card} grid gap-4 sm:grid-cols-2 print:grid-cols-2`}>

@@ -1,14 +1,14 @@
 /**
  * Builds the landing-page comparison images of a real chacra in Los Antiguos:
- *   public/landing/chacra-color.jpg  — high-resolution satellite photo (Esri World Imagery, ~1 m)
- *   public/landing/chacra-ndvi.jpg   — NDVI from Sentinel-2 red (B04) and near-infrared (B08) bands, 10 m,
- *                                      colored and blended with the photo so the parcels stay sharp
+ *   public/landing/chacra-color.jpg  — true color from Sentinel-2 (ESA Copernicus, open data, 10 m)
+ *   public/landing/chacra-ndvi.jpg   — NDVI from the same Sentinel-2 scene: red (B04) and near-infrared (B08) bands
  *   public/landing/chacra.json       — scene date, cloud cover and bounding box
  *
  *   npm run landing-images
  *   npm run landing-images -- --lat -46.55 --lon -71.64 --width 1400 --height 790 --from 2025-12-01 --to 2026-03-15
+ *   npm run landing-images -- --scene S2B_18GYP_20260104_0_L2A   # a known scene, straight from the bucket
  *
- * Needs internet (Esri tiles, Earth Search STAC catalog and the public Sentinel-2 COG bucket on AWS). No keys required.
+ * Only open data: the Earth Search STAC catalog and the public Sentinel-2 COG bucket on AWS. No keys required.
  */
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -67,31 +67,26 @@ async function getJson(url: string, init?: RequestInit) {
   return r.json();
 }
 
-// ---------- 1. high-resolution photo ----------
-async function photo() {
-  const rgb = new Uint8Array(W * H * 3);
-  const tasks: Promise<void>[] = [];
-  for (let tx = Math.floor(x0 / 256); tx <= Math.floor((x1 - 1) / 256); tx++) {
-    for (let ty = Math.floor(y0 / 256); ty <= Math.floor((y1 - 1) / 256); ty++) {
-      tasks.push((async () => {
-        const r = await fetch(`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${Z}/${ty}/${tx}`, { signal: AbortSignal.timeout(30_000) });
-        if (!r.ok) throw new Error(`imagery tile ${Z}/${ty}/${tx} → ${r.status}`);
-        const img = jpeg.decode(new Uint8Array(await r.arrayBuffer()), { useTArray: true });
-        for (let py = 0; py < 256; py++) for (let px = 0; px < 256; px++) {
-          const gx = tx * 256 + px - x0, gy = ty * 256 + py - y0;
-          if (gx < 0 || gy < 0 || gx >= W || gy >= H) continue;
-          const s = (py * img.width + px) * 4, d = (gy * W + gx) * 3;
-          rgb[d] = img.data[s]; rgb[d + 1] = img.data[s + 1]; rgb[d + 2] = img.data[s + 2];
-        }
-      })());
-    }
+// ---------- Sentinel-2 scene: true color + NDVI ----------
+type Item = { id: string; properties: Record<string, string | number | boolean | undefined>; assets: Record<string, { href: string }> };
+
+/** A known scene, read straight from the public bucket (its STAC item is stored next to the bands). */
+async function sceneItem(id: string): Promise<Item> {
+  const [, tile, date] = id.match(/^S2[AB]_(\d{2}[A-Z]{3})_(\d{8})_/) ?? [];
+  if (!tile) throw new Error(`unexpected scene id ${id}`);
+  const url = `https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/${Number(tile.slice(0, 2))}/${tile[2]}/${tile.slice(3)}/${date.slice(0, 4)}/${Number(date.slice(4, 6))}/${id}/${id}.json`;
+  const item = (await getJson(url)) as Item & { assets: Record<string, { href: string }> };
+  // the stored item uses s3:// or relative hrefs: make them https
+  for (const a of Object.values(item.assets)) {
+    if (a.href.startsWith("s3://sentinel-cogs/")) a.href = a.href.replace("s3://sentinel-cogs/", "https://sentinel-cogs.s3.us-west-2.amazonaws.com/");
+    else if (!a.href.startsWith("http")) a.href = new URL(a.href, url).href;
   }
-  await Promise.all(tasks);
-  return rgb;
+  return item;
 }
 
-// ---------- 2. Sentinel-2 NDVI ----------
-async function ndviGrid() {
+async function findItem(): Promise<Item> {
+  const fixed = arg("scene");
+  if (fixed) return sceneItem(fixed);
   const search = await getJson("https://earth-search.aws.element84.com/v1/search", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -106,7 +101,13 @@ async function ndviGrid() {
   });
   const item = search.features?.[0];
   if (!item) throw new Error(`no clear Sentinel-2 scene between ${from} and ${to}`);
-  const p = item.properties;
+  return item as Item;
+}
+
+async function sentinel() {
+  const item = await findItem();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- STAC properties are loosely typed
+  const p = item.properties as Record<string, any>;
   const zone = Number(p["proj:epsg"] ?? p["proj:code"]?.split(":")[1] ?? 32719) % 100;
   const baseline = parseFloat(p["s2:processing_baseline"] ?? "0");
   const offset = p["earthsearch:boa_offset_applied"] ? 0 : baseline >= 4 ? -1000 : 0;
@@ -120,30 +121,35 @@ async function ndviGrid() {
     E[y * W + x] = e; N[y * W + x] = n;
     eMin = Math.min(eMin, e); eMax = Math.max(eMax, e); nMin = Math.min(nMin, n); nMax = Math.max(nMax, n);
   }
-  const band = async (key: string) => {
-    const tif = await fromUrl(item.assets[key].href);
+  const keyOf = (k: string) => (item.assets[k] ? k : ({ red: "B04", nir: "B08", visual: "TCI" } as Record<string, string>)[k]);
+  const band = async (key: string, sample = 0, off = offset) => {
+    const tif = await fromUrl(item.assets[keyOf(key)].href);
     const img = await tif.getImage();
     const [ox, oy] = img.getOrigin(), [rx, ry] = img.getResolution();
     const c0 = Math.max(0, Math.floor((eMin - ox) / rx) - 1), c1 = Math.min(img.getWidth(), Math.ceil((eMax - ox) / rx) + 2);
     const r0 = Math.max(0, Math.floor((nMax - oy) / ry) - 1), r1 = Math.min(img.getHeight(), Math.ceil((nMin - oy) / ry) + 2);
-    const [data] = (await img.readRasters({ window: [c0, r0, c1, r1] })) as unknown as ArrayLike<number>[];
+    const data = ((await img.readRasters({ window: [c0, r0, c1, r1] })) as unknown as ArrayLike<number>[])[sample];
     const w = c1 - c0, h = r1 - r0;
     // bilinear sample at a UTM point
     return (e: number, n: number) => {
       const fx = (e - ox) / rx - c0 - 0.5, fy = (n - oy) / ry - r0 - 0.5;
       const ix = Math.max(0, Math.min(w - 2, Math.floor(fx))), iy = Math.max(0, Math.min(h - 2, Math.floor(fy)));
       const tx = Math.min(1, Math.max(0, fx - ix)), ty = Math.min(1, Math.max(0, fy - iy));
-      const v = (i: number, j: number) => data[(iy + j) * w + ix + i] + offset;
+      const v = (i: number, j: number) => data[(iy + j) * w + ix + i] + off;
       return (v(0, 0) * (1 - tx) + v(1, 0) * tx) * (1 - ty) + (v(0, 1) * (1 - tx) + v(1, 1) * tx) * ty;
     };
   };
-  const [red, nir] = await Promise.all([band("red"), band("nir")]);
+  const [red, nir, tr, tg, tb] = await Promise.all([band("red"), band("nir"), band("visual", 0, 0), band("visual", 1, 0), band("visual", 2, 0)]);
   const nd = new Float32Array(W * H);
+  const rgb = new Uint8Array(W * H * 3);
   for (let i = 0; i < W * H; i++) {
     const r = red(E[i], N[i]), n = nir(E[i], N[i]);
     nd[i] = n + r > 0 ? (n - r) / (n + r) : 0;
+    // true color (TCI), with a gentle brightness / contrast lift for screens
+    const lift = (x: number) => Math.max(0, Math.min(255, (x - 8) * 1.35));
+    rgb[i * 3] = lift(tr(E[i], N[i])); rgb[i * 3 + 1] = lift(tg(E[i], N[i])); rgb[i * 3 + 2] = lift(tb(E[i], N[i]));
   }
-  return { nd, date: p.datetime?.slice(0, 10), cloud: p["eo:cloud_cover"], id: item.id };
+  return { nd, rgb, date: String(p.datetime ?? "").slice(0, 10), cloud: p["eo:cloud_cover"], id: item.id };
 }
 
 // NDVI palette (bare soil → dense crop)
@@ -160,7 +166,8 @@ function color(v: number): [number, number, number] {
 async function main() {
   console.log(`Growvia landing images · ${lat}, ${lon} · ${widthM}×${heightM} m · ${W}×${H} px`);
   mkdirSync(OUT, { recursive: true });
-  const rgb = await photo();
+  const { nd, rgb, date, cloud, id } = await sentinel();
+  console.log(`· Sentinel-2 scene ${id} · ${date}`);
   const toRgba = (src: (i: number) => [number, number, number]) => {
     const d = Buffer.alloc(W * H * 4);
     for (let i = 0; i < W * H; i++) { const [r, g, b] = src(i); d[i * 4] = r; d[i * 4 + 1] = g; d[i * 4 + 2] = b; d[i * 4 + 3] = 255; }
@@ -169,10 +176,9 @@ async function main() {
   writeFileSync(join(OUT, "chacra-color.jpg"), jpeg.encode({ data: toRgba((i) => [rgb[i * 3], rgb[i * 3 + 1], rgb[i * 3 + 2]]), width: W, height: H }, 82).data);
   console.log("✓ chacra-color.jpg");
 
-  const { nd, date, cloud, id } = await ndviGrid();
   writeFileSync(join(OUT, "chacra-ndvi.jpg"), jpeg.encode({
     data: toRgba((i) => {
-      const lum = (0.3 * rgb[i * 3] + 0.59 * rgb[i * 3 + 1] + 0.11 * rgb[i * 3 + 2]) / 255; // keeps parcel edges sharp
+      const lum = (0.3 * rgb[i * 3] + 0.59 * rgb[i * 3 + 1] + 0.11 * rgb[i * 3 + 2]) / 255; // light shading from the true color
       const c = color(nd[i]);
       const k = 0.55 + 0.6 * lum;
       return [Math.min(255, c[0] * k), Math.min(255, c[1] * k), Math.min(255, c[2] * k)];

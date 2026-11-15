@@ -1,9 +1,9 @@
 "use client";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl, { type GeoJSONSource, type Map as MLMap, type Marker } from "maplibre-gl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { SATELLITE, STREETS } from "@/config/basemap";
 
-const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services";
 
 type Props = {
   lat: number;
@@ -47,14 +47,12 @@ export default function FarmMap({ lat, lon, limits, boundary, drawing, onPick, o
       style: {
         version: 8,
         sources: {
-          sat: { type: "raster", tiles: [`${ESRI}/World_Imagery/MapServer/tile/{z}/{y}/{x}`], tileSize: 256, maxzoom: 19, attribution: "Imagery © Esri, Maxar, Earthstar Geographics" },
-          roads: { type: "raster", tiles: [`${ESRI}/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}`], tileSize: 256, maxzoom: 19 },
-          labels: { type: "raster", tiles: [`${ESRI}/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}`], tileSize: 256, maxzoom: 19 },
+          sat: { type: "raster", tiles: SATELLITE.tiles, tileSize: 256, maxzoom: SATELLITE.maxzoom, attribution: SATELLITE.attribution },
+          streets: { type: "raster", tiles: STREETS.tiles, tileSize: 256, maxzoom: STREETS.maxzoom, attribution: STREETS.attribution },
         },
         layers: [
           { id: "sat", type: "raster", source: "sat" },
-          { id: "roads", type: "raster", source: "roads", paint: { "raster-opacity": 0.8 } },
-          { id: "labels", type: "raster", source: "labels" },
+          { id: "streets", type: "raster", source: "streets", layout: { visibility: "none" } },
         ],
       },
     });
@@ -122,5 +120,22 @@ export default function FarmMap({ lat, lon, limits, boundary, drawing, onPick, o
     m.getCanvas().style.cursor = drawing ? "crosshair" : "";
   }, [boundary, drawing]);
 
-  return <div ref={box} className="h-full w-full" />;
+  // Satellite (Sentinel-2) or streets (OpenStreetMap), to find the farm by its road
+  const [layer, setLayer] = useState<"sat" | "streets">("sat");
+  const pickLayer = (l: "sat" | "streets") => {
+    setLayer(l);
+    const m = map.current;
+    if (m?.getLayer("streets")) m.setLayoutProperty("streets", "visibility", l === "streets" ? "visible" : "none");
+  };
+  return (
+    <div className="relative h-full w-full">
+      <div ref={box} className="h-full w-full" />
+      <div className="absolute left-2 top-2 z-10 flex overflow-hidden rounded-lg border border-line bg-surface text-xs font-medium shadow-sm">
+        {(["sat", "streets"] as const).map((l) => (
+          <button key={l} type="button" onClick={() => pickLayer(l)} aria-pressed={layer === l}
+            className={`px-2.5 py-1.5 ${layer === l ? "bg-ink text-canvas" : "text-ink-2 hover:bg-surface-2"}`}>{l === "sat" ? "Satellite" : "Streets"}</button>
+        ))}
+      </div>
+    </div>
+  );
 }

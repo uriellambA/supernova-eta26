@@ -15,11 +15,11 @@ Growvia es una herramienta de apoyo a la decisión (en inglés) para productores
 |---|---|
 | `/` | **Portada**: título sobre plata y agua, 3 datos, botón **Download Growvia Desktop**, Growwy con 3 preguntas rápidas, botones **Sobre nosotros** y **Sobre Growwy**, y la demo **Probalo ahora** (sin registrarte). Arranca en español |
 | `/growwy` | **Sobre Growwy**: qué es Growwy, la Pachamama, en qué se basa y cómo ayuda a decidir |
-| `/about` | **Sobre nosotros**: el equipo, el comparador satelital (NDVI vs imagen), cómo funciona, qué te llevás y plan PDF de ejemplo |
+| `/about` | **Sobre nosotros**: el desafío (**Field Shift: Adapting Farms with NASA Data**), el equipo, el comparador satelital Sentinel-2 (NDVI vs color real), cómo funciona, qué te llevás, plan PDF de ejemplo y **Nuestros datos abiertos** (cada fuente, para qué se usa y su licencia) |
 | `/download` | **Descargas**: app oficial para Windows, macOS, Linux y Android (Rust/Tauri, se completa en `config/downloads.ts` al publicar) e instrucciones para instalar la app web en iPhone o cualquier equipo |
 | `/data` | **Datos técnicos**: las capas satelitales, climáticas y de suelo detrás de cada recomendación (antes estaba en la portada) |
 | `/plan` | **Plan de acción** de Growwy para guardar como PDF |
-| `/app` | **Panel** (pide registrar la chacra primero: con nombre y ubicación alcanza; después vuelve solo, con la pregunta que traías) dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, SI y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
+| `/app` | **Panel** (con la tarjeta **¿Qué tan efectiva va a ser?**: efectividad de la rotación recomendada, aspecto por aspecto hoy → con el plan, cuándo se ve cada mejora, confianza según los datos medidos y qué podría hacerla menos efectiva; también va en el PDF. Pide registrar la chacra primero: con nombre y ubicación alcanza; después vuelve solo, con la pregunta que traías) dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, SI y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
 | `/register` | **Registro del productor**: chacra (con **búsqueda por calle**, ubicación en el mapa satelital y **dibujo del límite** que calcula hectáreas y perímetro), lotes, qué hubo en cada estación, agua, análisis de suelo, economía y objetivos. Se guarda en el dispositivo y se puede exportar o importar en JSON |
 
 ### Pestañas del panel (atajos `1`–`5`)
@@ -82,7 +82,7 @@ El comparador de la introducción muestra una **chacra real de Los Antiguos**: a
 ```bash
 npm run landing-images
 ```
-Baja la foto satelital (Esri World Imagery, ~1 m) y calcula el NDVI real con las bandas roja (B04) e infrarroja cercana (B08) de **Sentinel-2** (10 m, la escena de verano con menos nubes). Las guarda en `public/landing/` (`chacra-color.jpg`, `chacra-ndvi.jpg`, `chacra.json`). Después hay que commitear esa carpeta. La zona se elige en `config/site.ts` → `showcase` (o con `--lat --lon --width --height`).
+Usa solo datos abiertos: arma la imagen en color real y calcula el NDVI con las bandas roja (B04) e infrarroja cercana (B08) de la misma escena de **Sentinel-2** (10 m, la de verano con menos nubes; `--scene ID` usa una escena conocida directo del bucket público de AWS). Las guarda en `public/landing/` (`chacra-color.jpg`, `chacra-ndvi.jpg`, `chacra.json`). Después hay que commitear esa carpeta. La zona se elige en `config/site.ts` → `showcase` (o con `--lat --lon --width --height`).
 Mientras esas imágenes no existan, la página arma la imagen satelital real en vivo en el navegador, con un índice de vegetación de bandas visibles (VARI), porque la foto común no trae infrarrojo.
 
 ### Lo nuevo en v0.3
@@ -95,6 +95,9 @@ Mientras esas imágenes no existan, la página arma la imagen satelital real en 
 - **SI:** también usa el registro, las especies, la salud del suelo y la fase del Pacífico. Devuelve un plan por estación y hasta 3 cultivos nuevos.
 
 En la interfaz no aparecen las marcas de las fuentes de datos, para que se vea como un producto real. Las fuentes están en [`docs/estudio-suelo-los-antiguos.md`](docs/estudio-suelo-los-antiguos.md): NASA POWER (temperatura, lluvia, viento, humedad, presión, UV, humedad del suelo), MODIS MOD13Q1 (NDVI/EVI) y capas GIBS, más SoilGrids, Open-Meteo y el índice ONI de NOAA. **Hay que nombrarlas en el pitch y en la página del proyecto para los jueces.**
+
+## 🔓 Solo datos abiertos
+Todo lo que muestra Growvia sale de fuentes abiertas: NASA POWER, MODIS (ORNL DAAC), SMAP y GIBS (NASA); Open-Meteo (pronóstico, altura, ERA5); Copernicus Sentinel-2 (mapa satelital de 10 m, mosaico de EOX, y la comparación de la portada); ISRIC SoilGrids; NOAA ONI; Terrain Tiles (AWS Open Data); OpenStreetMap / Nominatim / Photon (calles y direcciones); FAO-56 y referencias públicas del INTA. El detalle con licencias está en `/about` (`components/landing/OpenData.tsx`). El mapa base se configura en `config/basemap.ts`.
 
 ## 🚀 Correr en local
 ```bash

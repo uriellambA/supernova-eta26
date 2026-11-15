@@ -2,6 +2,7 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl, { type Map as MLMap, type Marker } from "maplibre-gl";
 import { useEffect, useRef } from "react";
+import { SATELLITE } from "@/config/basemap";
 import { mapLimits } from "@/config/sites";
 import type { SiteConfig } from "@/lib/types";
 import { WEATHER_VARS, type WeatherGrid, type WeatherVarId } from "@/lib/weathergrid";
@@ -116,7 +117,7 @@ export default function MapView({
       style: {
         version: 8,
         sources: {
-          sat: { type: "raster", tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"], tileSize: 256, maxzoom: 18, attribution: "Imagery © Esri, Maxar, Earthstar Geographics" },
+          sat: { type: "raster", tiles: SATELLITE.tiles, tileSize: 256, maxzoom: SATELLITE.maxzoom, attribution: SATELLITE.attribution },
           dem: { type: "raster-dem", tiles: [TERRAIN], tileSize: 256, encoding: "terrarium", maxzoom: 14 },
           demShade: { type: "raster-dem", tiles: [TERRAIN], tileSize: 256, encoding: "terrarium", maxzoom: 14 },
         },

@@ -23,6 +23,8 @@ import {
   type GroundReading, type IndicadoresNasa, type NdviResumen, type NieveResumen, type Priorities, type SoilResumen, type Strategy,
 } from "@/lib/types";
 import { AIPanel } from "./AIPanel";
+import { EffectivenessCard } from "./EffectivenessCard";
+import { effectiveness } from "@/lib/effectiveness";
 import { syncFarm } from "@/lib/desktop";
 import { desbloquearAudio } from "@/hooks/useLeer";
 import { LineChart, ndviPoints } from "./Charts";
@@ -159,6 +161,13 @@ export function Growvia() {
   const risks = useMemo(() => (climate.data ? hazards(climate.data, forecast.data, site.watershed ? snow.data : null, enso.data, site.zone) : []), [climate.data, forecast.data, snow.data, enso.data, site]);
   const options = useMemo(() => (climate.data ? farmOptions(climate.data, farm) : []), [climate.data, farm]);
   const simulated = climate.data?.simulado || soil.data?.simulado;
+  // How effective the recommended combination will be (best for the farmer vs what they do today)
+  const eff = useMemo(() => {
+    if (!results.length) return null;
+    const best = results.find((r) => r.strategy.id === advice?.best) ?? [...results].sort((a, b) => b.score - a.score)[0];
+    const cur = results.find((r) => r.strategy.current) ?? best;
+    return { name: best.strategy.name, e: effectiveness(best, cur, { soil: soil.data ?? null, climate: climate.data ?? null, sal: sal ?? null, register, simulated: !!simulated }) };
+  }, [results, advice, soil.data, climate.data, sal, register, simulated]);
 
   async function analyze(question = "", history: { q: string; a: string }[] = []) {
     if (!climate.data || !soil.data || !results.length || !health || !sal) return;
@@ -277,7 +286,10 @@ export function Growvia() {
           {tab === "home" ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
               {ready ? (
-                <RotationHero results={results} onCompare={() => go("plan", "rotations")} onBuild={() => go("plan", "builder")} onYear={() => go("plan", "seasons")} />
+                <>
+                  <RotationHero results={results} onCompare={() => go("plan", "rotations")} onBuild={() => go("plan", "builder")} onYear={() => go("plan", "seasons")} />
+                  {eff && <EffectivenessCard e={eff.e} name={eff.name} />}
+                </>
               ) : !failed && <div className="md:col-span-6 lg:col-span-12"><Spinner text="Comparing crop rotations for your field…" /></div>}
               <Reveal className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface md:col-span-6 lg:col-span-8">
                 <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-3">

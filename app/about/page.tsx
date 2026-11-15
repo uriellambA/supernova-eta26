@@ -7,6 +7,7 @@ import { SPECIES } from "@/config/species";
 import { STRATEGIES } from "@/config/rotations";
 import { CompareSlider } from "@/components/landing/CompareSlider";
 import { SamplePlanLink } from "@/components/landing/SamplePlanLink";
+import { OpenData } from "@/components/landing/OpenData";
 import { SiteFooter, SiteHeader } from "@/components/landing/SiteChrome";
 import { DownloadButton } from "@/components/DownloadButton";
 import { btnPrimary } from "@/components/styles";
@@ -27,6 +28,11 @@ export default function AboutPage() {
         <section id="about" aria-labelledby="about-title" className="mx-auto max-w-6xl scroll-mt-24 px-4 sm:px-6">
           <Reveal className="max-w-3xl rounded-2xl border border-line bg-surface p-6">
             <h2 id="about-title" className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">About us</h2>
+            <div className="mt-3 rounded-xl border border-cta/40 bg-surface-2 p-4">
+              <div className="text-[11px] font-medium uppercase tracking-[0.1em] text-cta">NASA Space Apps Challenge 2026 · Our challenge</div>
+              <div className="mt-1 font-serif text-2xl leading-snug">Field Shift: Adapting Farms with NASA Data</div>
+              <p className="mt-1 text-sm text-ink-2">Using NASA data so that farmers can adapt what they grow and how they care for their soil to a changing climate.</p>
+            </div>
             <p className="mt-3 font-serif text-2xl leading-snug">We are high school students from Caleta Olivia taking part in the NASA Space Apps Challenge. We developed Growvia: the path to smarter farming.</p>
             <p className="mt-3 text-ink-2">Growvia is a smart web platform designed to help farmers in Los Antiguos, Santa Cruz, make better decisions about their crops and the care of their soil. Our project combines NASA satellite observations, climate information, soil data and crop characteristics to offer recommendations tailored to each farm.</p>
           </Reveal>
@@ -75,6 +81,9 @@ export default function AboutPage() {
             <p className="mt-6 text-sm text-muted">Curious about the satellites and models behind it? <Link href="/data" className="font-medium text-ink underline underline-offset-4">See the technical data →</Link></p>
           </div>
         </section>
+
+        {/* ---------- Open data ---------- */}
+        <OpenData />
 
         {/* ---------- CTA ---------- */}
         <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
