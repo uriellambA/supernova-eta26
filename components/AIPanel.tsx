@@ -9,11 +9,11 @@ import Link from "next/link";
 import { speciesById } from "@/config/species";
 import type { SavedSession } from "@/lib/session";
 import { SessionActions } from "./SessionView";
-import { Growwy } from "./Growwy";
+import { Growwy, type GrowwyData, type GrowwyTurn } from "./Growwy";
 import { Badge, btnGhost, btnPrimary, input, label, LevelPill } from "./ui";
 
 export function AIPanel({
-  farm, setFarm, results, advice, busy, onAnalyze, error, registered, session, link, savedCount, onOpenSessions, systems,
+  farm, setFarm, results, advice, busy, onAnalyze, error, registered, session, link, savedCount, onOpenSessions, systems, growwy,
 }: {
   systems?: readonly string[];
   farm: FarmProfile;
@@ -28,6 +28,8 @@ export function AIPanel({
   link: string | null;
   savedCount: number;
   onOpenSessions: () => void;
+  /** field data Growwy uses for her charts and the action plan */
+  growwy: Omit<GrowwyData, "results" | "farm">;
 }) {
   const [text, setText] = useState("");
   const [reading, setReading] = useState(false);
@@ -41,16 +43,16 @@ export function AIPanel({
   const best = advice ? results.find((r) => r.strategy.id === advice.best) : null;
 
   // Conversation with Growwy: each question/reply and her answer, sent back with the next reply
-  const [thread, setThread] = useState<{ q: string; a: string }[]>([]);
+  const [turns, setTurns] = useState<GrowwyTurn[]>([]);
   const [asked, setAsked] = useState<{ q: string; reply: boolean } | null>(null);
   const [seen, setSeen] = useState(advice);
   if (advice !== seen) {
     setSeen(advice);
-    if (advice && asked?.q) setThread((t) => [...(asked.reply ? t : []), { q: asked.q, a: advice.answer || advice.summary }]);
+    if (advice) setTurns((t) => [...(asked?.reply ? t : []), { q: asked?.q ?? "", advice }]);
   }
   function ask(q: string, reply = false) {
     setAsked({ q: q.trim(), reply });
-    onAnalyze(q, reply ? thread : []);
+    onAnalyze(q, reply ? turns.map((t) => ({ q: t.q, a: t.advice.answer || t.advice.summary })) : []);
   }
 
   async function readNotes() {
@@ -75,7 +77,7 @@ export function AIPanel({
         {!busy && <kbd>A</kbd>}
       </button>
 
-      <Growwy busy={busy} advice={advice} question={asked?.q || null} isReply={!!asked?.reply} onReply={(q) => ask(q, true)} />
+      <Growwy busy={busy} advice={advice} turns={turns} pending={busy ? asked?.q ?? "" : null} isReply={!!asked?.reply} onReply={(q) => ask(q, true)} data={{ ...growwy, results, farm }} />
 
       <div className="space-y-2 rounded-xl border border-line p-3">
         <div className="flex items-center text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Your farm<Link href="/register" className="ml-auto normal-case tracking-normal text-ink underline-offset-4 hover:underline">{registered ? "Edit register" : "Register farm"} <kbd>R</kbd></Link></div>

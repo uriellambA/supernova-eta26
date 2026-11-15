@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { VISUALS } from "./types";
 
 export const FarmSchema = z.object({
   system: z.enum(["orchard", "vegetables", "forage"]).nullable().catch(null),
@@ -19,4 +20,5 @@ export const AdviceSchema = z.object({
   confidence: z.enum(["high", "medium", "low"]).catch("medium"),
   seasons: z.object({ spring: z.string(), summer: z.string(), autumn: z.string(), winter: z.string() }).optional().catch(undefined),
   newCrops: z.array(z.object({ id: z.string(), why: z.string() })).optional().catch(undefined),
+  visuals: z.array(z.enum(VISUALS)).max(3).optional().catch(undefined),
 });

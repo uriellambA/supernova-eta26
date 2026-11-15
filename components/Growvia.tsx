@@ -282,7 +282,8 @@ export function Growvia() {
                   <span className="font-serif text-2xl leading-none">Decision support</span>
                   <Badge tone="blue">SI</Badge>
                 </div>
-                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems} />
+                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems}
+                  growwy={{ fits, climate: climate.data ?? null, soil: soil.data ?? null, sal: sal ?? null, risks, register, site, place: field.name }} />
                 {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => go("plan", "seasons")}>See the year plan →</button>}
               </Reveal>
 

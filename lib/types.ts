@@ -263,4 +263,8 @@ export type AdvisorResult = {
   source: "ai" | "rules";
   seasons?: { spring: string; summer: string; autumn: string; winter: string };
   newCrops?: { id: string; why: string }[];
+  /** charts/tables Growwy shows with this answer */
+  visuals?: VisualId[];
 };
+export const VISUALS = ["rotations", "water", "frost", "climate", "crops", "economy", "seasons", "distribution"] as const;
+export type VisualId = (typeof VISUALS)[number];

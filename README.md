@@ -54,6 +54,9 @@ Growwy es el SI de Growvia y aparece como la **Pachamama**, con la ilustración 
 - **Página de inicio:** sección **¿Qué es Growwy?** con la Pachamama de cuerpo entero, qué hace, en qué se basa y que la decisión final es del productor; también puede presentarse en voz alta.
 - **Voz sin espera:** apenas llega la respuesta se genera el audio en partes (la primera frase primero, el resto en paralelo) y, con **Voz automática: sí**, Growwy empieza a hablar sola. El audio se habilita en el mismo toque de "Analizar" o "Enviar", así los celulares no lo bloquean. El botón **Escuchar** reutiliza el audio ya generado.
 - **Responder:** debajo de la respuesta, **Responder** abre un campo (escribir o dictar) para contestarle a Growwy; la conversación anterior viaja con la pregunta, así el SI sigue el hilo.
+- **Gráficos en la conversación:** cada respuesta puede traer hasta 2 gráficos o tablas (rotaciones comparadas, agua necesaria vs lluvia, heladas por mes, clima, cultivos nuevos, dinero por hectárea, estaciones, cómo dividir el campo). Los elige el SI (`visuals`) o, sin clave, se eligen por palabras de la pregunta (`components/growwy/Visuals.tsx`).
+- **Pantalla completa:** el botón ⛶ abre a Growwy en grande con toda la conversación, los gráficos, el resumen del plan y el campo para responder (Esc para salir).
+- **Plan de acción en PDF:** "Armar mi plan (PDF)" junta la conversación en un documento A4 (`/plan`, `lib/plan.ts`, `components/PlanDoc.tsx`): qué hacer paso a paso, cómo dividir el campo (mapa a escala con lotes, pruebas y cortina rompevientos), calendario, materiales con cantidades y precios de referencia (`config/materials.ts`), inversión, costos anuales, ingresos y en qué año se recupera, estaciones, riesgos, qué verificar y a quién consultar. Se guarda como PDF o se manda por WhatsApp. Después de un ida y vuelta, Growwy invita a armarlo.
 - Con "reducir movimiento" activado en el sistema queda quieta.
 
 ### Temas
@@ -163,6 +166,8 @@ app/api/*              climate, vegetation, forecast, snow, soil, enso, farm (SI
 components/            Growvia (panel bento), PlanSections, Sections, RegisterForm, landing/*, ui
 scripts/soil-study.ts  comando de estudio de suelo avanzado
 components/Pachamama.tsx  avatar animado de Growwy (SI); components/Growwy.tsx la tarjeta del panel; components/landing/GrowwyIntro.tsx la sección de inicio
+config/materials.ts    precios de referencia de materiales (USD) para el plan
+lib/plan.ts            plan de acción: lotes, materiales, números, pasos
 scripts/soil-study-all.ts  estudio de suelo de todas las ciudades de una vez + resumen
 ```
 

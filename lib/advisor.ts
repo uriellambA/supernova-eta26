@@ -2,7 +2,7 @@ import { SITES } from "@/config/sites";
 import { shortDate } from "./agro";
 import { yearPlan } from "./seasons";
 import type { SpeciesFit } from "./suitability";
-import type { SiteConfig, AdvisorResult, ClimaResumen, EnsoResumen, FarmProfile, FarmRegister, IndicadoresNasa, NdviResumen, Priorities, Salinity, SoilHealth, SoilResumen, StrategyResult } from "./types";
+import type { VisualId, SiteConfig, AdvisorResult, ClimaResumen, EnsoResumen, FarmProfile, FarmRegister, IndicadoresNasa, NdviResumen, Priorities, Salinity, SoilHealth, SoilResumen, StrategyResult } from "./types";
 import { registerSummary } from "./register";
 
 export type AdvisorContext = {
@@ -77,6 +77,23 @@ export function buildContext(
 }
 
 /** Rule-based explanation (offline or without an SI key). */
+/** Charts that fit a question (rules-based fallback of the SI's choice). English + Spanish keywords. */
+export function pickVisuals(q?: string): VisualId[] {
+  const t = (q ?? "").toLowerCase();
+  if (!t.trim()) return ["rotations", "seasons"] as VisualId[];
+  const out: VisualId[] = [];
+  const has = (re: RegExp) => re.test(t);
+  if (has(/agua|riego|seca|sequ[ií]a|lluvia|water|irrigat|drought|rain/)) out.push("water");
+  if (has(/helad|fr[ií]o|frost|cold/)) out.push("frost");
+  if (has(/clima|temperatur|climate|weather/)) out.push("climate");
+  if (has(/precio|costo|cuesta|plata|ganan|ingreso|inversi|rentab|margen|dinero|price|cost|money|income|profit|invest|margin/)) out.push("economy");
+  if (has(/plant|cultiv|sembr|especie|nuevo|crop|grow|sow|species/)) out.push("crops");
+  if (has(/rotaci|rotation|compar|mejor|best/)) out.push("rotations");
+  if (has(/estaci|temporada|verano|invierno|oto[ñn]o|primavera|season|summer|winter|autumn|spring|calendar|mes/)) out.push("seasons");
+  if (has(/distribu|dividir|repart|parcela|lote|hect[áa]rea|superficie|divide|plot|layout|area/)) out.push("distribution");
+  return (out.length ? out : (["rotations"] as VisualId[])).slice(0, 2);
+}
+
 /** Rules-based answer to a free question: picks the season mentioned and lists what fits it. */
 function localAnswer(q: string, ctx: AdvisorContext, res?: StrategyResult[], fits?: SpeciesFit[]) {
   const t = q.toLowerCase();
@@ -110,6 +127,7 @@ export function localAdvice(ctx: AdvisorContext, res?: StrategyResult[], fits?: 
     confidence: "medium",
     source: "rules",
     answer: ctx.question?.trim() ? localAnswer(ctx.question, ctx, res, fits) : undefined,
+    visuals: pickVisuals(ctx.question),
     newCrops: ctx.newCrops.filter((n) => n.viability >= 55).slice(0, 3).map((n) => ({
       id: n.id, why: `${n.viability}/100 fit; harvest in ${n.harvestMonths.map((m) => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]).join("/")}${n.limits[0] ? `. Watch: ${n.limits[0]}` : ""}.`,
     })),

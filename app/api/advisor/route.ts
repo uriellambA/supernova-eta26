@@ -24,9 +24,10 @@ RULES:
 - "voice": 2–3 short sentences to be READ ALOUD, no symbols.
 - "seasons": one short line each for spring (Sep–Nov), summer (Dec–Feb), autumn (Mar–May), winter (Jun–Aug): what grows/covers the field and the key task.
 - "newCrops": up to 3 {id, why} from the newCrops list (ids must match) that best fill the months without income and suit the soil.
+- "visuals": up to 2 charts/tables to show next to your answer, chosen from: "rotations" (scores of the rotations), "water" (monthly water need vs rain), "frost" (frost days per month), "climate" (monthly temperature and rain), "crops" (new crops ranked), "economy" (costs, income and margin per hectare), "seasons" (what happens each season), "distribution" (how to divide the field). Pick the ones that best support the answer.
 - This is decision SUPPORT: it never replaces the farmer's judgment.
 Return ONLY JSON: {"answer": "..." (only if there is a question), "summary": "...", "best": "...", "notes": [{"id": "...", "text": "..."}], "askExpert": ["..."], "voice": "...", "confidence": "high"|"medium"|"low",
-"seasons": {"spring": "...", "summer": "...", "autumn": "...", "winter": "..."}, "newCrops": [{"id": "...", "why": "..."}]}`;
+"seasons": {"spring": "...", "summer": "...", "autumn": "...", "winter": "..."}, "newCrops": [{"id": "...", "why": "..."}], "visuals": ["..."]}`;
 
 export async function POST(req: Request) {
   const ctx = (await req.json().catch(() => null)) as AdvisorContext | null;
