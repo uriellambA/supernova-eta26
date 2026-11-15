@@ -1,0 +1,102 @@
+# Growvia Desktop: builds the official installers and publishes them as a GitHub Release.
+#
+# How to release:  1) bump the version in desktop/src-tauri/tauri.conf.json (and Cargo.toml / package.json)
+#                  2) push a tag:  git tag desktop-v0.1.0 && git push origin desktop-v0.1.0
+# Or run it by hand from the Actions tab (workflow_dispatch) with a tag name.
+#
+# Secrets (Settings → Secrets and variables → Actions):
+#   TAURI_SIGNING_PRIVATE_KEY           content of growvia-updater.key (signs automatic updates)
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  empty unless the key has a password
+# Without the key the installers are still built, but automatic updates are not published.
+name: Growvia Desktop release
+
+on:
+  push:
+    tags: ["desktop-v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. desktop-v0.1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: desktop-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows
+            os: windows-latest
+            args: ""
+          - name: macOS (universal)
+            os: macos-latest
+            args: "--target universal-apple-darwin"
+          - name: Linux
+            os: ubuntu-22.04
+            args: ""
+    runs-on: ${{ matrix.os }}
+    env:
+      GROWVIA_URL: https://growvia-coral.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Linux system libraries
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev libayatana-appindicator3-dev patchelf
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ runner.os == 'macOS' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri -> target
+
+      - name: Install the Tauri CLI
+        working-directory: desktop
+        run: npm ci
+
+      - name: Rust tests
+        if: runner.os == 'Linux'
+        working-directory: desktop/src-tauri
+        run: cargo test
+
+      - name: Build and publish
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          projectPath: desktop
+          tagName: ${{ github.event.inputs.tag || github.ref_name }}
+          releaseName: "Growvia Desktop __VERSION__"
+          releaseBody: |
+            Official Growvia app: Growwy, your crop rotation plan and frost / wind alerts on your computer.
+
+            **Download:** https://growvia-coral.vercel.app/download
+
+            - Windows: `Growvia_…_x64-setup.exe` (if Windows shows "Windows protected your PC": More info → Run anyway)
+            - macOS: `Growvia_…_universal.dmg` (the first time: right-click the app → Open)
+            - Linux: `.AppImage` or `.deb`
+          releaseDraft: false
+          prerelease: false
+          includeUpdaterJson: true
+          # signed updater files only when the signing key is configured
+          args: ${{ matrix.args }} ${{ secrets.TAURI_SIGNING_PRIVATE_KEY != '' && '--config src-tauri/tauri.release.conf.json' || '' }}

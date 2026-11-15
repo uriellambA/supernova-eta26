@@ -2,8 +2,10 @@
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { DOWNLOADS, RELEASES_URL, detectPlatform, type Platform } from "@/config/downloads";
+import type { ReleaseInfo } from "@/lib/release";
 import { Brand } from "./Brand";
 import { desktopInfo } from "@/lib/desktop";
+import { getLang } from "@/lib/i18n";
 import { Pachamama } from "./Pachamama";
 import { LangToggle } from "./Translator";
 import { btnGhost, btnPrimary } from "./styles";
@@ -25,6 +27,14 @@ export function DownloadView() {
   const mine = useSyncExternalStore(noop, () => detectPlatform(navigator.userAgent, navigator.platform), () => null);
   const [prompt, setPrompt] = useState<InstallPrompt | null>(null);
   const [installed, setInstalled] = useState(false);
+  const [rel, setRel] = useState<ReleaseInfo | null>(null);
+  useEffect(() => {
+    let alive = true;
+    fetch("/api/release").then((r) => r.json()).then((j: ReleaseInfo) => alive && setRel(j)).catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
   useEffect(() => {
     const onPrompt = (e: Event) => {
       e.preventDefault();
@@ -61,6 +71,7 @@ export function DownloadView() {
           <div className="md:col-span-8">
             <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">Official app</div>
             <h1 className="mt-2 font-serif text-5xl leading-tight">Download Growvia</h1>
+            {rel?.version && <p className="mt-1 text-sm text-muted">{`Version ${rel.version} · ${new Date(rel.published!).toLocaleDateString(getLang() === "es" ? "es-AR" : "en-US")}`}</p>}
             <p className="mt-3 max-w-xl text-lg text-ink-2">Growwy on your computer or phone: frost and wind alerts, your plan always at hand and the same data as the web. Built in Rust: light and fast.</p>
           </div>
           <div className="hidden justify-center md:col-span-4 md:flex"><Pachamama className="h-52 w-auto" /></div>
@@ -73,16 +84,20 @@ export function DownloadView() {
           {list.map((p, i) => {
             const d = DOWNLOADS[p];
             const first = i === 0 && !!mine;
+            const a = d.url ? { url: d.url, name: d.file, sizeMb: 0 } : rel?.assets[p];
             return (
               <section id={p} key={p} className={`scroll-mt-24 rounded-2xl border bg-surface p-5 ${first ? "border-ink" : "border-line"}`}>
                 <div className="flex flex-wrap items-center gap-4">
                   <svg viewBox="0 0 24 24" className="h-8 w-8 shrink-0 text-ink" fill={p === "mac" || p === "windows" ? "currentColor" : "none"} stroke={p === "mac" || p === "windows" ? "none" : "currentColor"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d={ICON[p]} /></svg>
                   <div className="min-w-0 flex-1">
                     <div className="font-medium">{d.label}{first && <span className="ml-2 rounded-full bg-green-bg px-2 py-0.5 text-[11px] text-green-fg">Your device</span>}</div>
-                    <div className="text-sm text-muted">{p === "iphone" ? "Install the web app from Safari: same features, no store needed." : d.url ? d.file : "Being prepared: available very soon."}</div>
+                    <div className="text-sm text-muted">{p === "iphone" ? "Install the web app from Safari: same features, no store needed." : a ? (a.sizeMb ? `${a.name} · ${a.sizeMb} MB` : a.name) : rel === null ? "Looking for the latest version…" : "Being prepared: available very soon."}</div>
                   </div>
-                  {p === "iphone" ? null : d.url ? (
-                    <a href={d.url} className={btnPrimary}>Download</a>
+                  {p === "iphone" ? null : a ? (
+                    <div className="flex flex-wrap gap-2">
+                      <a href={a.url} className={first ? btnPrimary : btnGhost}>Download</a>
+                      {p === "linux" && rel?.assets.linuxDeb && <a href={rel.assets.linuxDeb.url} className={btnGhost}>.deb</a>}
+                    </div>
                   ) : (
                     <a href={RELEASES_URL} className={btnGhost} target="_blank" rel="noopener">Check releases</a>
                   )}

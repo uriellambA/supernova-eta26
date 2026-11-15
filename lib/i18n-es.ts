@@ -646,6 +646,9 @@ export const ES: Record<string, string> = {
   "Bare months": "Meses desnudo", "N kg/ha": "N kg/ha", "Main benefit / risk": "Principal beneficio / riesgo", "New crops ranked for this field": "Cultivos nuevos ordenados para este campo", "Main limit": "Principal limitante", "Margin USD/ha": "Margen USD/ha",
   // ---------- Rotation explorer ----------
   "in {n}": "en {n}",
+  "Version {x} · {x}": "Versión {x} · {x}",
+  "Looking for the latest version": "Buscando la última versión",
+  "Looking for the latest version…": "Buscando la última versión…",
   "You are already using Growvia Desktop {x}": "Ya estás usando Growvia Desktop {x}",
   "Download Growvia Desktop": "Descargar Growvia para PC",
   "Download for Android": "Descargar para Android",

@@ -31,3 +31,19 @@ GROWVIA_URL=https://your-app.vercel.app npm run build   # installers in src-taur
 - The default web app is `https://growvia-coral.vercel.app`.
 - Icons: `npm run icons` regenerates them from `public/brand/growvia-mark.png`.
 - Tests: `cargo test` in `src-tauri/`.
+
+## Publish a version (GitHub Actions)
+`.github/workflows/desktop-release.yml` builds the Windows (`-setup.exe`, `.msi`), macOS (universal `.dmg`) and Linux (`.AppImage`, `.deb`, `.rpm`) installers on GitHub's machines and publishes them as a Release. The `/download` page and the "Download Growvia Desktop" button pick up the latest one automatically (`/api/release`).
+
+1. **Once:** in the repository, Settings → Secrets and variables → Actions → New repository secret:
+   - `TAURI_SIGNING_PRIVATE_KEY`: the whole content of `growvia-updater.key` (signs automatic updates).
+   - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`: leave it out (the key has no password).
+2. Bump the version in `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml` and `package.json`.
+3. Push a tag:
+   ```bash
+   git tag desktop-v0.1.0
+   git push origin desktop-v0.1.0
+   ```
+   (or Actions → "Growvia Desktop release" → Run workflow, with the tag name).
+
+It takes ~15–20 minutes. Installed apps find the new version by themselves (`latest.json` in the Release).
