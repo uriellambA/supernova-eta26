@@ -100,6 +100,18 @@ export function Growvia() {
   const enso = useRecurso<EnsoResumen>("/api/enso");
   const smap = useRecurso<SmapResumen>(`/api/smap?${q}`);
 
+  // Coming from the landing (quick question to Growwy, or "Try it"): /app?site=…&ask=…
+  const [autoAsk, setAutoAsk] = useState<string | null>(null);
+  useEffect(() => {
+    const u = new URLSearchParams(window.location.search);
+    if (!u.has("ask") && !u.has("site")) return;
+    const s = u.get("site");
+    if (s && SITES.some((x) => x.id === s)) setTimeout(() => chooseSite(s), 0); // after the saved data is restored
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- read once from the URL
+    if (u.has("ask")) setAutoAsk(u.get("ask") ?? "");
+    window.history.replaceState(null, "", "/app"); // a reload does not ask again
+  }, [chooseSite]);
+
   // Restore saved farm data (stored on this device)
   useEffect(() => {
     leer<FarmRegister>("register").then((r) => {
@@ -282,7 +294,7 @@ export function Growvia() {
                   <span className="font-serif text-2xl leading-none">Decision support</span>
                   <Badge tone="blue">SI</Badge>
                 </div>
-                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems}
+                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems} autoAsk={autoAsk}
                   growwy={{ fits, climate: climate.data ?? null, soil: soil.data ?? null, sal: sal ?? null, risks, register, site, place: field.name }} />
                 {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => go("plan", "seasons")}>See the year plan →</button>}
               </Reveal>

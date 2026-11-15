@@ -12,7 +12,8 @@ export function getLang(): Lang {
   if (current) return current;
   if (typeof window === "undefined") return "en";
   try {
-    current = (localStorage.getItem(KEY) as Lang | null) ?? (navigator.language?.toLowerCase().startsWith("es") ? "es" : "en");
+    // Spanish first: Growvia is for farmers in Argentina; English only if the visitor chose it
+    current = (localStorage.getItem(KEY) as Lang | null) ?? "es";
   } catch {
     current = "en";
   }

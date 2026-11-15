@@ -13,7 +13,10 @@ Growvia es una herramienta de apoyo a la decisión (en inglés) para productores
 ## Páginas
 | Ruta | Qué es |
 |---|---|
-| `/` | **Introducción**: qué es Growvia, comparador "índice de vegetación vs imagen original", cómo funciona (con capturas reales), funciones en bento y **la base de datos** que usa |
+| `/` | **Portada que vende**: título sobre plata y agua, 3 datos, botón **Download Growvia Desktop** (detecta PC, Android o iPhone), Growwy arriba con 3 preguntas rápidas (abren el panel con la respuesta en pantalla completa), **Probalo sin registrarte** (elegís lugar, sistema y hectáreas y ves la mejor rotación con datos reales), plan PDF de ejemplo, ¿Qué es Growwy?, cómo funciona y sobre nosotros. En el celular, barra fija con "Hablá con Growwy" y descarga. Arranca en español |
+| `/download` | **Descargas**: app oficial para Windows, macOS, Linux y Android (Rust/Tauri, se completa en `config/downloads.ts` al publicar) e instrucciones para instalar la app web en iPhone o cualquier equipo |
+| `/data` | **Datos técnicos**: las capas satelitales, climáticas y de suelo detrás de cada recomendación (antes estaba en la portada) |
+| `/plan` | **Plan de acción** de Growwy para guardar como PDF |
 | `/app` | **Panel** dividido en 5 pestañas para no mostrar todo junto: **Resumen** (mapa, SI y 4 indicadores), **Plan de rotación**, **Cultivos y economía**, **Clima y riesgos**, **Suelo y agua** |
 | `/register` | **Registro del productor**: chacra (con **búsqueda por calle**, ubicación en el mapa satelital y **dibujo del límite** que calcula hectáreas y perímetro), lotes, qué hubo en cada estación, agua, análisis de suelo, economía y objetivos. Se guarda en el dispositivo y se puede exportar o importar en JSON |
 

@@ -52,7 +52,7 @@ export function Bars({ labels, series, unit, height = 120 }: { labels: string[];
               const v = s.values[i] ?? 0;
               return <rect key={s.name} x={x} y={y(Math.max(0, v))} width={w - 0.6} height={Math.max(0, H - P.b - y(Math.max(0, v)))} rx="1" fill={s.color}><title>{`${s.name} · ${l}: ${Math.round(v)}${unit ? " " + unit : ""}`}</title></rect>;
             })}
-            <text x={P.l + i * bw + bw / 2} y={H - 5} textAnchor="middle" fontSize="7" fill="var(--chart-axis)">{l}</text>
+            <text x={P.l + i * bw + bw / 2} y={H - 5} textAnchor="middle" fontSize={l.length > 10 ? 5.5 : 7} fill="var(--chart-axis)">{l}</text>
           </g>
         ))}
       </svg>
@@ -174,8 +174,8 @@ export function Visual({ id, data }: { id: VisualId; data: VisualData }) {
                   <td className="py-1 pr-2">{r.strategy.name}{r.strategy.current && <span className="text-subtle"> (current)</span>}</td>
                   <td className="w-24"><div className="h-1.5 rounded-full bg-surface-2"><div className="h-full rounded-full" style={{ width: `${r.score}%`, background: r === best ? "var(--green-fg)" : "var(--chart-axis)" }} /></div></td>
                   <td className="w-8 text-right font-semibold tabular-nums">{r.score}</td>
-                  <td className="w-16 text-right tabular-nums text-muted">{r.metrics.waterMm} mm</td>
-                  <td className="w-12 text-right tabular-nums text-muted">{r.metrics.bareMonths} mo</td>
+                  <td className="w-16 text-right tabular-nums text-muted">{`${r.metrics.waterMm} mm`}</td>
+                  <td className="w-12 text-right tabular-nums text-muted">{`${r.metrics.bareMonths} mo`}</td>
                 </tr>
               ))}
             </tbody>
@@ -231,7 +231,7 @@ export function Visual({ id, data }: { id: VisualId; data: VisualData }) {
       const top = fits.filter((f) => f.species.status === "new").slice(0, 4);
       return (
         <Frame title="Money per hectare (USD, full production)" note="Reference prices; ask buyers and suppliers for a current quote.">
-          <Bars labels={top.map((f) => f.species.name.split(" ")[0])} unit="USD" series={[
+          <Bars labels={top.map((f) => f.species.name)} unit="USD" series={[
             { name: "Income", color: "var(--green-fg)", values: top.map((f) => f.economy.revenue) },
             { name: "Yearly cost", color: "var(--amber-fg)", values: top.map((f) => f.species.econ.costUsdHa) },
             { name: "Setup", color: "var(--red-fg)", values: top.map((f) => f.species.econ.setupUsdHa) },

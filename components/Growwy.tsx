@@ -45,7 +45,9 @@ const THINKING = "Let me read your field: climate, soil, water and your register
  * - "Reply" continues the conversation; "Full screen" shows the whole conversation with a big Pachamama.
  * - "Build my plan" turns the conversation into a printable action plan (PDF) with layout, materials and prices.
  */
-export function Growwy({ busy, advice, turns, pending, isReply, onReply, data }: {
+export function Growwy({ busy, advice, turns, pending, isReply, onReply, data, openFull = false }: {
+  /** open in full screen (the farmer came from a quick question on the landing) */
+  openFull?: boolean;
   busy: boolean;
   advice: AdvisorResult | null;
   turns: GrowwyTurn[];
@@ -59,7 +61,12 @@ export function Growwy({ busy, advice, turns, pending, isReply, onReply, data }:
   const tts = useLeer();
   const [auto, setAuto] = useState(leerAuto);
   const [replying, setReplying] = useState(false);
-  const [full, setFull] = useState(false);
+  const [full, setFull] = useState(openFull);
+  const [prevOpen, setPrevOpen] = useState(openFull);
+  if (openFull !== prevOpen) {
+    setPrevOpen(openFull);
+    if (openFull) setFull(true);
+  }
 
   // parts read aloud (each one is translated on its own when the page is in Spanish)
   const parts = advice ? (isReply ? [advice.answer || advice.summary] : [advice.answer, advice.voice ?? advice.summary]).filter((x): x is string => !!x) : [];
@@ -234,7 +241,7 @@ function FullScreen({ busy, pending, turns, data, onClose, voiceButtons, autoBtn
           <div className="absolute inset-x-6 bottom-6 rounded-2xl border border-line bg-surface/90 p-4 backdrop-blur">
             <div className="text-[11px] font-medium uppercase tracking-[0.1em] text-subtle">Your plan so far</div>
             <div className="mt-1 font-medium">{plan.rotation.name}</div>
-            <div className="mt-0.5 text-xs text-muted">{plan.plots.length} plots · investment {usd(plan.totals.investment)} · {plan.steps.length} steps</div>
+            <div className="mt-0.5 text-xs text-muted">{`${plan.plots.length} plots · investment ${usd(plan.totals.investment)} · ${plan.steps.length} steps`}</div>
             <div className="mt-3">{planBtn(true)}</div>
           </div>
         )}

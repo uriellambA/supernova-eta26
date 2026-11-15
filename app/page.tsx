@@ -8,6 +8,11 @@ import { SPECIES } from "@/config/species";
 import { STRATEGIES } from "@/config/rotations";
 import { CompareSlider } from "@/components/landing/CompareSlider";
 import { HeroBackdrop } from "@/components/landing/HeroBackdrop";
+import { HeroGrowwy } from "@/components/landing/HeroGrowwy";
+import { MobileBar } from "@/components/landing/MobileBar";
+import { SamplePlanLink } from "@/components/landing/SamplePlanLink";
+import { TryIt } from "@/components/landing/TryIt";
+import { DownloadButton } from "@/components/DownloadButton";
 import { GrowwyIntro } from "@/components/landing/GrowwyIntro";
 import { LangToggle } from "@/components/Translator";
 import { LandingKeys } from "@/components/landing/LandingKeys";
@@ -25,16 +30,16 @@ export default function Landing() {
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3 sm:px-6">
           <Brand />
           <nav className="hidden gap-1 text-sm text-muted md:flex">
+            <a href="#try" className="rounded-lg px-2 py-1 hover:text-ink">Try it</a>
             <a href="#growwy" className="rounded-lg px-2 py-1 hover:text-ink">Growwy</a>
             <a href="#how" className="rounded-lg px-2 py-1 hover:text-ink">How it works</a>
-            <a href="#features" className="rounded-lg px-2 py-1 hover:text-ink">Features</a>
-            <a href="#data" className="rounded-lg px-2 py-1 hover:text-ink">Our data</a>
             <a href="#about" className="rounded-lg px-2 py-1 hover:text-ink">About us</a>
           </nav>
           <div className="ml-auto flex items-center gap-2">
             <LangToggle />
             <ThemeToggle />
-            <Link href="/app" className={btnPrimary}>Open dashboard <kbd>D</kbd></Link>
+            <span className="hidden sm:block"><DownloadButton /></span>
+            <span className="hidden lg:block"><Link href="/app" className={btnGhost}>Open dashboard <kbd>D</kbd></Link></span>
           </div>
         </div>
       </header>
@@ -43,63 +48,62 @@ export default function Landing() {
         {/* ---------- Hero ---------- */}
         <section className="relative isolate overflow-hidden">
           <HeroBackdrop />
-          <div className="mx-auto max-w-6xl px-4 pb-28 pt-14 sm:px-6 sm:pt-20">
-            <div className="max-w-3xl">
+          <div className="mx-auto grid max-w-6xl items-start gap-10 px-4 pb-24 pt-12 sm:px-6 sm:pt-16 lg:grid-cols-12">
+            <div className="lg:col-span-7">
             <Reveal className="flex flex-wrap items-center gap-2">
               {SITES.map((x) => (
                 <Badge key={x.id} tone="green" dot title={x.region}>{x.name}</Badge>
               ))}
-              <Badge tone="blue">Decision support with SI</Badge>
             </Reveal>
             <Reveal delay={80}>
-              <h1 className="mt-6 max-w-4xl font-serif text-5xl leading-[0.98] tracking-tight sm:text-6xl xl:text-7xl">
-                A better crop rotation for your soil, <em className="text-muted">every season.</em>
+              <h1 className="mt-6 font-serif text-5xl leading-[0.98] tracking-tight sm:text-6xl xl:text-7xl">
+                Know what to plant next, <em className="text-cta">and how much you&apos;ll earn.</em>
               </h1>
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-6 max-w-2xl text-lg text-ink-2">
-                {APP_NAME} compares your current crop rotation with better alternatives for your exact field — using 20 years of climate,
-                satellite vegetation and soil data — explains why, and shows what you could grow when the cherry and strawberry season is over.
+                Growwy reads 20 years of NASA climate and the soil of your farm, compares your rotation with better ones and gives you a plan with numbers: water, money and a calendar. Free, in Spanish, on your phone or computer.
               </p>
             </Reveal>
             <Reveal delay={220} className="mt-8 flex flex-wrap gap-3">
-              <Link href="/app" className={`${btnPrimary} px-5 py-3`}>Compare rotations for my field <kbd>D</kbd></Link>
-              <Link href="/register" className={`${btnGhost} px-5 py-3`}>Register your farm <kbd>R</kbd></Link>
+              <a href="#try" className={`${btnPrimary} px-5 py-3`}>Try it with my farm</a>
+              <DownloadButton size="lg" ghost />
             </Reveal>
-            <p className="mt-4 text-xs uppercase tracking-[0.14em] text-muted">Guiding growers towards a better future</p>
-            <Reveal delay={280} className="mt-8 max-w-2xl rounded-2xl border border-line bg-surface/80 p-6 backdrop-blur-sm">
-              <section id="about" aria-labelledby="about-title" className="scroll-mt-24">
-                <h2 id="about-title" className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">About us</h2>
-                <p className="mt-3 font-serif text-2xl leading-snug">We are high school students from Caleta Olivia taking part in the NASA Space Apps Challenge. We developed Growvia: the path to smarter farming.</p>
-                <p className="mt-3 text-ink-2">Growvia is a smart web platform designed to help farmers in Los Antiguos, Santa Cruz, make better decisions about their crops and the care of their soil. Our project combines NASA satellite observations, climate information, soil data and crop characteristics to offer recommendations tailored to each farm.</p>
-              </section>
+            <Reveal delay={260} className="mt-8 grid max-w-2xl grid-cols-3 gap-2">
+              {[
+                ["20 years", "of NASA climate for your exact farm"],
+                ["4 rotations", "compared in water, soil and money"],
+                ["1 plan", "with materials, prices and calendar"],
+              ].map(([v, l]) => (
+                <div key={v} className="rounded-2xl border border-line bg-surface/80 p-3 backdrop-blur-sm sm:p-4">
+                  <div className="font-serif text-2xl leading-none sm:text-3xl">{v}</div>
+                  <div className="mt-1 text-xs text-muted sm:text-sm">{l}</div>
+                </div>
+              ))}
             </Reveal>
+            <p className="mt-6 text-xs uppercase tracking-[0.14em] text-muted">Guiding growers towards a better future</p>
             </div>
+            <Reveal delay={200} className="lg:col-span-5 lg:pt-6">
+              <HeroGrowwy />
+            </Reveal>
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
-          <Reveal delay={300} className="mt-12">
-            <CompareSlider />
+        <TryIt />
+
+        {/* ---------- About us ---------- */}
+        <section id="about" aria-labelledby="about-title" className="mx-auto max-w-6xl scroll-mt-24 px-4 sm:px-6">
+          <Reveal className="max-w-3xl rounded-2xl border border-line bg-surface p-6">
+            <h2 id="about-title" className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">About us</h2>
+            <p className="mt-3 font-serif text-2xl leading-snug">We are high school students from Caleta Olivia taking part in the NASA Space Apps Challenge. We developed Growvia: the path to smarter farming.</p>
+            <p className="mt-3 text-ink-2">Growvia is a smart web platform designed to help farmers in Los Antiguos, Santa Cruz, make better decisions about their crops and the care of their soil. Our project combines NASA satellite observations, climate information, soil data and crop characteristics to offer recommendations tailored to each farm.</p>
           </Reveal>
         </section>
 
-        {/* ---------- Strip ---------- */}
-        <section className="border-y border-line bg-surface">
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-line md:grid-cols-4">
-            {[
-              ["🗺️", "Satellite layers", "Vegetation, heat, snow and relief on one map"],
-              ["📈", "12+ indicators", "Frost, humidity, pressure, UV, evaporation, salinity"],
-              ["⏱️", "Always current", "Daily forecast, 16-day vegetation passes"],
-              ["⚖️", "Options compared", "4 rotations and 15 crops ranked for your field"],
-            ].map(([e, t, d], i) => (
-              <Reveal key={t} delay={i * 70} className="bg-surface p-6">
-                <div className="text-2xl">{e}</div>
-                <div className="mt-2 font-medium">{t}</div>
-                <div className="text-sm text-muted">{d}</div>
-              </Reveal>
-            ))}
-          </div>
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+          <Reveal className="mt-12">
+            <CompareSlider />
+          </Reveal>
         </section>
 
         {/* ---------- Growwy, the Pachamama ---------- */}
@@ -117,85 +121,29 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* ---------- Features (bento) ---------- */}
+        {/* ---------- What Growwy does for you ---------- */}
         <section id="features" className="border-t border-line bg-surface-2/50">
           <div className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 sm:px-6">
-            <SectionTitle eyebrow="Features" title="Everything a small farm needs to plan the year" />
-            <div className="mt-10 grid gap-4 md:grid-cols-6 lg:grid-cols-12">
-              <Feature className="md:col-span-6 lg:col-span-12" title="Crop rotation decision system — the heart of Growvia" badge={<Badge tone="blue">SI + rules</Badge>}
-                text="Compares your existing rotation with three alternatives using water, bare-soil months, wind erosion, nitrogen, organic matter, pests, forage, income and labor — weighted by your priorities.">
-                <div className="mt-5 grid grid-cols-4 gap-1 text-[10.5px]">
-                  {["Spring", "Summer", "Autumn", "Winter"].map((s) => <div key={s} className="text-subtle">{s}</div>)}
-                  {["Cherry + clover", "Cherry harvest", "Rye sown in alleys", "Rye cover"].map((c, i) => <div key={c} className={`rounded-md px-1.5 py-1 ${i >= 2 ? "bg-green-bg text-green-fg" : "bg-surface-2 text-ink-2"}`}>{c}</div>)}
-                  {["Potato", "Potato", "Oats + vetch", "Bare soil"].map((c, i) => <div key={c + i} className={`rounded-md px-1.5 py-1 ${i === 3 ? "bg-red-bg text-red-fg" : i === 2 ? "bg-green-bg text-green-fg" : "bg-blue-bg text-blue-fg"}`}>{c}</div>)}
-                </div>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {["Your rotation vs 3 alternatives", "Build your own rotation", "Plan by season", "Why · evidence · gaps · risks", "Weighted by your priorities"].map((x) => <Badge key={x} tone="green" dot>{x}</Badge>)}
-                </div>
-                <p className="mt-3 text-xs text-muted">{STRATEGIES.length} strategies across orchards, vegetables and forage.</p>
-              </Feature>
-              <Feature className="md:col-span-6 lg:col-span-6" title="Vegetation index · NDVI & EVI" delay={70} text="Plant vigor every 16 days at 250 m, and how it compares with last year.">
-                <svg viewBox="0 0 300 80" className="mt-5 w-full" aria-hidden>
-                  <path d="M0,60 C30,58 50,30 80,22 S130,40 160,58 S220,26 250,20 S290,40 300,46" fill="none" stroke="#3f8f5a" strokeWidth="2" />
-                  <path d="M0,68 C30,66 50,46 80,40 S130,52 160,66 S220,44 250,38 S290,52 300,56" fill="none" stroke="#b08a3c" strokeWidth="1.6" strokeDasharray="4 3" />
-                </svg>
-              </Feature>
-              <Feature className="md:col-span-3 lg:col-span-4" title="Weather & field sensors" delay={0} text="Temperature, humidity, pressure, soil salinity, evaporation and UV — from satellites, forecasts and your own Field Node.">
-                <div className="mt-4 flex flex-wrap gap-1.5">{["Temperature", "Humidity", "Pressure", "Salinity", "Evaporation", "UV"].map((x) => <Badge key={x}>{x}</Badge>)}</div>
-              </Feature>
-              <Feature className="md:col-span-3 lg:col-span-4" title="Soil study & health" delay={70} text="Texture, organic matter, pH, nitrogen, CEC, water holding, infiltration and a soil-health index for every point.">
-                <div className="mt-4 flex h-2.5 overflow-hidden rounded-full"><div className="w-[55%] bg-[#e3c995]" /><div className="w-[30%] bg-[#b5aca1]" /><div className="w-[15%] bg-[#9a5b3c]" /></div>
-                <div className="mt-1 flex justify-between text-[10px] text-subtle"><span>Sand</span><span>Silt</span><span>Clay</span></div>
-              </Feature>
-              <Feature className="md:col-span-6 lg:col-span-4" title="Economic viability" delay={140} text="Yield, price, margin, setup cost and payback for each option, adjusted by how well it fits your soil and climate.">
-                <div className="mt-4 font-serif text-4xl">USD 9.4k<span className="ml-2 font-sans text-xs text-muted">margin/ha · example</span></div>
-              </Feature>
-              <Feature className="md:col-span-6 lg:col-span-6" title="What after cherries and strawberries?" badge={<Badge tone="green">{newSpecies.length} new species</Badge>}
-                text="Haskap, calafate, rosehip, sea buckthorn, saffron, hops, asparagus… scored against frost, chill, heat, pH, salinity, water and wind.">
+            <SectionTitle eyebrow="What you get" title="Less guessing, more harvest" />
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              <Feature title="Know what to plant" badge={<Badge tone="green">{`${STRATEGIES.length} rotations · ${newSpecies.length} new crops`}</Badge>}
+                text="The best rotation for your soil and your priorities, and new crops for the months without income, season by season.">
                 <div className="mt-5 space-y-1.5">
                   <MonthRow label="Today" months={[12, 1, 2, 3]} />
-                  <MonthRow label="With new crops" months={[3, 4, 5, 10, 11, 12, 1, 2]} />
+                  <MonthRow label="With Growwy" months={[3, 4, 5, 10, 11, 12, 1, 2]} />
                 </div>
               </Feature>
-              <Feature className="md:col-span-6 lg:col-span-6" title="Contingencies: frost, wind, drought, El Niño & La Niña" delay={70}
-                text="Live status from the forecast plus a before / during / after plan, and what each Pacific phase meant on your field in the last 20 years.">
-                <div className="mt-4 flex flex-wrap gap-1.5"><Badge tone="red" dot>Late frost</Badge><Badge tone="amber" dot>Strong wind</Badge><Badge tone="green" dot>Snowpack</Badge><Badge tone="blue" dot>El Niño</Badge><Badge>Volcanic ash</Badge></div>
+              <Feature title="Save water and soil" delay={70}
+                text="How much to irrigate each month, how to keep the soil covered, and alerts for frost, wind, drought, El Niño and La Niña.">
+                <div className="mt-4 flex flex-wrap gap-1.5"><Badge tone="blue" dot>Irrigation by month</Badge><Badge tone="red" dot>Late frost</Badge><Badge tone="amber" dot>Strong wind</Badge><Badge tone="green" dot>Soil covered</Badge></div>
               </Feature>
-              <Feature className="md:col-span-3 lg:col-span-4" title="Farm register" text="Plots, crops season by season, water, soil test and economy. Stays on your device; export it anytime." />
-              <Feature className="md:col-span-3 lg:col-span-4" title="3D terrain & weather map" delay={70} text="See slopes and cold low spots in 3D, and layer temperature, wind, UV, humidity and rain over your valley." />
-              <Feature className="md:col-span-6 lg:col-span-4" title="Voice, offline & share" delay={140} text="Speak your notes, listen to the advice, use it without signal, and share a PDF or WhatsApp summary." />
+              <Feature title="Know the numbers" delay={140}
+                text="A plan in PDF with what to do, how to divide your field, materials with prices, margin and when it pays back.">
+                <SamplePlanLink />
+              </Feature>
             </div>
+            <p className="mt-6 text-sm text-muted">Curious about the satellites and models behind it? <Link href="/data" className="font-medium text-ink underline underline-offset-4">See the technical data →</Link></p>
           </div>
-        </section>
-
-        {/* ---------- Data ---------- */}
-        <section id="data" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 sm:px-6">
-          <SectionTitle eyebrow="Our data" title="The database behind every recommendation" />
-          <Reveal className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[640px] text-left text-sm">
-                <thead className="text-xs text-muted">
-                  <tr className="border-b border-line"><th className="px-6 py-3 font-medium">Layer</th><th className="font-medium">Detail</th><th className="font-medium">Coverage</th><th className="px-6 font-medium">Used for</th></tr>
-                </thead>
-                <tbody className="text-ink-2">
-                  {[
-                    ["Daily climate record", "Temperature, rain, wind, humidity, pressure, UV, soil wetness", "20 years, every day", "Frost calendar, evaporation, chill hours, trends"],
-                    ["Vegetation index", "NDVI and EVI, 250 m", "Every 16 days", "Crop vigor, bare soil, year-on-year change"],
-                    ["Soil map", "Texture, organic carbon, pH, N, CEC, density · 6 depths", "250 m, 0–200 cm", "Soil study, water holding, soil health"],
-                    ["Weather forecast", "Hourly temperature, humidity, pressure, UV, gusts", "16 days", "Frost alerts, irrigation, contingencies"],
-                    ["Snowpack", "Snowfall in the watershed that feeds the canals", "20 seasons", "Summer water outlook"],
-                    ["Pacific index", "El Niño / La Niña anomaly", "Since 1950", "Seasonal tendency, contingency plans"],
-                    ["Satellite map layers", "Imagery, vegetation, land heat, snow, relief, salinity risk", "4 sites", "Map filters and 3D view"],
-                    ["Weather map", "Temperature, UV, wind, humidity, rain, pressure, clouds", "Grid over each site, now", "Weather filters on the map"],
-                    ["Crop & species library", `${SPECIES.length} species, 15 traits each + economics`, "Patagonia and Pampa", "New crops and viability"],
-                    ["Your farm register", "Plots, history, soil test, water, economy", "Your farm", "Personal SI analysis"],
-                  ].map(([a, b, c, d]) => (
-                    <tr key={a} className="border-b border-line last:border-0"><td className="px-6 py-3 font-medium text-ink">{a}</td><td>{b}</td><td className="whitespace-nowrap pr-4">{c}</td><td className="px-6">{d}</td></tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Reveal>
         </section>
 
         {/* ---------- CTA ---------- */}
@@ -205,11 +153,12 @@ export default function Landing() {
             <p className="mx-auto mt-4 max-w-xl text-ink-2">{APP_NAME} highlights patterns and trade-offs. It supports your judgment and local agronomic advice; it never replaces them.</p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link href="/app" className={`${btnPrimary} px-5 py-3`}>Open the dashboard <kbd>D</kbd></Link>
-              <Link href="/register" className={`${btnGhost} px-5 py-3`}>Register your farm <kbd>R</kbd></Link>
+              <DownloadButton size="lg" ghost />
             </div>
           </Reveal>
         </section>
       </main>
+      <MobileBar />
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-6xl flex-wrap gap-3 px-4 py-6 text-xs text-subtle sm:px-6">
           <span className="font-serif text-base text-ink">{APP_NAME}</span>

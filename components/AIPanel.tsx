@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SYSTEMS } from "@/config/rotations";
 import { useDictado } from "@/hooks/useDictado";
 import { useLang } from "@/lib/i18n";
@@ -13,7 +13,7 @@ import { Growwy, type GrowwyData, type GrowwyTurn } from "./Growwy";
 import { Badge, btnGhost, btnPrimary, input, label, LevelPill } from "./ui";
 
 export function AIPanel({
-  farm, setFarm, results, advice, busy, onAnalyze, error, registered, session, link, savedCount, onOpenSessions, systems, growwy,
+  farm, setFarm, results, advice, busy, onAnalyze, error, registered, session, link, savedCount, onOpenSessions, systems, growwy, autoAsk = null,
 }: {
   systems?: readonly string[];
   farm: FarmProfile;
@@ -28,6 +28,8 @@ export function AIPanel({
   link: string | null;
   savedCount: number;
   onOpenSessions: () => void;
+  /** a question that arrived with the link (landing): asked as soon as the data is ready */
+  autoAsk?: string | null;
   /** field data Growwy uses for her charts and the action plan */
   growwy: Omit<GrowwyData, "results" | "farm">;
 }) {
@@ -50,6 +52,17 @@ export function AIPanel({
     setSeen(advice);
     if (advice) setTurns((t) => [...(asked?.reply ? t : []), { q: asked?.q ?? "", advice }]);
   }
+  // Question from the landing: ask it once the field data is ready, and open Growwy in full screen
+  const asked0 = useRef(false);
+  useEffect(() => {
+    if (autoAsk === null || asked0.current || !results.length || busy) return;
+    asked0.current = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- the question comes from outside (the link)
+    if (autoAsk) setText(autoAsk);
+    ask(autoAsk);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once, when the data is ready
+  }, [autoAsk, results.length]);
+
   function ask(q: string, reply = false) {
     setAsked({ q: q.trim(), reply });
     onAnalyze(q, reply ? turns.map((t) => ({ q: t.q, a: t.advice.answer || t.advice.summary })) : []);
@@ -77,7 +90,7 @@ export function AIPanel({
         {!busy && <kbd>A</kbd>}
       </button>
 
-      <Growwy busy={busy} advice={advice} turns={turns} pending={busy ? asked?.q ?? "" : null} isReply={!!asked?.reply} onReply={(q) => ask(q, true)} data={{ ...growwy, results, farm }} />
+      <Growwy openFull={autoAsk !== null} busy={busy} advice={advice} turns={turns} pending={busy ? asked?.q ?? "" : null} isReply={!!asked?.reply} onReply={(q) => ask(q, true)} data={{ ...growwy, results, farm }} />
 
       <div className="space-y-2 rounded-xl border border-line p-3">
         <div className="flex items-center text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Your farm<Link href="/register" className="ml-auto normal-case tracking-normal text-ink underline-offset-4 hover:underline">{registered ? "Edit register" : "Register farm"} <kbd>R</kbd></Link></div>
