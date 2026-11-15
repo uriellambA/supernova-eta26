@@ -1,6 +1,6 @@
 [package]
 name = "growvia"
-version = "0.1.1"
+version = "1.0.0"
 description = "Growvia Desktop: Growwy and your crop plan on your computer"
 authors = ["Supernovas ETA26"]
 edition = "2021"
