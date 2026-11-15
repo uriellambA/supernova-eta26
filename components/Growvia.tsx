@@ -24,6 +24,7 @@ import {
   type GroundReading, type IndicadoresNasa, type NdviResumen, type NieveResumen, type Priorities, type SoilResumen, type Strategy,
 } from "@/lib/types";
 import { AIPanel } from "./AIPanel";
+import { Tour } from "./Tour";
 import { EffectivenessCard } from "./EffectivenessCard";
 import { effectiveness } from "@/lib/effectiveness";
 import { syncFarm } from "@/lib/desktop";
@@ -84,6 +85,13 @@ export function Growvia() {
   const [sessionsOpen, setSessionsOpen] = useState(false);
   useEffect(() => { listSessions().then(setSessions); }, []);
   const online = useOnline();
+  // first visit: the guided tour opens once (remembered on this device); "?" opens it again
+  const [tourOpen, setTourOpen] = useState(false);
+  useEffect(() => {
+    leer<boolean>("tour").then((x) => { if (!x?.v) setTimeout(() => setTourOpen(true), 1200); });
+  }, []);
+  const closeTour = useCallback(() => { setTourOpen(false); guardar("tour", true); }, []);
+  const tourStep = useCallback((id: string) => { if (["rotation", "effect", "map", "growwy", "tiles"].includes(id)) go("home"); }, [go]);
   /** Change of site: go to its centre, keep a farming system that exists there. */
   const chooseSite = useCallback((id: string) => {
     const s2 = siteById(id);
@@ -223,6 +231,7 @@ export function Growvia() {
 
   return (
     <>
+      {tourOpen && <Tour onClose={closeTour} onStep={tourStep} />}
       <div className="flex min-h-screen flex-col print:hidden">
         <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur">
           <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-3 px-4 py-3 sm:px-6">
@@ -232,7 +241,7 @@ export function Growvia() {
               <span className="rounded-lg px-2 py-1 text-ink">Dashboard</span>
               <Link href="/register" className="rounded-lg px-2 py-1 hover:text-ink">Register</Link>
             </nav>
-            <div className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-line bg-surface px-3 py-1.5 text-sm sm:max-w-md">
+            <div data-tour="place" className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-line bg-surface px-3 py-1.5 text-sm sm:max-w-md">
               <Icon name="pin" className="h-4 w-4 shrink-0 text-muted" />
               <select className="min-w-0 flex-1 bg-transparent font-medium focus:outline-none" aria-label="Satellite map"
                 value={register && field.lat === register.lat && field.lon === register.lon ? "register" : site.id}
@@ -248,13 +257,14 @@ export function Growvia() {
               </select>
               <DemoBadge show={simulated} />
             </div>
-            <div className="flex gap-2">
+            <div data-tour="tools" className="flex gap-2">
+              <button className={btnGhost} onClick={() => setTourOpen(true)} title="Tutorial" aria-label="Tutorial">?</button>
               <button className={`${btnGhost} ${is3D ? "!border-ink" : ""}`} onClick={() => { go("home"); setIs3D(!is3D); }} aria-pressed={is3D}>3D View <kbd>D</kbd></button>
               <LangToggle />
               <ThemeToggle />
             </div>
           </div>
-          <nav className="mx-auto flex max-w-[1500px] gap-1 overflow-x-auto px-4 pb-2 sm:px-6" aria-label="Dashboard tabs">
+          <nav data-tour="tabs" className="mx-auto flex max-w-[1500px] gap-1 overflow-x-auto px-4 pb-2 sm:px-6" aria-label="Dashboard tabs">
             {TABS.map((t, i) => (
               <button key={t.id} onClick={() => go(t.id)} aria-pressed={tab === t.id}
                 className={`flex shrink-0 items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition ${tab === t.id ? "bg-ink text-canvas" : "text-ink-2 hover:bg-surface-2"}`}>
@@ -295,7 +305,7 @@ export function Growvia() {
                   {eff && <EffectivenessCard e={eff.e} name={eff.name} />}
                 </>
               ) : !failed && <div className="md:col-span-6 lg:col-span-12"><Spinner text="Comparing crop rotations for your field…" /></div>}
-              <Reveal className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface md:col-span-6 lg:col-span-8">
+              <Reveal tour="map" className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface md:col-span-6 lg:col-span-8">
                 <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-3">
                   <span className="text-sm font-medium">Satellite map</span>
                   <span className="hidden text-xs text-subtle sm:inline">Tap to place your field</span>
@@ -312,7 +322,7 @@ export function Growvia() {
                 </div>
               </Reveal>
 
-              <Reveal delay={80} className="flex flex-col rounded-2xl border border-line bg-surface p-6 md:col-span-6 lg:col-span-4">
+              <Reveal delay={80} tour="growwy" className="flex flex-col rounded-2xl border border-line bg-surface p-6 md:col-span-6 lg:col-span-4">
                 <div className="mb-4 flex items-center gap-2">
                   <span className="font-serif text-2xl leading-none">Decision support</span>
                   <Badge tone="blue">SI</Badge>
@@ -322,7 +332,7 @@ export function Growvia() {
                 {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => go("plan", "seasons")}>See the year plan →</button>}
               </Reveal>
 
-              <Tile className="md:col-span-3 lg:col-span-3" delay={60} eyebrow="Vegetation" onClick={() => go("soil", "soil")}>
+              <Tile tour="tiles" className="md:col-span-3 lg:col-span-3" delay={60} eyebrow="Vegetation" onClick={() => go("soil", "soil")}>
                 {ndvi.data?.ultimo ? (
                   <>
                     <div className="flex items-baseline gap-2">
@@ -429,9 +439,9 @@ export function Growvia() {
   );
 }
 
-function Tile({ children, className = "", delay = 0, eyebrow, onClick }: { children: React.ReactNode; className?: string; delay?: number; eyebrow: string; onClick?: () => void }) {
+function Tile({ children, className = "", delay = 0, eyebrow, onClick, tour }: { children: React.ReactNode; className?: string; delay?: number; eyebrow: string; onClick?: () => void; tour?: string }) {
   return (
-    <Reveal delay={delay} className={`group relative rounded-2xl border border-line bg-surface p-6 ${className}`}>
+    <Reveal delay={delay} tour={tour} className={`group relative rounded-2xl border border-line bg-surface p-6 ${className}`}>
       <div className="mb-3 flex items-center text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">
         {eyebrow}
         {onClick && <button onClick={onClick} className="ml-auto normal-case tracking-normal text-muted transition group-hover:text-ink">Details →</button>}

@@ -4,7 +4,7 @@ import type { Nivel } from "@/lib/types";
 import { btnGhost } from "./styles";
 
 // ---------- Scroll-entry animation ----------
-export function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+export function Reveal({ children, className = "", delay = 0, tour }: { children: ReactNode; className?: string; delay?: number; tour?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
@@ -27,7 +27,7 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} className={`reveal ${inView ? "in" : ""} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+    <div ref={ref} data-tour={tour} className={`reveal ${inView ? "in" : ""} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
       {children}
     </div>
   );

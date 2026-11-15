@@ -73,7 +73,7 @@ export function EffectivenessView({ e, name, print = false }: { e: Effectiveness
 
 export function EffectivenessCard({ e, name }: { e: Effectiveness; name: string }) {
   return (
-    <Reveal className="rounded-2xl border border-line bg-surface p-6 md:col-span-6 lg:col-span-12">
+    <Reveal tour="effect" className="rounded-2xl border border-line bg-surface p-6 md:col-span-6 lg:col-span-12">
       <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">How effective will it be?</div>
       <h2 className="mt-1 font-serif text-3xl leading-tight">{`${name}: what changes on your farm and why`}</h2>
       <div className="mt-5"><EffectivenessView e={e} name={name} /></div>

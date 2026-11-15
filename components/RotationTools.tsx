@@ -23,7 +23,7 @@ export function RotationHero({ results, onCompare, onBuild, onYear }: { results:
     !same && best.metrics.nitrogen > cur.metrics.nitrogen + 10 && `🫘 +${best.metrics.nitrogen - cur.metrics.nitrogen} kg N/ha`,
   ].filter(Boolean) as string[];
   return (
-    <Reveal className="rounded-2xl border border-ink bg-surface p-6 md:col-span-6 lg:col-span-12">
+    <Reveal tour="rotation" className="rounded-2xl border border-ink bg-surface p-6 md:col-span-6 lg:col-span-12">
       <div className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <div className="flex flex-wrap items-center gap-2">
