@@ -25,6 +25,8 @@ import {
 } from "@/lib/types";
 import { AIPanel } from "./AIPanel";
 import { Tour } from "./Tour";
+import { AccountButton } from "./AccountButton";
+import { FARM_CHANGED } from "@/lib/account";
 import { EffectivenessCard } from "./EffectivenessCard";
 import { effectiveness } from "@/lib/effectiveness";
 import { syncFarm } from "@/lib/desktop";
@@ -153,7 +155,18 @@ export function Growvia() {
     });
 
     leer<GroundReading[]>("readings").then((r) => r && setReadings(r.v));
+    // the account brought or switched the farm: show it
+    const reload = () => leer<FarmRegister>("register").then((r) => {
+      if (!r?.v.farmName) return;
+      setRegister(r.v);
+      setFarmState(profileFromRegister(r.v));
+      setPriState(r.v.priorities);
+      setSiteIdState(siteById(r.v.siteId).id);
+      setField({ lat: r.v.lat, lon: r.v.lon, name: r.v.farmName });
+    });
+    window.addEventListener(FARM_CHANGED, reload);
     leer<Strategy | null>("customRotation").then((r) => r?.v && setCustomState(r.v));
+    return () => window.removeEventListener(FARM_CHANGED, reload);
   }, [chooseSite]);
   const setFarm = useCallback((f: FarmProfile) => { setFarmState(f); guardar("farm", f); setAdvice(null); }, []);
   const setPri = useCallback((p: Priorities) => { setPriState(p); guardar("priorities", p); setAdvice(null); }, []);
@@ -261,6 +274,7 @@ export function Growvia() {
               <DemoBadge show={simulated} />
             </div>
             <div data-tour="tools" className="flex gap-2">
+              <AccountButton />
               <button className={btnGhost} onClick={() => setTourOpen(true)} title="Tutorial" aria-label="Tutorial">?</button>
               <button className={`${btnGhost} ${is3D ? "!border-ink" : ""}`} onClick={() => { go("map"); setIs3D(!is3D); }} aria-pressed={is3D}>3D View <kbd>D</kbd></button>
               <LangToggle />

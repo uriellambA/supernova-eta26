@@ -4,6 +4,7 @@ import { Brand } from "@/components/Brand";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LangToggle } from "@/components/Translator";
+import { AccountButton } from "@/components/AccountButton";
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 
 const noop = () => () => {};
@@ -173,7 +174,8 @@ export function RegisterForm() {
             <Link href="/app" className="rounded-lg px-2 py-1 hover:text-ink">Dashboard</Link>
             <span className="rounded-lg px-2 py-1 text-ink">Register</span>
           </nav>
-          <span className="ml-auto text-xs text-subtle">{saved ? `Saved on this device · ${saved}` : "Not saved yet"}</span>
+          <span className="ml-auto hidden text-xs text-subtle sm:inline">{saved ? `Saved on this device · ${saved}` : "Not saved yet"}</span>
+          <span className="ml-auto sm:ml-0"><AccountButton /></span>
           <LangToggle />
           <ThemeToggle />
         </div>

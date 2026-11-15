@@ -223,6 +223,7 @@ export type FarmRegister = {
   priorities: Priorities;
   notes: string;
   updated: string;
+  cloudId?: string; // id of this farm in the person's account (when signed in)
 };
 
 // ---------- Rotation results ----------
