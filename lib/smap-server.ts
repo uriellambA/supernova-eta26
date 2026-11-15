@@ -11,7 +11,7 @@ let lastErrors: string[] = [];
 let failedAt = 0;
 let pending: Promise<Resolved> | null = null;
 
-async function getPng(url: string) {
+export async function getPng(url: string) {
   const r = await fetch(url, { signal: AbortSignal.timeout(12_000) });
   if (!r.ok) throw new Error(`${r.status}`);
   const type = r.headers.get("content-type") ?? "";
