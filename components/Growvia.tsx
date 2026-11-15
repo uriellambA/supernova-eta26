@@ -322,12 +322,12 @@ export function Growvia() {
                 {ndvi.data?.ultimo ? (
                   <>
                     <div className="flex items-baseline gap-2">
-                      <span className="font-serif text-4xl">{ndvi.data.ultimo.ndvi}</span><span className="text-xs text-muted">NDVI</span>
+                      <span className="font-serif text-4xl">{ndvi.data.aproximado ? "≈" : ""}{ndvi.data.ultimo.ndvi}</span><span className="text-xs text-muted">NDVI</span>
                       {ndvi.data.ultimo.evi !== undefined && <span className="ml-auto text-xs text-muted">EVI {ndvi.data.ultimo.evi}</span>}
                     </div>
                     <div className="-mx-1 mt-1"><LineChart label="NDVI" points={ndviPoints(ndvi.data.serie.slice(-23))} /></div>
                   </>
-                ) : <TileEmpty st={ndvi.estado} />}
+                ) : <TileEmpty st={ndvi.estado} why={ndvi.error} />}
               </Tile>
               <Tile className="md:col-span-3 lg:col-span-3" delay={120} eyebrow="Weather today" onClick={() => go("weather", "forecast")}>
                 {today ? (
@@ -339,7 +339,7 @@ export function Growvia() {
                       <div><div className="text-muted">Gusts</div><div className="font-medium">{Math.round(today.rafagas)}</div></div>
                     </div>
                   </>
-                ) : <TileEmpty st={forecast.estado} />}
+                ) : <TileEmpty st={forecast.estado} why={forecast.error} />}
               </Tile>
               <Tile className="md:col-span-3 lg:col-span-3" delay={180} eyebrow="Soil health" onClick={() => go("soil", "soil")}>
                 {health && sal ? (
@@ -437,6 +437,11 @@ function Tile({ children, className = "", delay = 0, eyebrow, onClick }: { child
   );
 }
 
-function TileEmpty({ st }: { st: string }) {
-  return <div className="text-sm text-muted">{st === "cargando" ? "Loading…" : "Not available right now"}</div>;
+function TileEmpty({ st, why }: { st: string; why?: string }) {
+  return (
+    <div className="text-sm text-muted">
+      {st === "cargando" ? "Loading…" : "Not available right now"}
+      {st !== "cargando" && why && <div className="mt-1 text-[11px] text-subtle" title={why}>{why.length > 120 ? why.slice(0, 117) + "…" : why}</div>}
+    </div>
+  );
 }

@@ -1,11 +1,12 @@
 "use client";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl, { type Map as MLMap, type Marker } from "maplibre-gl";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { SATELLITE } from "@/config/basemap";
 import { mapLimits } from "@/config/sites";
 import type { SiteConfig } from "@/lib/types";
 import { WEATHER_VARS, type WeatherGrid, type WeatherVarId } from "@/lib/weathergrid";
+import { probeElevation, probeGibs, probeSalinity, probeWeather, type GibsProbe } from "@/lib/map-probe";
 
 export type OverlayId = "latest" | "vegetation" | "evi" | "temperature" | "snow" | "relief" | "salinity";
 
@@ -13,6 +14,14 @@ const day = (back: number) => new Date(Date.now() - back * 86_400_000).toISOStri
 const eo = (layer: string, date: string, level: number, ext: "png" | "jpg") =>
   `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/${layer}/default/${date}/GoogleMapsCompatible_Level${level}/{z}/{y}/{x}.${ext}`;
 const TERRAIN = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
+
+// What the cursor reads on each NASA layer (same layer, date and zoom level as the tiles on the map)
+const PROBES: Partial<Record<OverlayId, GibsProbe & { label: string; unit: string; digits: number }>> = {
+  vegetation: { layer: "MODIS_Terra_NDVI_8Day", date: day(10), level: 9, kind: "ndvi", label: "NDVI", unit: "", digits: 2 },
+  evi: { layer: "MODIS_Terra_EVI_8Day", date: day(10), level: 9, kind: "evi", label: "EVI", unit: "", digits: 2 },
+  temperature: { layer: "MODIS_Terra_Land_Surface_Temp_Day", date: day(3), level: 7, kind: "lst", label: "Land temperature", unit: "°C", digits: 1 },
+  snow: { layer: "MODIS_Terra_NDSI_Snow_Cover", date: day(2), level: 8, kind: "snow", label: "Snow cover", unit: "%", digits: 0 },
+};
 
 const OVERLAYS: Record<Exclude<OverlayId, "relief" | "salinity">, { url: string; maxzoom: number; opacity: number }> = {
   latest: { url: eo("MODIS_Terra_CorrectedReflectance_TrueColor", day(2), 9, "jpg"), maxzoom: 9, opacity: 0.85 },
@@ -104,6 +113,34 @@ export default function MapView({
     pick.current = onPick;
   });
 
+  // ---------- exact value under the cursor ----------
+  type Line = { label: string; value: string; approx?: boolean };
+  const [hover, setHover] = useState<{ x: number; y: number; w: number; lat: number; lon: number; lines: Line[] } | null>(null);
+  const layers = useRef({ overlays, weather });
+  useEffect(() => {
+    layers.current = { overlays, weather };
+  });
+  const probe = useRef<{ timer: ReturnType<typeof setTimeout> | null; seq: number }>({ timer: null, seq: 0 });
+  const readAt = useCallback(async (x: number, y: number, w0: number, lat: number, lon: number, seq: number) => {
+    const { overlays: ov, weather: w } = layers.current;
+    const fmt = (v: number, d: number) => v.toLocaleString(undefined, { minimumFractionDigits: d, maximumFractionDigits: d });
+    const jobs: Promise<Line | null>[] = [];
+    if (w) {
+      const v = WEATHER_VARS.find((q) => q.id === w.varId)!;
+      const r = probeWeather(w.grid, w.varId, lat, lon);
+      if (r) jobs.push(Promise.resolve({ label: v.name, value: `${fmt(r.value, w.varId === "temperature" || w.varId === "rain" || w.varId === "uv" ? 1 : 0)}${r.unit ? " " + r.unit : ""}${r.from ? ` · ${r.from}` : ""}` }));
+    }
+    for (const id of ov) {
+      const p = PROBES[id];
+      if (p) jobs.push(probeGibs(p, lat, lon).then((r) => (r ? { label: p.label, value: `${fmt(r.value, p.digits)}${p.unit ? " " + p.unit : ""}`, approx: !r.exact } : { label: p.label, value: "no data here" })));
+      if (id === "salinity") jobs.push(probeSalinity(lat, lon).then((r) => (r === null ? { label: "Salinity risk", value: "no data here" } : { label: "Salinity risk", value: `${fmt(r, 2)} · ${r >= 0.65 ? "high" : r >= 0.35 ? "moderate" : "low"}`, approx: true })));
+      if (id === "relief") jobs.push(probeElevation(lat, lon).then((r) => (r === null ? null : { label: "Elevation", value: `${r.toLocaleString()} m` })));
+    }
+    const lines = (await Promise.all(jobs)).filter((l): l is Line => !!l);
+    if (seq !== probe.current.seq) return; // the cursor moved on
+    setHover({ x, y, w: w0, lat, lon, lines });
+  }, []);
+
   // Create the map once
   useEffect(() => {
     if (!box.current) return;
@@ -142,6 +179,17 @@ export default function MapView({
       m.fire("growvia:ready");
     });
     m.on("click", (e) => pick.current(+e.lngLat.lat.toFixed(4), +e.lngLat.lng.toFixed(4)));
+    m.on("mousemove", (e) => {
+      const { overlays: ov, weather: w } = layers.current;
+      if (!w && ![...ov].some((id) => id !== "latest")) return setHover(null);
+      const seq = ++probe.current.seq;
+      if (probe.current.timer) clearTimeout(probe.current.timer);
+      probe.current.timer = setTimeout(() => readAt(e.point.x, e.point.y, m.getContainer().clientWidth, e.lngLat.lat, e.lngLat.lng, seq), 90);
+    });
+    m.getCanvas().addEventListener("mouseleave", () => {
+      probe.current.seq++;
+      setHover(null);
+    });
     marker.current = new maplibregl.Marker({ color: "#111111" }).setLngLat([field.lon, field.lat]).addTo(m);
     map.current = m;
     return () => {
@@ -226,5 +274,21 @@ export default function MapView({
     else m.once("growvia:ready", apply);
   }, [is3D]);
 
-  return <div ref={box} className="h-full min-h-[320px] w-full" />;
+  return (
+    <div className="relative h-full min-h-[320px] w-full">
+      <div ref={box} className="h-full min-h-[320px] w-full" />
+      {hover && hover.lines.length > 0 && (
+        <div className="pointer-events-none absolute z-10 min-w-36 rounded-xl border border-line bg-surface/95 px-3 py-2 text-xs shadow-lg backdrop-blur"
+          style={{ left: Math.max(4, Math.min(hover.x + 14, hover.w - 190)), top: Math.max(4, hover.y - 10) }}>
+          {hover.lines.map((l) => (
+            <div key={l.label} className="flex items-baseline justify-between gap-3">
+              <span className="text-muted">{l.label}</span>
+              <span className="font-semibold tabular-nums text-ink">{l.approx ? "≈ " : ""}{l.value}</span>
+            </div>
+          ))}
+          <div className="mt-1 text-[10px] tabular-nums text-subtle">{`${hover.lat.toFixed(4)}, ${hover.lon.toFixed(4)}`}</div>
+        </div>
+      )}
+    </div>
+  );
 }

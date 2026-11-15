@@ -646,6 +646,12 @@ export const ES: Record<string, string> = {
   "Bare months": "Meses desnudo", "N kg/ha": "N kg/ha", "Main benefit / risk": "Principal beneficio / riesgo", "New crops ranked for this field": "Cultivos nuevos ordenados para este campo", "Main limit": "Principal limitante", "Margin USD/ha": "Margen USD/ha",
   // ---------- Rotation explorer ----------
   "in {n}": "en {n}",
+  "Salinity risk": "Riesgo de salinidad",
+  "Elevation": "Altura",
+  "no data here": "sin datos acá",
+  "{n} · high": "{n} · alto",
+  "{n} · moderate": "{n} · moderado",
+  "{n} · low": "{n} · bajo",
   "Mapzen / Tilezen (AWS Open Data), from SRTM and others": "Mapzen / Tilezen (AWS Open Data), a partir de SRTM y otras fuentes",
   "How effective will it be?": "¿Qué tan efectiva va a ser?",
   "{x}: what changes on your farm and why": "{x}: qué cambia en tu chacra y por qué",
