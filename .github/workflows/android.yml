@@ -42,12 +42,14 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: android-actions/setup-android@v3
-
+      # GitHub's Ubuntu runners already include the Android SDK ($ANDROID_HOME): add the NDK and build tools
       - name: Android NDK and build tools
         run: |
-          sdkmanager --install "ndk;${NDK_VERSION}" "platforms;android-34" "build-tools;${BUILD_TOOLS}" > /dev/null
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKM" --licenses > /dev/null || true
+          "$SDKM" --install "ndk;${NDK_VERSION}" "platforms;android-34" "build-tools;${BUILD_TOOLS}" > /dev/null
           echo "NDK_HOME=$ANDROID_HOME/ndk/${NDK_VERSION}" >> "$GITHUB_ENV"
+          ls "$ANDROID_HOME/ndk"
 
       - uses: actions/setup-node@v4
         with:
