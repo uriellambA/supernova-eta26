@@ -19,7 +19,7 @@
     "category": "Productivity",
     "shortDescription": "Growwy and your crop rotation plan, on your computer",
     "longDescription": "Growvia helps farmers in Santa Cruz and the Pampa decide their crop rotation with NASA climate, soil and satellite data. Growwy, the Pachamama, explains it and builds your action plan.",
-    "copyright": "Supernovas ETA26 · NASA Space Apps Challenge 2026",
+    "copyright": "Supernovas ETA26 \u00b7 NASA Space Apps Challenge 2026",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -28,7 +28,25 @@
       "icons/icon.ico"
     ],
     "windows": {
-      "nsis": { "installMode": "currentUser", "languages": ["Spanish", "English"], "displayLanguageSelector": false }
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": [
+          "Spanish",
+          "English"
+        ],
+        "displayLanguageSelector": false
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEZGMTlBNjkwRDI1MTJBMDIKUldRQ0tsSFNrS1laLzNmTE0yYVN1bGZBWURDOUdTeFpwWThkSnQwaktud3d2NzlyY2pmTTcyVmYK",
+      "endpoints": [
+        "https://github.com/uriellambA/supernova-eta26/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
     }
   }
 }

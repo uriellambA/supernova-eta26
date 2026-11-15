@@ -67,7 +67,7 @@
     const invoke = window.__TAURI__ && window.__TAURI__.core && window.__TAURI__.core.invoke;
     const info = window.__GROWVIA_DESKTOP__;
     if (info) document.getElementById("ver").textContent = "Growvia Desktop " + info.version;
-    let base = "https://growvia.vercel.app";
+    let base = "https://growvia-coral.vercel.app";
 
     function show(id) {
       document.getElementById("loading").classList.toggle("hidden", id !== "loading");

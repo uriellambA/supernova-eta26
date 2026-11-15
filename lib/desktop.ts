@@ -27,3 +27,9 @@ export async function printPage() {
 export async function openExternal(url: string) {
   if (!(await call("open_external", { url }))) window.open(url, "_blank", "noopener");
 }
+
+/** Tells the desktop app where the farm is, so it can warn about frost and wind in the background. */
+export function syncFarm(lat: number, lon: number, name: string, lang: string) {
+  if (!desktopInfo()) return;
+  void call("set_farm", { lat, lon, name, lang });
+}

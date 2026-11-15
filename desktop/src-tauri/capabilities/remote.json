@@ -1,10 +1,21 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "growvia-web",
-  "description": "The official Growvia web app may call the app commands (print / save PDF, open in browser). Add your custom domain here if you use one.",
-  "windows": ["main"],
+  "description": "The official Growvia web app may call only these app commands: print / save PDF, open a link in the browser and tell the app where the farm is (frost and wind alerts). Add your custom domain here if you use one.",
+  "windows": [
+    "main"
+  ],
   "remote": {
-    "urls": ["https://*.vercel.app/*", "http://localhost:3000/*"]
+    "urls": [
+      "https://growvia-coral.vercel.app/*",
+      "https://*.vercel.app/*",
+      "http://localhost:3000/*"
+    ]
   },
-  "permissions": ["core:default"]
+  "permissions": [
+    "core:default",
+    "allow-print-page",
+    "allow-open-external",
+    "allow-set-farm"
+  ]
 }

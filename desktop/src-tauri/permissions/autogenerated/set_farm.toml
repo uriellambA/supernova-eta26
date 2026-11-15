@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-set-farm"
+description = "Enables the set_farm command without any pre-configured scope."
+commands.allow = ["set_farm"]
+
+[[permission]]
+identifier = "deny-set-farm"
+description = "Denies the set_farm command without any pre-configured scope."
+commands.deny = ["set_farm"]

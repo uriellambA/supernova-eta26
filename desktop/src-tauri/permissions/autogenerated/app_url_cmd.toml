@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-app-url-cmd"
+description = "Enables the app_url_cmd command without any pre-configured scope."
+commands.allow = ["app_url_cmd"]
+
+[[permission]]
+identifier = "deny-app-url-cmd"
+description = "Denies the app_url_cmd command without any pre-configured scope."
+commands.deny = ["app_url_cmd"]

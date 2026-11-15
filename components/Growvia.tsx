@@ -23,6 +23,7 @@ import {
   type GroundReading, type IndicadoresNasa, type NdviResumen, type NieveResumen, type Priorities, type SoilResumen, type Strategy,
 } from "@/lib/types";
 import { AIPanel } from "./AIPanel";
+import { syncFarm } from "@/lib/desktop";
 import { desbloquearAudio } from "@/hooks/useLeer";
 import { LineChart, ndviPoints } from "./Charts";
 import { FiltersPanel, WeatherLegend, WeatherPicker } from "./FiltersPanel";
@@ -35,7 +36,7 @@ import { SmapStatus } from "./SmapStatus";
 import { RotationBuilder, RotationHero, RotationMatrix, RotationMethod } from "./RotationTools";
 import { RotationExplorer } from "./RotationExplorer";
 import { LangToggle } from "./Translator";
-import { getLang } from "@/lib/i18n";
+import { getLang, useLang } from "@/lib/i18n";
 import { Forecast, Frost, Options, Overview, Soil, Water } from "./Sections";
 import { Badge, DemoBadge, LevelPill, Meter, Note, Reveal, Spinner, ThemeToggle, btnGhost, useHotkeys } from "./ui";
 
@@ -111,6 +112,12 @@ export function Growvia() {
     if (u.has("ask")) setAutoAsk(u.get("ask") ?? "");
     window.history.replaceState(null, "", "/app"); // a reload does not ask again
   }, [chooseSite]);
+
+  // Growvia Desktop: keep the app's background frost / wind alerts on this field
+  const uiLang = useLang();
+  useEffect(() => {
+    syncFarm(field.lat, field.lon, field.name, uiLang);
+  }, [field.lat, field.lon, field.name, uiLang]);
 
   // Restore saved farm data (stored on this device)
   useEffect(() => {
