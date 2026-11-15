@@ -124,12 +124,15 @@ export function RegisterForm() {
     return n && n.startsWith("/") && !n.startsWith("//") ? n : null;
   }, () => null);
   const [needName, setNeedName] = useState(false);
-  const finish = () => {
+  const finish = async () => {
     if (!r.farmName.trim()) {
       setNeedName(true);
       document.getElementById("farmName")?.focus();
       return;
     }
+    // save now (the auto-save waits half a second) so the dashboard finds the farm right away
+    const v = { ...r, updated: new Date().toISOString() };
+    await Promise.all([guardar("register", v), guardar("farm", profileFromRegister(v)), guardar("priorities", v.priorities)]);
     router.push(next ?? "/app");
   };
   const [drawing, setDrawing] = useState(false);
