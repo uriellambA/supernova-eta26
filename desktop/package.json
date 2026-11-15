@@ -1,0 +1,15 @@
+{
+  "name": "growvia-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Growvia Desktop: official app (Rust + Tauri 2)",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "icons": "tauri icon ../public/brand/growvia-mark.png"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

@@ -139,6 +139,9 @@ npm run soil-study -- --offline
 ```
 `--offline` usa los valores de referencia y un clima simulado: sirve solo para probar.
 
+## 🖥️ App de escritorio (Rust + Tauri 2)
+En `desktop/` está **Growvia Desktop**, la app oficial. El núcleo es Rust: ventana con menú propio, pantalla de carga y sin conexión, recuerda tamaño y posición, una sola instancia, links externos al navegador del sistema e **imprimir / guardar PDF** con el diálogo nativo (también desde el plan de Growwy). Muestra la web oficial, así el SI, la voz y los datos siguen en el servidor. El instalador para Linux pesa ~2,5 MB. Cómo compilar: [`desktop/README.md`](desktop/README.md).
+
 ## ☁️ Deploy en Vercel
 1. En Vercel: **Add New → Project → Import** el repo `supernova-eta26`. El framework se detecta solo: **Next.js**.
 2. **No cambies los comandos.** `vercel.json` ya fija `npm install` y `npm run build`. Nunca uses `npm run dev` como comando de build: es un servidor que no termina y el deploy queda colgado.

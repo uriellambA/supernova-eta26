@@ -1,4 +1,5 @@
 "use client";
+import { printPage } from "@/lib/desktop";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PlanDoc } from "./PlanDoc";
@@ -16,7 +17,7 @@ export function PlanView() {
     // printed documents always use the light theme
     document.documentElement.dataset.theme = "light";
     if (new URLSearchParams(window.location.search).get("print") === "1") {
-      const t = setTimeout(() => window.print(), 1200); // let the translator and images finish
+      const t = setTimeout(() => printPage(), 1200); // let the translator and images finish
       return () => clearTimeout(t);
     }
   }, []);
@@ -41,7 +42,7 @@ export function PlanView() {
     <div className="min-h-screen bg-canvas px-4 py-6 print:bg-white print:p-0">
       <div className="mx-auto mb-4 flex max-w-4xl flex-wrap items-center gap-2 print:hidden">
         <Link href="/app" className={btnGhost}>← Dashboard</Link>
-        <button className={btnPrimary} onClick={() => window.print()}>Save as PDF / Print</button>
+        <button className={btnPrimary} onClick={() => printPage()}>Save as PDF / Print</button>
         <button className={btnGhost} onClick={() => openWhatsApp(text)}>Send by WhatsApp</button>
         <LangToggle className="ml-auto" />
       </div>

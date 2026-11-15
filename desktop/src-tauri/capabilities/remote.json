@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "growvia-web",
+  "description": "The official Growvia web app may call the app commands (print / save PDF, open in browser). Add your custom domain here if you use one.",
+  "windows": ["main"],
+  "remote": {
+    "urls": ["https://*.vercel.app/*", "http://localhost:3000/*"]
+  },
+  "permissions": ["core:default"]
+}

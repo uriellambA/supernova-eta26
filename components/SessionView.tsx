@@ -1,4 +1,5 @@
 "use client";
+import { printPage } from "@/lib/desktop";
 import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 import { APP_NAME } from "@/config/app";
@@ -29,7 +30,7 @@ export function SessionActions({ s, link, compact = false }: { s: SavedSession; 
       <button className={b} onClick={() => openWhatsApp(whatsappText(s, "team", url))}>WhatsApp: tasks for the team</button>
       <button className={b} disabled={!link} onClick={async () => { await navigator.clipboard.writeText(url).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 1800); }}>{copied ? "✓ Link copied" : "🔗 Copy link"}</button>
       {!compact && typeof navigator !== "undefined" && "share" in navigator && <button className={b} onClick={share}>📤 Share…</button>}
-      <button className={b} onClick={() => (link ? window.open(`${link.replace("/s#", "/s?print=1#")}`, "_blank", "noopener") : window.print())}>📄 PDF</button>
+      <button className={b} onClick={() => (link ? window.open(`${link.replace("/s#", "/s?print=1#")}`, "_blank", "noopener") : printPage())}>📄 PDF</button>
       {tts.soportado && (tts.hablando
         ? <><button className={b} onClick={tts.pausar}>{tts.pausado ? "▶ Resume" : "⏸ Pause"}</button><button className={b} onClick={tts.detener}>⏹ Stop</button></>
         : <button className={b} onClick={() => tts.leer([s.advice.answer, s.advice.voice ?? s.advice.summary].filter(Boolean).join(" "))}>🔊 Listen</button>)}

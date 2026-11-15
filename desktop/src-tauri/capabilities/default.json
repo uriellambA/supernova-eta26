@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Local loading / offline screen of the main window",
+  "windows": ["main"],
+  "permissions": ["core:default", "opener:default", "window-state:default"]
+}

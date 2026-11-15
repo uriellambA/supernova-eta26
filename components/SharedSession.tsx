@@ -1,4 +1,5 @@
 "use client";
+import { printPage } from "@/lib/desktop";
 import Link from "next/link";
 import { Brand } from "@/components/Brand";
 import { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ export function SharedSession() {
       .then((x) => {
         setS(x);
         setLink(`${window.location.origin}/s#${code}`);
-        if (new URLSearchParams(window.location.search).get("print") === "1") setTimeout(() => window.print(), 700);
+        if (new URLSearchParams(window.location.search).get("print") === "1") setTimeout(() => printPage(), 700);
       })
       .catch(() => setErr(true));
   }, []);

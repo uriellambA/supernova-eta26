@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { detectPlatform, type Platform } from "@/config/downloads";
+import { desktopInfo } from "@/lib/desktop";
 import { btnGhost, btnPrimary } from "./styles";
 
 const noop = () => () => {};
@@ -16,6 +17,8 @@ const LABEL: Record<Platform, string> = {
 /** The official-app button: "Download Growvia Desktop" on computers, the APK on Android, the web app on iPhone. */
 export function DownloadButton({ size = "md", ghost = false, className = "" }: { size?: "md" | "lg"; ghost?: boolean; className?: string }) {
   const p = useSyncExternalStore(noop, () => detectPlatform(navigator.userAgent, navigator.platform), () => "windows" as Platform);
+  const inApp = useSyncExternalStore(noop, () => !!desktopInfo(), () => false);
+  if (inApp) return null; // already in Growvia Desktop
   return (
     <Link href={`/download#${p}`} className={`${ghost ? btnGhost : btnPrimary} ${size === "lg" ? "px-5 py-3" : ""} ${className}`}>
       <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
