@@ -6,175 +6,176 @@
       "lon": -71.615
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63.1,
+        "silt": 18.6,
+        "clay": 18.3,
+        "soc": 46.6,
+        "ph": 6.9,
+        "cec": 26,
+        "bdod": 1.12,
+        "cfvo": 8.6,
+        "texture": "Sandy loam",
+        "fc": 29.8,
+        "wp": 17,
+        "awcMm": 6,
+        "ksat": 43.1,
+        "range": "clay 2–58%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.4,
+        "silt": 19,
+        "clay": 19.7,
+        "soc": 39.5,
+        "ph": 6.9,
+        "cec": 23.5,
+        "bdod": 1.2,
+        "cfvo": 9.4,
+        "texture": "Sandy loam",
+        "fc": 29.1,
+        "wp": 16.8,
+        "awcMm": 11,
+        "ksat": 33.3,
+        "range": "clay 2–73%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.2,
+        "silt": 18.5,
+        "clay": 19.3,
+        "soc": 50.4,
+        "ph": 7.1,
+        "cec": 22.2,
+        "bdod": 1.26,
+        "cfvo": 9,
+        "texture": "Sandy loam",
+        "fc": 30.4,
+        "wp": 17.5,
+        "awcMm": 18,
+        "ksat": 39.2,
+        "range": "clay 1–73%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.1,
+        "silt": 18.4,
+        "clay": 20.5,
+        "soc": 46.6,
+        "ph": 7.2,
+        "cec": 20.4,
+        "bdod": 1.3,
+        "cfvo": 12.2,
+        "texture": "Sandy clay loam",
+        "fc": 31,
+        "wp": 18,
+        "awcMm": 34,
+        "ksat": 34.9,
+        "range": "clay 1–73%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.2,
+        "silt": 18,
+        "clay": 20.8,
+        "soc": 44.4,
+        "ph": 7.3,
+        "cec": 19.4,
+        "bdod": 1.31,
+        "cfvo": 14.7,
+        "texture": "Sandy clay loam",
+        "fc": 30.6,
+        "wp": 17.9,
+        "awcMm": 43,
+        "ksat": 32.4,
+        "range": "clay 1–73%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 59.8,
+        "silt": 18.7,
+        "clay": 21.5,
+        "soc": 44.3,
+        "ph": 7.2,
+        "cec": 18.9,
+        "bdod": 1.33,
+        "cfvo": 14.7,
+        "texture": "Sandy clay loam",
+        "fc": 31.1,
+        "wp": 18.2,
+        "awcMm": 110,
+        "ksat": 30.5,
+        "range": "clay 1–73%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 69,
     "soil": {
-      "sand": 55,
-      "silt": 30,
-      "clay": 15,
-      "soc": 8,
-      "ph": 7.6,
-      "nitrogen": 0.8,
-      "cec": 14,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 62,
+      "silt": 19,
+      "clay": 19,
+      "soc": 46.1,
+      "ph": 7,
+      "nitrogen": 2.33,
+      "cec": 23.3,
+      "bulkDensity": 1.22,
+      "source": "soil-map",
       "depth": "0–30 cm",
       "texture": "Sandy loam",
-      "organicMatter": 1.4,
-      "waterHolding": 66,
-      "infiltration": "moderate",
-      "ksat": 23.7,
-      "fieldCapacity": 21.1,
-      "wiltingPoint": 10.1
+      "organicMatter": 7.9,
+      "waterHolding": 77,
+      "infiltration": "fast",
+      "ksat": 40.1,
+      "fieldCapacity": 30.2,
+      "wiltingPoint": 17.3
     },
     "sal": {
-      "ece": 0.8,
+      "ece": 0.5,
       "cls": "low",
       "measured": false,
       "reasons": [
+        "Fast drainage helps irrigation water flush salts below the roots.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 61,
-      "level": "watch",
+      "score": 82,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.35,
-          "note": "1.4% (target > 3%)"
+          "value": 1,
+          "note": "7.9% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.6,
-          "note": "7.6 (best 6.0–7.5)"
+          "value": 0.9,
+          "note": "7 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.56,
-          "note": "CEC 14 cmol/kg"
+          "value": 0.93,
+          "note": "CEC 23.3 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.55,
-          "note": "66 mm in 60 cm"
+          "value": 0.64,
+          "note": "77 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 0.96,
+          "note": "1.22 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
           "value": 1,
-          "note": "~0.8 dS/m (estimated)"
+          "note": "~0.5 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -183,8 +184,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.62,
+          "note": "average NDVI 0.41"
         }
       ]
     },
@@ -594,22 +595,22 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.57,
+        "evi": 0.29
       },
-      "points": 46
+      "points": 26
     },
     "results": [
       {
         "id": "o-rye",
         "name": "Cherry + winter rye cover",
         "current": false,
-        "score": 70,
+        "score": 69,
         "metrics": {
           "waterMm": 446,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.018193749999999998,
           "nitrogen": 0,
           "organicMatter": 0.65,
           "pestBreak": 0.43333333333333335,
@@ -631,7 +632,7 @@
         "metrics": {
           "waterMm": 577,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.018193749999999998,
           "nitrogen": 48,
           "organicMatter": 0.575,
           "pestBreak": 0.43333333333333335,
@@ -646,6 +647,28 @@
         }
       },
       {
+        "id": "o-current",
+        "name": "Cherry orchard, bare alleys",
+        "current": true,
+        "score": 55,
+        "metrics": {
+          "waterMm": 427,
+          "bareMonths": 7.2,
+          "erosion": 0.26199,
+          "nitrogen": 0,
+          "organicMatter": 0.05,
+          "pestBreak": 0.1,
+          "forage": 0,
+          "income": 0.95,
+          "labor": 0.9,
+          "market": 0.49,
+          "outlets": [
+            "Export / national"
+          ],
+          "deepRoots": 1
+        }
+      },
+      {
         "id": "o-diverse",
         "name": "Cherry + berry hedgerows + clover",
         "current": false,
@@ -653,7 +676,7 @@
         "metrics": {
           "waterMm": 547,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.018193749999999998,
           "nitrogen": 48,
           "organicMatter": 0.5499999999999999,
           "pestBreak": 0.7666666666666666,
@@ -666,28 +689,6 @@
             "Local / frozen / jam"
           ],
           "deepRoots": 0.3333333333333333
-        }
-      },
-      {
-        "id": "o-current",
-        "name": "Cherry orchard, bare alleys",
-        "current": true,
-        "score": 53,
-        "metrics": {
-          "waterMm": 427,
-          "bareMonths": 7.2,
-          "erosion": 0.6273000000000001,
-          "nitrogen": 0,
-          "organicMatter": 0.05,
-          "pestBreak": 0.1,
-          "forage": 0,
-          "income": 0.95,
-          "labor": 0.9,
-          "market": 0.49,
-          "outlets": [
-            "Export / national"
-          ],
-          "deepRoots": 1
         }
       }
     ],
@@ -874,7 +875,7 @@
         "margin": 28000,
         "payback": 5.6,
         "limits": [
-          "Soil pH: Soil pH 7.6; likes 4.5–5.5",
+          "Soil pH: Soil pH 7; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~660 mm"
         ]
       },
@@ -910,175 +911,176 @@
       "lon": -71.615
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 60,
+        "silt": 21.1,
+        "clay": 18.9,
+        "soc": 77.2,
+        "ph": 7.1,
+        "cec": 24.9,
+        "bdod": 0.87,
+        "cfvo": 11.3,
+        "texture": "Sandy loam",
+        "fc": 30.6,
+        "wp": 17.2,
+        "awcMm": 6,
+        "ksat": 41.7,
+        "range": "clay 1–64%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 59.8,
+        "silt": 22.1,
+        "clay": 18,
+        "soc": 63.2,
+        "ph": 7.1,
+        "cec": 21.6,
+        "bdod": 0.98,
+        "cfvo": 13.1,
+        "texture": "Sandy loam",
+        "fc": 30.3,
+        "wp": 16.8,
+        "awcMm": 12,
+        "ksat": 45.6,
+        "range": "clay 1–64%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.2,
+        "silt": 21.8,
+        "clay": 17.1,
+        "soc": 59.6,
+        "ph": 7.1,
+        "cec": 20.9,
+        "bdod": 1.05,
+        "cfvo": 12.8,
+        "texture": "Sandy loam",
+        "fc": 29.7,
+        "wp": 16.4,
+        "awcMm": 17,
+        "ksat": 49.3,
+        "range": "clay 1–74%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 60.7,
+        "silt": 20.8,
+        "clay": 18.5,
+        "soc": 54.7,
+        "ph": 7.1,
+        "cec": 19.7,
+        "bdod": 1.16,
+        "cfvo": 14.1,
+        "texture": "Sandy loam",
+        "fc": 30.3,
+        "wp": 17.1,
+        "awcMm": 34,
+        "ksat": 43.1,
+        "range": "clay 1–73%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 59.5,
+        "silt": 20.1,
+        "clay": 20.4,
+        "soc": 57.7,
+        "ph": 7.1,
+        "cec": 19,
+        "bdod": 1.19,
+        "cfvo": 16.8,
+        "texture": "Sandy clay loam",
+        "fc": 31.2,
+        "wp": 17.9,
+        "awcMm": 44,
+        "ksat": 35.9,
+        "range": "clay 1–74%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 58.7,
+        "silt": 20.6,
+        "clay": 20.6,
+        "soc": 58.6,
+        "ph": 7,
+        "cec": 18.9,
+        "bdod": 1.21,
+        "cfvo": 18.1,
+        "texture": "Sandy clay loam",
+        "fc": 31.4,
+        "wp": 18,
+        "awcMm": 110,
+        "ksat": 35.4,
+        "range": "clay 1–78%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 69,
     "soil": {
-      "sand": 55,
-      "silt": 30,
-      "clay": 15,
-      "soc": 8,
-      "ph": 7.6,
-      "nitrogen": 0.8,
-      "cec": 14,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 61,
+      "silt": 22,
+      "clay": 18,
+      "soc": 63.7,
+      "ph": 7.1,
+      "nitrogen": 2.44,
+      "cec": 21.8,
+      "bulkDensity": 1,
+      "source": "soil-map",
       "depth": "0–30 cm",
       "texture": "Sandy loam",
-      "organicMatter": 1.4,
-      "waterHolding": 66,
-      "infiltration": "moderate",
-      "ksat": 23.7,
-      "fieldCapacity": 21.1,
-      "wiltingPoint": 10.1
+      "organicMatter": 11,
+      "waterHolding": 80,
+      "infiltration": "fast",
+      "ksat": 45.2,
+      "fieldCapacity": 30.1,
+      "wiltingPoint": 16.8
     },
     "sal": {
-      "ece": 0.8,
+      "ece": 0.5,
       "cls": "low",
       "measured": false,
       "reasons": [
+        "Fast drainage helps irrigation water flush salts below the roots.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 61,
-      "level": "watch",
+      "score": 82,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.35,
-          "note": "1.4% (target > 3%)"
+          "value": 1,
+          "note": "11% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.6,
-          "note": "7.6 (best 6.0–7.5)"
+          "value": 0.85,
+          "note": "7.1 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.56,
-          "note": "CEC 14 cmol/kg"
+          "value": 0.87,
+          "note": "CEC 21.8 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.55,
-          "note": "66 mm in 60 cm"
+          "value": 0.67,
+          "note": "80 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
           "value": 1,
-          "note": "~0.8 dS/m (estimated)"
+          "note": "~0.5 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -1087,8 +1089,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.69,
+          "note": "average NDVI 0.45"
         }
       ]
     },
@@ -1498,11 +1500,11 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.55,
+        "evi": 0.26
       },
-      "points": 46
+      "points": 26
     },
     "results": [
       {
@@ -1513,7 +1515,7 @@
         "metrics": {
           "waterMm": 446,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 0,
           "organicMatter": 0.65,
           "pestBreak": 0.43333333333333335,
@@ -1535,7 +1537,7 @@
         "metrics": {
           "waterMm": 578,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 48,
           "organicMatter": 0.575,
           "pestBreak": 0.43333333333333335,
@@ -1550,6 +1552,28 @@
         }
       },
       {
+        "id": "o-current",
+        "name": "Cherry orchard, bare alleys",
+        "current": true,
+        "score": 55,
+        "metrics": {
+          "waterMm": 428,
+          "bareMonths": 7.2,
+          "erosion": 0.246,
+          "nitrogen": 0,
+          "organicMatter": 0.05,
+          "pestBreak": 0.1,
+          "forage": 0,
+          "income": 0.95,
+          "labor": 0.9,
+          "market": 0.49,
+          "outlets": [
+            "Export / national"
+          ],
+          "deepRoots": 1
+        }
+      },
+      {
         "id": "o-diverse",
         "name": "Cherry + berry hedgerows + clover",
         "current": false,
@@ -1557,7 +1581,7 @@
         "metrics": {
           "waterMm": 548,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 48,
           "organicMatter": 0.5499999999999999,
           "pestBreak": 0.7666666666666666,
@@ -1570,28 +1594,6 @@
             "Local / frozen / jam"
           ],
           "deepRoots": 0.3333333333333333
-        }
-      },
-      {
-        "id": "o-current",
-        "name": "Cherry orchard, bare alleys",
-        "current": true,
-        "score": 53,
-        "metrics": {
-          "waterMm": 428,
-          "bareMonths": 7.2,
-          "erosion": 0.6273000000000001,
-          "nitrogen": 0,
-          "organicMatter": 0.05,
-          "pestBreak": 0.1,
-          "forage": 0,
-          "income": 0.95,
-          "labor": 0.9,
-          "market": 0.49,
-          "outlets": [
-            "Export / national"
-          ],
-          "deepRoots": 1
         }
       }
     ],
@@ -1778,7 +1780,7 @@
         "margin": 28000,
         "payback": 5.6,
         "limits": [
-          "Soil pH: Soil pH 7.6; likes 4.5–5.5",
+          "Soil pH: Soil pH 7.1; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~660 mm"
         ]
       },
@@ -1814,180 +1816,186 @@
       "lon": -71.615
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
       "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 64.3,
+        "silt": 18.4,
+        "clay": 17.3,
+        "soc": 58.4,
+        "ph": 7.3,
+        "cec": 22.5,
+        "bdod": 0.99,
+        "cfvo": 12.8,
+        "texture": "Sandy loam",
+        "fc": 29.3,
+        "wp": 16.6,
+        "awcMm": 6,
+        "ksat": 47.3,
+        "range": "clay 2–47%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.1,
+        "silt": 18.8,
+        "clay": 19.1,
+        "soc": 36.4,
+        "ph": 7.3,
+        "cec": 20.8,
+        "bdod": 1.1,
+        "cfvo": 13.6,
+        "texture": "Sandy loam",
+        "fc": 28,
+        "wp": 16.1,
+        "awcMm": 10,
+        "ksat": 33.3,
+        "range": "clay 2–53%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.4,
+        "silt": 18.3,
+        "clay": 19.3,
+        "soc": 28,
+        "ph": 7.4,
+        "cec": 20.6,
+        "bdod": 1.18,
+        "cfvo": 13.2,
+        "texture": "Sandy loam",
+        "fc": 26.1,
+        "wp": 15.1,
+        "awcMm": 14,
+        "ksat": 27.7,
+        "range": "clay 2–59%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.1,
+        "silt": 18.5,
+        "clay": 19.4,
+        "soc": 25.1,
+        "ph": 7.4,
+        "cec": 19.1,
+        "bdod": 1.26,
+        "cfvo": 15.4,
+        "texture": "Sandy loam",
+        "fc": 25.6,
+        "wp": 14.8,
+        "awcMm": 27,
+        "ksat": 25.9,
+        "range": "clay 1–56%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.9,
+        "silt": 18.5,
+        "clay": 18.6,
+        "soc": 24,
+        "ph": 7.4,
+        "cec": 18.8,
+        "bdod": 1.26,
+        "cfvo": 18.3,
+        "texture": "Sandy loam",
+        "fc": 24.8,
+        "wp": 14.2,
+        "awcMm": 35,
+        "ksat": 27.5,
+        "range": "clay 1–58%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.9,
+        "silt": 18.2,
+        "clay": 19.9,
+        "soc": 24.2,
+        "ph": 7.4,
+        "cec": 18.5,
+        "bdod": 1.29,
+        "cfvo": 19.5,
+        "texture": "Sandy loam",
+        "fc": 25.7,
+        "wp": 14.9,
+        "awcMm": 87,
+        "ksat": 24.1,
+        "range": "clay 1–60%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 57,
     "soil": {
-      "sand": 55,
-      "silt": 30,
-      "clay": 15,
-      "soc": 8,
-      "ph": 7.6,
-      "nitrogen": 0.8,
-      "cec": 14,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 63,
+      "silt": 18,
+      "clay": 19,
+      "soc": 35.9,
+      "ph": 7.3,
+      "nitrogen": 2.26,
+      "cec": 21,
+      "bulkDensity": 1.12,
+      "source": "soil-map",
       "depth": "0–30 cm",
       "texture": "Sandy loam",
-      "organicMatter": 1.4,
-      "waterHolding": 66,
-      "infiltration": "moderate",
-      "ksat": 23.7,
-      "fieldCapacity": 21.1,
-      "wiltingPoint": 10.1
+      "organicMatter": 6.2,
+      "waterHolding": 70,
+      "infiltration": "fast",
+      "ksat": 33.3,
+      "fieldCapacity": 27.7,
+      "wiltingPoint": 16
     },
     "sal": {
-      "ece": 0.8,
+      "ece": 0.5,
       "cls": "low",
       "measured": false,
       "reasons": [
+        "Fast drainage helps irrigation water flush salts below the roots.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 61,
-      "level": "watch",
+      "score": 72,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.35,
-          "note": "1.4% (target > 3%)"
+          "value": 1,
+          "note": "6.2% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.6,
-          "note": "7.6 (best 6.0–7.5)"
+          "value": 0.75,
+          "note": "7.3 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.56,
-          "note": "CEC 14 cmol/kg"
+          "value": 0.84,
+          "note": "CEC 21 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.55,
-          "note": "66 mm in 60 cm"
+          "value": 0.58,
+          "note": "70 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1.12 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
           "value": 1,
-          "note": "~0.8 dS/m (estimated)"
+          "note": "~0.5 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
           "value": 0.49,
           "note": "7.2 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.08,
+          "note": "average NDVI 0.14"
         }
       ]
     },
@@ -2396,8 +2404,12 @@
       }
     },
     "veg": {
-      "latest": null,
-      "points": 0
+      "latest": {
+        "fecha": "2026-11-05",
+        "ndvi": 0.15,
+        "evi": 0.08
+      },
+      "points": 26
     },
     "results": [
       {
@@ -2408,7 +2420,7 @@
         "metrics": {
           "waterMm": 436,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.02579583333333333,
           "nitrogen": 0,
           "organicMatter": 0.65,
           "pestBreak": 0.43333333333333335,
@@ -2430,7 +2442,7 @@
         "metrics": {
           "waterMm": 564,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.02579583333333333,
           "nitrogen": 48,
           "organicMatter": 0.575,
           "pestBreak": 0.43333333333333335,
@@ -2445,6 +2457,28 @@
         }
       },
       {
+        "id": "o-current",
+        "name": "Cherry orchard, bare alleys",
+        "current": true,
+        "score": 55,
+        "metrics": {
+          "waterMm": 418,
+          "bareMonths": 7.2,
+          "erosion": 0.37146,
+          "nitrogen": 0,
+          "organicMatter": 0.05,
+          "pestBreak": 0.1,
+          "forage": 0,
+          "income": 0.95,
+          "labor": 0.9,
+          "market": 0.49,
+          "outlets": [
+            "Export / national"
+          ],
+          "deepRoots": 1
+        }
+      },
+      {
         "id": "o-diverse",
         "name": "Cherry + berry hedgerows + clover",
         "current": false,
@@ -2452,7 +2486,7 @@
         "metrics": {
           "waterMm": 535,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.02579583333333333,
           "nitrogen": 48,
           "organicMatter": 0.5499999999999999,
           "pestBreak": 0.7666666666666666,
@@ -2465,28 +2499,6 @@
             "Local / frozen / jam"
           ],
           "deepRoots": 0.3333333333333333
-        }
-      },
-      {
-        "id": "o-current",
-        "name": "Cherry orchard, bare alleys",
-        "current": true,
-        "score": 53,
-        "metrics": {
-          "waterMm": 418,
-          "bareMonths": 7.2,
-          "erosion": 0.6273000000000001,
-          "nitrogen": 0,
-          "organicMatter": 0.05,
-          "pestBreak": 0.1,
-          "forage": 0,
-          "income": 0.95,
-          "labor": 0.9,
-          "market": 0.49,
-          "outlets": [
-            "Export / national"
-          ],
-          "deepRoots": 1
         }
       }
     ],
@@ -2524,7 +2536,7 @@
         "id": "strawberry",
         "name": "Strawberry",
         "viability": 75,
-        "agro": 65,
+        "agro": 66,
         "margin": 30000,
         "payback": 1.6,
         "limits": [
@@ -2673,7 +2685,7 @@
         "margin": 28000,
         "payback": 5.6,
         "limits": [
-          "Soil pH: Soil pH 7.6; likes 4.5–5.5",
+          "Soil pH: Soil pH 7.3; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~660 mm"
         ]
       },
@@ -2709,175 +2721,176 @@
       "lon": -71.595
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63.2,
+        "silt": 18.3,
+        "clay": 18.5,
+        "soc": 68.5,
+        "ph": 7.2,
+        "cec": 24.2,
+        "bdod": 0.91,
+        "cfvo": 11.6,
+        "texture": "Sandy loam",
+        "fc": 29.9,
+        "wp": 17.1,
+        "awcMm": 6,
+        "ksat": 42.2,
+        "range": "clay 2–51%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.1,
+        "silt": 19.1,
+        "clay": 18.8,
+        "soc": 49.6,
+        "ph": 7.2,
+        "cec": 22.2,
+        "bdod": 1.01,
+        "cfvo": 12,
+        "texture": "Sandy loam",
+        "fc": 30.2,
+        "wp": 17.3,
+        "awcMm": 11,
+        "ksat": 41.3,
+        "range": "clay 2–54%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.2,
+        "silt": 18.4,
+        "clay": 19.3,
+        "soc": 44,
+        "ph": 7.3,
+        "cec": 21.8,
+        "bdod": 1.11,
+        "cfvo": 11.8,
+        "texture": "Sandy loam",
+        "fc": 29.8,
+        "wp": 17.2,
+        "awcMm": 17,
+        "ksat": 37.4,
+        "range": "clay 2–64%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.4,
+        "silt": 18.4,
+        "clay": 19.2,
+        "soc": 32,
+        "ph": 7.3,
+        "cec": 20.7,
+        "bdod": 1.21,
+        "cfvo": 13.7,
+        "texture": "Sandy loam",
+        "fc": 27,
+        "wp": 15.6,
+        "awcMm": 30,
+        "ksat": 30.2,
+        "range": "clay 1–65%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63.2,
+        "silt": 18.2,
+        "clay": 18.8,
+        "soc": 31.5,
+        "ph": 7.3,
+        "cec": 19.8,
+        "bdod": 1.24,
+        "cfvo": 16.5,
+        "texture": "Sandy loam",
+        "fc": 26.5,
+        "wp": 15.3,
+        "awcMm": 38,
+        "ksat": 31.2,
+        "range": "clay 1–63%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.5,
+        "silt": 18,
+        "clay": 19.6,
+        "soc": 32.6,
+        "ph": 7.2,
+        "cec": 19.7,
+        "bdod": 1.26,
+        "cfvo": 17.2,
+        "texture": "Sandy loam",
+        "fc": 27.3,
+        "wp": 15.9,
+        "awcMm": 95,
+        "ksat": 29.4,
+        "range": "clay 1–63%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 64,
     "soil": {
-      "sand": 55,
-      "silt": 30,
-      "clay": 15,
-      "soc": 8,
-      "ph": 7.6,
-      "nitrogen": 0.8,
-      "cec": 14,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 62,
+      "silt": 19,
+      "clay": 19,
+      "soc": 50,
+      "ph": 7.3,
+      "nitrogen": 1.99,
+      "cec": 22.3,
+      "bulkDensity": 1.04,
+      "source": "soil-map",
       "depth": "0–30 cm",
       "texture": "Sandy loam",
-      "organicMatter": 1.4,
-      "waterHolding": 66,
-      "infiltration": "moderate",
-      "ksat": 23.7,
-      "fieldCapacity": 21.1,
-      "wiltingPoint": 10.1
+      "organicMatter": 8.6,
+      "waterHolding": 78,
+      "infiltration": "fast",
+      "ksat": 40.5,
+      "fieldCapacity": 30.3,
+      "wiltingPoint": 17.3
     },
     "sal": {
-      "ece": 0.8,
+      "ece": 0.5,
       "cls": "low",
       "measured": false,
       "reasons": [
+        "Fast drainage helps irrigation water flush salts below the roots.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 61,
-      "level": "watch",
+      "score": 78,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.35,
-          "note": "1.4% (target > 3%)"
+          "value": 1,
+          "note": "8.6% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.6,
-          "note": "7.6 (best 6.0–7.5)"
+          "value": 0.75,
+          "note": "7.3 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.56,
-          "note": "CEC 14 cmol/kg"
+          "value": 0.89,
+          "note": "CEC 22.3 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.55,
-          "note": "66 mm in 60 cm"
+          "value": 0.65,
+          "note": "78 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1.04 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
           "value": 1,
-          "note": "~0.8 dS/m (estimated)"
+          "note": "~0.5 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -2886,8 +2899,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.48,
+          "note": "average NDVI 0.34"
         }
       ]
     },
@@ -3297,22 +3310,22 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.35,
+        "evi": 0.07
       },
-      "points": 46
+      "points": 26
     },
     "results": [
       {
         "id": "o-rye",
         "name": "Cherry + winter rye cover",
         "current": false,
-        "score": 70,
+        "score": 69,
         "metrics": {
           "waterMm": 447,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 0,
           "organicMatter": 0.65,
           "pestBreak": 0.43333333333333335,
@@ -3334,7 +3347,7 @@
         "metrics": {
           "waterMm": 578,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 48,
           "organicMatter": 0.575,
           "pestBreak": 0.43333333333333335,
@@ -3349,6 +3362,28 @@
         }
       },
       {
+        "id": "o-current",
+        "name": "Cherry orchard, bare alleys",
+        "current": true,
+        "score": 55,
+        "metrics": {
+          "waterMm": 428,
+          "bareMonths": 7.2,
+          "erosion": 0.246,
+          "nitrogen": 0,
+          "organicMatter": 0.05,
+          "pestBreak": 0.1,
+          "forage": 0,
+          "income": 0.95,
+          "labor": 0.9,
+          "market": 0.49,
+          "outlets": [
+            "Export / national"
+          ],
+          "deepRoots": 1
+        }
+      },
+      {
         "id": "o-diverse",
         "name": "Cherry + berry hedgerows + clover",
         "current": false,
@@ -3356,7 +3391,7 @@
         "metrics": {
           "waterMm": 548,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 48,
           "organicMatter": 0.5499999999999999,
           "pestBreak": 0.7666666666666666,
@@ -3369,28 +3404,6 @@
             "Local / frozen / jam"
           ],
           "deepRoots": 0.3333333333333333
-        }
-      },
-      {
-        "id": "o-current",
-        "name": "Cherry orchard, bare alleys",
-        "current": true,
-        "score": 53,
-        "metrics": {
-          "waterMm": 428,
-          "bareMonths": 7.2,
-          "erosion": 0.6273000000000001,
-          "nitrogen": 0,
-          "organicMatter": 0.05,
-          "pestBreak": 0.1,
-          "forage": 0,
-          "income": 0.95,
-          "labor": 0.9,
-          "market": 0.49,
-          "outlets": [
-            "Export / national"
-          ],
-          "deepRoots": 1
         }
       }
     ],
@@ -3577,7 +3590,7 @@
         "margin": 28000,
         "payback": 5.6,
         "limits": [
-          "Soil pH: Soil pH 7.6; likes 4.5–5.5",
+          "Soil pH: Soil pH 7.3; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~660 mm"
         ]
       },
@@ -3613,175 +3626,176 @@
       "lon": -71.635
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63.9,
+        "silt": 18.2,
+        "clay": 17.9,
+        "soc": 74.1,
+        "ph": 6.8,
+        "cec": 26.3,
+        "bdod": 0.99,
+        "cfvo": 11.2,
+        "texture": "Sandy loam",
+        "fc": 29.6,
+        "wp": 16.9,
+        "awcMm": 6,
+        "ksat": 44.6,
+        "range": "clay 2–54%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63.5,
+        "silt": 18.5,
+        "clay": 18,
+        "soc": 53.8,
+        "ph": 6.9,
+        "cec": 23.9,
+        "bdod": 1.09,
+        "cfvo": 11.5,
+        "texture": "Sandy loam",
+        "fc": 29.7,
+        "wp": 16.9,
+        "awcMm": 11,
+        "ksat": 44.3,
+        "range": "clay 2–54%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 64.4,
+        "silt": 18.2,
+        "clay": 17.4,
+        "soc": 43.8,
+        "ph": 6.9,
+        "cec": 22.5,
+        "bdod": 1.17,
+        "cfvo": 11.1,
+        "texture": "Sandy loam",
+        "fc": 28.6,
+        "wp": 16.3,
+        "awcMm": 16,
+        "ksat": 44.7,
+        "range": "clay 1–55%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63.3,
+        "silt": 18.2,
+        "clay": 18.5,
+        "soc": 42.3,
+        "ph": 7.2,
+        "cec": 21.3,
+        "bdod": 1.22,
+        "cfvo": 12.5,
+        "texture": "Sandy loam",
+        "fc": 28.9,
+        "wp": 16.6,
+        "awcMm": 32,
+        "ksat": 39.2,
+        "range": "clay 1–63%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63.6,
+        "silt": 17.4,
+        "clay": 18.9,
+        "soc": 41.7,
+        "ph": 7.2,
+        "cec": 20.7,
+        "bdod": 1.24,
+        "cfvo": 15.7,
+        "texture": "Sandy loam",
+        "fc": 28.9,
+        "wp": 16.7,
+        "awcMm": 41,
+        "ksat": 37.1,
+        "range": "clay 1–59%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62,
+        "silt": 18.1,
+        "clay": 19.9,
+        "soc": 41.5,
+        "ph": 7.3,
+        "cec": 21.1,
+        "bdod": 1.28,
+        "cfvo": 17.2,
+        "texture": "Sandy loam",
+        "fc": 29.5,
+        "wp": 17.1,
+        "awcMm": 102,
+        "ksat": 33.7,
+        "range": "clay 1–62%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 65,
     "soil": {
-      "sand": 55,
-      "silt": 30,
-      "clay": 15,
-      "soc": 8,
-      "ph": 7.6,
-      "nitrogen": 0.8,
-      "cec": 14,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 64,
+      "silt": 18,
+      "clay": 18,
+      "soc": 52.2,
+      "ph": 6.9,
+      "nitrogen": 2.22,
+      "cec": 23.6,
+      "bulkDensity": 1.11,
+      "source": "soil-map",
       "depth": "0–30 cm",
       "texture": "Sandy loam",
-      "organicMatter": 1.4,
-      "waterHolding": 66,
-      "infiltration": "moderate",
-      "ksat": 23.7,
-      "fieldCapacity": 21.1,
-      "wiltingPoint": 10.1
+      "organicMatter": 9,
+      "waterHolding": 76,
+      "infiltration": "fast",
+      "ksat": 44.1,
+      "fieldCapacity": 29.6,
+      "wiltingPoint": 16.9
     },
     "sal": {
-      "ece": 0.8,
+      "ece": 0.5,
       "cls": "low",
       "measured": false,
       "reasons": [
+        "Fast drainage helps irrigation water flush salts below the roots.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 61,
-      "level": "watch",
+      "score": 83,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.35,
-          "note": "1.4% (target > 3%)"
+          "value": 1,
+          "note": "9% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.6,
-          "note": "7.6 (best 6.0–7.5)"
+          "value": 0.95,
+          "note": "6.9 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.56,
-          "note": "CEC 14 cmol/kg"
+          "value": 0.94,
+          "note": "CEC 23.6 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.55,
-          "note": "66 mm in 60 cm"
+          "value": 0.63,
+          "note": "76 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1.11 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
           "value": 1,
-          "note": "~0.8 dS/m (estimated)"
+          "note": "~0.5 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -3790,8 +3804,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.59,
+          "note": "average NDVI 0.39"
         }
       ]
     },
@@ -4201,22 +4215,22 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.63,
+        "evi": 0.58
       },
-      "points": 46
+      "points": 26
     },
     "results": [
       {
         "id": "o-rye",
         "name": "Cherry + winter rye cover",
         "current": false,
-        "score": 70,
+        "score": 69,
         "metrics": {
           "waterMm": 445,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 0,
           "organicMatter": 0.65,
           "pestBreak": 0.43333333333333335,
@@ -4238,7 +4252,7 @@
         "metrics": {
           "waterMm": 576,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 48,
           "organicMatter": 0.575,
           "pestBreak": 0.43333333333333335,
@@ -4253,6 +4267,28 @@
         }
       },
       {
+        "id": "o-current",
+        "name": "Cherry orchard, bare alleys",
+        "current": true,
+        "score": 55,
+        "metrics": {
+          "waterMm": 426,
+          "bareMonths": 7.2,
+          "erosion": 0.246,
+          "nitrogen": 0,
+          "organicMatter": 0.05,
+          "pestBreak": 0.1,
+          "forage": 0,
+          "income": 0.95,
+          "labor": 0.9,
+          "market": 0.49,
+          "outlets": [
+            "Export / national"
+          ],
+          "deepRoots": 1
+        }
+      },
+      {
         "id": "o-diverse",
         "name": "Cherry + berry hedgerows + clover",
         "current": false,
@@ -4260,7 +4296,7 @@
         "metrics": {
           "waterMm": 546,
           "bareMonths": 0.5,
-          "erosion": 0.043562500000000004,
+          "erosion": 0.017083333333333332,
           "nitrogen": 48,
           "organicMatter": 0.5499999999999999,
           "pestBreak": 0.7666666666666666,
@@ -4273,28 +4309,6 @@
             "Local / frozen / jam"
           ],
           "deepRoots": 0.3333333333333333
-        }
-      },
-      {
-        "id": "o-current",
-        "name": "Cherry orchard, bare alleys",
-        "current": true,
-        "score": 53,
-        "metrics": {
-          "waterMm": 426,
-          "bareMonths": 7.2,
-          "erosion": 0.6273000000000001,
-          "nitrogen": 0,
-          "organicMatter": 0.05,
-          "pestBreak": 0.1,
-          "forage": 0,
-          "income": 0.95,
-          "labor": 0.9,
-          "market": 0.49,
-          "outlets": [
-            "Export / national"
-          ],
-          "deepRoots": 1
         }
       }
     ],
@@ -4481,7 +4495,7 @@
         "margin": 28000,
         "payback": 5.6,
         "limits": [
-          "Soil pH: Soil pH 7.6; likes 4.5–5.5",
+          "Soil pH: Soil pH 6.9; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~660 mm"
         ]
       },

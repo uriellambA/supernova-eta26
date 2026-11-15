@@ -5,39 +5,39 @@ Gobernador Gregores centre,Calafate,new,62,71,19000,3.7,no,Water: Needs ~250 mm/
 Gobernador Gregores centre,Rosehip (rosa mosqueta),new,62,71,3500,4.6,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 Gobernador Gregores centre,Sea buckthorn,new,61,63,13000,5.1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 Gobernador Gregores centre,Garlic,current,60,57,12000,1,yes,Water: Needs ~330 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Rhubarb,new,58,47,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
 Gobernador Gregores centre,Quinoa,new,57,60,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 Gobernador Gregores centre,Haskap berry,new,56,48,24000,4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-Gobernador Gregores centre,Rhubarb,new,56,45,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-Gobernador Gregores centre,Strawberry,current,47,32,30000,2.3,yes,Water: Needs ~450 mm/season; useful supply ~405 mm
-Gobernador Gregores centre,Raspberry,current,45,33,23000,3.3,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Strawberry,current,49,35,30000,2.1,yes,Water: Needs ~450 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Raspberry,current,46,35,23000,3.2,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
 Gobernador Gregores centre,Lavender,new,45,62,3000,5.2,no,Water: Needs ~300 mm/season; useful supply ~405 mm
-Gobernador Gregores centre,Cherry,current,39,31,23000,7.5,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Cherry,current,40,32,23000,7.4,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
 Gobernador Gregores centre,Asparagus,new,38,33,10000,6,yes,Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 75% of years
-Gobernador Gregores centre,Hazelnut,new,35,33,7000,8.9,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
-Gobernador Gregores centre,Elderberry,new,34,39,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
-Gobernador Gregores centre,Apple,new,33,32,9000,10.3,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
-Gobernador Gregores centre,Blueberry,new,28,27,28000,6.3,no,Soil pH: Soil pH 8.1; likes 4.5–5.5
-Gobernador Gregores centre,Walnut,new,28,27,6500,12.8,yes,Water: Needs ~700 mm/season; useful supply ~405 mm
-Gobernador Gregores centre,Hops,new,24,33,8000,9.6,no,Water: Needs ~550 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Hazelnut,new,36,35,7000,8.7,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Elderberry,new,35,40,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Apple,new,35,34,9000,9.9,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Blueberry,new,29,28,28000,6.2,no,Soil pH: Soil pH 7.7; likes 4.5–5.5
+Gobernador Gregores centre,Walnut,new,28,28,6500,12.6,yes,Water: Needs ~700 mm/season; useful supply ~405 mm
+Gobernador Gregores centre,Hops,new,25,34,8000,9.4,no,Water: Needs ~550 mm/season; useful supply ~405 mm
 North,Winter greens in tunnels,new,81,70,40000,3.1,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 North,Saffron,new,77,85,11000,3.7,yes,
 North,Rosehip (rosa mosqueta),new,62,71,3500,4.6,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 North,Calafate,new,61,70,19000,3.7,no,Water: Needs ~250 mm/season; useful supply ~405 mm
 North,Sea buckthorn,new,61,62,13000,5.1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 North,Garlic,current,60,57,12000,1,yes,Water: Needs ~330 mm/season; useful supply ~405 mm
+North,Rhubarb,new,58,47,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
 North,Haskap berry,new,56,48,24000,4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-North,Rhubarb,new,56,45,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
 North,Quinoa,new,56,58,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
+North,Strawberry,current,46,31,30000,2.3,yes,Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 90% of years
+North,Raspberry,current,45,34,23000,3.3,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
 North,Lavender,new,45,61,3000,5.3,no,Water: Needs ~300 mm/season; useful supply ~405 mm
-North,Raspberry,current,44,32,23000,3.4,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
-North,Strawberry,current,43,28,30000,2.4,yes,Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 90% of years
 North,Asparagus,new,36,30,10000,6.3,yes,Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 85% of years
-North,Cherry,current,34,26,23000,8.2,yes,Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 85% of years
+North,Cherry,current,35,27,23000,8,yes,Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 85% of years
 North,Elderberry,new,34,38,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
-North,Hazelnut,new,30,27,7000,9.8,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
-North,Apple,new,27,25,9000,12,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+North,Hazelnut,new,32,29,7000,9.4,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+North,Apple,new,28,26,9000,11.7,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
 North,Blueberry,new,27,26,28000,6.4,no,Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 85% of years
-North,Walnut,new,26,24,6500,13.7,yes,Season length: 130 frost-free days; needs ~170
+North,Walnut,new,26,25,6500,13.4,yes,Season length: 130 frost-free days; needs ~170
 North,Hops,new,23,32,8000,9.8,no,Water: Needs ~550 mm/season; useful supply ~405 mm
 South,Winter greens in tunnels,new,81,70,40000,3.1,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 South,Saffron,new,77,85,11000,3.7,yes,
@@ -45,57 +45,57 @@ South,Calafate,new,62,71,19000,3.7,no,Water: Needs ~250 mm/season; useful supply
 South,Rosehip (rosa mosqueta),new,62,71,3500,4.6,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 South,Sea buckthorn,new,62,64,13000,5.1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 South,Garlic,current,60,57,12000,1,yes,Water: Needs ~330 mm/season; useful supply ~405 mm
+South,Rhubarb,new,58,48,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
 South,Quinoa,new,57,60,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 South,Haskap berry,new,56,48,24000,4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-South,Rhubarb,new,56,45,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-South,Strawberry,current,47,32,30000,2.3,yes,Water: Needs ~450 mm/season; useful supply ~405 mm
-South,Raspberry,current,45,33,23000,3.3,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+South,Strawberry,current,50,36,30000,2.1,yes,Water: Needs ~450 mm/season; useful supply ~405 mm
+South,Raspberry,current,47,36,23000,3.2,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
 South,Lavender,new,45,62,3000,5.2,no,Water: Needs ~300 mm/season; useful supply ~405 mm
-South,Cherry,current,39,31,23000,7.5,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+South,Cherry,current,40,32,23000,7.4,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
 South,Asparagus,new,38,33,10000,6,yes,Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 75% of years
-South,Hazelnut,new,35,33,7000,8.9,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
-South,Elderberry,new,34,39,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
-South,Apple,new,33,32,9000,10.3,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
-South,Blueberry,new,28,27,28000,6.3,no,Soil pH: Soil pH 8.1; likes 4.5–5.5
-South,Walnut,new,28,27,6500,12.8,yes,Water: Needs ~700 mm/season; useful supply ~405 mm
-South,Hops,new,24,33,8000,9.6,no,Water: Needs ~550 mm/season; useful supply ~405 mm
+South,Hazelnut,new,36,35,7000,8.7,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+South,Elderberry,new,35,40,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
+South,Apple,new,35,34,9000,9.9,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+South,Blueberry,new,29,28,28000,6.2,no,Soil pH: Soil pH 7.3; likes 4.5–5.5
+South,Walnut,new,28,28,6500,12.6,yes,Water: Needs ~700 mm/season; useful supply ~405 mm
+South,Hops,new,25,34,8000,9.4,no,Water: Needs ~550 mm/season; useful supply ~405 mm
 East,Winter greens in tunnels,new,81,70,40000,3.1,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 East,Saffron,new,77,85,11000,3.7,yes,
 East,Calafate,new,62,71,19000,3.7,no,Water: Needs ~250 mm/season; useful supply ~405 mm
 East,Rosehip (rosa mosqueta),new,62,71,3500,4.6,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 East,Sea buckthorn,new,62,64,13000,5.1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 East,Garlic,current,60,57,12000,1,yes,Water: Needs ~330 mm/season; useful supply ~405 mm
+East,Rhubarb,new,58,47,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
 East,Quinoa,new,57,60,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 East,Haskap berry,new,56,48,24000,4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-East,Rhubarb,new,56,45,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-East,Strawberry,current,47,32,30000,2.3,yes,Water: Needs ~450 mm/season; useful supply ~405 mm
-East,Raspberry,current,45,34,23000,3.3,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+East,Strawberry,current,49,35,30000,2.1,yes,Water: Needs ~450 mm/season; useful supply ~405 mm
+East,Raspberry,current,47,36,23000,3.2,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
 East,Lavender,new,45,62,3000,5.2,no,Water: Needs ~300 mm/season; useful supply ~405 mm
-East,Cherry,current,39,31,23000,7.5,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+East,Cherry,current,40,32,23000,7.4,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
 East,Asparagus,new,38,33,10000,6,yes,Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 75% of years
-East,Hazelnut,new,35,33,7000,8.9,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
-East,Elderberry,new,34,39,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
-East,Apple,new,33,32,9000,10.3,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
-East,Blueberry,new,28,27,28000,6.3,no,Soil pH: Soil pH 8.1; likes 4.5–5.5
-East,Walnut,new,28,27,6500,12.8,yes,Water: Needs ~700 mm/season; useful supply ~405 mm
-East,Hops,new,24,33,8000,9.6,no,Water: Needs ~550 mm/season; useful supply ~405 mm
+East,Hazelnut,new,36,35,7000,8.7,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+East,Elderberry,new,35,40,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
+East,Apple,new,35,34,9000,9.9,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+East,Blueberry,new,29,28,28000,6.2,no,Soil pH: Soil pH 7.7; likes 4.5–5.5
+East,Walnut,new,28,28,6500,12.6,yes,Water: Needs ~700 mm/season; useful supply ~405 mm
+East,Hops,new,25,34,8000,9.4,no,Water: Needs ~550 mm/season; useful supply ~405 mm
 West,Winter greens in tunnels,new,81,70,40000,3.1,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 West,Saffron,new,77,85,11000,3.7,yes,
 West,Calafate,new,62,71,19000,3.7,no,Water: Needs ~250 mm/season; useful supply ~405 mm
 West,Rosehip (rosa mosqueta),new,62,71,3500,4.6,yes,Water: Needs ~250 mm/season; useful supply ~405 mm
 West,Sea buckthorn,new,61,63,13000,5.1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 West,Garlic,current,60,57,12000,1,yes,Water: Needs ~330 mm/season; useful supply ~405 mm
+West,Rhubarb,new,58,48,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
 West,Quinoa,new,57,60,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~405 mm
 West,Haskap berry,new,56,48,24000,4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-West,Rhubarb,new,56,45,26000,2.4,yes,Water: Needs ~400 mm/season; useful supply ~405 mm
-West,Strawberry,current,47,32,30000,2.3,yes,Water: Needs ~450 mm/season; useful supply ~405 mm
-West,Raspberry,current,45,33,23000,3.3,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+West,Strawberry,current,50,36,30000,2.1,yes,Water: Needs ~450 mm/season; useful supply ~405 mm
+West,Raspberry,current,47,36,23000,3.2,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
 West,Lavender,new,45,62,3000,5.2,no,Water: Needs ~300 mm/season; useful supply ~405 mm
-West,Cherry,current,39,31,23000,7.5,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+West,Cherry,current,40,32,23000,7.4,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
 West,Asparagus,new,38,33,10000,6,yes,Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 75% of years
-West,Hazelnut,new,35,33,7000,8.9,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
-West,Elderberry,new,34,39,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
-West,Apple,new,33,32,9000,10.3,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
-West,Blueberry,new,28,27,28000,6.3,no,Soil pH: Soil pH 8.1; likes 4.5–5.5
-West,Walnut,new,28,27,6500,12.8,yes,Water: Needs ~700 mm/season; useful supply ~405 mm
-West,Hops,new,24,33,8000,9.6,no,Water: Needs ~550 mm/season; useful supply ~405 mm
+West,Hazelnut,new,36,35,7000,8.7,yes,Water: Needs ~500 mm/season; useful supply ~405 mm
+West,Elderberry,new,35,40,11000,4.4,no,Water: Needs ~450 mm/season; useful supply ~405 mm
+West,Apple,new,35,34,9000,9.9,yes,Water: Needs ~650 mm/season; useful supply ~405 mm
+West,Blueberry,new,29,28,28000,6.2,no,Soil pH: Soil pH 7.5; likes 4.5–5.5
+West,Walnut,new,28,28,6500,12.6,yes,Water: Needs ~700 mm/season; useful supply ~405 mm
+West,Hops,new,25,34,8000,9.4,no,Water: Needs ~550 mm/season; useful supply ~405 mm

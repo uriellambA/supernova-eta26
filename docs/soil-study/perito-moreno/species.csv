@@ -7,17 +7,17 @@ Perito Moreno centre,Rosehip (rosa mosqueta),new,66,78,3500,4.5,yes,
 Perito Moreno centre,Rhubarb,new,66,57,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
 Perito Moreno centre,Haskap berry,new,65,59,24000,3.8,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
 Perito Moreno centre,Quinoa,new,63,69,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~495 mm
-Perito Moreno centre,Strawberry,current,59,46,30000,1.9,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
+Perito Moreno centre,Strawberry,current,59,47,30000,1.9,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 Perito Moreno centre,Garlic,current,57,67,12000,1,no,Water: Needs ~330 mm/season; useful supply ~495 mm
 Perito Moreno centre,Elderberry,new,54,53,11000,4,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 Perito Moreno centre,Lavender,new,52,71,3000,4.8,no,Water: Needs ~300 mm/season; useful supply ~495 mm
 Perito Moreno centre,Asparagus,new,50,49,10000,5,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
-Perito Moreno centre,Raspberry,current,43,44,23000,3,no,Water: Needs ~500 mm/season; useful supply ~495 mm
+Perito Moreno centre,Raspberry,current,44,45,23000,3,no,Water: Needs ~500 mm/season; useful supply ~495 mm
 Perito Moreno centre,Hazelnut,new,43,44,7000,7.9,yes,Water: Needs ~500 mm/season; useful supply ~495 mm
-Perito Moreno centre,Blueberry,new,41,30,28000,6,yes,Soil pH: Soil pH 7.9; likes 4.5–5.5
+Perito Moreno centre,Blueberry,new,42,31,28000,5.9,yes,Soil pH: Soil pH 7.8; likes 4.5–5.5
 Perito Moreno centre,Hops,new,38,37,8000,8.8,yes,Water: Needs ~550 mm/season; useful supply ~495 mm
 Perito Moreno centre,Apple,new,36,35,9000,9.7,yes,Water: Needs ~650 mm/season; useful supply ~495 mm
-Perito Moreno centre,Cherry,current,31,34,23000,7.2,no,Water: Needs ~650 mm/season; useful supply ~495 mm
+Perito Moreno centre,Cherry,current,32,35,23000,7.1,no,Water: Needs ~650 mm/season; useful supply ~495 mm
 Perito Moreno centre,Walnut,new,30,31,6500,12,yes,Water: Needs ~700 mm/season; useful supply ~495 mm
 North,Winter greens in tunnels,new,85,77,40000,2.9,yes,
 North,Saffron,new,80,89,11000,3.6,yes,
@@ -27,14 +27,14 @@ North,Rosehip (rosa mosqueta),new,66,78,3500,4.5,yes,
 North,Rhubarb,new,66,57,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
 North,Haskap berry,new,65,59,24000,3.8,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
 North,Quinoa,new,63,69,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~495 mm
-North,Strawberry,current,59,46,30000,1.9,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
+North,Strawberry,current,59,47,30000,1.9,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 North,Garlic,current,57,67,12000,1,no,Water: Needs ~330 mm/season; useful supply ~495 mm
 North,Elderberry,new,54,53,11000,4,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 North,Lavender,new,52,71,3000,4.8,no,Water: Needs ~300 mm/season; useful supply ~495 mm
 North,Asparagus,new,49,47,10000,5.1,yes,Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 60% of years
 North,Raspberry,current,43,44,23000,3,no,Water: Needs ~500 mm/season; useful supply ~495 mm
 North,Hazelnut,new,43,44,7000,7.9,yes,Water: Needs ~500 mm/season; useful supply ~495 mm
-North,Blueberry,new,41,30,28000,6,yes,Soil pH: Soil pH 7.9; likes 4.5–5.5
+North,Blueberry,new,41,30,28000,6,yes,Soil pH: Soil pH 7.8; likes 4.5–5.5
 North,Hops,new,38,37,8000,8.8,yes,Water: Needs ~550 mm/season; useful supply ~495 mm
 North,Apple,new,36,35,9000,9.7,yes,Water: Needs ~650 mm/season; useful supply ~495 mm
 North,Cherry,current,31,34,23000,7.2,no,Water: Needs ~650 mm/season; useful supply ~495 mm
@@ -67,35 +67,35 @@ East,Rosehip (rosa mosqueta),new,66,78,3500,4.5,yes,
 East,Rhubarb,new,66,57,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
 East,Haskap berry,new,65,59,24000,3.8,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
 East,Quinoa,new,63,69,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~495 mm
-East,Strawberry,current,59,46,30000,1.9,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
+East,Strawberry,current,59,47,30000,1.9,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 East,Garlic,current,57,67,12000,1,no,Water: Needs ~330 mm/season; useful supply ~495 mm
 East,Elderberry,new,54,53,11000,4,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 East,Lavender,new,52,71,3000,4.8,no,Water: Needs ~300 mm/season; useful supply ~495 mm
 East,Asparagus,new,50,49,10000,5,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
-East,Raspberry,current,43,44,23000,3,no,Water: Needs ~500 mm/season; useful supply ~495 mm
+East,Raspberry,current,44,45,23000,3,no,Water: Needs ~500 mm/season; useful supply ~495 mm
 East,Hazelnut,new,43,44,7000,7.9,yes,Water: Needs ~500 mm/season; useful supply ~495 mm
-East,Blueberry,new,42,31,28000,5.9,yes,Soil pH: Soil pH 7.9; likes 4.5–5.5
+East,Blueberry,new,42,31,28000,5.9,yes,Soil pH: Soil pH 7.8; likes 4.5–5.5
 East,Hops,new,38,37,8000,8.8,yes,Water: Needs ~550 mm/season; useful supply ~495 mm
 East,Apple,new,36,35,9000,9.7,yes,Water: Needs ~650 mm/season; useful supply ~495 mm
-East,Cherry,current,31,34,23000,7.2,no,Water: Needs ~650 mm/season; useful supply ~495 mm
+East,Cherry,current,32,35,23000,7.1,no,Water: Needs ~650 mm/season; useful supply ~495 mm
 East,Walnut,new,30,31,6500,12,yes,Water: Needs ~700 mm/season; useful supply ~495 mm
 West,Winter greens in tunnels,new,85,77,40000,2.9,yes,
 West,Saffron,new,80,89,11000,3.6,yes,
 West,Sea buckthorn,new,68,72,13000,5,yes,Water: Needs ~300 mm/season; useful supply ~495 mm
 West,Calafate,new,67,78,19000,3.6,no,
+West,Rhubarb,new,67,58,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
 West,Rosehip (rosa mosqueta),new,66,78,3500,4.5,yes,
-West,Rhubarb,new,66,57,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
 West,Haskap berry,new,65,59,24000,3.8,yes,Water: Needs ~400 mm/season; useful supply ~495 mm
+West,Strawberry,current,63,51,30000,1.8,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 West,Quinoa,new,63,69,3000,1,yes,Water: Needs ~300 mm/season; useful supply ~495 mm
-West,Strawberry,current,62,50,30000,1.8,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 West,Garlic,current,57,67,12000,1,no,Water: Needs ~330 mm/season; useful supply ~495 mm
 West,Elderberry,new,54,52,11000,4,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
 West,Lavender,new,52,71,3000,4.8,no,Water: Needs ~300 mm/season; useful supply ~495 mm
 West,Asparagus,new,52,51,10000,5,yes,Water: Needs ~450 mm/season; useful supply ~495 mm
-West,Raspberry,current,44,45,23000,3,no,Water: Needs ~500 mm/season; useful supply ~495 mm
-West,Blueberry,new,43,32,28000,5.8,yes,Soil pH: Soil pH 7.9; likes 4.5–5.5
-West,Hazelnut,new,42,43,7000,8,yes,Water: Needs ~500 mm/season; useful supply ~495 mm
+West,Raspberry,current,45,46,23000,2.9,no,Water: Needs ~500 mm/season; useful supply ~495 mm
+West,Hazelnut,new,43,44,7000,7.9,yes,Water: Needs ~500 mm/season; useful supply ~495 mm
+West,Blueberry,new,43,32,28000,5.8,yes,Soil pH: Soil pH 7.7; likes 4.5–5.5
 West,Hops,new,37,36,8000,8.9,yes,Water: Needs ~550 mm/season; useful supply ~495 mm
-West,Apple,new,36,35,9000,9.7,yes,Water: Needs ~650 mm/season; useful supply ~495 mm
+West,Apple,new,37,36,9000,9.6,yes,Water: Needs ~650 mm/season; useful supply ~495 mm
 West,Walnut,new,34,35,6500,11.3,yes,Water: Needs ~700 mm/season; useful supply ~495 mm
 West,Cherry,current,33,36,23000,7,no,Water: Needs ~650 mm/season; useful supply ~495 mm

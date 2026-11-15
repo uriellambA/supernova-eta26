@@ -16,7 +16,7 @@ Los Antiguos centre,Lavender,new,57,80,3000,4.5,no,
 Los Antiguos centre,Hazelnut,new,54,59,7000,7.2,yes,Water: Needs ~500 mm/season; useful supply ~660 mm
 Los Antiguos centre,Hops,new,51,54,8000,6.6,yes,Water: Needs ~550 mm/season; useful supply ~660 mm
 Los Antiguos centre,Apple,new,45,46,9000,8.3,yes,Water: Needs ~650 mm/season; useful supply ~660 mm
-Los Antiguos centre,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.6; likes 4.5–5.5
+Los Antiguos centre,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7; likes 4.5–5.5
 Los Antiguos centre,Cherry,current,43,47,23000,6.3,no,Water: Needs ~650 mm/season; useful supply ~660 mm
 Los Antiguos centre,Walnut,new,38,41,6500,10.5,yes,Water: Needs ~700 mm/season; useful supply ~660 mm
 North,Winter greens in tunnels,new,90,85,40000,2.8,yes,
@@ -36,13 +36,13 @@ North,Lavender,new,57,80,3000,4.5,no,
 North,Hazelnut,new,54,59,7000,7.2,yes,Water: Needs ~500 mm/season; useful supply ~660 mm
 North,Hops,new,51,54,8000,6.6,yes,Water: Needs ~550 mm/season; useful supply ~660 mm
 North,Apple,new,45,46,9000,8.3,yes,Water: Needs ~650 mm/season; useful supply ~660 mm
-North,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.6; likes 4.5–5.5
+North,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.1; likes 4.5–5.5
 North,Cherry,current,43,47,23000,6.3,no,Water: Needs ~650 mm/season; useful supply ~660 mm
 North,Walnut,new,38,41,6500,10.5,yes,Water: Needs ~700 mm/season; useful supply ~660 mm
 South,Winter greens in tunnels,new,90,85,40000,2.8,yes,
 South,Saffron,new,81,91,11000,3.5,yes,
 South,Rhubarb,new,77,71,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~660 mm
-South,Strawberry,current,75,65,30000,1.6,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+South,Strawberry,current,75,66,30000,1.6,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
 South,Haskap berry,new,75,71,24000,3.7,yes,Water: Needs ~400 mm/season; useful supply ~660 mm
 South,Sea buckthorn,new,74,81,13000,4.9,yes,
 South,Calafate,new,73,86,19000,3.6,no,
@@ -56,7 +56,7 @@ South,Lavender,new,57,79,3000,4.5,no,
 South,Hazelnut,new,54,59,7000,7.2,yes,Water: Needs ~500 mm/season; useful supply ~660 mm
 South,Hops,new,50,53,8000,6.7,yes,Water: Needs ~550 mm/season; useful supply ~660 mm
 South,Apple,new,44,45,9000,8.4,yes,Water: Needs ~650 mm/season; useful supply ~660 mm
-South,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.6; likes 4.5–5.5
+South,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.3; likes 4.5–5.5
 South,Cherry,current,42,46,23000,6.4,no,Water: Needs ~650 mm/season; useful supply ~660 mm
 South,Walnut,new,38,41,6500,10.5,yes,Water: Needs ~700 mm/season; useful supply ~660 mm
 East,Winter greens in tunnels,new,90,85,40000,2.8,yes,
@@ -76,7 +76,7 @@ East,Lavender,new,57,80,3000,4.5,no,
 East,Hazelnut,new,54,59,7000,7.2,yes,Water: Needs ~500 mm/season; useful supply ~660 mm
 East,Hops,new,51,54,8000,6.6,yes,Water: Needs ~550 mm/season; useful supply ~660 mm
 East,Apple,new,45,46,9000,8.3,yes,Water: Needs ~650 mm/season; useful supply ~660 mm
-East,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.6; likes 4.5–5.5
+East,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.3; likes 4.5–5.5
 East,Cherry,current,43,47,23000,6.3,no,Water: Needs ~650 mm/season; useful supply ~660 mm
 East,Walnut,new,38,41,6500,10.5,yes,Water: Needs ~700 mm/season; useful supply ~660 mm
 West,Winter greens in tunnels,new,90,85,40000,2.8,yes,
@@ -96,6 +96,6 @@ West,Lavender,new,57,80,3000,4.5,no,
 West,Hazelnut,new,54,59,7000,7.2,yes,Water: Needs ~500 mm/season; useful supply ~660 mm
 West,Hops,new,51,54,8000,6.6,yes,Water: Needs ~550 mm/season; useful supply ~660 mm
 West,Apple,new,45,46,9000,8.3,yes,Water: Needs ~650 mm/season; useful supply ~660 mm
-West,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.6; likes 4.5–5.5
+West,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 6.9; likes 4.5–5.5
 West,Cherry,current,43,47,23000,6.3,no,Water: Needs ~650 mm/season; useful supply ~660 mm
 West,Walnut,new,38,41,6500,10.5,yes,Water: Needs ~700 mm/season; useful supply ~660 mm

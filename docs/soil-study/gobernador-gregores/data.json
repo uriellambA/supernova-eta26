@@ -6,177 +6,176 @@
       "lon": -70.247
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63,
+        "silt": 15.6,
+        "clay": 21.5,
+        "soc": 31.9,
+        "ph": 7.7,
+        "cec": 25.9,
+        "bdod": 1.02,
+        "cfvo": 11.8,
+        "texture": "Sandy clay loam",
+        "fc": 27.9,
+        "wp": 16.8,
+        "awcMm": 5,
+        "ksat": 23.6,
+        "range": "clay 5–54%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 58.2,
+        "silt": 15.7,
+        "clay": 26,
+        "soc": 22.1,
+        "ph": 7.6,
+        "cec": 23.8,
+        "bdod": 1.11,
+        "cfvo": 12.4,
+        "texture": "Sandy clay loam",
+        "fc": 28.9,
+        "wp": 17.9,
+        "awcMm": 10,
+        "ksat": 11.8,
+        "range": "clay 5–56%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 58,
+        "silt": 16.1,
+        "clay": 26.4,
+        "soc": 22.7,
+        "ph": 7.7,
+        "cec": 23.7,
+        "bdod": 1.18,
+        "cfvo": 12.4,
+        "texture": "Sandy clay loam",
+        "fc": 29.2,
+        "wp": 18.2,
+        "awcMm": 14,
+        "ksat": 11.4,
+        "range": "clay 4–62%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 57.9,
+        "silt": 15.3,
+        "clay": 27.1,
+        "soc": 19.5,
+        "ph": 8.1,
+        "cec": 23.8,
+        "bdod": 1.27,
+        "cfvo": 14.9,
+        "texture": "Sandy clay loam",
+        "fc": 29,
+        "wp": 18.3,
+        "awcMm": 27,
+        "ksat": 9.8,
+        "range": "clay 3–71%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 59.2,
+        "silt": 13.9,
+        "clay": 26.4,
+        "soc": 16.5,
+        "ph": 8.1,
+        "cec": 22.2,
+        "bdod": 1.29,
+        "cfvo": 19.4,
+        "texture": "Sandy clay loam",
+        "fc": 27.9,
+        "wp": 17.6,
+        "awcMm": 33,
+        "ksat": 9.9,
+        "range": "clay 2–72%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.1,
+        "silt": 13.5,
+        "clay": 24.6,
+        "soc": 16.3,
+        "ph": 8.1,
+        "cec": 21.1,
+        "bdod": 1.3,
+        "cfvo": 21.3,
+        "texture": "Sandy clay loam",
+        "fc": 26.6,
+        "wp": 16.6,
+        "awcMm": 79,
+        "ksat": 12.3,
+        "range": "clay 2–71%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 56,
     "soil": {
-      "sand": 45,
-      "silt": 35,
-      "clay": 20,
-      "soc": 9,
-      "ph": 8.1,
-      "nitrogen": 0.8,
-      "cec": 16,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 59,
+      "silt": 16,
+      "clay": 25,
+      "soc": 24,
+      "ph": 7.7,
+      "nitrogen": 1.09,
+      "cec": 24.1,
+      "bulkDensity": 1.13,
+      "source": "soil-map",
       "depth": "0–30 cm",
-      "texture": "Loam",
-      "organicMatter": 1.5,
-      "waterHolding": 77,
+      "texture": "Sandy clay loam",
+      "organicMatter": 4.1,
+      "waterHolding": 66,
       "infiltration": "moderate",
-      "ksat": 13.1,
-      "fieldCapacity": 25.8,
-      "wiltingPoint": 13.1
+      "ksat": 13.7,
+      "fieldCapacity": 28.6,
+      "wiltingPoint": 17.6
     },
     "sal": {
-      "ece": 1.9,
+      "ece": 1.1,
       "cls": "low",
       "measured": false,
       "reasons": [
         "Dry climate: rain is only 27% of evaporation, so salts are not washed down naturally.",
-        "pH 8.1: alkaline soils often carry carbonates and some sodium.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 64,
-      "level": "watch",
+      "score": 80,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.38,
-          "note": "1.5% (target > 3%)"
+          "value": 1,
+          "note": "4.1% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.35,
-          "note": "8.1 (best 6.0–7.5)"
+          "value": 0.55,
+          "note": "7.7 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.64,
-          "note": "CEC 16 cmol/kg"
+          "value": 0.96,
+          "note": "CEC 24.1 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.64,
-          "note": "77 mm in 60 cm"
+          "value": 0.55,
+          "note": "66 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1.13 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
-          "value": 0.78,
-          "note": "~1.9 dS/m (estimated)"
+          "value": 0.97,
+          "note": "~1.1 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -185,8 +184,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.36,
+          "note": "average NDVI 0.28"
         }
       ]
     },
@@ -596,11 +595,11 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.38,
+        "evi": 0.26
       },
-      "points": 46
+      "points": 26
     },
     "results": [
       {
@@ -611,7 +610,7 @@
         "metrics": {
           "waterMm": 505,
           "bareMonths": 0.3,
-          "erosion": 0.025076785714285715,
+          "erosion": 0.02108607142857143,
           "nitrogen": 107,
           "organicMatter": 0.6900000000000001,
           "pestBreak": 0.4666666666666666,
@@ -631,7 +630,7 @@
         "id": "f-mixed",
         "name": "Alfalfa–grass mix, rotational grazing",
         "current": false,
-        "score": 50,
+        "score": 49,
         "metrics": {
           "waterMm": 573,
           "bareMonths": 0,
@@ -654,11 +653,11 @@
         "id": "f-cash",
         "name": "Alfalfa → garlic → fava",
         "current": false,
-        "score": 46,
+        "score": 48,
         "metrics": {
           "waterMm": 549,
           "bareMonths": 0.8,
-          "erosion": 0.06687142857142858,
+          "erosion": 0.05622952380952381,
           "nitrogen": 101,
           "organicMatter": 0.6625000000000001,
           "pestBreak": 0.41666666666666663,
@@ -764,6 +763,17 @@
         ]
       },
       {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 58,
+        "agro": 47,
+        "margin": 26000,
+        "payback": 2.4,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~405 mm"
+        ]
+      },
+      {
         "id": "quinoa",
         "name": "Quinoa",
         "viability": 57,
@@ -786,40 +796,26 @@
         ]
       },
       {
-        "id": "rhubarb",
-        "name": "Rhubarb",
-        "viability": 56,
-        "agro": 45,
-        "margin": 26000,
-        "payback": 2.4,
-        "limits": [
-          "Water: Needs ~400 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
-        ]
-      },
-      {
         "id": "strawberry",
         "name": "Strawberry",
-        "viability": 47,
-        "agro": 32,
+        "viability": 49,
+        "agro": 35,
         "margin": 30000,
-        "payback": 2.3,
+        "payback": 2.1,
         "limits": [
           "Water: Needs ~450 mm/season; useful supply ~405 mm",
-          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years"
         ]
       },
       {
         "id": "raspberry",
         "name": "Raspberry",
-        "viability": 45,
-        "agro": 33,
+        "viability": 46,
+        "agro": 35,
         "margin": 23000,
-        "payback": 3.3,
+        "payback": 3.2,
         "limits": [
-          "Water: Needs ~500 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.8–7.5"
+          "Water: Needs ~500 mm/season; useful supply ~405 mm"
         ]
       },
       {
@@ -836,10 +832,10 @@
       {
         "id": "cherry",
         "name": "Cherry",
-        "viability": 39,
-        "agro": 31,
+        "viability": 40,
+        "agro": 32,
         "margin": 23000,
-        "payback": 7.5,
+        "payback": 7.4,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 75% of years",
@@ -861,10 +857,10 @@
       {
         "id": "hazelnut",
         "name": "Hazelnut",
-        "viability": 35,
-        "agro": 33,
+        "viability": 36,
+        "agro": 35,
         "margin": 7000,
-        "payback": 8.9,
+        "payback": 8.7,
         "limits": [
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Summer heat: 586 degree-days available; needs ~1000"
@@ -873,8 +869,8 @@
       {
         "id": "elderberry",
         "name": "Elderberry",
-        "viability": 34,
-        "agro": 39,
+        "viability": 35,
+        "agro": 40,
         "margin": 11000,
         "payback": 4.4,
         "limits": [
@@ -884,10 +880,10 @@
       {
         "id": "apple",
         "name": "Apple",
-        "viability": 33,
-        "agro": 32,
+        "viability": 35,
+        "agro": 34,
         "margin": 9000,
-        "payback": 10.3,
+        "payback": 9.9,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Summer heat: 586 degree-days available; needs ~1100",
@@ -897,12 +893,12 @@
       {
         "id": "blueberry",
         "name": "Blueberry",
-        "viability": 28,
-        "agro": 27,
+        "viability": 29,
+        "agro": 28,
         "margin": 28000,
-        "payback": 6.3,
+        "payback": 6.2,
         "limits": [
-          "Soil pH: Soil pH 8.1; likes 4.5–5.5",
+          "Soil pH: Soil pH 7.7; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 75% of years"
         ]
@@ -911,9 +907,9 @@
         "id": "walnut",
         "name": "Walnut",
         "viability": 28,
-        "agro": 27,
+        "agro": 28,
         "margin": 6500,
-        "payback": 12.8,
+        "payback": 12.6,
         "limits": [
           "Water: Needs ~700 mm/season; useful supply ~405 mm",
           "Season length: 156 frost-free days; needs ~170",
@@ -924,10 +920,10 @@
       {
         "id": "hops",
         "name": "Hops",
-        "viability": 24,
-        "agro": 33,
+        "viability": 25,
+        "agro": 34,
         "margin": 8000,
-        "payback": 9.6,
+        "payback": 9.4,
         "limits": [
           "Water: Needs ~550 mm/season; useful supply ~405 mm",
           "Wind: Spring wind 5.4 m/s; tolerance low"
@@ -942,177 +938,176 @@
       "lon": -70.247
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.9,
+        "silt": 15.4,
+        "clay": 21.7,
+        "soc": 31.4,
+        "ph": 7.7,
+        "cec": 24.8,
+        "bdod": 1,
+        "cfvo": 16.2,
+        "texture": "Sandy clay loam",
+        "fc": 27.9,
+        "wp": 16.8,
+        "awcMm": 5,
+        "ksat": 22.9,
+        "range": "clay 4–50%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 58.9,
+        "silt": 15.2,
+        "clay": 25.9,
+        "soc": 36,
+        "ph": 7.7,
+        "cec": 21.8,
+        "bdod": 1.12,
+        "cfvo": 16.4,
+        "texture": "Sandy clay loam",
+        "fc": 31.3,
+        "wp": 19.4,
+        "awcMm": 10,
+        "ksat": 15.7,
+        "range": "clay 5–50%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 58.7,
+        "silt": 15.2,
+        "clay": 26.1,
+        "soc": 30.1,
+        "ph": 7.7,
+        "cec": 21.2,
+        "bdod": 1.22,
+        "cfvo": 17,
+        "texture": "Sandy clay loam",
+        "fc": 30.3,
+        "wp": 18.9,
+        "awcMm": 14,
+        "ksat": 13.7,
+        "range": "clay 4–54%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 60.6,
+        "silt": 14.9,
+        "clay": 24.5,
+        "soc": 23.5,
+        "ph": 8.1,
+        "cec": 22.5,
+        "bdod": 1.3,
+        "cfvo": 19.6,
+        "texture": "Sandy clay loam",
+        "fc": 28,
+        "wp": 17.3,
+        "awcMm": 26,
+        "ksat": 14.4,
+        "range": "clay 3–62%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.7,
+        "silt": 13.9,
+        "clay": 24.3,
+        "soc": 24.7,
+        "ph": 8.2,
+        "cec": 21.6,
+        "bdod": 1.33,
+        "cfvo": 21.4,
+        "texture": "Sandy clay loam",
+        "fc": 28,
+        "wp": 17.4,
+        "awcMm": 33,
+        "ksat": 15,
+        "range": "clay 3–65%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.7,
+        "silt": 13.7,
+        "clay": 23.5,
+        "soc": 24.7,
+        "ph": 8.2,
+        "cec": 20.8,
+        "bdod": 1.34,
+        "cfvo": 22.2,
+        "texture": "Sandy clay loam",
+        "fc": 27.4,
+        "wp": 17,
+        "awcMm": 81,
+        "ksat": 16.5,
+        "range": "clay 3–63%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 55,
     "soil": {
-      "sand": 45,
-      "silt": 35,
-      "clay": 20,
-      "soc": 9,
-      "ph": 8.1,
-      "nitrogen": 0.8,
-      "cec": 16,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 59,
+      "silt": 15,
+      "clay": 25,
+      "soc": 32.3,
+      "ph": 7.7,
+      "nitrogen": 1.12,
+      "cec": 22,
+      "bulkDensity": 1.15,
+      "source": "soil-map",
       "depth": "0–30 cm",
-      "texture": "Loam",
-      "organicMatter": 1.5,
-      "waterHolding": 77,
+      "texture": "Sandy clay loam",
+      "organicMatter": 5.6,
+      "waterHolding": 70,
       "infiltration": "moderate",
-      "ksat": 13.1,
-      "fieldCapacity": 25.8,
-      "wiltingPoint": 13.1
+      "ksat": 16.4,
+      "fieldCapacity": 30.2,
+      "wiltingPoint": 18.6
     },
     "sal": {
-      "ece": 1.7,
+      "ece": 0.9,
       "cls": "low",
       "measured": false,
       "reasons": [
         "Dry climate: rain is only 32% of evaporation, so salts are not washed down naturally.",
-        "pH 8.1: alkaline soils often carry carbonates and some sodium.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 64,
-      "level": "watch",
+      "score": 76,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.38,
-          "note": "1.5% (target > 3%)"
+          "value": 1,
+          "note": "5.6% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.35,
-          "note": "8.1 (best 6.0–7.5)"
+          "value": 0.55,
+          "note": "7.7 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.64,
-          "note": "CEC 16 cmol/kg"
+          "value": 0.88,
+          "note": "CEC 22 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.64,
-          "note": "77 mm in 60 cm"
+          "value": 0.58,
+          "note": "70 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1.15 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
-          "value": 0.82,
-          "note": "~1.7 dS/m (estimated)"
+          "value": 1,
+          "note": "~0.9 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -1121,8 +1116,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.08,
+          "note": "average NDVI 0.14"
         }
       ]
     },
@@ -1532,11 +1527,11 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.38,
+        "evi": 0.06
       },
-      "points": 46
+      "points": 24
     },
     "results": [
       {
@@ -1547,7 +1542,7 @@
         "metrics": {
           "waterMm": 473,
           "bareMonths": 0.3,
-          "erosion": 0.02582410714285714,
+          "erosion": 0.01754928571428571,
           "nitrogen": 107,
           "organicMatter": 0.6900000000000001,
           "pestBreak": 0.4666666666666666,
@@ -1567,7 +1562,7 @@
         "id": "f-mixed",
         "name": "Alfalfa–grass mix, rotational grazing",
         "current": false,
-        "score": 51,
+        "score": 50,
         "metrics": {
           "waterMm": 536,
           "bareMonths": 0,
@@ -1590,11 +1585,11 @@
         "id": "f-cash",
         "name": "Alfalfa → garlic → fava",
         "current": false,
-        "score": 47,
+        "score": 49,
         "metrics": {
           "waterMm": 515,
           "bareMonths": 0.8,
-          "erosion": 0.06886428571428571,
+          "erosion": 0.046798095238095236,
           "nitrogen": 101,
           "organicMatter": 0.6625000000000001,
           "pestBreak": 0.41666666666666663,
@@ -1700,6 +1695,17 @@
         ]
       },
       {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 58,
+        "agro": 47,
+        "margin": 26000,
+        "payback": 2.4,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~405 mm"
+        ]
+      },
+      {
         "id": "haskap",
         "name": "Haskap berry",
         "viability": 56,
@@ -1708,18 +1714,6 @@
         "payback": 4,
         "limits": [
           "Water: Needs ~400 mm/season; useful supply ~405 mm"
-        ]
-      },
-      {
-        "id": "rhubarb",
-        "name": "Rhubarb",
-        "viability": 56,
-        "agro": 45,
-        "margin": 26000,
-        "payback": 2.4,
-        "limits": [
-          "Water: Needs ~400 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
         ]
       },
       {
@@ -1734,6 +1728,30 @@
         ]
       },
       {
+        "id": "strawberry",
+        "name": "Strawberry",
+        "viability": 46,
+        "agro": 31,
+        "margin": 30000,
+        "payback": 2.3,
+        "limits": [
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 90% of years",
+          "Water: Needs ~450 mm/season; useful supply ~405 mm"
+        ]
+      },
+      {
+        "id": "raspberry",
+        "name": "Raspberry",
+        "viability": 45,
+        "agro": 34,
+        "margin": 23000,
+        "payback": 3.3,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~405 mm",
+          "Spring frost: Frost ≤ -1 °C at bloom (Nov 1–Dec 10) in 45% of years"
+        ]
+      },
+      {
         "id": "lavender",
         "name": "Lavender",
         "viability": 45,
@@ -1742,32 +1760,6 @@
         "payback": 5.3,
         "limits": [
           "Water: Needs ~300 mm/season; useful supply ~405 mm"
-        ]
-      },
-      {
-        "id": "raspberry",
-        "name": "Raspberry",
-        "viability": 44,
-        "agro": 32,
-        "margin": 23000,
-        "payback": 3.4,
-        "limits": [
-          "Water: Needs ~500 mm/season; useful supply ~405 mm",
-          "Spring frost: Frost ≤ -1 °C at bloom (Nov 1–Dec 10) in 45% of years",
-          "Soil pH: Soil pH 8.1; likes 5.8–7.5"
-        ]
-      },
-      {
-        "id": "strawberry",
-        "name": "Strawberry",
-        "viability": 43,
-        "agro": 28,
-        "margin": 30000,
-        "payback": 2.4,
-        "limits": [
-          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 90% of years",
-          "Water: Needs ~450 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
         ]
       },
       {
@@ -1785,10 +1777,10 @@
       {
         "id": "cherry",
         "name": "Cherry",
-        "viability": 34,
-        "agro": 26,
+        "viability": 35,
+        "agro": 27,
         "margin": 23000,
-        "payback": 8.2,
+        "payback": 8,
         "limits": [
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 85% of years",
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
@@ -1810,10 +1802,10 @@
       {
         "id": "hazelnut",
         "name": "Hazelnut",
-        "viability": 30,
-        "agro": 27,
+        "viability": 32,
+        "agro": 29,
         "margin": 7000,
-        "payback": 9.8,
+        "payback": 9.4,
         "limits": [
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Season length: 130 frost-free days; needs ~150",
@@ -1823,10 +1815,10 @@
       {
         "id": "apple",
         "name": "Apple",
-        "viability": 27,
-        "agro": 25,
+        "viability": 28,
+        "agro": 26,
         "margin": 9000,
-        "payback": 12,
+        "payback": 11.7,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Season length: 130 frost-free days; needs ~150",
@@ -1844,7 +1836,7 @@
         "payback": 6.4,
         "limits": [
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 85% of years",
-          "Soil pH: Soil pH 8.1; likes 4.5–5.5",
+          "Soil pH: Soil pH 7.7; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~405 mm"
         ]
       },
@@ -1852,9 +1844,9 @@
         "id": "walnut",
         "name": "Walnut",
         "viability": 26,
-        "agro": 24,
+        "agro": 25,
         "margin": 6500,
-        "payback": 13.7,
+        "payback": 13.4,
         "limits": [
           "Season length: 130 frost-free days; needs ~170",
           "Water: Needs ~700 mm/season; useful supply ~405 mm",
@@ -1884,177 +1876,176 @@
       "lon": -70.247
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.8,
+        "silt": 16.5,
+        "clay": 21.7,
+        "soc": 36.8,
+        "ph": 7.2,
+        "cec": 28.2,
+        "bdod": 1.07,
+        "cfvo": 10.5,
+        "texture": "Sandy clay loam",
+        "fc": 29.2,
+        "wp": 17.5,
+        "awcMm": 5,
+        "ksat": 25.4,
+        "range": "clay 4–56%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 57.1,
+        "silt": 16.5,
+        "clay": 26.4,
+        "soc": 26.7,
+        "ph": 7.2,
+        "cec": 25.1,
+        "bdod": 1.15,
+        "cfvo": 11.5,
+        "texture": "Sandy clay loam",
+        "fc": 30.1,
+        "wp": 18.6,
+        "awcMm": 10,
+        "ksat": 12.5,
+        "range": "clay 5–66%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 55.1,
+        "silt": 16.6,
+        "clay": 28.3,
+        "soc": 27.5,
+        "ph": 7.3,
+        "cec": 24.2,
+        "bdod": 1.2,
+        "cfvo": 11,
+        "texture": "Sandy clay loam",
+        "fc": 31.4,
+        "wp": 19.7,
+        "awcMm": 16,
+        "ksat": 10.2,
+        "range": "clay 4–78%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 55.3,
+        "silt": 16.9,
+        "clay": 27.8,
+        "soc": 20,
+        "ph": 7.6,
+        "cec": 23.7,
+        "bdod": 1.31,
+        "cfvo": 13.2,
+        "texture": "Sandy clay loam",
+        "fc": 29.9,
+        "wp": 18.7,
+        "awcMm": 29,
+        "ksat": 9.1,
+        "range": "clay 3–73%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 57.5,
+        "silt": 15.9,
+        "clay": 26.6,
+        "soc": 18,
+        "ph": 7.6,
+        "cec": 23.2,
+        "bdod": 1.31,
+        "cfvo": 17.6,
+        "texture": "Sandy clay loam",
+        "fc": 28.6,
+        "wp": 17.8,
+        "awcMm": 35,
+        "ksat": 10,
+        "range": "clay 2–73%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 59.7,
+        "silt": 15.6,
+        "clay": 24.7,
+        "soc": 17.7,
+        "ph": 7.6,
+        "cec": 21.1,
+        "bdod": 1.32,
+        "cfvo": 20.3,
+        "texture": "Sandy clay loam",
+        "fc": 27.2,
+        "wp": 16.8,
+        "awcMm": 83,
+        "ksat": 12.5,
+        "range": "clay 2–72%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 60,
     "soil": {
-      "sand": 45,
-      "silt": 35,
-      "clay": 20,
-      "soc": 9,
-      "ph": 8.1,
-      "nitrogen": 0.8,
-      "cec": 16,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 57,
+      "silt": 17,
+      "clay": 27,
+      "soc": 28.8,
+      "ph": 7.3,
+      "nitrogen": 1.47,
+      "cec": 25.2,
+      "bulkDensity": 1.16,
+      "source": "soil-map",
       "depth": "0–30 cm",
-      "texture": "Loam",
-      "organicMatter": 1.5,
-      "waterHolding": 77,
+      "texture": "Sandy clay loam",
+      "organicMatter": 5,
+      "waterHolding": 69,
       "infiltration": "moderate",
-      "ksat": 13.1,
-      "fieldCapacity": 25.8,
-      "wiltingPoint": 13.1
+      "ksat": 12.2,
+      "fieldCapacity": 30.8,
+      "wiltingPoint": 19.2
     },
     "sal": {
-      "ece": 1.9,
+      "ece": 1.1,
       "cls": "low",
       "measured": false,
       "reasons": [
         "Dry climate: rain is only 27% of evaporation, so salts are not washed down naturally.",
-        "pH 8.1: alkaline soils often carry carbonates and some sodium.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 64,
-      "level": "watch",
+      "score": 89,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.38,
-          "note": "1.5% (target > 3%)"
+          "value": 1,
+          "note": "5% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.35,
-          "note": "8.1 (best 6.0–7.5)"
+          "value": 0.75,
+          "note": "7.3 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.64,
-          "note": "CEC 16 cmol/kg"
+          "value": 1,
+          "note": "CEC 25.2 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.64,
-          "note": "77 mm in 60 cm"
+          "value": 0.57,
+          "note": "69 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1.16 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
-          "value": 0.78,
-          "note": "~1.9 dS/m (estimated)"
+          "value": 0.97,
+          "note": "~1.1 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -2063,8 +2054,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.79,
+          "note": "average NDVI 0.49"
         }
       ]
     },
@@ -2474,11 +2465,11 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.67,
+        "evi": 0.41
       },
-      "points": 46
+      "points": 26
     },
     "results": [
       {
@@ -2489,7 +2480,7 @@
         "metrics": {
           "waterMm": 505,
           "bareMonths": 0.3,
-          "erosion": 0.025076785714285715,
+          "erosion": 0.018227857142857143,
           "nitrogen": 107,
           "organicMatter": 0.6900000000000001,
           "pestBreak": 0.4666666666666666,
@@ -2509,7 +2500,7 @@
         "id": "f-mixed",
         "name": "Alfalfa–grass mix, rotational grazing",
         "current": false,
-        "score": 50,
+        "score": 49,
         "metrics": {
           "waterMm": 573,
           "bareMonths": 0,
@@ -2532,11 +2523,11 @@
         "id": "f-cash",
         "name": "Alfalfa → garlic → fava",
         "current": false,
-        "score": 46,
+        "score": 48,
         "metrics": {
           "waterMm": 549,
           "bareMonths": 0.8,
-          "erosion": 0.06687142857142858,
+          "erosion": 0.048607619047619045,
           "nitrogen": 101,
           "organicMatter": 0.6625000000000001,
           "pestBreak": 0.41666666666666663,
@@ -2642,6 +2633,17 @@
         ]
       },
       {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 58,
+        "agro": 48,
+        "margin": 26000,
+        "payback": 2.4,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~405 mm"
+        ]
+      },
+      {
         "id": "quinoa",
         "name": "Quinoa",
         "viability": 57,
@@ -2664,40 +2666,26 @@
         ]
       },
       {
-        "id": "rhubarb",
-        "name": "Rhubarb",
-        "viability": 56,
-        "agro": 45,
-        "margin": 26000,
-        "payback": 2.4,
-        "limits": [
-          "Water: Needs ~400 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
-        ]
-      },
-      {
         "id": "strawberry",
         "name": "Strawberry",
-        "viability": 47,
-        "agro": 32,
+        "viability": 50,
+        "agro": 36,
         "margin": 30000,
-        "payback": 2.3,
+        "payback": 2.1,
         "limits": [
           "Water: Needs ~450 mm/season; useful supply ~405 mm",
-          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years"
         ]
       },
       {
         "id": "raspberry",
         "name": "Raspberry",
-        "viability": 45,
-        "agro": 33,
+        "viability": 47,
+        "agro": 36,
         "margin": 23000,
-        "payback": 3.3,
+        "payback": 3.2,
         "limits": [
-          "Water: Needs ~500 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.8–7.5"
+          "Water: Needs ~500 mm/season; useful supply ~405 mm"
         ]
       },
       {
@@ -2714,10 +2702,10 @@
       {
         "id": "cherry",
         "name": "Cherry",
-        "viability": 39,
-        "agro": 31,
+        "viability": 40,
+        "agro": 32,
         "margin": 23000,
-        "payback": 7.5,
+        "payback": 7.4,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 75% of years",
@@ -2739,10 +2727,10 @@
       {
         "id": "hazelnut",
         "name": "Hazelnut",
-        "viability": 35,
-        "agro": 33,
+        "viability": 36,
+        "agro": 35,
         "margin": 7000,
-        "payback": 8.9,
+        "payback": 8.7,
         "limits": [
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Summer heat: 587 degree-days available; needs ~1000"
@@ -2751,8 +2739,8 @@
       {
         "id": "elderberry",
         "name": "Elderberry",
-        "viability": 34,
-        "agro": 39,
+        "viability": 35,
+        "agro": 40,
         "margin": 11000,
         "payback": 4.4,
         "limits": [
@@ -2762,10 +2750,10 @@
       {
         "id": "apple",
         "name": "Apple",
-        "viability": 33,
-        "agro": 32,
+        "viability": 35,
+        "agro": 34,
         "margin": 9000,
-        "payback": 10.3,
+        "payback": 9.9,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Summer heat: 587 degree-days available; needs ~1100",
@@ -2775,12 +2763,12 @@
       {
         "id": "blueberry",
         "name": "Blueberry",
-        "viability": 28,
-        "agro": 27,
+        "viability": 29,
+        "agro": 28,
         "margin": 28000,
-        "payback": 6.3,
+        "payback": 6.2,
         "limits": [
-          "Soil pH: Soil pH 8.1; likes 4.5–5.5",
+          "Soil pH: Soil pH 7.3; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 75% of years"
         ]
@@ -2789,9 +2777,9 @@
         "id": "walnut",
         "name": "Walnut",
         "viability": 28,
-        "agro": 27,
+        "agro": 28,
         "margin": 6500,
-        "payback": 12.8,
+        "payback": 12.6,
         "limits": [
           "Water: Needs ~700 mm/season; useful supply ~405 mm",
           "Season length: 156 frost-free days; needs ~170",
@@ -2802,10 +2790,10 @@
       {
         "id": "hops",
         "name": "Hops",
-        "viability": 24,
-        "agro": 33,
+        "viability": 25,
+        "agro": 34,
         "margin": 8000,
-        "payback": 9.6,
+        "payback": 9.4,
         "limits": [
           "Water: Needs ~550 mm/season; useful supply ~405 mm",
           "Wind: Spring wind 5.4 m/s; tolerance low"
@@ -2820,177 +2808,176 @@
       "lon": -70.227
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 62.5,
+        "silt": 16.4,
+        "clay": 21,
+        "soc": 26,
+        "ph": 7.7,
+        "cec": 25.7,
+        "bdod": 1.01,
+        "cfvo": 13.6,
+        "texture": "Sandy clay loam",
+        "fc": 26.5,
+        "wp": 15.8,
+        "awcMm": 5,
+        "ksat": 22.3,
+        "range": "clay 4–50%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 57.7,
+        "silt": 17.1,
+        "clay": 25.2,
+        "soc": 18.3,
+        "ph": 7.6,
+        "cec": 24.4,
+        "bdod": 1.12,
+        "cfvo": 13.6,
+        "texture": "Sandy clay loam",
+        "fc": 27.9,
+        "wp": 17.1,
+        "awcMm": 9,
+        "ksat": 11.9,
+        "range": "clay 5–53%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 58.1,
+        "silt": 17.1,
+        "clay": 24.8,
+        "soc": 21,
+        "ph": 7.7,
+        "cec": 24.2,
+        "bdod": 1.19,
+        "cfvo": 14.3,
+        "texture": "Sandy clay loam",
+        "fc": 28.1,
+        "wp": 17.2,
+        "awcMm": 14,
+        "ksat": 13.2,
+        "range": "clay 5–49%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 57.2,
+        "silt": 16.2,
+        "clay": 26.6,
+        "soc": 20.9,
+        "ph": 8.2,
+        "cec": 24.1,
+        "bdod": 1.28,
+        "cfvo": 17.1,
+        "texture": "Sandy clay loam",
+        "fc": 29.1,
+        "wp": 18.1,
+        "awcMm": 27,
+        "ksat": 10.7,
+        "range": "clay 5–60%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 59.3,
+        "silt": 15.2,
+        "clay": 25.6,
+        "soc": 19,
+        "ph": 8.2,
+        "cec": 22.9,
+        "bdod": 1.29,
+        "cfvo": 20.4,
+        "texture": "Sandy clay loam",
+        "fc": 28,
+        "wp": 17.4,
+        "awcMm": 34,
+        "ksat": 11.5,
+        "range": "clay 4–62%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.9,
+        "silt": 14.4,
+        "clay": 23.7,
+        "soc": 19.1,
+        "ph": 8.2,
+        "cec": 21.8,
+        "bdod": 1.31,
+        "cfvo": 20.9,
+        "texture": "Sandy clay loam",
+        "fc": 26.6,
+        "wp": 16.4,
+        "awcMm": 80,
+        "ksat": 14.4,
+        "range": "clay 4–56%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 55,
     "soil": {
-      "sand": 45,
-      "silt": 35,
-      "clay": 20,
-      "soc": 9,
-      "ph": 8.1,
-      "nitrogen": 0.8,
-      "cec": 16,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 59,
+      "silt": 17,
+      "clay": 24,
+      "soc": 20.9,
+      "ph": 7.7,
+      "nitrogen": 0.91,
+      "cec": 24.5,
+      "bulkDensity": 1.14,
+      "source": "soil-map",
       "depth": "0–30 cm",
-      "texture": "Loam",
-      "organicMatter": 1.5,
-      "waterHolding": 77,
+      "texture": "Sandy clay loam",
+      "organicMatter": 3.6,
+      "waterHolding": 65,
       "infiltration": "moderate",
-      "ksat": 13.1,
-      "fieldCapacity": 25.8,
-      "wiltingPoint": 13.1
+      "ksat": 14.5,
+      "fieldCapacity": 27.5,
+      "wiltingPoint": 16.7
     },
     "sal": {
-      "ece": 1.9,
+      "ece": 1.1,
       "cls": "low",
       "measured": false,
       "reasons": [
         "Dry climate: rain is only 27% of evaporation, so salts are not washed down naturally.",
-        "pH 8.1: alkaline soils often carry carbonates and some sodium.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 64,
-      "level": "watch",
+      "score": 75,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.38,
-          "note": "1.5% (target > 3%)"
+          "value": 0.9,
+          "note": "3.6% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.35,
-          "note": "8.1 (best 6.0–7.5)"
+          "value": 0.55,
+          "note": "7.7 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.64,
-          "note": "CEC 16 cmol/kg"
+          "value": 0.98,
+          "note": "CEC 24.5 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.64,
-          "note": "77 mm in 60 cm"
+          "value": 0.54,
+          "note": "65 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1.14 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
-          "value": 0.78,
-          "note": "~1.9 dS/m (estimated)"
+          "value": 0.97,
+          "note": "~1.1 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -2999,8 +2986,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.07,
+          "note": "average NDVI 0.14"
         }
       ]
     },
@@ -3410,11 +3397,11 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.15,
+        "evi": 0.06
       },
-      "points": 46
+      "points": 26
     },
     "results": [
       {
@@ -3425,7 +3412,7 @@
         "metrics": {
           "waterMm": 505,
           "bareMonths": 0.3,
-          "erosion": 0.025076785714285715,
+          "erosion": 0.022434285714285716,
           "nitrogen": 107,
           "organicMatter": 0.6900000000000001,
           "pestBreak": 0.4666666666666666,
@@ -3445,7 +3432,7 @@
         "id": "f-mixed",
         "name": "Alfalfa–grass mix, rotational grazing",
         "current": false,
-        "score": 50,
+        "score": 49,
         "metrics": {
           "waterMm": 573,
           "bareMonths": 0,
@@ -3468,11 +3455,11 @@
         "id": "f-cash",
         "name": "Alfalfa → garlic → fava",
         "current": false,
-        "score": 46,
+        "score": 47,
         "metrics": {
           "waterMm": 549,
           "bareMonths": 0.8,
-          "erosion": 0.06687142857142858,
+          "erosion": 0.05982476190476191,
           "nitrogen": 101,
           "organicMatter": 0.6625000000000001,
           "pestBreak": 0.41666666666666663,
@@ -3578,6 +3565,17 @@
         ]
       },
       {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 58,
+        "agro": 47,
+        "margin": 26000,
+        "payback": 2.4,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~405 mm"
+        ]
+      },
+      {
         "id": "quinoa",
         "name": "Quinoa",
         "viability": 57,
@@ -3600,40 +3598,26 @@
         ]
       },
       {
-        "id": "rhubarb",
-        "name": "Rhubarb",
-        "viability": 56,
-        "agro": 45,
-        "margin": 26000,
-        "payback": 2.4,
-        "limits": [
-          "Water: Needs ~400 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
-        ]
-      },
-      {
         "id": "strawberry",
         "name": "Strawberry",
-        "viability": 47,
-        "agro": 32,
+        "viability": 49,
+        "agro": 35,
         "margin": 30000,
-        "payback": 2.3,
+        "payback": 2.1,
         "limits": [
           "Water: Needs ~450 mm/season; useful supply ~405 mm",
-          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years"
         ]
       },
       {
         "id": "raspberry",
         "name": "Raspberry",
-        "viability": 45,
-        "agro": 34,
+        "viability": 47,
+        "agro": 36,
         "margin": 23000,
-        "payback": 3.3,
+        "payback": 3.2,
         "limits": [
-          "Water: Needs ~500 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.8–7.5"
+          "Water: Needs ~500 mm/season; useful supply ~405 mm"
         ]
       },
       {
@@ -3650,10 +3634,10 @@
       {
         "id": "cherry",
         "name": "Cherry",
-        "viability": 39,
-        "agro": 31,
+        "viability": 40,
+        "agro": 32,
         "margin": 23000,
-        "payback": 7.5,
+        "payback": 7.4,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 75% of years",
@@ -3675,10 +3659,10 @@
       {
         "id": "hazelnut",
         "name": "Hazelnut",
-        "viability": 35,
-        "agro": 33,
+        "viability": 36,
+        "agro": 35,
         "margin": 7000,
-        "payback": 8.9,
+        "payback": 8.7,
         "limits": [
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Summer heat: 589 degree-days available; needs ~1000"
@@ -3687,8 +3671,8 @@
       {
         "id": "elderberry",
         "name": "Elderberry",
-        "viability": 34,
-        "agro": 39,
+        "viability": 35,
+        "agro": 40,
         "margin": 11000,
         "payback": 4.4,
         "limits": [
@@ -3698,10 +3682,10 @@
       {
         "id": "apple",
         "name": "Apple",
-        "viability": 33,
-        "agro": 32,
+        "viability": 35,
+        "agro": 34,
         "margin": 9000,
-        "payback": 10.3,
+        "payback": 9.9,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Summer heat: 589 degree-days available; needs ~1100",
@@ -3711,12 +3695,12 @@
       {
         "id": "blueberry",
         "name": "Blueberry",
-        "viability": 28,
-        "agro": 27,
+        "viability": 29,
+        "agro": 28,
         "margin": 28000,
-        "payback": 6.3,
+        "payback": 6.2,
         "limits": [
-          "Soil pH: Soil pH 8.1; likes 4.5–5.5",
+          "Soil pH: Soil pH 7.7; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 75% of years"
         ]
@@ -3725,9 +3709,9 @@
         "id": "walnut",
         "name": "Walnut",
         "viability": 28,
-        "agro": 27,
+        "agro": 28,
         "margin": 6500,
-        "payback": 12.8,
+        "payback": 12.6,
         "limits": [
           "Water: Needs ~700 mm/season; useful supply ~405 mm",
           "Season length: 157 frost-free days; needs ~170",
@@ -3738,10 +3722,10 @@
       {
         "id": "hops",
         "name": "Hops",
-        "viability": 24,
-        "agro": 33,
+        "viability": 25,
+        "agro": 34,
         "margin": 8000,
-        "payback": 9.6,
+        "payback": 9.4,
         "limits": [
           "Water: Needs ~550 mm/season; useful supply ~405 mm",
           "Wind: Spring wind 5.4 m/s; tolerance low"
@@ -3756,177 +3740,176 @@
       "lon": -70.267
     },
     "sources": {
-      "soil": "regional reference",
+      "soil": "SoilGrids 250 m",
       "climate": "daily record 20 yr",
-      "vegetation": "simulated"
+      "vegetation": "MODIS 250 m"
     },
     "layers": [
       {
         "depth": "0-5 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 64.1,
+        "silt": 14.8,
+        "clay": 21.1,
+        "soc": 37.7,
+        "ph": 7.4,
+        "cec": 27.8,
+        "bdod": 1.05,
+        "cfvo": 10.2,
+        "texture": "Sandy clay loam",
+        "fc": 28.8,
+        "wp": 17.3,
+        "awcMm": 5,
+        "ksat": 27.2,
+        "range": "clay 6–50%"
       },
       {
         "depth": "5-15 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 59,
+        "silt": 15.4,
+        "clay": 25.7,
+        "soc": 23.4,
+        "ph": 7.4,
+        "cec": 25.8,
+        "bdod": 1.13,
+        "cfvo": 9.8,
+        "texture": "Sandy clay loam",
+        "fc": 28.8,
+        "wp": 17.9,
+        "awcMm": 10,
+        "ksat": 12.5,
+        "range": "clay 6–54%"
       },
       {
         "depth": "15-30 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 58.6,
+        "silt": 15.9,
+        "clay": 25.5,
+        "soc": 24.9,
+        "ph": 7.5,
+        "cec": 24.1,
+        "bdod": 1.19,
+        "cfvo": 10.9,
+        "texture": "Sandy clay loam",
+        "fc": 29.1,
+        "wp": 18,
+        "awcMm": 15,
+        "ksat": 13.2,
+        "range": "clay 4–67%"
       },
       {
         "depth": "30-60 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 59.6,
+        "silt": 15.4,
+        "clay": 25,
+        "soc": 18,
+        "ph": 7.8,
+        "cec": 23.5,
+        "bdod": 1.28,
+        "cfvo": 13.6,
+        "texture": "Sandy clay loam",
+        "fc": 27.4,
+        "wp": 17,
+        "awcMm": 27,
+        "ksat": 12.1,
+        "range": "clay 2–69%"
       },
       {
         "depth": "60-100 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 61.3,
+        "silt": 14,
+        "clay": 24.7,
+        "soc": 16.3,
+        "ph": 7.8,
+        "cec": 22.4,
+        "bdod": 1.28,
+        "cfvo": 15.9,
+        "texture": "Sandy clay loam",
+        "fc": 26.7,
+        "wp": 16.6,
+        "awcMm": 34,
+        "ksat": 12.2,
+        "range": "clay 1–68%"
       },
       {
         "depth": "100-200 cm",
-        "sand": null,
-        "silt": null,
-        "clay": null,
-        "soc": null,
-        "ph": null,
-        "cec": null,
-        "bdod": null,
-        "cfvo": null,
-        "texture": "—",
-        "fc": null,
-        "wp": null,
-        "awcMm": null,
-        "ksat": null,
-        "range": ""
+        "sand": 63.3,
+        "silt": 13.7,
+        "clay": 23,
+        "soc": 17.3,
+        "ph": 7.8,
+        "cec": 21.2,
+        "bdod": 1.29,
+        "cfvo": 17.5,
+        "texture": "Sandy clay loam",
+        "fc": 25.6,
+        "wp": 15.8,
+        "awcMm": 81,
+        "ksat": 15.2,
+        "range": "clay 1–65%"
       }
     ],
-    "rootZoneAwc": 0,
+    "rootZoneAwc": 57,
     "soil": {
-      "sand": 45,
-      "silt": 35,
-      "clay": 20,
-      "soc": 9,
-      "ph": 8.1,
-      "nitrogen": 0.8,
-      "cec": 16,
-      "bulkDensity": 1.35,
-      "source": "reference",
+      "sand": 60,
+      "silt": 16,
+      "clay": 25,
+      "soc": 26.5,
+      "ph": 7.5,
+      "nitrogen": 1.04,
+      "cec": 25.3,
+      "bulkDensity": 1.15,
+      "source": "soil-map",
       "depth": "0–30 cm",
-      "texture": "Loam",
-      "organicMatter": 1.5,
-      "waterHolding": 77,
+      "texture": "Sandy clay loam",
+      "organicMatter": 4.6,
+      "waterHolding": 66,
       "infiltration": "moderate",
-      "ksat": 13.1,
-      "fieldCapacity": 25.8,
-      "wiltingPoint": 13.1
+      "ksat": 14.5,
+      "fieldCapacity": 29,
+      "wiltingPoint": 18
     },
     "sal": {
-      "ece": 1.9,
+      "ece": 1.1,
       "cls": "low",
       "measured": false,
       "reasons": [
         "Dry climate: rain is only 27% of evaporation, so salts are not washed down naturally.",
-        "pH 8.1: alkaline soils often carry carbonates and some sodium.",
         "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
       ]
     },
     "health": {
-      "score": 64,
-      "level": "watch",
+      "score": 85,
+      "level": "good",
       "parts": [
         {
           "name": "Organic matter",
-          "value": 0.38,
-          "note": "1.5% (target > 3%)"
+          "value": 1,
+          "note": "4.6% (target > 3%)"
         },
         {
           "name": "pH",
-          "value": 0.35,
-          "note": "8.1 (best 6.0–7.5)"
+          "value": 0.65,
+          "note": "7.5 (best 6.0–7.5)"
         },
         {
           "name": "Nutrient holding",
-          "value": 0.64,
-          "note": "CEC 16 cmol/kg"
+          "value": 1,
+          "note": "CEC 25.3 cmol/kg"
         },
         {
           "name": "Water holding",
-          "value": 0.64,
-          "note": "77 mm in 60 cm"
+          "value": 0.55,
+          "note": "66 mm in 60 cm"
         },
         {
           "name": "Compaction",
-          "value": 0.7,
-          "note": "1.35 g/cm³ (< 1.5 is loose)"
+          "value": 1,
+          "note": "1.15 g/cm³ (< 1.5 is loose)"
         },
         {
           "name": "Salinity",
-          "value": 0.78,
-          "note": "~1.9 dS/m (estimated)"
+          "value": 0.97,
+          "note": "~1.1 dS/m (estimated)"
         },
         {
           "name": "Ground cover",
@@ -3935,8 +3918,8 @@
         },
         {
           "name": "Plant activity",
-          "value": 0.6,
-          "note": "average NDVI 0.40"
+          "value": 0.62,
+          "note": "average NDVI 0.41"
         }
       ]
     },
@@ -4346,11 +4329,11 @@
     },
     "veg": {
       "latest": {
-        "fecha": "2026-11-15",
-        "ndvi": 0.462,
-        "evi": 0.286
+        "fecha": "2026-11-05",
+        "ndvi": 0.63,
+        "evi": 0.39
       },
-      "points": 46
+      "points": 25
     },
     "results": [
       {
@@ -4361,7 +4344,7 @@
         "metrics": {
           "waterMm": 504,
           "bareMonths": 0.3,
-          "erosion": 0.025076785714285715,
+          "erosion": 0.019953571428571428,
           "nitrogen": 107,
           "organicMatter": 0.6900000000000001,
           "pestBreak": 0.4666666666666666,
@@ -4381,7 +4364,7 @@
         "id": "f-mixed",
         "name": "Alfalfa–grass mix, rotational grazing",
         "current": false,
-        "score": 50,
+        "score": 49,
         "metrics": {
           "waterMm": 573,
           "bareMonths": 0,
@@ -4404,11 +4387,11 @@
         "id": "f-cash",
         "name": "Alfalfa → garlic → fava",
         "current": false,
-        "score": 46,
+        "score": 48,
         "metrics": {
           "waterMm": 548,
           "bareMonths": 0.8,
-          "erosion": 0.06687142857142858,
+          "erosion": 0.05320952380952381,
           "nitrogen": 101,
           "organicMatter": 0.6625000000000001,
           "pestBreak": 0.41666666666666663,
@@ -4514,6 +4497,17 @@
         ]
       },
       {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 58,
+        "agro": 48,
+        "margin": 26000,
+        "payback": 2.4,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~405 mm"
+        ]
+      },
+      {
         "id": "quinoa",
         "name": "Quinoa",
         "viability": 57,
@@ -4536,40 +4530,26 @@
         ]
       },
       {
-        "id": "rhubarb",
-        "name": "Rhubarb",
-        "viability": 56,
-        "agro": 45,
-        "margin": 26000,
-        "payback": 2.4,
-        "limits": [
-          "Water: Needs ~400 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
-        ]
-      },
-      {
         "id": "strawberry",
         "name": "Strawberry",
-        "viability": 47,
-        "agro": 32,
+        "viability": 50,
+        "agro": 36,
         "margin": 30000,
-        "payback": 2.3,
+        "payback": 2.1,
         "limits": [
           "Water: Needs ~450 mm/season; useful supply ~405 mm",
-          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years",
-          "Soil pH: Soil pH 8.1; likes 5.5–7.5"
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years"
         ]
       },
       {
         "id": "raspberry",
         "name": "Raspberry",
-        "viability": 45,
-        "agro": 33,
+        "viability": 47,
+        "agro": 36,
         "margin": 23000,
-        "payback": 3.3,
+        "payback": 3.2,
         "limits": [
-          "Water: Needs ~500 mm/season; useful supply ~405 mm",
-          "Soil pH: Soil pH 8.1; likes 5.8–7.5"
+          "Water: Needs ~500 mm/season; useful supply ~405 mm"
         ]
       },
       {
@@ -4586,10 +4566,10 @@
       {
         "id": "cherry",
         "name": "Cherry",
-        "viability": 39,
-        "agro": 31,
+        "viability": 40,
+        "agro": 32,
         "margin": 23000,
-        "payback": 7.5,
+        "payback": 7.4,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 75% of years",
@@ -4611,10 +4591,10 @@
       {
         "id": "hazelnut",
         "name": "Hazelnut",
-        "viability": 35,
-        "agro": 33,
+        "viability": 36,
+        "agro": 35,
         "margin": 7000,
-        "payback": 8.9,
+        "payback": 8.7,
         "limits": [
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Summer heat: 584 degree-days available; needs ~1000"
@@ -4623,8 +4603,8 @@
       {
         "id": "elderberry",
         "name": "Elderberry",
-        "viability": 34,
-        "agro": 39,
+        "viability": 35,
+        "agro": 40,
         "margin": 11000,
         "payback": 4.4,
         "limits": [
@@ -4634,10 +4614,10 @@
       {
         "id": "apple",
         "name": "Apple",
-        "viability": 33,
-        "agro": 32,
+        "viability": 35,
+        "agro": 34,
         "margin": 9000,
-        "payback": 10.3,
+        "payback": 9.9,
         "limits": [
           "Water: Needs ~650 mm/season; useful supply ~405 mm",
           "Summer heat: 584 degree-days available; needs ~1100",
@@ -4647,12 +4627,12 @@
       {
         "id": "blueberry",
         "name": "Blueberry",
-        "viability": 28,
-        "agro": 27,
+        "viability": 29,
+        "agro": 28,
         "margin": 28000,
-        "payback": 6.3,
+        "payback": 6.2,
         "limits": [
-          "Soil pH: Soil pH 8.1; likes 4.5–5.5",
+          "Soil pH: Soil pH 7.5; likes 4.5–5.5",
           "Water: Needs ~500 mm/season; useful supply ~405 mm",
           "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 75% of years"
         ]
@@ -4661,9 +4641,9 @@
         "id": "walnut",
         "name": "Walnut",
         "viability": 28,
-        "agro": 27,
+        "agro": 28,
         "margin": 6500,
-        "payback": 12.8,
+        "payback": 12.6,
         "limits": [
           "Water: Needs ~700 mm/season; useful supply ~405 mm",
           "Season length: 156 frost-free days; needs ~170",
@@ -4674,10 +4654,10 @@
       {
         "id": "hops",
         "name": "Hops",
-        "viability": 24,
-        "agro": 33,
+        "viability": 25,
+        "agro": 34,
         "margin": 8000,
-        "payback": 9.6,
+        "payback": 9.4,
         "limits": [
           "Water: Needs ~550 mm/season; useful supply ~405 mm",
           "Wind: Spring wind 5.4 m/s; tolerance low"
