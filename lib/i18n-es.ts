@@ -646,6 +646,7 @@ export const ES: Record<string, string> = {
   "Bare months": "Meses desnudo", "N kg/ha": "N kg/ha", "Main benefit / risk": "Principal beneficio / riesgo", "New crops ranked for this field": "Cultivos nuevos ordenados para este campo", "Main limit": "Principal limitante", "Margin USD/ha": "Margen USD/ha",
   // ---------- Rotation explorer ----------
   "in {n}": "en {n}",
+  "More information": "Más información",
   "Mark the {n} plots on the field as shown in the map (section {n})": "Marcá los {n} lotes en el campo como muestra el mapa (sección {n})",
   "Full screen": "Pantalla completa",
   "Talk with Growwy": "Hablá con Growwy",

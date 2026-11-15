@@ -131,41 +131,45 @@ export function AIPanel({
         )}
         {error && <p className="mb-2 text-[11px] text-amber-fg">{error}</p>}
         {advice && (
-          <div className="space-y-3 text-sm">
-            {best && (
-              <div className="rounded-xl bg-green-bg p-3 text-green-fg">
-                <div className="text-[11px] font-medium uppercase tracking-[0.08em]">Recommended rotation</div>
-                <div className="font-semibold">{best.strategy.name}</div>
-                <div className="mt-1"><LevelPill level={best.level}>{best.score} / 100</LevelPill></div>
+          // Growwy already says the answer: everything else stays folded under "+ More information"
+          <div className="space-y-2 text-sm">
+            <details className="group rounded-xl border border-line">
+              <summary className="flex cursor-pointer list-none items-center gap-2 px-3 py-2 text-xs font-medium text-ink-2 hover:text-ink [&::-webkit-details-marker]:hidden">
+                <span className="grid h-4 w-4 place-items-center rounded-full border border-current text-[11px] leading-none transition group-open:rotate-45">+</span>
+                <span className="whitespace-nowrap">More information</span>
+                {best && <span className="ml-auto truncate font-normal text-muted">{best.strategy.name} · {best.score}/100</span>}
+              </summary>
+              <div className="space-y-3 border-t border-line px-3 py-3">
+                {best && (
+                  <div className="rounded-xl bg-green-bg p-3 text-green-fg">
+                    <div className="text-[11px] font-medium uppercase tracking-[0.08em]">Recommended rotation</div>
+                    <div className="font-semibold">{best.strategy.name}</div>
+                    <div className="mt-1"><LevelPill level={best.level}>{best.score} / 100</LevelPill></div>
+                  </div>
+                )}
+                {advice.answer && <p className="text-ink-2">{advice.summary}</p>}
+                {advice.newCrops && advice.newCrops.length > 0 && (
+                  <div>
+                    <div className="text-xs font-semibold">New crops to try</div>
+                    <div className="mt-1 flex flex-wrap gap-1">{advice.newCrops.map((n) => <Badge key={n.id} tone="blue" title={n.why}>{speciesById(n.id)?.emoji} {speciesById(n.id)?.name ?? n.id}</Badge>)}</div>
+                  </div>
+                )}
+                {advice.askExpert.length > 0 && (
+                  <div>
+                    <div className="text-xs font-semibold">Check with a local expert</div>
+                    <ul className="list-disc pl-4 text-xs text-muted">{advice.askExpert.map((a) => <li key={a}>{a}</li>)}</ul>
+                  </div>
+                )}
+                {session && <SessionActions s={session} link={link} compact />}
+                <p className="text-[10px] text-subtle">
+                  {advice.source === "ai" ? "SI explanation · scores from the rotation model" : "Rotation model (SI offline)"} · confidence {advice.confidence}. Decision support only: your judgment comes first.
+                </p>
               </div>
-            )}
-            {advice.answer && (
-              <div className="rounded-xl border border-line p-3">
-                <div className="text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Answer to your question</div>
-                <p className="mt-1 text-ink">{advice.answer}</p>
-              </div>
-            )}
-            <p className="text-ink-2">{advice.summary}</p>
-            {advice.newCrops && advice.newCrops.length > 0 && (
-              <div>
-                <div className="text-xs font-semibold">New crops to try</div>
-                <div className="mt-1 flex flex-wrap gap-1">{advice.newCrops.map((n) => <Badge key={n.id} tone="blue" title={n.why}>{speciesById(n.id)?.emoji} {speciesById(n.id)?.name ?? n.id}</Badge>)}</div>
-              </div>
-            )}
-            {advice.askExpert.length > 0 && (
-              <div>
-                <div className="text-xs font-semibold">Check with a local expert</div>
-                <ul className="list-disc pl-4 text-xs text-muted">{advice.askExpert.map((a) => <li key={a}>{a}</li>)}</ul>
-              </div>
-            )}
-            {session && <SessionActions s={session} link={link} compact />}
-            <div className="flex items-center gap-2 text-[11px] text-muted">
-              {session && <span>💾 Saved on this device</span>}
+            </details>
+            <div className="flex items-center gap-2 px-1 text-[11px] text-muted">
+              {session && <span>Saved on this device</span>}
               <button className="ml-auto font-medium text-ink underline-offset-4 hover:underline" onClick={onOpenSessions}>Saved sessions ({savedCount})</button>
             </div>
-            <p className="text-[10px] text-subtle">
-              {advice.source === "ai" ? "SI explanation · scores from the rotation model" : "Rotation model (SI offline)"} · confidence {advice.confidence}. Decision support only: your judgment comes first.
-            </p>
           </div>
         )}
       </div>
