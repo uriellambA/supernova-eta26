@@ -18,7 +18,7 @@ const STEPS: Step[] = [
   { id: "tiles", title: "Quick summary", text: "Vegetation, today's weather, soil health and alerts. \"Details\" opens the full tab." },
   { id: "map", title: "Satellite map", text: "Turn on NASA layers (vegetation, soil temperature, salinity, snow) or the weather. Move the cursor over the map to see the exact value at each point. Tap to place your field." },
   { id: "growwy", title: "Growwy, your SI", text: "Always here, on every tab. Ask anything about your farm, by writing or by voice. \"Analyze my field\" gives you a full plan with the year by seasons." },
-  { id: "tools", title: "Account and language", text: "Your account, Spanish or English, and the \"?\" button to see this tour again. Light or dark mode is at the bottom left; the 3D view is on the map." },
+  { id: "tools", title: "Tour and language", text: "Spanish or English, and the \"?\" button to see this tour again. Light or dark mode is at the bottom left; the 3D view is on the map." },
 ];
 
 type Box = { x: number; y: number; w: number; h: number };

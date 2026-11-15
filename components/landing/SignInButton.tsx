@@ -1,11 +1,20 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { farmIsRegistered } from "@/components/RequireFarm";
 import { btnPrimary } from "@/components/styles";
-import { useAccount } from "@/hooks/useAccount";
+import { leer } from "@/lib/storage";
+import type { FarmRegister } from "@/lib/types";
 
-/** The way into the dashboard: sign in (or, once signed in, "My dashboard"). */
+/** The way into the dashboard: register your farm (or, once registered on this device, "My dashboard"). */
 export function SignInButton({ className = "" }: { className?: string }) {
-  const { session, enabled, ready } = useAccount();
-  if (session) return <Link href="/app" className={`${btnPrimary} ${className}`}>My dashboard</Link>;
-  return <Link href={enabled || !ready ? "/account?next=%2Fapp" : "/app"} className={`${btnPrimary} ${className}`}>Sign in</Link>;
+  const [registered, setRegistered] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    leer<FarmRegister>("register").then((r) => alive && setRegistered(farmIsRegistered(r?.v)));
+    return () => { alive = false; };
+  }, []);
+  return registered
+    ? <Link href="/app" className={`${btnPrimary} ${className}`}>My dashboard</Link>
+    : <Link href="/register?next=%2Fapp" className={`${btnPrimary} ${className}`}>Register farm</Link>;
 }

@@ -29,7 +29,7 @@ export default function Landing() {
             <div className="lg:col-span-7">
             <Reveal>
               <h1 className="font-serif text-5xl leading-[0.98] tracking-tight sm:text-6xl xl:text-7xl">
-                Harvest <em className="text-cta">smart</em>
+                Sow <em className="text-cta">smart</em>
               </h1>
             </Reveal>
             <Reveal delay={100}>

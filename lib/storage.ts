@@ -5,12 +5,7 @@ import { get, set } from "idb-keyval";
 // app WebViews answer IndexedDB slowly or empty after a restart, and the farmer must not be sent back to the register.
 export const claveChacra = (lat: number, lon: number) => `${lat.toFixed(2)},${lon.toFixed(2)}`;
 
-const MIRROR = new Set(["register", "farm", "priorities", "site", "tour", "farms"]);
-
-// Account sync listens to these saves (set by lib/account.ts when someone is signed in)
-type SaveHook = (clave: string, valor: unknown) => void;
-let hook: SaveHook | null = null;
-export const onSaved = (fn: SaveHook | null) => { hook = fn; };
+const MIRROR = new Set(["register", "farm", "priorities", "site", "tour"]);
 const LS = (k: string) => `growvia:${k}`;
 
 function lsSet(clave: string, entry: unknown) {
@@ -42,7 +37,6 @@ export async function guardar<T>(clave: string, valor: T) {
   } catch {
     /* modo privado o sin IndexedDB: la app sigue funcionando */
   }
-  hook?.(clave, valor);
 }
 
 export async function leer<T>(clave: string): Promise<{ t: number; v: T } | null> {
