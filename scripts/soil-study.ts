@@ -16,6 +16,7 @@
  * the ranking of every crop species (agronomic fit + economics) and the rotation strategies for the chosen system.
  * Output: report.md, data.json, points.csv, species.csv, profile.csv in the output folder.
  */
+import { ndviGibs } from "../lib/ndvi-gibs";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { STRATEGIES } from "../config/rotations";
@@ -96,22 +97,23 @@ async function study(p: Pt) {
   log(`${p.name} (${p.lat}, ${p.lon})`);
   const prof = await tryOr("soil map", () => soilGridsProfile(p.lat, p.lon), () => null);
   const climateRaw = await tryOr("climate", () => powerDiario(p.lat, p.lon), () => diarioSimulado(p.lat, p.lon));
-  const veg = await tryOr<NdviResumen>("vegetation", () => ndviModis(p.lat, p.lon), () => ndviSimulado());
+  // NASA GIBS images first (fast), the ORNL point service if they fail
+  const veg = await tryOr<NdviResumen>("vegetation", () => ndviGibs(p.lat, p.lon, 60_000).catch(() => ndviModis(p.lat, p.lon)), () => ndviSimulado());
 
   // Profile by depth
   const thick: Record<string, number> = { "0-5cm": 50, "5-15cm": 100, "15-30cm": 150, "30-60cm": 300, "60-100cm": 400, "100-200cm": 1000 };
   const layers: Layer[] = SOIL_DEPTHS.map((d) => {
     const g = (k: string) => prof.v?.[d]?.[k]?.mean ?? null;
-    const sand = g("sand") !== null ? g("sand")! / 10 : null, clay = g("clay") !== null ? g("clay")! / 10 : null, silt = g("silt") !== null ? g("silt")! / 10 : null;
+    const sand = g("sand"), clay = g("clay"), silt = g("silt"); // % already
     const om = g("soc") !== null ? (g("soc")! / 10) * 1.72 : null;
     const sr = sand !== null && clay !== null ? saxtonRawls(sand, clay, om ?? 1) : null;
     const q = (k: string) => prof.v?.[d]?.[k];
-    const range = q("clay")?.q05 != null ? `clay ${(q("clay")!.q05! / 10).toFixed(0)}–${(q("clay")!.q95! / 10).toFixed(0)}%` : "";
+    const range = q("clay")?.q05 != null ? `clay ${q("clay")!.q05!.toFixed(0)}–${(q("clay")!.q95 ?? 0).toFixed(0)}%` : "";
     return {
-      depth: d.replace("cm", " cm"), sand, silt, clay, soc: g("soc"), ph: g("phh2o"), cec: g("cec"), bdod: g("bdod"), cfvo: g("cfvo") !== null ? g("cfvo")! / 10 : null,
+      depth: d.replace("cm", " cm"), sand, silt, clay, soc: g("soc"), ph: g("phh2o"), cec: g("cec"), bdod: g("bdod"), cfvo: g("cfvo"),
       texture: sand !== null && clay !== null ? textureClass(sand, clay) : "—",
       fc: sr ? +(sr.fc * 100).toFixed(1) : null, wp: sr ? +(sr.wp * 100).toFixed(1) : null,
-      awcMm: sr ? Math.round((sr.fc - sr.wp) * thick[d] * (1 - (g("cfvo") ?? 0) / 1000)) : null, ksat: sr ? +sr.ksat.toFixed(1) : null, range,
+      awcMm: sr ? Math.round((sr.fc - sr.wp) * thick[d] * (1 - (g("cfvo") ?? 0) / 100)) : null, ksat: sr ? +sr.ksat.toFixed(1) : null, range,
     };
   });
   let soil: SoilResumen;

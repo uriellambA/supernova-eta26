@@ -1,5 +1,6 @@
 import { siteNear } from "@/config/sites";
 import { fetchJson } from "./cache";
+import { soilGridsWcs } from "./soilgrids-wcs";
 import type { SmapResumen } from "./smap";
 import type { FarmProfile, IndicadoresNasa, Nivel, NdviResumen, Salinity, SoilHealth, SoilResumen, SoilValues } from "./types";
 
@@ -54,8 +55,20 @@ export const SOIL_PROPS = ["sand", "silt", "clay", "soc", "phh2o", "nitrogen", "
 export const SOIL_DEPTHS = ["0-5cm", "5-15cm", "15-30cm", "30-60cm", "60-100cm", "100-200cm"] as const;
 const THICK: Record<string, number> = { "0-5cm": 5, "5-15cm": 10, "15-30cm": 15, "30-60cm": 30, "60-100cm": 40, "100-200cm": 100 };
 
-/** Raw SoilGrids query: every property at each requested depth, in conventional units. */
+/**
+ * SoilGrids profile: every property at each requested depth, in conventional units
+ * (sand/silt/clay/cfvo %, soc g/kg, pH, nitrogen g/kg, cec cmol/kg, bdod kg/dm³).
+ * The REST API and the map service (WCS) are asked at the same time; the first good answer wins.
+ */
 export async function soilGridsProfile(lat: number, lon: number, depths: readonly string[] = SOIL_DEPTHS) {
+  try {
+    return await Promise.any([soilGridsRest(lat, lon, depths), soilGridsWcs(lat, lon, SOIL_PROPS, depths)]);
+  } catch (e) {
+    throw new Error((e as AggregateError).errors?.map((x: Error) => x.message).join(" · ") ?? (e as Error).message);
+  }
+}
+
+async function soilGridsRest(lat: number, lon: number, depths: readonly string[]) {
   const url =
     `https://rest.isric.org/soilgrids/v2.0/properties/query?lon=${lon}&lat=${lat}` +
     SOIL_PROPS.map((p) => `&property=${p}`).join("") + depths.map((d) => `&depth=${d}`).join("") + "&value=mean&value=Q0.05&value=Q0.95";
@@ -88,7 +101,7 @@ export function topsoilValues(profile: Awaited<ReturnType<typeof soilGridsProfil
   const g = (p: string) => weighted(profile, p, depths);
   const sand = g("sand"), clay = g("clay");
   if (sand === undefined || clay === undefined) throw new Error("soil map: no data at this point");
-  const pct = (gkg: number) => gkg / 10; // g/kg → %
+  const pct = (x: number) => x; // already % (SoilGrids g/kg ÷ 10)
   return {
     sand: +pct(sand).toFixed(0),
     silt: +(g("silt") !== undefined ? pct(g("silt")!) : 100 - pct(sand) - pct(clay)).toFixed(0),
