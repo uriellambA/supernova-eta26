@@ -7,24 +7,35 @@ import { listSessions, type SavedSession } from "./session";
 import { guardar, leer, onSaved } from "./storage";
 import type { FarmRegister } from "./types";
 
-const URL_ = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
-export const accountsEnabled = !!URL_ && !!KEY;
+// Where the accounts live. Taken from the page build when present; otherwise asked to our server, which reads its
+// environment at request time (so the keys work with or without the NEXT_PUBLIC_ prefix).
+const BUILD_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").trim().replace(/\/+$/, "");
+const BUILD_KEY = (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || "").trim();
+type Config = { url: string; key: string } | null;
+let config: Promise<Config> | null = null;
+function getConfig(): Promise<Config> {
+  config ??= BUILD_URL && BUILD_KEY
+    ? Promise.resolve({ url: BUILD_URL, key: BUILD_KEY })
+    : fetch("/api/account-config", { cache: "no-store" }).then((r) => r.json()).then((j) => (j?.enabled ? { url: j.url, key: j.key } : null)).catch(() => null);
+  return config;
+}
 
 let client: Promise<SupabaseClient> | null = null;
 /** The Supabase client, loaded only when accounts are used. */
 export function cloud(): Promise<SupabaseClient> {
-  if (!accountsEnabled) return Promise.reject(new Error("Accounts are not set up yet"));
-  client ??= import("@supabase/supabase-js").then(({ createClient }) =>
-    createClient(URL_, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce", storageKey: "growvia-auth" } }),
-  );
+  client ??= getConfig().then(async (c) => {
+    if (!c) throw new Error("Accounts are not set up yet");
+    const { createClient } = await import("@supabase/supabase-js");
+    return createClient(c.url, c.key, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce", storageKey: "growvia-auth" } });
+  });
   return client;
 }
 
 // ---------- state shared with the screens ----------
 export type SyncState = { status: "off" | "idle" | "syncing" | "ok" | "error"; at?: number; error?: string };
-export type AccountState = { session: Session | null; sync: SyncState; ready: boolean };
-let state: AccountState = { session: null, sync: { status: accountsEnabled ? "idle" : "off" }, ready: !accountsEnabled };
+/** enabled: accounts are set up on this server (false until known). ready: we know who is signed in. */
+export type AccountState = { session: Session | null; sync: SyncState; ready: boolean; enabled: boolean };
+let state: AccountState = { session: null, sync: { status: "off" }, ready: false, enabled: false };
 const subs = new Set<() => void>();
 const emit = (patch: Partial<AccountState>) => { state = { ...state, ...patch }; subs.forEach((f) => f()); };
 export const accountSnapshot = () => state;
@@ -37,15 +48,20 @@ export function subscribeAccount(f: () => void) {
 let started = false;
 /** Reads the saved login once and keeps the device in sync while the person is signed in. */
 function start() {
-  if (started || !accountsEnabled || typeof window === "undefined") return;
+  if (started || typeof window === "undefined") return;
   started = true;
-  cloud().then(async (sb) => {
-    const { data } = await sb.auth.getSession();
-    emit({ session: data.session, ready: true });
-    if (data.session) syncNow();
-    sb.auth.onAuthStateChange((event, session) => {
-      emit({ session });
-      if (event === "SIGNED_IN") syncNow();
+  getConfig().then((c) => {
+    if (!c) return emit({ ready: true, enabled: false });
+    emit({ enabled: true, sync: { status: "idle" } });
+    watchSaves();
+    return cloud().then(async (sb) => {
+      const { data } = await sb.auth.getSession();
+      emit({ session: data.session, ready: true });
+      if (data.session) syncNow();
+      sb.auth.onAuthStateChange((event, session) => {
+        emit({ session });
+        if (event === "SIGNED_IN") syncNow();
+      });
     });
   }).catch(() => emit({ ready: true }));
 }
@@ -163,7 +179,7 @@ async function guardarSilent<T>(k: string, v: T) {
 
 // every change to the register or the sessions on this device is sent to the account (a moment later)
 let timer: ReturnType<typeof setTimeout> | null = null;
-if (accountsEnabled && typeof window !== "undefined") {
+function watchSaves() {
   onSaved((k) => {
     if (quiet || !state.session || (k !== "register" && k !== "sessions")) return;
     if (timer) clearTimeout(timer);

@@ -8,7 +8,7 @@ import { LangToggle } from "@/components/Translator";
 import { ThemeToggle } from "@/components/ui";
 import { useAccount } from "@/hooks/useAccount";
 import {
-  accountsEnabled, deleteAccount, deleteFarm, exportAccount, listFarms, newFarm, sendCode, signInWithGoogle, signOut, switchFarm, syncNow, verifyCode,
+  deleteAccount, deleteFarm, exportAccount, listFarms, newFarm, sendCode, signInWithGoogle, signOut, switchFarm, syncNow, verifyCode,
 } from "@/lib/account";
 import { siteById } from "@/config/sites";
 import { desktopInfo } from "@/lib/desktop";
@@ -21,7 +21,7 @@ const noop = () => () => {};
 const card = "rounded-2xl border border-line bg-surface p-6";
 
 export function AccountView() {
-  const { session, sync, ready } = useAccount();
+  const { session, sync, ready, enabled } = useAccount();
   const router = useRouter();
   const inApp = useSyncExternalStore(noop, () => !!desktopInfo(), () => false);
   const next = useSyncExternalStore(noop, () => {
@@ -99,10 +99,10 @@ export function AccountView() {
           <p className="mt-2 text-ink-2">Keep your farms and the sessions with Growwy on every device. Without an account everything keeps working on this device.</p>
         </div>
 
-        {!accountsEnabled ? (
-          <div className={card}><p className="text-sm text-muted">Accounts are not turned on yet on this server.</p></div>
-        ) : !ready ? (
+        {!ready ? (
           <div className={card}><p className="text-sm text-muted">Loading…</p></div>
+        ) : !enabled ? (
+          <div className={card}><p className="text-sm text-muted">Accounts are not turned on yet on this server.</p>{next && <Link href={next} className={`${btnPrimary} mt-4`}>Continue without an account</Link>}</div>
         ) : !session ? (
           <div className={card}>
             <h2 className="font-serif text-2xl">Sign in or create your account</h2>

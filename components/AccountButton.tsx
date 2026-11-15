@@ -1,13 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useAccount } from "@/hooks/useAccount";
-import { accountsEnabled } from "@/lib/account";
 import { btnGhost } from "./styles";
 
 /** Header button: "Sign in", or the person's initial with the sync state. Hidden while accounts are not set up. */
 export function AccountButton() {
-  const { session, sync } = useAccount();
-  if (!accountsEnabled) return null;
+  const { session, sync, enabled } = useAccount();
+  if (!enabled) return null;
   const email = session?.user.email ?? "";
   const dot = sync.status === "error" ? "bg-red-fg" : sync.status === "syncing" ? "bg-amber-fg animate-pulse" : "bg-green-fg";
   return session ? (

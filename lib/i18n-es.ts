@@ -659,6 +659,7 @@ export const ES: Record<string, string> = {
   "Why it works →": "Por qué funciona →", "effective": "efectiva", "Effectiveness": "Efectividad", "Summary": "Resumen", "Rotation": "Rotación", "Crops": "Cultivos", "Weather": "Clima",
   "Tap to place your field · move the cursor to read the exact value": "Tocá para ubicar tu campo · pasá el cursor para leer el valor exacto",
   "No connection with the account service. Check your internet and try again.": "No hay conexión con el servicio de cuentas. Revisá tu internet y probá de nuevo.",
+  "Continue without an account": "Seguir sin cuenta",
   "Sign in": "Iniciar sesión", "Account": "Cuenta", "My account": "Mi cuenta", "Optional": "Opcional", "Your account": "Tu cuenta",
   "Keep your farms and the sessions with Growwy on every device. Without an account everything keeps working on this device.": "Tené tus chacras y las sesiones con Growwy en todos tus aparatos. Sin cuenta, todo sigue funcionando en este aparato.",
   "Accounts are not turned on yet on this server.": "Las cuentas todavía no están activadas en este servidor.", "Loading…": "Cargando…",
