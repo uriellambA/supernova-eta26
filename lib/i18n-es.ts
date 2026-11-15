@@ -787,6 +787,7 @@ export const ES: Record<string, string> = {
   "Ask": "Preguntar",
   "Try it now · no sign-up": "Probalo ahora · sin registrarte",
   "See your result in a minute": "Mirá tu resultado en un minuto",
+  "Choose where your farm is and what you grow.": "Elegí dónde está tu chacra y qué producís.",
   "Choose where your farm is and what you grow. Growvia reads 20 years of NASA climate and the soil map for that place and compares the rotations": "Elegí dónde está tu chacra y qué producís. Growvia lee 20 años de clima de la NASA y el mapa de suelos de ese lugar y compara las rotaciones",
   "Hectares": "Hectáreas",
   "Show my result": "Ver mi resultado",

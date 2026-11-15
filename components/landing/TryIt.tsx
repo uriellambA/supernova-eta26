@@ -66,7 +66,7 @@ export function TryIt() {
         <Reveal className="lg:col-span-5">
           <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">Try it now · no sign-up</div>
           <h2 className="mt-2 font-serif text-4xl leading-tight sm:text-5xl">See your result in a minute</h2>
-          <p className="mt-3 text-ink-2">Choose where your farm is and what you grow. Growvia reads 20 years of NASA climate and the soil map for that place and compares the rotations.</p>
+          <p className="mt-3 text-ink-2">Choose where your farm is and what you grow.</p>
 
           <div className="mt-6 grid grid-cols-2 gap-2">
             {SITES.map((s) => (
