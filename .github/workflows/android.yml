@@ -12,10 +12,12 @@ name: Growvia Android (APK)
 
 on:
   push:
+    # both lists are needed: with only "tags", GitHub ignores branch pushes
+    branches: ["**"]
+    tags: ["desktop-v*"]
     paths:
       - "desktop/**"
       - ".github/workflows/android.yml"
-    tags: ["desktop-v*"]
   workflow_dispatch:
 
 permissions:
