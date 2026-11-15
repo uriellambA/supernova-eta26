@@ -65,19 +65,16 @@ export function gibsDecoder(layer: string, kind: GibsKind): Promise<Decoder> {
   let p = cache.get(layer);
   if (!p) {
     p = (async () => {
-      for (const url of candidates(layer)) {
-        try {
-          const r = await fetch(url, { signal: AbortSignal.timeout(8000) });
-          if (!r.ok) continue;
-          const entries = parseColormap(await r.text());
-          if (entries.length < 5) continue;
-          const look = colorLookup(entries);
-          return { exact: true, decode: (r, g, b, a) => { const v = look(r, g, b, a); return v === null ? null : normalize(kind, v); } } as Decoder;
-        } catch {
-          /* try the next location */
-        }
-      }
-      return rampDecoder(kind);
+      // all known locations at once: the first valid colormap wins
+      const tries = candidates(layer).map(async (url) => {
+        const r = await fetch(url, { signal: AbortSignal.timeout(6000) });
+        if (!r.ok) throw new Error(`${r.status}`);
+        const entries = parseColormap(await r.text());
+        if (entries.length < 5) throw new Error("empty colormap");
+        const look = colorLookup(entries);
+        return { exact: true, decode: (r, g, b, a) => { const v = look(r, g, b, a); return v === null ? null : normalize(kind, v); } } as Decoder;
+      });
+      return Promise.any(tries).catch(() => rampDecoder(kind));
     })();
     cache.set(layer, p);
   }

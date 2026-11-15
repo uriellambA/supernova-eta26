@@ -31,7 +31,9 @@ export function leerLatLon(url: string) {
 export const usarSimulado = () => process.env.MOCK_DATA === "1";
 
 export async function fetchJson(url: string, timeoutMs = 25_000, init?: RequestInit) {
-  const res = await fetch(url, { ...init, cache: "no-store", signal: AbortSignal.timeout(timeoutMs) });
+  // long offline jobs (the soil study) can ask for more patience with GROWVIA_MIN_TIMEOUT_MS
+  const ms = Math.max(timeoutMs, Number(process.env.GROWVIA_MIN_TIMEOUT_MS) || 0);
+  const res = await fetch(url, { ...init, cache: "no-store", signal: AbortSignal.timeout(ms) });
   if (!res.ok) throw new Error(`${new URL(url).host} respondió ${res.status}`);
   return res.json();
 }

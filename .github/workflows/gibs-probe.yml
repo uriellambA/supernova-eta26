@@ -4,26 +4,18 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: |
-          set -x
-          G=https://gibs.earthdata.nasa.gov
-          time curl -s -o caps.xml $G/wmts/epsg3857/best/1.0.0/WMTSCapabilities.xml
+          curl -s -o caps.xml https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/1.0.0/WMTSCapabilities.xml
           python3 - <<'PY'
           import re
           x=open('caps.xml').read()
           for m in re.finditer(r'<Layer>(.*?)</Layer>', x, re.S):
               b=m.group(1); i=re.search(r'<ows:Identifier>(.*?)</ows:Identifier>', b).group(1)
-              if re.search(r'NDVI|EVI|Land_Surface_Temp_Day|NDSI_Snow', i):
-                  tms=re.findall(r'<TileMatrixSet>(.*?)</TileMatrixSet>', b)
-                  vals=re.findall(r'<Value>(.*?)</Value>', b)
-                  d=re.search(r'<Default>(.*?)</Default>', b)
-                  cm=re.findall(r'xlink:href="([^"]*colormaps[^"]*)"', b)
-                  print(i, tms, 'default', d and d.group(1), 'last', vals[-1:] , cm[:3])
+              if i in ('MODIS_Terra_NDVI_8Day','MODIS_Terra_Land_Surface_Temp_Day','MODIS_Terra_NDSI_Snow_Cover','MODIS_Terra_L3_NDVI_16Day','MODIS_Terra_EVI_8Day'):
+                  print(i, re.findall(r'href="([^"]+)"', b), re.findall(r'<Value>(.*?)</Value>', b)[:4])
           PY
-          for L in MODIS_Terra_NDVI_8Day MODIS_Aqua_NDVI_8Day; do
-            for D in 2026-10-24 2026-10-28 2026-09-14; do
-              curl -s -o t.png -w "$L $D %{http_code} %{content_type} %{size_download} %{time_total}\n" "$G/wmts/epsg3857/best/$L/default/$D/GoogleMapsCompatible_Level9/9/330/154.png"
-            done
-          done
-          for v in v1.3 v1.2 v1.0; do curl -s -o /dev/null -w "colormap $v %{http_code} %{time_total}\n" $G/colormaps/$v/MODIS_Terra_NDVI_8Day.xml; done
-          curl -s -o /dev/null -w "ornl %{http_code} %{time_total}\n" "https://modis.ornl.gov/rst/api/v1/MOD13Q1/dates?latitude=-46.55&longitude=-71.6"
+      - run: timeout 300 npx tsx scripts/probe-ndvi.mts

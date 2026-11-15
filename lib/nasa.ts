@@ -1,6 +1,7 @@
 import { calcularIndicadores } from "./agro";
 import { siteNear } from "@/config/sites";
 import { fetchJson } from "./cache";
+import { resumenNdvi } from "./nasa-summary";
 import type { DiarioClima, IndicadoresNasa, NdviResumen, PuntoNdvi } from "./types";
 
 const POWER = "https://power.larc.nasa.gov/api/temporal/daily/point";
@@ -103,15 +104,4 @@ export async function ndviModis(lat: number, lon: number): Promise<NdviResumen> 
   return resumenNdvi(serie);
 }
 
-export function resumenNdvi(serie: PuntoNdvi[]): NdviResumen {
-  const ultimo = serie.at(-1) ?? null;
-  let anioAnterior: PuntoNdvi | null = null;
-  if (ultimo) {
-    const objetivo = Date.parse(ultimo.fecha) - 365 * 86_400_000;
-    anioAnterior = serie.reduce<PuntoNdvi | null>((mejor, p) => {
-      const dif = Math.abs(Date.parse(p.fecha) - objetivo);
-      return dif < 20 * 86_400_000 && (!mejor || dif < Math.abs(Date.parse(mejor.fecha) - objetivo)) ? p : mejor;
-    }, null);
-  }
-  return { serie, ultimo, anioAnterior };
-}
+export { resumenNdvi } from "./nasa-summary";

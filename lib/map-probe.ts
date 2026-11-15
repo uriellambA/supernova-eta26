@@ -32,6 +32,19 @@ function pixels(url: string): Promise<Pixels | null> {
   return p;
 }
 
+/** Tile reader for the shared NASA readers (vegetation series computed in the browser). */
+export async function browserTile(url: string) {
+  const px = await pixels(url);
+  if (!px) { tiles.delete(url); throw new Error("tile not reachable"); }
+  return { width: px.w, height: px.h, data: px.data };
+}
+
+/** Vegetation series straight from NASA in the browser, when our server could not get it in time. */
+export async function ndviInBrowser(lat: number, lon: number) {
+  const { ndviFromGibs } = await import("./ndvi-core");
+  return ndviFromGibs(lat, lon, browserTile, 40_000);
+}
+
 async function rgbaAt(urlFor: (z: number, x: number, y: number) => string, z: number, lat: number, lon: number) {
   const t = tilePixel(lat, lon, z);
   const px = await pixels(urlFor(z, t.x, t.y));
