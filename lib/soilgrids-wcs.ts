@@ -8,7 +8,12 @@ const WCS = "https://maps.isric.org/mapserv";
 const FACTOR: Record<string, number> = { sand: 10, silt: 10, clay: 10, soc: 10, phh2o: 10, nitrogen: 100, cec: 10, bdod: 100, cfvo: 10 };
 const D = 0.003; // ≈ 300 m box around the point (a few 250 m pixels)
 
-export async function wcsValue(prop: string, depth: string, stat: string, lat: number, lon: number, timeoutMs = 30_000) {
+export async function wcsValue(prop: string, depth: string, stat: string, lat: number, lon: number, timeoutMs = 30_000): Promise<number | null> {
+  // where the map has no data right at the point (it answers 0), look a bit further around (~1.2 km)
+  return (await wcsBox(prop, depth, stat, lat, lon, D, timeoutMs)) ?? wcsBox(prop, depth, stat, lat, lon, D * 4, timeoutMs);
+}
+
+async function wcsBox(prop: string, depth: string, stat: string, lat: number, lon: number, D: number, timeoutMs: number) {
   const q = new URLSearchParams({
     map: `/map/${prop}.map`, SERVICE: "WCS", VERSION: "2.0.1", REQUEST: "GetCoverage",
     COVERAGEID: `${prop}_${depth}_${stat}`, FORMAT: "image/tiff",
@@ -24,7 +29,8 @@ export async function wcsValue(prop: string, depth: string, stat: string, lat: n
   const w = img.getWidth(), h = img.getHeight();
   const nodata = img.getGDALNoData();
   // centre pixel, else the median of the valid pixels in the box
-  const ok = (v: number) => v !== nodata && v !== -32768 && Number.isFinite(v);
+  // 0 = no data in these maps (no real soil has 0 sand, 0 pH or 0 density)
+  const ok = (v: number) => v !== nodata && v !== -32768 && v > 0 && Number.isFinite(v);
   const c = band[Math.floor(h / 2) * w + Math.floor(w / 2)];
   if (ok(c)) return c / FACTOR[prop];
   const vals = Array.from(band).filter(ok).sort((a, b) => a - b);

@@ -1,7 +1,7 @@
 // Temporary: checks the SoilGrids map service (WCS) against the real ISRIC servers in CI.
-import { soilGridsWcs } from "../lib/soilgrids-wcs.ts";
-import { soilGridsProfile, topsoilValues, deriveSoil, SOIL_PROPS } from "../lib/soil.ts";
-for (const [lat, lon] of [[-46.55, -71.615], [-46.6, -70.93], [-48.75, -70.25]]) {
+import { soilGridsWcs } from "../lib/soilgrids-wcs";
+import { soilGridsProfile, topsoilValues, deriveSoil, SOIL_PROPS } from "../lib/soil";
+for (const [lat, lon] of [[-46.55, -71.615], [-46.6, -70.93], [-48.75, -70.25], [-48.78, -70.3]]) {
   const t0 = Date.now();
   try {
     const w = await soilGridsWcs(lat, lon, SOIL_PROPS, ["0-5cm", "5-15cm", "15-30cm"]);
