@@ -176,7 +176,7 @@ export const blankCustom = (system: FarmSystem): Strategy => ({
   risks: [],
 });
 
-/** Builds a starting design from the farm register (largest plot, last 12 months). */
+/** Builds a starting design from the farm data (largest plot, last 12 months). */
 export function customFromRegister(r: FarmRegister, system: FarmSystem): Strategy | null {
   const plot = [...r.plots].sort((a, b) => b.areaHa - a.areaHa)[0];
   if (!plot) return null;
@@ -186,8 +186,8 @@ export function customFromRegister(r: FarmRegister, system: FarmSystem): Strateg
   const winter = plot.history.winter && plot.history.winter !== "bare" ? pick(plot.history.winter) : null;
   const base = blankCustom(system);
   return system === "orchard"
-    ? { ...base, name: `${plot.name} (from register)`, years: [{ main, winter }], alley: winter }
-    : { ...base, name: `${plot.name} (from register)`, years: [{ main, winter }] };
+    ? { ...base, name: `${plot.name} (from your data)`, years: [{ main, winter }], alley: winter }
+    : { ...base, name: `${plot.name} (from your data)`, years: [{ main, winter }] };
 }
 
 export function RotationBuilder({ system, custom, setCustom, result, rank, total, register }: {
@@ -200,7 +200,7 @@ export function RotationBuilder({ system, custom, setCustom, result, rank, total
         <p className="max-w-2xl text-sm text-ink-2">Choose the crops for each year and what covers the soil in winter. Growvia scores your design with the same rules and shows where it ranks against the alternatives.</p>
         <div className="mt-4 flex flex-wrap gap-2">
           <button className={btnPrimary} onClick={() => setCustom(blankCustom(system))}>Start a new design</button>
-          {register && <button className={btnGhost} onClick={() => setCustom(customFromRegister(register, system) ?? blankCustom(system))}>Start from my farm register</button>}
+          {register && <button className={btnGhost} onClick={() => setCustom(customFromRegister(register, system) ?? blankCustom(system))}>Start from my farm data</button>}
         </div>
       </Card>
     );
@@ -294,7 +294,7 @@ export function RotationMethod() {
           <li><b>Your priorities</b> (0–3) weight the five criteria. Each criterion mixes an absolute value with how the option ranks among those compared, so differences are visible.</li>
           <li><b>Penalties</b> when a crop needs more frost-free days than your field has, when frost hits its sensitive stage in half of the years, or when water use exceeds supply.</li>
         </ol>
-        <p className="mt-4 text-sm text-ink-2">Every strategy lists <b>why</b> it is suggested, the <b>evidence</b> (climate record, soil, snowpack), <b>benefits</b>, <b>information gaps</b> and <b>risks</b> to check with a local expert. The SI explains the result in plain words; it does not change the scores.</p>
+        <p className="mt-4 text-sm text-ink-2">Every strategy lists <b>why</b> it is suggested, the <b>evidence</b> (climate history, soil, snowpack), <b>benefits</b>, <b>information gaps</b> and <b>risks</b> to check with a local expert. The SI explains the result in plain words; it does not change the scores.</p>
         <Note kind="warn">Values come from regional references and satellite records. Validate with your own yields, a soil test and local advice (INTA, cooperatives) before changing your rotation.</Note>
       </Card>
       <Card className="lg:col-span-5" title="Words used here">

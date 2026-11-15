@@ -18,7 +18,7 @@ export function RequireFarm({ children }: { children: ReactNode }) {
       if (farmIsRegistered(r?.v)) return setOk(true);
       // keep the question / site that came with the link, to continue after registering
       const next = window.location.pathname + window.location.search;
-      router.replace(`/register?next=${encodeURIComponent(next)}`);
+      router.replace(`/datos?next=${encodeURIComponent(next)}`);
     });
     return () => {
       alive = false;

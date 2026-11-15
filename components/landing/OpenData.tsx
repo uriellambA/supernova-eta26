@@ -14,7 +14,7 @@ const SOURCES: Source[] = [
   { group: "Other open sources", name: "SoilGrids 250 m", by: "ISRIC World Soil Information", use: "Soil texture, organic carbon, pH, nitrogen, CEC and density at 6 depths: soil study and soil health.", license: "CC BY 4.0", url: "https://soilgrids.org" },
   { group: "Other open sources", name: "Oceanic Niño Index (ONI)", by: "NOAA Climate Prediction Center", use: "El Niño / La Niña phase and what each phase meant on your farm.", license: "Public domain", url: "https://www.cpc.ncep.noaa.gov" },
   { group: "Other open sources", name: "Terrain Tiles", by: "Mapzen / Tilezen (AWS Open Data), from SRTM and others", use: "Relief and the 3D view (slopes, cold low spots).", license: "Open data (public domain and CC BY sources)", url: "https://registry.opendata.aws/terrain-tiles/" },
-  { group: "Other open sources", name: "OpenStreetMap · Nominatim · Photon", by: "OpenStreetMap contributors", use: "Street map and address search when registering the farm.", license: "ODbL", url: "https://www.openstreetmap.org/copyright" },
+  { group: "Other open sources", name: "OpenStreetMap · Nominatim · Photon", by: "OpenStreetMap contributors", use: "Street map and address search when loading the farm data.", license: "ODbL", url: "https://www.openstreetmap.org/copyright" },
   { group: "Other open sources", name: "FAO-56 and public agronomic references", by: "FAO · INTA (public reports)", use: "Crop water coefficients (Kc) and the traits of each crop and species, compiled by us as approximate references.", license: "Open publications", url: "https://www.fao.org/4/x0490e/x0490e00.htm" },
 ];
 

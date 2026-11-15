@@ -136,7 +136,7 @@ export function compareStrategies(site: SiteData, farm: FarmProfile, pri: Priori
           risks.unshift(`Frost ≤ ${c.sensitive.threshold} °C during ${c.name.toLowerCase()} ${c.sensitive.stage} (${shortDate(c.sensitive.from)}–${shortDate(c.sensitive.to)}) in ${pct(p)} of years.`);
           if (p >= 0.5) score *= 0.93;
         }
-        if (p !== null) evidence.push(`${c.name} ${c.sensitive.stage} frost risk: ${pct(p)} of the last ${climate.calendario.anios.length} years (climate record).`);
+        if (p !== null) evidence.push(`${c.name} ${c.sensitive.stage} frost risk: ${pct(p)} of the last ${climate.calendario.anios.length} years (climate history).`);
       }
     }
     // Water fit

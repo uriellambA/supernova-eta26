@@ -27,7 +27,7 @@ export function speciesFit(sp: Species, c: IndicadoresNasa, soil: SoilResumen, s
   const indoor = !!sp.greenhouse;
 
   // Winter cold
-  // older cached climate records may lack minAnual: estimate it from the coldest monthly minimum
+  // older cached climate historys may lack minAnual: estimate it from the coldest monthly minimum
   const minAnual = Number.isFinite(c.minAnual) ? c.minAnual : +(Math.min(...c.mensual.map((m) => m.tmin)) - 9).toFixed(1);
   const margin = minAnual - sp.minWinter;
   if (!sp.annual) f.push({ name: "Winter cold", score: indoor ? 1 : clamp(0.5 + margin / 8), note: indoor ? "Protected crop" : `Coldest night averages ${minAnual} °C; survives ${sp.minWinter} °C` });

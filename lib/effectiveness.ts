@@ -54,10 +54,10 @@ export function effectiveness(best: StrategyResult, cur: StrategyResult, ctx: {
   if (ctx.soil?.source === "soil-map") based.push("250 m soil map (SoilGrids) for your farm");
   else { conf -= 15; toImprove.push("No soil map for this point: a lab soil test would make it much more precise."); }
   if (ctx.sal?.measured || ctx.register?.soilTest?.ph != null) based.push("Your own soil test");
-  else { conf -= 10; toImprove.push("Add a soil test (pH, salinity, organic matter) in the farm register."); }
-  if (ctx.register?.plots?.length) based.push("Your plots and their history (farm register)");
+  else { conf -= 10; toImprove.push("Add a soil test (pH, salinity, organic matter) in the farm data."); }
+  if (ctx.register?.plots?.length) based.push("Your plots and their history (farm data)");
   else { conf -= 10; toImprove.push("Add your plots and what grew in each season."); }
-  if ((ctx.climate?.calendario?.anios?.length ?? 20) < 15) { conf -= 10; toImprove.push("The climate record is shorter than usual for this point."); }
+  if ((ctx.climate?.calendario?.anios?.length ?? 20) < 15) { conf -= 10; toImprove.push("The climate history is shorter than usual for this point."); }
   conf = Math.max(30, conf);
 
   return {

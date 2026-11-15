@@ -4,6 +4,6 @@ import { useHotkeys } from "../ui";
 
 export function LandingKeys() {
   const router = useRouter();
-  useHotkeys({ d: () => router.push("/app"), r: () => router.push("/register") });
+  useHotkeys({ d: () => router.push("/app"), r: () => router.push("/datos") });
   return null;
 }

@@ -57,8 +57,7 @@ function dot(v: number, all: number[]): [string, string] {
 }
 const COLS: [keyof Priorities, string][] = [["water", "Water"], ["soil", "Soil"], ["income", "Income"], ["labor", "Work"], ["forage", "Forage"]];
 
-export function Rotations({ results, pri, setPri, children }: { results: StrategyResult[]; pri: Priorities; setPri: (p: Priorities) => void; children?: React.ReactNode }) {
-  const [open, setOpen] = useState<string | null>(null);
+export function Rotations({ results, pri, setPri }: { results: StrategyResult[]; pri: Priorities; setPri: (p: Priorities) => void }) {
   const sorted = [...results].sort((a, b) => b.score - a.score);
   return (
     <div className="space-y-4">
@@ -122,68 +121,90 @@ export function Rotations({ results, pri, setPri, children }: { results: Strateg
           </div>
         </div>
       </details>
-      <details className="rounded-2xl border border-line bg-surface">
-        <summary className="cursor-pointer list-none px-6 py-4 font-medium">See every rotation in detail <span className="text-xs font-normal text-muted">· seasons, evidence and risks</span></summary>
-        <div className="space-y-4 px-4 pb-6 sm:px-6">
-          <div className="grid gap-4 md:grid-cols-2">
-            {sorted.map((r, i) => {
-              const isOpen = open === r.strategy.id;
-              return (
-                <Reveal key={r.strategy.id} delay={i * 70} className="rounded-2xl border border-line bg-surface p-6">
-                  <div className="flex items-start gap-3">
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="text-[11px] text-subtle">#{i + 1}</span>
-                        {r.strategy.current && <Badge tone="blue">Current rotation</Badge>}
-                        {r.strategy.id === "custom" && <Badge tone="amber">Your design</Badge>}
-                        {i === 0 && <Badge tone="green" dot>Best match</Badge>}
-                      </div>
-                      <h4 className="mt-1.5 font-semibold leading-tight tracking-tight">{r.strategy.name}</h4>
-                      <p className="mt-1 text-xs text-muted">{r.strategy.years.map((y) => `${cropById(y.main)?.name}${y.winter && y.winter !== y.main ? ` + ${cropById(y.winter)?.name.toLowerCase()}` : ""}`).join(" → ")}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-serif text-4xl leading-none tabular-nums">{r.score}</div>
-                      <div className="mt-1"><LevelPill level={r.level} /></div>
-                    </div>
-                  </div>
-                  <div className="mt-4"><SeasonStrip r={r} /></div>
-                  <div className="mt-3 grid grid-cols-4 gap-2 text-center text-[11px]">
-                    {[["Water", `${r.metrics.waterMm} mm`], ["Bare", `${r.metrics.bareMonths} mo`], ["Erosion", pct(r.metrics.erosion)], ["N added", `${r.metrics.nitrogen} kg`]].map(([k, v]) => (
-                      <div key={k} className="rounded-lg bg-surface-2 p-1.5"><div className="text-muted">{k}</div><div className="font-semibold">{v}</div></div>
-                    ))}
-                  </div>
-                  {r.benefits.length > 0 && <p className="mt-3 text-sm text-green-fg">✓ {r.benefits.slice(0, 2).join(" · ")}</p>}
-                  {r.risks[0] && <p className="mt-1 text-sm text-amber-fg">⚠ {r.risks[0]}</p>}
-                  <button className="mt-3 text-xs font-medium text-ink underline-offset-4 hover:underline" onClick={() => setOpen(isOpen ? null : r.strategy.id)} aria-expanded={isOpen}>
-                    {isOpen ? "Hide details" : "Why? Evidence, gaps and risks →"}
-                  </button>
-                  {isOpen && (
-                    <div className="mt-3 space-y-2 border-t border-line pt-3 text-xs text-ink-2">
-                      <Block title="Why it was suggested" items={r.why} />
-                      <Block title="Evidence" items={r.evidence} />
-                      {r.benefits.length > 0 && <Block title="Benefits" items={r.benefits} />}
-                      <Block title="Information gaps" items={r.gaps} />
-                      <Block title="Risks to review locally" items={r.risks} />
-                      <div className="grid grid-cols-5 gap-1.5 pt-1">
-                        {(Object.keys(PRI_LABEL) as (keyof Priorities)[]).map((k) => (
-                          <div key={k}><Meter value={r.scores[k] * 100} /><div className="mt-0.5 text-[10px] text-subtle">{PRI_LABEL[k]}</div></div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </Reveal>
-              );
-            })}
+    </div>
+  );
+}
+
+// ---------------- One rotation at a time, in short sub-tabs ----------------
+const PARTS = [["seasons", "Seasons"], ["why", "Why"], ["risks", "Risks"], ["numbers", "Numbers"]] as const;
+type Part = (typeof PARTS)[number][0];
+
+export function RotationDetail({ results }: { results: StrategyResult[] }) {
+  const sorted = [...results].sort((a, b) => b.score - a.score);
+  const [id, setId] = useState(sorted[0]?.strategy.id);
+  const [part, setPart] = useState<Part>("seasons");
+  const r = sorted.find((x) => x.strategy.id === id) ?? sorted[0];
+  if (!r) return null;
+  const i = sorted.indexOf(r);
+  return (
+    <div className="space-y-4">
+      {/* which rotation */}
+      <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Rotation">
+        {sorted.map((x, k) => (
+          <button key={x.strategy.id} role="tab" aria-selected={x === r} onClick={() => setId(x.strategy.id)}
+            className={`rounded-full border px-3 py-1.5 text-sm transition ${x === r ? "border-ink bg-ink text-canvas" : "border-line text-ink-2 hover:border-ink"}`}>
+            {`${k + 1}. ${x.strategy.name}`}{x.strategy.current ? " · today" : ""}
+          </button>
+        ))}
+      </div>
+
+      <Card pad={false}>
+        <div className="flex flex-wrap items-start gap-3 p-6 pb-4">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-1.5">
+              {i === 0 && <Badge tone="green" dot>Best match</Badge>}
+              {r.strategy.current && <Badge tone="blue">Current rotation</Badge>}
+              {r.strategy.id === "custom" && <Badge tone="amber">Your design</Badge>}
+            </div>
+            <h3 className="mt-1.5 font-serif text-2xl leading-tight">{r.strategy.name}</h3>
+            <p className="mt-1 text-xs text-muted">{r.strategy.years.map((y) => `${cropById(y.main)?.name}${y.winter && y.winter !== y.main ? ` + ${cropById(y.winter)?.name.toLowerCase()}` : ""}`).join(" → ")}</p>
           </div>
-          {children}
-          <div className="flex flex-wrap gap-2 text-[11px]">
-            <Badge tone="blue">Crop</Badge><Badge tone="green">Cover / forage</Badge><Badge tone="neutral">Orchard</Badge><Badge tone="red">Bare soil</Badge>
-          </div>
-          <Note>
-            <b>Quick guide:</b> legumes (alfalfa, vetch, clover, peas, fava) fix nitrogen from the air · cover crops (rye, oats) protect bare soil from wind and add organic matter · deep roots (alfalfa, rye) open the soil so water soaks in · drought-tolerant crops (garlic, peas) need less irrigation.
-          </Note>
+          <div className="text-right"><div className="font-serif text-4xl leading-none tabular-nums">{r.score}</div><div className="mt-1"><LevelPill level={r.level} /></div></div>
         </div>
-      </details>
+        {/* what to see about it */}
+        <div className="flex gap-1 border-y border-line px-4" role="tablist" aria-label="Detail">
+          {PARTS.map(([k, l]) => (
+            <button key={k} role="tab" aria-selected={part === k} onClick={() => setPart(k)}
+              className={`-mb-px border-b-2 px-3 py-2.5 text-sm ${part === k ? "border-ink font-medium text-ink" : "border-transparent text-muted hover:text-ink"}`}>{l}</button>
+          ))}
+        </div>
+        <div className="p-6">
+          {part === "seasons" && (
+            <>
+              <SeasonStrip r={r} />
+              <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
+                <Badge tone="blue">Crop</Badge><Badge tone="green">Cover / forage</Badge><Badge tone="neutral">Orchard</Badge><Badge tone="red">Bare soil</Badge>
+              </div>
+            </>
+          )}
+          {part === "why" && (
+            <div className="grid gap-4 text-sm text-ink-2 sm:grid-cols-2">
+              <Block title="Why it was suggested" items={r.why} />
+              {r.benefits.length > 0 ? <Block title="Benefits" items={r.benefits} /> : <Block title="Evidence" items={r.evidence} />}
+            </div>
+          )}
+          {part === "risks" && (
+            <div className="grid gap-4 text-sm text-ink-2 sm:grid-cols-2">
+              {r.risks.length ? <Block title="Risks to review locally" items={r.risks} /> : <p className="text-muted">No special risks for this field.</p>}
+              <Block title="Information gaps" items={r.gaps} />
+            </div>
+          )}
+          {part === "numbers" && (
+            <>
+              <div className="grid grid-cols-2 gap-2 text-center text-sm sm:grid-cols-4">
+                {[["Water", `${r.metrics.waterMm} mm`], ["Bare soil", `${r.metrics.bareMonths} mo`], ["Erosion", pct(r.metrics.erosion)], ["N added", `${r.metrics.nitrogen} kg`]].map(([k, v]) => (
+                  <div key={k} className="rounded-xl bg-surface-2 p-3"><div className="text-xs text-muted">{k}</div><div className="mt-0.5 text-lg font-semibold">{v}</div></div>
+                ))}
+              </div>
+              <div className="mt-5 grid grid-cols-5 gap-3">
+                {(Object.keys(PRI_LABEL) as (keyof Priorities)[]).map((k) => (
+                  <div key={k}><Meter value={r.scores[k] * 100} /><div className="mt-1 text-[11px] text-subtle">{PRI_LABEL[k]}</div></div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </Card>
     </div>
   );
 }

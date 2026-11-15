@@ -42,7 +42,7 @@ export function Overview({ c, current, ndvi }: { c: IndicadoresNasa; current: St
         <Stat label="Rain trend" value={c.tendenciaLluvia ? `${c.tendenciaLluvia.difPct > 0 ? "+" : ""}${c.tendenciaLluvia.difPct}` : "—"} unit="%" hint="Recent vs earlier years" />
       </div>
       <div className="grid gap-4 lg:col-span-7">
-        <Card title="Field calendar: when is the field vulnerable?" eyebrow="20-year climate record">
+        <Card title="Field calendar: when is the field vulnerable?" eyebrow="20-year climate history">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[460px] border-separate border-spacing-[3px] text-[11px]">
               <thead>
@@ -63,7 +63,7 @@ export function Overview({ c, current, ndvi }: { c: IndicadoresNasa; current: St
               </tbody>
             </table>
           </div>
-          {c.altura && <p className="mt-3 text-[11px] text-blue-fg">Temperatures adjusted {c.altura.deltaC > 0 ? "+" : ""}{c.altura.deltaC} °C: the regional climate record averages terrain at ~{c.altura.celda} m (Andes included); your field is at ~{c.altura.campo} m.</p>}
+          {c.altura && <p className="mt-3 text-[11px] text-blue-fg">Temperatures adjusted {c.altura.deltaC > 0 ? "+" : ""}{c.altura.deltaC} °C: the regional climate history averages terrain at ~{c.altura.celda} m (Andes included); your field is at ~{c.altura.campo} m.</p>}
           <p className="mt-3 text-[11px] text-muted">Darker = higher risk. Hover a cell for the value. Winter months with bare soil and strong spring winds are the best moments for a cover crop.</p>
         </Card>
         <div className="grid gap-4 md:grid-cols-2">
@@ -127,7 +127,7 @@ export function Soil({ s, c, ndvi, readings, sal, health, smap, onShowMap }: { s
           </Card>
           <Card title="Salinity" right={<Badge tone={sal.cls === "low" ? "green" : sal.cls === "moderate" ? "amber" : "red"} dot>{sal.measured ? "" : "~"}{sal.ece} dS/m · {sal.cls}</Badge>}>
             <ul className="list-disc space-y-1 pl-5 text-sm text-ink-2">{sal.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
-            {!sal.measured && <p className="mt-2 text-[11px] text-muted">Estimated: soil maps do not measure salt. Add an electrical conductivity (EC) test in your farm register or with the field sensor to replace this estimate.</p>}
+            {!sal.measured && <p className="mt-2 text-[11px] text-muted">Estimated: soil maps do not measure salt. Add an electrical conductivity (EC) test in your farm data or with the field sensor to replace this estimate.</p>}
           </Card>
           {smap && smap.mean !== null && smap.risk !== null && (
             <Card title="Salinity risk from SMAP" eyebrow="Satellite soil moisture, top 5 cm, 9 km" right={<Badge tone={smap.risk < 0.35 ? "green" : smap.risk < 0.65 ? "amber" : "red"} dot>{smap.risk < 0.35 ? "Low risk" : smap.risk < 0.65 ? "Moderate risk" : "High risk"}</Badge>}>

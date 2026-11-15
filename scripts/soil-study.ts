@@ -192,7 +192,7 @@ async function main() {
     "- Soil: ISRIC SoilGrids 2.0 (250 m, mean and 5–95% range), depth-weighted 0–30 cm for the topsoil.",
     "- Water retention and conductivity: Saxton & Rawls (2006) pedotransfer equations from sand, clay and organic matter.",
     "- Salinity: indicator from aridity (rain/ET0), pH, drainage and irrigation method — soil maps do not measure EC.",
-    "- Climate: daily agro-climate record (20 years); ET0 by Hargreaves; chill hours 0–7.2 °C; degree-days base 10 °C.",
+    "- Climate: daily agro-climate history (20 years); ET0 by Hargreaves; chill hours 0–7.2 °C; degree-days base 10 °C.",
     "- Vegetation: MOD13Q1 NDVI/EVI, 250 m, 16 days.",
     "- Species and rotation scores: Growvia rules engine (`lib/suitability.ts`, `lib/rotation.ts`) with approximate regional values.",
     `- Strategies available: ${STRATEGIES.filter((x) => x.system === system).map((x) => x.name).join("; ")}.`);

@@ -29,7 +29,7 @@ export default function DataPage() {
                 </thead>
                 <tbody className="text-ink-2">
                   {[
-                    ["Daily climate record", "Temperature, rain, wind, humidity, pressure, UV, soil wetness", "20 years, every day", "Frost calendar, evaporation, chill hours, trends"],
+                    ["Daily climate history", "Temperature, rain, wind, humidity, pressure, UV, soil wetness", "20 years, every day", "Frost calendar, evaporation, chill hours, trends"],
                     ["Vegetation index", "NDVI and EVI, 250 m", "Every 16 days", "Crop vigor, bare soil, year-on-year change"],
                     ["Soil map", "Texture, organic carbon, pH, N, CEC, density · 6 depths", "250 m, 0–200 cm", "Soil study, water holding, soil health"],
                     ["Weather forecast", "Hourly temperature, humidity, pressure, UV, gusts", "16 days", "Frost alerts, irrigation, contingencies"],
@@ -38,7 +38,7 @@ export default function DataPage() {
                     ["Satellite map layers", "Imagery, vegetation, land heat, snow, relief, salinity risk", "4 sites", "Map filters and 3D view"],
                     ["Weather map", "Temperature, UV, wind, humidity, rain, pressure, clouds", "Grid over each site, now", "Weather filters on the map"],
                     ["Crop & species library", `${SPECIES.length} species, 15 traits each + economics`, "Patagonia and Pampa", "New crops and viability"],
-                    ["Your farm register", "Plots, history, soil test, water, economy", "Your farm", "Personal SI analysis"],
+                    ["Your farm data", "Plots, history, soil test, water, economy", "Your farm", "Personal SI analysis"],
                   ].map(([a, b, c, d]) => (
                     <tr key={a} className="border-b border-line last:border-0"><td className="px-6 py-3 font-medium text-ink">{a}</td><td>{b}</td><td className="whitespace-nowrap pr-4">{c}</td><td className="px-6">{d}</td></tr>
                   ))}

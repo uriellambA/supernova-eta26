@@ -93,7 +93,7 @@ export function AIPanel({
       <Growwy openFull={autoAsk !== null} busy={busy} advice={advice} turns={turns} pending={busy ? asked?.q ?? "" : null} isReply={!!asked?.reply} onReply={(q) => ask(q, true)} data={{ ...growwy, results, farm }} />
 
       <div className="space-y-2 rounded-xl border border-line p-3">
-        <div className="flex items-center text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Your farm<Link href="/register" className="ml-auto normal-case tracking-normal text-ink underline-offset-4 hover:underline">{registered ? "Edit register" : "Register farm"} <kbd>R</kbd></Link></div>
+        <div className="flex items-center text-[11px] font-medium uppercase tracking-[0.08em] text-subtle">Your farm<Link href="/datos" className="ml-auto normal-case tracking-normal text-ink underline-offset-4 hover:underline">{registered ? "Edit farm data" : "Load farm data"} <kbd>R</kbd></Link></div>
         <div className={`grid gap-1 ${systems && systems.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
           {SYSTEMS.filter((s) => !systems || systems.includes(s.id)).map((s) => (
             <button key={s.id} onClick={() => setFarm({ ...farm, system: s.id })} className={`rounded-lg border px-1 py-1.5 text-xs font-medium ${farm.system === s.id ? "border-ink bg-ink text-canvas" : "border-line bg-surface text-ink-2 hover:bg-surface-2"}`}>
@@ -139,7 +139,7 @@ export function AIPanel({
         {!advice && !busy && (
           <div className="space-y-2 text-sm text-muted">
             {savedCount > 0 && <button className="text-xs font-medium text-ink underline-offset-4 hover:underline" onClick={onOpenSessions}>Saved sessions ({savedCount}) →</button>}
-            <p>Compares your current rotation with three alternatives, plans the four seasons and suggests new crops for the months without income, using your field&apos;s climate, soil, water and farm register.</p>
+            <p>Compares your current rotation with three alternatives, plans the four seasons and suggests new crops for the months without income, using your field&apos;s climate, soil, water and farm data.</p>
           </div>
         )}
         {error && <p className="mb-2 text-[11px] text-amber-fg">{error}</p>}

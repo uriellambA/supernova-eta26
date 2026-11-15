@@ -33,7 +33,7 @@ import { LineChart, ndviPoints } from "./Charts";
 import { FiltersPanel, WeatherLegend, WeatherPicker } from "./FiltersPanel";
 import { Icon } from "./icons";
 import type { OverlayId } from "./MapView";
-import { Contingency, NewCrops, Rotations, Viability, YearPlan } from "./PlanSections";
+import { Contingency, NewCrops, RotationDetail, Rotations, Viability, YearPlan } from "./PlanSections";
 import { SessionsModal } from "./SessionsModal";
 import { buildSession, listSessions, saveSession, sessionLink, type SavedSession } from "@/lib/session";
 import { SmapStatus } from "./SmapStatus";
@@ -49,10 +49,10 @@ const MapView = dynamic(() => import("./MapView"), { ssr: false, loading: () => 
 
 // The dashboard is split in 5 tabs so the farmer sees one topic at a time.
 const TABS = [
-  { id: "plan", label: "Crop rotation", short: "Rotation", icon: "rotation", blurb: "Compare, design and plan the rotation of your field", tone: "bg-green-bg text-green-fg", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "effect", label: "Effectiveness" }, { id: "builder", label: "Build your own" }, { id: "seasons", label: "Year plan" }, { id: "method", label: "How it's scored" }] },
+  { id: "plan", label: "Crop rotation", short: "Rotation", icon: "rotation", blurb: "Compare, design and plan the rotation of your field", tone: "bg-green-bg text-green-fg", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "detail", label: "Each rotation" }, { id: "side", label: "Side by side" }, { id: "effect", label: "Effectiveness" }, { id: "builder", label: "Build your own" }, { id: "seasons", label: "Year plan" }, { id: "method", label: "How it's scored" }] },
   { id: "map", label: "Map", short: "Map", icon: "map", blurb: "", tone: "", subs: [] },
   { id: "crops", label: "Crops & economy", short: "Crops", icon: "sprout", blurb: "New species, costs, margins and what you can do", tone: "bg-amber-bg text-amber-fg", subs: [{ id: "crops", label: "New crops" }, { id: "viability", label: "Viability" }, { id: "options", label: "What you can do" }] },
-  { id: "weather", label: "Weather & risks", short: "Weather", icon: "weather", blurb: "Forecast, frost and El Niño / La Niña plans", tone: "bg-blue-bg text-blue-fg", subs: [{ id: "forecast", label: "Forecast" }, { id: "risks", label: "Contingencies" }, { id: "frost", label: "Frost" }, { id: "climate", label: "Climate record" }] },
+  { id: "weather", label: "Weather & risks", short: "Weather", icon: "weather", blurb: "Forecast, frost and El Niño / La Niña plans", tone: "bg-blue-bg text-blue-fg", subs: [{ id: "forecast", label: "Forecast" }, { id: "risks", label: "Contingencies" }, { id: "frost", label: "Frost" }, { id: "climate", label: "Climate history" }] },
   { id: "soil", label: "Soil & water", short: "Soil", icon: "drop", blurb: "Soil health, salinity and irrigation needs", tone: "bg-red-bg text-red-fg", subs: [{ id: "soil", label: "Soil" }, { id: "water", label: "Irrigation" }] },
   { id: "home", label: "General overview", short: "General", icon: "home", blurb: "", tone: "", subs: [] },
 ] as const;
@@ -220,7 +220,7 @@ export function Growvia() {
   useHotkeys({
     a: () => { setGrowwyOpen(true); analyze(); },
     d: () => { go("map"); setIs3D((v) => !v); },
-    r: () => router.push("/register"),
+    r: () => router.push("/datos"),
     ...Object.fromEntries(TABS.map((t, i) => [String(i + 1), () => go(t.id)])),
   });
 
@@ -278,7 +278,7 @@ export function Growvia() {
             </div>
             {tab === "home" && (
               <div className="flex flex-wrap gap-1.5 sm:ml-auto">
-                {!register && <Link href="/register"><Badge tone="amber">Register your farm →</Badge></Link>}
+                {!register && <Link href="/datos"><Badge tone="amber">Load your farm data →</Badge></Link>}
               </div>
             )}
             {current_tab.subs.length > 0 && (
@@ -353,16 +353,18 @@ export function Growvia() {
                 </div>
               </Reveal>
           ) : failed ? (
-            <Note kind="warn">We couldn&apos;t load the climate record for this field ({climate.error}). Try again in a minute.</Note>
+            <Note kind="warn">We couldn&apos;t load the climate history for this field ({climate.error}). Try again in a minute.</Note>
           ) : !ready ? (
-            <Spinner text="Reading 20 years of climate records and the soil map for your field… (first time ~20 s)" />
+            <Spinner text="Reading 20 years of climate historys and the soil map for your field… (first time ~20 s)" />
           ) : (
             <div key={`${tab}-${sub}`}>
-              {sub === "rotations" && (
-                <Rotations results={results} pri={pri} setPri={setPri}>
+              {sub === "rotations" && <Rotations results={results} pri={pri} setPri={setPri} />}
+              {sub === "detail" && <RotationDetail results={results} />}
+              {sub === "side" && (
+                <div className="space-y-4">
                   <RotationMatrix results={results} />
                   <RotationExplorer results={results} site={site} />
-                </Rotations>
+                </div>
               )}
               {sub === "builder" && (() => {
                 const list = [...results].sort((a, b) => b.score - a.score);
@@ -385,7 +387,7 @@ export function Growvia() {
           )}
         </main>
         <footer className="mx-auto hidden w-full max-w-[1500px] px-6 pb-6 text-[11px] text-subtle sm:block">
-          {APP_NAME} is a decision-support tool. It does not replace your judgment or local agronomic advice. · Shortcuts: <kbd>A</kbd> analyze · <kbd>D</kbd> 3D · <kbd>R</kbd> register · <kbd>1</kbd>–<kbd>6</kbd> tabs
+          {APP_NAME} is a decision-support tool. It does not replace your judgment or local agronomic advice. · Shortcuts: <kbd>A</kbd> analyze · <kbd>D</kbd> 3D · <kbd>R</kbd> farm data · <kbd>1</kbd>–<kbd>6</kbd> tabs
         </footer>
       </div>
 

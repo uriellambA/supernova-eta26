@@ -36,7 +36,7 @@ const leerAuto = () => {
 
 const pill = "rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium transition hover:border-ink disabled:opacity-50";
 const Dots = () => <span className="inline-flex gap-0.5" aria-hidden>{[0, 1, 2].map((i) => <span key={i} className="h-1 w-1 animate-bounce rounded-full bg-muted" style={{ animationDelay: `${i * 0.15}s` }} />)}</span>;
-const THINKING = "Let me read your field: climate, soil, water and your register…";
+const THINKING = "Let me read your field: climate, soil, water and your farm data…";
 
 /**
  * Growwy, Growvia's SI, shown as the Pachamama whenever the SI is working or answering.

@@ -49,7 +49,7 @@ export default function AboutPage() {
         <section id="how" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 sm:px-6">
           <SectionTitle eyebrow="How it works" title="From satellite to a decision you can trust" />
           <div className="mt-10 grid gap-4 lg:grid-cols-12">
-            <Step n="01" title="Pick your field" text="Tap the satellite map or register your farm: plots, crops of each season, water, soil test and economy." className="lg:col-span-4" />
+            <Step n="01" title="Pick your field" text="Tap the satellite map or load your farm data: plots, crops of each season, water, soil test and economy." className="lg:col-span-4" />
             <Step n="02" title="Growvia reads the data" text="Two decades of daily climate, the soil map, vegetation every 16 days, snowpack and the Pacific index, all for that spot." className="lg:col-span-4" delay={80} />
             <Step n="03" title="Compare and decide" text="Your rotation vs three alternatives, a four-season plan and new crops — each with why, evidence, gaps and risks." className="lg:col-span-4" delay={160} />
             <Shot src="/landing/rotations.png" alt="Rotation strategies compared side by side with a season-by-season layout" caption="Rotations compared, season by season" className="lg:col-span-7" />

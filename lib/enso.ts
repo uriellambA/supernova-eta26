@@ -40,7 +40,7 @@ export async function ensoLive(): Promise<EnsoResumen> {
 
 export type EnsoImpact = { phase: EnsoPhase; years: number[]; rain: number; frostDays: number; lateFrostPct: number; temp: number; wind: number };
 
-/** What each phase meant on THIS field in the climate record (rain, frost, late frost, wind). */
+/** What each phase meant on THIS field in the climate history (rain, frost, late frost, wind). */
 export function ensoImpacts(enso: EnsoResumen, anual: Anual[]): EnsoImpact[] {
   const phases: EnsoPhase[] = ["El Niño", "Neutral", "La Niña"];
   const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);

@@ -57,7 +57,7 @@ export type Strategy = {
   risks: string[];
 };
 
-// ---------- Climate record (daily, 20 years) ----------
+// ---------- Climate history (daily, 20 years) ----------
 export type DiarioClima = {
   fechas: string[];
   tmin: (number | null)[];
@@ -194,7 +194,7 @@ export const DEFAULT_PRIORITIES: Priorities = { water: 3, income: 2, soil: 3, fo
 
 export type GroundReading = { date: string; moisture: number | null; soilTemp: number | null; ec?: number | null; airTemp?: number | null; humidity?: number | null };
 
-// ---------- Farm register (stored on the device) ----------
+// ---------- Farm data (stored on the device) ----------
 export type PlotRecord = {
   id: string;
   name: string;

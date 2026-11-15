@@ -160,7 +160,7 @@ export function RegisterForm() {
     try {
       setR({ ...emptyRegister(), ...JSON.parse(await f.text()) });
     } catch {
-      alert("That file is not a Growvia farm register.");
+      alert("That file is not a Growvia farm data file.");
     }
   }
 
@@ -171,7 +171,7 @@ export function RegisterForm() {
           <Brand />
           <nav className="hidden gap-1 text-sm text-muted sm:flex">
             <Link href="/app" className="rounded-lg px-2 py-1 hover:text-ink">Dashboard</Link>
-            <span className="rounded-lg px-2 py-1 text-ink">Register</span>
+            <span className="rounded-lg px-2 py-1 text-ink">Farm data</span>
           </nav>
           <span className="ml-auto text-xs text-subtle">{saved ? `Saved on this device · ${saved}` : "Not saved yet"}</span>
           <LangToggle />
@@ -183,10 +183,10 @@ export function RegisterForm() {
         <aside className="lg:sticky lg:top-24 lg:self-start">
           {(next || needName) && (
             <div role="status" className="mb-4 rounded-xl border border-amber-fg/40 bg-amber-bg p-3 text-sm text-amber-fg">
-              First register your farm: its name and location are enough to start. You can complete the rest later.
+              Growwy and the dashboard open once your farm data is loaded: its name and location are enough to start. You can complete the rest later.
             </div>
           )}
-          <h1 className="font-serif text-4xl leading-none">Farm register</h1>
+          <h1 className="font-serif text-4xl leading-none">Farm data</h1>
           <p className="mt-3 text-sm text-muted">Tell {APP_NAME} about your farm once. The SI uses it to compare rotations, plan the seasons and suggest new crops.</p>
           <ol className="mt-6 hidden space-y-1 lg:block">
             {STEPS.map((s, i) => (

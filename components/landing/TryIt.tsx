@@ -121,7 +121,7 @@ export function TryIt() {
               )}
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link href={`/app?site=${site.id}&ask=${ask}`} className={btnPrimary}>Ask Growwy and get my plan →</Link>
-                <Link href="/register" className={btnGhost}>Save my farm</Link>
+                <Link href="/datos" className={btnGhost}>Save my farm</Link>
               </div>
             </div>
           )}

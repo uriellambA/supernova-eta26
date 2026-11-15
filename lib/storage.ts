@@ -1,7 +1,7 @@
 import { get, set } from "idb-keyval";
 
 // IndexedDB: guarda chacras y últimos resultados para el modo offline.
-// The farm register (and what comes from it) is also mirrored in localStorage: some phone browsers and
+// The farm data (and what comes from it) is also mirrored in localStorage: some phone browsers and
 // app WebViews answer IndexedDB slowly or empty after a restart, and the farmer must not be sent back to the register.
 export const claveChacra = (lat: number, lon: number) => `${lat.toFixed(2)},${lon.toFixed(2)}`;
 

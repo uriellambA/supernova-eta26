@@ -11,7 +11,7 @@ const find = (id: string) => (id ? [...document.querySelectorAll(`[data-tour="${
 
 const STEPS: Step[] = [
   { id: "", title: "Welcome to Growvia", text: "A quick tour of your dashboard: what each part shows and how to use it. It takes one minute." },
-  { id: "place", title: "Your farm or a place", text: "Choose your registered farm or one of the places. Everything on the dashboard changes to that spot." },
+  { id: "place", title: "Your farm or a place", text: "Choose your farm or one of the places. Everything on the dashboard changes to that spot." },
   { id: "tabs", title: "Six tabs", text: "It starts with Crop rotation, the main decision. Then Map, Crops, Climate and Soil. General overview, at the end, sums everything up." },
   { id: "rotation", title: "The best rotation for your field", text: "Growvia compares your current rotation with the others and scores them with your priorities: water, income, soil, forage and work." },
   { id: "effect", title: "How effective it will be", text: "How much the recommended rotation improves on what you do today. \"Why it works\" shows each aspect, why, and when you will notice it." },
