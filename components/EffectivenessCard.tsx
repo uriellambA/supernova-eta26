@@ -3,9 +3,9 @@
 import type { Effectiveness } from "@/lib/effectiveness";
 import { Reveal } from "./ui";
 
-const LEVEL = { high: "Very effective", medium: "Effective", low: "Little gain" } as const;
+export const EFF_LEVEL = { high: "Very effective", medium: "Effective", low: "Little gain" } as const;
 const CONF = { high: "High confidence", medium: "Medium confidence", low: "Low confidence" } as const;
-const tone = (l: "high" | "medium" | "low") => (l === "high" ? "bg-green-bg text-green-fg" : l === "medium" ? "bg-amber-bg text-amber-fg" : "bg-red-bg text-red-fg");
+export const effTone = (l: "high" | "medium" | "low") => (l === "high" ? "bg-green-bg text-green-fg" : l === "medium" ? "bg-amber-bg text-amber-fg" : "bg-red-bg text-red-fg");
 
 export function EffectivenessView({ e, name, print = false }: { e: Effectiveness; name: string; print?: boolean }) {
   const ordered = [...e.aspects].sort((a, b) => b.gain - a.gain);
@@ -15,8 +15,8 @@ export function EffectivenessView({ e, name, print = false }: { e: Effectiveness
         <div>
           <div className="font-serif text-7xl leading-none print:text-5xl">{e.score}<span className="text-2xl text-muted">%</span></div>
           <div className="mt-2 flex flex-wrap gap-1.5">
-            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${tone(e.level)}`}>{LEVEL[e.level]}</span>
-            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${tone(e.confidence.level)}`}>{CONF[e.confidence.level]}</span>
+            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${effTone(e.level)}`}>{EFF_LEVEL[e.level]}</span>
+            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${effTone(e.confidence.level)}`}>{CONF[e.confidence.level]}</span>
           </div>
         </div>
         <p className={`text-sm text-ink-2 ${print ? "max-w-md" : "mt-4"}`}>

@@ -37,7 +37,8 @@ import { Contingency, NewCrops, Rotations, Viability, YearPlan } from "./PlanSec
 import { SessionsModal } from "./SessionsModal";
 import { buildSession, listSessions, saveSession, sessionLink, type SavedSession } from "@/lib/session";
 import { SmapStatus } from "./SmapStatus";
-import { RotationBuilder, RotationHero, RotationMatrix, RotationMethod } from "./RotationTools";
+import { RotationBuilder, RotationMatrix, RotationMethod, RotationSummary } from "./RotationTools";
+import { Pachamama } from "./Pachamama";
 import { RotationExplorer } from "./RotationExplorer";
 import { LangToggle } from "./Translator";
 import { getLang, useLang } from "@/lib/i18n";
@@ -48,11 +49,12 @@ const MapView = dynamic(() => import("./MapView"), { ssr: false, loading: () => 
 
 // The dashboard is split in 5 tabs so the farmer sees one topic at a time.
 const TABS = [
-  { id: "home", label: "Overview", icon: "home", blurb: "", tone: "", subs: [] },
-  { id: "plan", label: "Crop rotation", icon: "rotation", blurb: "Compare, design and plan the rotation of your field", tone: "bg-green-bg text-green-fg", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "builder", label: "Build your own" }, { id: "seasons", label: "Year plan" }, { id: "method", label: "How it's scored" }] },
-  { id: "crops", label: "Crops & economy", icon: "sprout", blurb: "New species, costs, margins and what you can do", tone: "bg-amber-bg text-amber-fg", subs: [{ id: "crops", label: "New crops" }, { id: "viability", label: "Viability" }, { id: "options", label: "What you can do" }] },
-  { id: "weather", label: "Weather & risks", icon: "weather", blurb: "Forecast, frost and El Niño / La Niña plans", tone: "bg-blue-bg text-blue-fg", subs: [{ id: "forecast", label: "Forecast" }, { id: "risks", label: "Contingencies" }, { id: "frost", label: "Frost" }, { id: "climate", label: "Climate record" }] },
-  { id: "soil", label: "Soil & water", icon: "drop", blurb: "Soil health, salinity and irrigation needs", tone: "bg-red-bg text-red-fg", subs: [{ id: "soil", label: "Soil" }, { id: "water", label: "Irrigation" }] },
+  { id: "home", label: "Overview", short: "Summary", icon: "home", blurb: "", tone: "", subs: [] },
+  { id: "map", label: "Map", short: "Map", icon: "map", blurb: "", tone: "", subs: [] },
+  { id: "plan", label: "Crop rotation", short: "Rotation", icon: "rotation", blurb: "Compare, design and plan the rotation of your field", tone: "bg-green-bg text-green-fg", subs: [{ id: "rotations", label: "Compare rotations" }, { id: "effect", label: "Effectiveness" }, { id: "builder", label: "Build your own" }, { id: "seasons", label: "Year plan" }, { id: "method", label: "How it's scored" }] },
+  { id: "crops", label: "Crops & economy", short: "Crops", icon: "sprout", blurb: "New species, costs, margins and what you can do", tone: "bg-amber-bg text-amber-fg", subs: [{ id: "crops", label: "New crops" }, { id: "viability", label: "Viability" }, { id: "options", label: "What you can do" }] },
+  { id: "weather", label: "Weather & risks", short: "Weather", icon: "weather", blurb: "Forecast, frost and El Niño / La Niña plans", tone: "bg-blue-bg text-blue-fg", subs: [{ id: "forecast", label: "Forecast" }, { id: "risks", label: "Contingencies" }, { id: "frost", label: "Frost" }, { id: "climate", label: "Climate record" }] },
+  { id: "soil", label: "Soil & water", short: "Soil", icon: "drop", blurb: "Soil health, salinity and irrigation needs", tone: "bg-red-bg text-red-fg", subs: [{ id: "soil", label: "Soil" }, { id: "water", label: "Irrigation" }] },
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 
@@ -87,11 +89,12 @@ export function Growvia() {
   const online = useOnline();
   // first visit: the guided tour opens once (remembered on this device); "?" opens it again
   const [tourOpen, setTourOpen] = useState(false);
+  const [growwyOpen, setGrowwyOpen] = useState(false);
   useEffect(() => {
     leer<boolean>("tour").then((x) => { if (!x?.v) setTimeout(() => setTourOpen(true), 1200); });
   }, []);
   const closeTour = useCallback(() => { setTourOpen(false); guardar("tour", true); }, []);
-  const tourStep = useCallback((id: string) => { if (["rotation", "effect", "map", "growwy", "tiles"].includes(id)) go("home"); }, [go]);
+  const tourStep = useCallback((id: string) => { if (["rotation", "effect", "tiles"].includes(id)) go("home"); else if (id === "map") go("map"); }, [go]);
   /** Change of site: go to its centre, keep a farming system that exists there. */
   const chooseSite = useCallback((id: string) => {
     const s2 = siteById(id);
@@ -123,7 +126,7 @@ export function Growvia() {
     const s = u.get("site");
     if (s && SITES.some((x) => x.id === s)) setTimeout(() => chooseSite(s), 0); // after the saved data is restored
     // eslint-disable-next-line react-hooks/set-state-in-effect -- read once from the URL
-    if (u.has("ask")) setAutoAsk(u.get("ask") ?? "");
+    if (u.has("ask")) { setAutoAsk(u.get("ask") ?? ""); setGrowwyOpen(true); }
     window.history.replaceState(null, "", "/app"); // a reload does not ask again
   }, [chooseSite]);
 
@@ -215,8 +218,8 @@ export function Growvia() {
   const toggleOverlay = (id: OverlayId) => setOverlays((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
 
   useHotkeys({
-    a: () => { go("home"); analyze(); },
-    d: () => { go("home"); setIs3D((v) => !v); },
+    a: () => { setGrowwyOpen(true); analyze(); },
+    d: () => { go("map"); setIs3D((v) => !v); },
     r: () => router.push("/register"),
     ...Object.fromEntries(TABS.map((t, i) => [String(i + 1), () => go(t.id)])),
   });
@@ -259,12 +262,12 @@ export function Growvia() {
             </div>
             <div data-tour="tools" className="flex gap-2">
               <button className={btnGhost} onClick={() => setTourOpen(true)} title="Tutorial" aria-label="Tutorial">?</button>
-              <button className={`${btnGhost} ${is3D ? "!border-ink" : ""}`} onClick={() => { go("home"); setIs3D(!is3D); }} aria-pressed={is3D}>3D View <kbd>D</kbd></button>
+              <button className={`${btnGhost} ${is3D ? "!border-ink" : ""}`} onClick={() => { go("map"); setIs3D(!is3D); }} aria-pressed={is3D}>3D View <kbd>D</kbd></button>
               <LangToggle />
               <ThemeToggle />
             </div>
           </div>
-          <nav data-tour="tabs" className="mx-auto flex max-w-[1500px] gap-1 overflow-x-auto px-4 pb-2 sm:px-6" aria-label="Dashboard tabs">
+          <nav data-tour="tabs" className="mx-auto hidden max-w-[1500px] gap-1 overflow-x-auto px-4 pb-2 sm:flex sm:px-6" aria-label="Dashboard tabs">
             {TABS.map((t, i) => (
               <button key={t.id} onClick={() => go(t.id)} aria-pressed={tab === t.id}
                 className={`flex shrink-0 items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition ${tab === t.id ? "bg-ink text-canvas" : "text-ink-2 hover:bg-surface-2"}`}>
@@ -274,7 +277,7 @@ export function Growvia() {
           </nav>
         </header>
 
-        <main className="mx-auto w-full max-w-[1500px] flex-1 px-4 py-6 sm:px-6">
+        <main className="mx-auto w-full max-w-[1500px] flex-1 px-4 pb-28 pt-6 sm:px-6 sm:pb-6">
           <div className="mb-6 flex flex-wrap items-end gap-3">
             <div>
               <h1 className="font-serif text-4xl leading-none tracking-tight sm:text-5xl">{tab === "home" ? field.name : current_tab.label}</h1>
@@ -300,38 +303,8 @@ export function Growvia() {
           {tab === "home" ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
               {ready ? (
-                <>
-                  <RotationHero results={results} onCompare={() => go("plan", "rotations")} onBuild={() => go("plan", "builder")} onYear={() => go("plan", "seasons")} />
-                  {eff && <EffectivenessCard e={eff.e} name={eff.name} />}
-                </>
+                <RotationSummary results={results} eff={eff?.e ?? null} onCompare={() => go("plan", "rotations")} onEffect={() => go("plan", "effect")} />
               ) : !failed && <div className="md:col-span-6 lg:col-span-12"><Spinner text="Comparing crop rotations for your field…" /></div>}
-              <Reveal tour="map" className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface md:col-span-6 lg:col-span-8">
-                <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-3">
-                  <span className="text-sm font-medium">Satellite map</span>
-                  <span className="hidden text-xs text-subtle sm:inline">Tap to place your field</span>
-                  <div className="w-full sm:ml-auto sm:w-auto"><FiltersPanel active={overlays} toggle={toggleOverlay} /></div>
-                </div>
-                <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-2">
-                  <span className="text-xs font-medium text-muted">Weather now</span>
-                  <div className="w-full sm:ml-auto sm:w-auto"><WeatherPicker value={weatherVar} onChange={setWeatherVar} /></div>
-                </div>
-                {weatherVar && <WeatherLegend varId={weatherVar} grid={wgrid.data} />}
-                {overlays.has("salinity") && <SmapStatus />}
-                <div className="h-[46vh] min-h-[340px] lg:h-[560px]">
-                  <MapView site={site} weather={weatherVar && wgrid.data ? { varId: weatherVar, grid: wgrid.data } : null} field={field} onPick={pick} is3D={is3D} overlays={overlays} boundary={register && field.lat === register.lat && field.lon === register.lon ? register.boundary : null} />
-                </div>
-              </Reveal>
-
-              <Reveal delay={80} tour="growwy" className="flex flex-col rounded-2xl border border-line bg-surface p-6 md:col-span-6 lg:col-span-4">
-                <div className="mb-4 flex items-center gap-2">
-                  <span className="font-serif text-2xl leading-none">Decision support</span>
-                  <Badge tone="blue">SI</Badge>
-                </div>
-                <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems} autoAsk={autoAsk}
-                  growwy={{ fits, climate: climate.data ?? null, soil: soil.data ?? null, sal: sal ?? null, risks, register, site, place: field.name }} />
-                {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => go("plan", "seasons")}>See the year plan →</button>}
-              </Reveal>
-
               <Tile tour="tiles" className="md:col-span-3 lg:col-span-3" delay={60} eyebrow="Vegetation" onClick={() => go("soil", "soil")}>
                 {ndvi.data?.ultimo ? (
                   <>
@@ -375,29 +348,24 @@ export function Growvia() {
                 ) : <TileEmpty st={climate.estado} />}
               </Tile>
 
-              <Reveal className="grid gap-3 sm:grid-cols-2 md:col-span-6 lg:col-span-12 lg:grid-cols-4">
-                {TABS.slice(1).map((t, i) => (
-                  <div key={t.id} role="link" tabIndex={0} onClick={() => go(t.id)} onKeyDown={(e) => e.key === "Enter" && go(t.id)}
-                    className="group flex cursor-pointer flex-col rounded-2xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:border-ink">
-                    <div className="flex items-start justify-between">
-                      <span className={`grid h-11 w-11 place-items-center rounded-xl ${t.tone}`}><Icon name={t.icon} className="h-5 w-5" /></span>
-                      <span className="flex items-center gap-2 text-subtle">
-                        <kbd className="hidden lg:inline-flex">{i + 2}</kbd>
-                        <Icon name="arrow" className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:text-ink" />
-                      </span>
-                    </div>
-                    <div className="mt-4 font-medium">{t.label}</div>
-                    <p className="mt-1 text-xs text-muted">{t.blurb}</p>
-                    <div className="mt-4 flex flex-wrap gap-1.5 border-t border-line pt-3">
-                      {t.subs.map((x) => (
-                        <button key={x.id} onClick={(e) => { e.stopPropagation(); go(t.id, x.id); }}
-                          className="rounded-full border border-line px-2.5 py-1 text-[11px] text-ink-2 transition hover:border-ink hover:text-ink">{x.label}</button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </Reveal>
             </div>
+          ) : tab === "map" ? (
+              <Reveal tour="map" className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface ">
+                <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-3">
+                  <span className="text-sm font-medium">Satellite map</span>
+                  <span className="hidden text-xs text-subtle sm:inline">Tap to place your field · move the cursor to read the exact value</span>
+                  <div className="w-full sm:ml-auto sm:w-auto"><FiltersPanel active={overlays} toggle={toggleOverlay} /></div>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-2">
+                  <span className="text-xs font-medium text-muted">Weather now</span>
+                  <div className="w-full sm:ml-auto sm:w-auto"><WeatherPicker value={weatherVar} onChange={setWeatherVar} /></div>
+                </div>
+                {weatherVar && <WeatherLegend varId={weatherVar} grid={wgrid.data} />}
+                {overlays.has("salinity") && <SmapStatus />}
+                <div className="h-[62vh] min-h-[380px] lg:h-[calc(100vh-280px)]">
+                  <MapView site={site} weather={weatherVar && wgrid.data ? { varId: weatherVar, grid: wgrid.data } : null} field={field} onPick={pick} is3D={is3D} overlays={overlays} boundary={register && field.lat === register.lat && field.lon === register.lon ? register.boundary : null} />
+                </div>
+              </Reveal>
           ) : failed ? (
             <Note kind="warn">We couldn&apos;t load the climate record for this field ({climate.error}). Try again in a minute.</Note>
           ) : !ready ? (
@@ -416,6 +384,7 @@ export function Growvia() {
                 return <RotationBuilder system={farm.system} custom={custom} setCustom={setCustom} result={mine} rank={mine ? list.indexOf(mine) + 1 : 0} total={list.length} register={register} />;
               })()}
               {sub === "method" && <RotationMethod />}
+              {sub === "effect" && (eff ? <EffectivenessCard e={eff.e} name={eff.name} /> : <Spinner text="Comparing crop rotations for your field…" />)}
               {sub === "seasons" && <YearPlan results={results} fits={fits} advice={advice} site={site} />}
               {sub === "crops" && <NewCrops fits={fits} advice={advice} site={site} />}
               {sub === "viability" && <Viability fits={fits} areaHa={farm.areaHa} site={site} />}
@@ -424,15 +393,48 @@ export function Growvia() {
               {sub === "risks" && <Contingency list={risks} enso={enso.data} c={climate.data!} />}
               {sub === "frost" && <Frost c={climate.data!} />}
               {sub === "climate" && <Overview c={climate.data!} current={current} ndvi={ndvi.data} />}
-              {sub === "soil" && <Soil s={soil.data!} c={climate.data} ndvi={ndvi.data} readings={readings} sal={sal!} health={health!} smap={smap.data} onShowMap={() => { setOverlays(new Set(["salinity"])); go("home"); }} />}
+              {sub === "soil" && <Soil s={soil.data!} c={climate.data} ndvi={ndvi.data} readings={readings} sal={sal!} health={health!} smap={smap.data} onShowMap={() => { setOverlays(new Set(["salinity"])); go("map"); }} />}
               {sub === "water" && <Water c={climate.data!} f={forecast.data} snow={snow.data} farm={farm} setFarm={setFarm} />}
             </div>
           )}
         </main>
-        <footer className="mx-auto w-full max-w-[1500px] px-6 pb-6 text-[11px] text-subtle">
-          {APP_NAME} is a decision-support tool. It does not replace your judgment or local agronomic advice. · Shortcuts: <kbd>A</kbd> analyze · <kbd>D</kbd> 3D · <kbd>R</kbd> register · <kbd>1</kbd>–<kbd>5</kbd> tabs
+        <footer className="mx-auto hidden w-full max-w-[1500px] px-6 pb-6 text-[11px] text-subtle sm:block">
+          {APP_NAME} is a decision-support tool. It does not replace your judgment or local agronomic advice. · Shortcuts: <kbd>A</kbd> analyze · <kbd>D</kbd> 3D · <kbd>R</kbd> register · <kbd>1</kbd>–<kbd>6</kbd> tabs
         </footer>
       </div>
+
+      {/* Growwy: always at hand, in a side panel */}
+      <button data-tour="growwy" onClick={() => setGrowwyOpen(true)} aria-label="Ask Growwy"
+        className={`fixed bottom-20 right-4 z-40 flex items-center gap-2 rounded-full border border-line bg-surface p-1 shadow-xl sm:py-1.5 sm:pl-1.5 sm:pr-4 transition hover:border-ink sm:bottom-6 sm:right-6 print:hidden ${growwyOpen ? "hidden" : ""}`}>
+        <span className="h-11 w-11 overflow-hidden rounded-full bg-surface-2"><Pachamama fill className="h-full w-full" /></span>
+        <span className="hidden text-sm font-medium sm:inline">Ask Growwy</span>
+      </button>
+      {growwyOpen && (
+        <div className="fixed inset-0 z-50 print:hidden" role="dialog" aria-modal="true" aria-label="Growwy">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setGrowwyOpen(false)} />
+          <aside className="absolute inset-y-0 right-0 flex w-full max-w-md flex-col overflow-y-auto border-l border-line bg-canvas p-5 shadow-2xl">
+            <div className="mb-4 flex items-center gap-2">
+              <span className="font-serif text-2xl leading-none">Decision support</span>
+              <Badge tone="blue">SI</Badge>
+              <button className={`${btnGhost} ml-auto`} onClick={() => setGrowwyOpen(false)} aria-label="Close">✕</button>
+            </div>
+            <AIPanel farm={farm} setFarm={setFarm} results={results} advice={advice} busy={busy} onAnalyze={analyze} error={aiError} registered={!!register} session={session} link={link} savedCount={sessions.length} onOpenSessions={() => setSessionsOpen(true)} systems={site.systems} autoAsk={autoAsk}
+                  growwy={{ fits, climate: climate.data ?? null, soil: soil.data ?? null, sal: sal ?? null, risks, register, site, place: field.name }} />
+                {advice && <button className="mt-3 text-left text-xs font-medium underline-offset-4 hover:underline" onClick={() => { setGrowwyOpen(false); go("plan", "seasons"); }}>See the year plan →</button>}
+          </aside>
+        </div>
+      )}
+
+      {/* Phones: the tabs as a bar at the bottom, like an app */}
+      <nav data-tour="tabs" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-6 border-t border-line bg-canvas/95 backdrop-blur sm:hidden print:hidden" style={{ paddingBottom: "env(safe-area-inset-bottom)" }} aria-label="Dashboard tabs">
+        {TABS.map((t) => (
+          <button key={t.id} onClick={() => go(t.id)} aria-pressed={tab === t.id}
+            className={`flex flex-col items-center gap-0.5 py-2 text-[10px] font-medium ${tab === t.id ? "text-ink" : "text-muted"}`}>
+            <span className={`grid h-7 w-10 place-items-center rounded-full ${tab === t.id ? "bg-surface-2" : ""}`}><Icon name={t.icon} className="h-[18px] w-[18px]" /></span>
+            {t.short}
+          </button>
+        ))}
+      </nav>
 
       <SessionsModal open={sessionsOpen} onClose={() => setSessionsOpen(false)} sessions={sessions} setSessions={setSessions} />
     </>

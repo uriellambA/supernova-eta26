@@ -6,15 +6,18 @@ import { btnGhost, btnPrimary } from "./styles";
 
 type Step = { id: string; title: string; text: string };
 
+/** First visible element for a step (the same part can exist twice, e.g. tabs on top and at the bottom on phones). */
+const find = (id: string) => (id ? [...document.querySelectorAll(`[data-tour="${id}"]`)].find((el) => el.getBoundingClientRect().width > 0) ?? null : null);
+
 const STEPS: Step[] = [
   { id: "", title: "Welcome to Growvia", text: "A quick tour of your dashboard: what each part shows and how to use it. It takes one minute." },
   { id: "place", title: "Your farm or a place", text: "Choose your registered farm or one of the places. Everything on the dashboard changes to that spot." },
-  { id: "tabs", title: "Five tabs", text: "Summary is the short version. Crop rotation, Crops and economy, Climate and risks and Soil and water have the details." },
+  { id: "tabs", title: "Six tabs", text: "Summary is the short version. Map, Crop rotation, Crops and economy, Climate and risks and Soil and water have the details." },
   { id: "rotation", title: "The best rotation for your field", text: "Growvia compares your current rotation with the others and scores them with your priorities: water, income, soil, forage and work." },
-  { id: "effect", title: "How effective it will be", text: "What improves on your farm with the recommended rotation, why, and when you will notice it." },
-  { id: "map", title: "Satellite map", text: "Turn on NASA layers (vegetation, soil temperature, salinity, snow) or the weather. Move the cursor over the map to see the exact value at each point. Tap to place your field." },
-  { id: "growwy", title: "Growwy, your SI", text: "Ask anything about your farm, by writing or by voice. \"Analyze my field\" gives you a full plan with the year by seasons." },
+  { id: "effect", title: "How effective it will be", text: "How much the recommended rotation improves on what you do today. \"Why it works\" shows each aspect, why, and when you will notice it." },
   { id: "tiles", title: "Quick summary", text: "Vegetation, today's weather, soil health and alerts. \"Details\" opens the full tab." },
+  { id: "map", title: "Satellite map", text: "Turn on NASA layers (vegetation, soil temperature, salinity, snow) or the weather. Move the cursor over the map to see the exact value at each point. Tap to place your field." },
+  { id: "growwy", title: "Growwy, your SI", text: "Always here, on every tab. Ask anything about your farm, by writing or by voice. \"Analyze my field\" gives you a full plan with the year by seasons." },
   { id: "tools", title: "3D, language and theme", text: "3D view of the terrain, Spanish or English, light or dark. The \"?\" button opens this tour again." },
 ];
 
@@ -30,7 +33,7 @@ export function Tour({ onClose, onStep }: { onClose: () => void; onStep?: (id: s
   const measure = useCallback(() => {
     setVw(window.innerWidth);
     setVh(window.innerHeight);
-    const el = step.id ? document.querySelector(`[data-tour="${step.id}"]`) : null;
+    const el = find(step.id);
     if (!el) return setBox(null);
     const r = el.getBoundingClientRect();
     setBox({ x: r.left, y: r.top, w: r.width, h: r.height });
@@ -40,7 +43,7 @@ export function Tour({ onClose, onStep }: { onClose: () => void; onStep?: (id: s
   useEffect(() => {
     onStep?.(step.id);
     const t = setTimeout(() => {
-      const el = step.id ? document.querySelector(`[data-tour="${step.id}"]`) : null;
+      const el = find(step.id);
       el?.scrollIntoView({ block: "center", behavior: "smooth" });
       measure();
     }, 120);

@@ -2,12 +2,55 @@
 import { CROPS, cropById } from "@/config/crops";
 import { SYSTEMS } from "@/config/rotations";
 import type { FarmRegister, FarmSystem, Priorities, Strategy, StrategyResult } from "@/lib/types";
+import type { Effectiveness } from "@/lib/effectiveness";
+import { EFF_LEVEL, effTone } from "./EffectivenessCard";
 import { SeasonStrip } from "./PlanSections";
 import { Badge, Card, LevelPill, Meter, Note, Reveal, btnGhost, btnPrimary, input, label } from "./ui";
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const PRI: [keyof Priorities, string][] = [["water", "Save water"], ["income", "Income"], ["soil", "Soil health"], ["forage", "Forage"], ["labor", "Less work"]];
 const sorted = (r: StrategyResult[]) => [...r].sort((a, b) => b.score - a.score);
+
+// ---------------- Summary card (Overview tab) ----------------
+/** The one decision, short: the best rotation, its score, how effective it is and the way to the details. */
+export function RotationSummary({ results, eff, onCompare, onEffect }: { results: StrategyResult[]; eff: Effectiveness | null; onCompare: () => void; onEffect: () => void }) {
+  if (!results.length) return null;
+  const list = sorted(results);
+  const best = list[0];
+  const cur = results.find((r) => r.strategy.current) ?? best;
+  const same = best.strategy.id === cur.strategy.id;
+  const chips = [
+    !same && best.metrics.waterMm < cur.metrics.waterMm - 20 && `💧 −${cur.metrics.waterMm - best.metrics.waterMm} mm water/yr`,
+    !same && best.metrics.bareMonths < cur.metrics.bareMonths - 0.5 && `🌱 bare soil ${cur.metrics.bareMonths} → ${best.metrics.bareMonths} months`,
+    !same && best.metrics.erosion < cur.metrics.erosion - 0.05 && `💨 erosion ${pct(cur.metrics.erosion)} → ${pct(best.metrics.erosion)}`,
+  ].filter(Boolean) as string[];
+  return (
+    <Reveal tour="rotation" className="rounded-2xl border border-ink bg-surface p-6 md:col-span-6 lg:col-span-12">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">Crop rotation</span>
+        <Badge tone="blue">Core decision</Badge>
+      </div>
+      <h2 className="mt-2 font-serif text-3xl leading-tight sm:text-4xl">
+        {same ? "Your current rotation is the best fit" : <>Best for your field: <em>{best.strategy.name}</em></>}
+      </h2>
+      <div className="mt-4 flex flex-wrap items-end gap-x-8 gap-y-4">
+        <div><div className="font-serif text-6xl leading-none">{best.score}</div><div className="mt-1 text-xs text-muted">score / 100</div></div>
+        {!same && <div><div className="font-serif text-4xl leading-none text-subtle">{cur.score}</div><div className="mt-1 text-xs text-muted">your current rotation</div></div>}
+        {eff && (
+          <div data-tour="effect">
+            <div className="font-serif text-6xl leading-none">{eff.score}<span className="text-2xl text-muted">%</span></div>
+            <div className="mt-1 flex items-center gap-1.5 text-xs text-muted">effective <span className={`rounded-full px-2 py-0.5 font-medium ${effTone(eff.level)}`}>{EFF_LEVEL[eff.level]}</span></div>
+          </div>
+        )}
+        <div className="flex flex-wrap gap-1.5">{chips.map((c) => <Badge key={c} tone="green">{c}</Badge>)}</div>
+      </div>
+      <div className="mt-5 flex flex-wrap gap-2">
+        <button className={btnPrimary} onClick={onEffect}>Why it works →</button>
+        <button className={btnGhost} onClick={onCompare}>Compare rotations</button>
+      </div>
+    </Reveal>
+  );
+}
 
 // ---------------- Overview hero ----------------
 export function RotationHero({ results, onCompare, onBuild, onYear }: { results: StrategyResult[]; onCompare: () => void; onBuild: () => void; onYear: () => void }) {
