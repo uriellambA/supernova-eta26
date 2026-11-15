@@ -1,0 +1,3932 @@
+[
+  {
+    "point": {
+      "name": "Pampa Ondulada centre",
+      "lat": -33.89,
+      "lon": -60.574
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 10,
+      "silt": 65,
+      "clay": 25,
+      "soc": 18,
+      "ph": 6,
+      "nitrogen": 1.6,
+      "cec": 20,
+      "bulkDensity": 1.25,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Silt loam",
+      "organicMatter": 3.1,
+      "waterHolding": 117,
+      "infiltration": "moderate",
+      "ksat": 11,
+      "fieldCapacity": 36,
+      "wiltingPoint": 16.5
+    },
+    "sal": {
+      "ece": 0.8,
+      "cls": "low",
+      "measured": false,
+      "reasons": []
+    },
+    "health": {
+      "score": 79,
+      "level": "good",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.78,
+          "note": "3.1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.6,
+          "note": "6 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.8,
+          "note": "CEC 20 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.97,
+          "note": "117 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.9,
+          "note": "1.25 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 1,
+          "note": "~0.8 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 0.65,
+          "note": "6 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -33.89,
+        "lon": -60.574
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "08-21",
+      "ultimaHeladaP80": "09-04",
+      "aniosHeladaTardia": 0,
+      "libreHeladas": 294,
+      "diasHeladaAnio": 12,
+      "horasFrio": 716,
+      "gdd10": 2398,
+      "lluviaAnual": 1071,
+      "et0Anual": 1411,
+      "tempMedia": 17.3,
+      "vientoPrimavera": 2.8,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 17.9,
+          "tmax": 32,
+          "lluvia": 121.9,
+          "et0": 200.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.61,
+          "humedadSup": 0.58,
+          "diasHelada": 0,
+          "diasCalor": 20.9,
+          "humedadRel": 60,
+          "presion": 1003,
+          "uv": 2.8
+        },
+        {
+          "mes": 2,
+          "tmin": 17.1,
+          "tmax": 30.1,
+          "lluvia": 133.6,
+          "et0": 154.2,
+          "viento": 2.3,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.61,
+          "diasHelada": 0,
+          "diasCalor": 13.9,
+          "humedadRel": 66,
+          "presion": 1004,
+          "uv": 2.4
+        },
+        {
+          "mes": 3,
+          "tmin": 14.6,
+          "tmax": 27.2,
+          "lluvia": 124.8,
+          "et0": 130,
+          "viento": 2.3,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 7,
+          "humedadRel": 71,
+          "presion": 1006,
+          "uv": 1.8
+        },
+        {
+          "mes": 4,
+          "tmin": 11.2,
+          "tmax": 23.5,
+          "lluvia": 112.5,
+          "et0": 86.7,
+          "viento": 2.3,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.66,
+          "diasHelada": 0,
+          "diasCalor": 1.1,
+          "humedadRel": 75,
+          "presion": 1008,
+          "uv": 1
+        },
+        {
+          "mes": 5,
+          "tmin": 7.8,
+          "tmax": 19,
+          "lluvia": 70.1,
+          "et0": 57.8,
+          "viento": 2.3,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 0.5,
+          "diasCalor": 0.1,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.6
+        },
+        {
+          "mes": 6,
+          "tmin": 4.6,
+          "tmax": 16.1,
+          "lluvia": 27.8,
+          "et0": 43.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 2.7,
+          "diasCalor": 0,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.4
+        },
+        {
+          "mes": 7,
+          "tmin": 4.1,
+          "tmax": 15.7,
+          "lluvia": 31.8,
+          "et0": 48.4,
+          "viento": 2.6,
+          "humedadRaiz": 0.67,
+          "humedadSup": 0.67,
+          "diasHelada": 5.5,
+          "diasCalor": 0,
+          "humedadRel": 78,
+          "presion": 1011,
+          "uv": 0.4
+        },
+        {
+          "mes": 8,
+          "tmin": 5,
+          "tmax": 18.2,
+          "lluvia": 41.7,
+          "et0": 70.5,
+          "viento": 2.7,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.66,
+          "diasHelada": 2.7,
+          "diasCalor": 0.3,
+          "humedadRel": 73,
+          "presion": 1010,
+          "uv": 0.7
+        },
+        {
+          "mes": 9,
+          "tmin": 7.5,
+          "tmax": 21.1,
+          "lluvia": 71.1,
+          "et0": 99.2,
+          "viento": 2.9,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.65,
+          "diasHelada": 0.3,
+          "diasCalor": 0.7,
+          "humedadRel": 70,
+          "presion": 1009,
+          "uv": 1.1
+        },
+        {
+          "mes": 10,
+          "tmin": 10.4,
+          "tmax": 24.4,
+          "lluvia": 114.9,
+          "et0": 141.3,
+          "viento": 2.9,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.65,
+          "diasHelada": 0,
+          "diasCalor": 2.8,
+          "humedadRel": 67,
+          "presion": 1007,
+          "uv": 1.7
+        },
+        {
+          "mes": 11,
+          "tmin": 13.6,
+          "tmax": 28.2,
+          "lluvia": 107.9,
+          "et0": 174.5,
+          "viento": 2.9,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 10.4,
+          "humedadRel": 62,
+          "presion": 1005,
+          "uv": 2.3
+        },
+        {
+          "mes": 12,
+          "tmin": 16.2,
+          "tmax": 31,
+          "lluvia": 112.6,
+          "et0": 203.7,
+          "viento": 2.6,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.59,
+          "diasHelada": 0,
+          "diasCalor": 18.1,
+          "humedadRel": 58,
+          "presion": 1003,
+          "uv": 2.7
+        }
+      ],
+      "tendencia": {
+        "decada1": 17.1,
+        "decada2": 17.54,
+        "dif": 0.43
+      },
+      "tendenciaLluvia": {
+        "antes": 1134,
+        "despues": 1007,
+        "difPct": -11
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 1192,
+          "diasHelada": 7,
+          "tMedia": 17.51,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2007,
+          "lluvia": 1139,
+          "diasHelada": 27,
+          "tMedia": 15.94,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2008,
+          "lluvia": 657,
+          "diasHelada": 5,
+          "tMedia": 18.13,
+          "heladaTardia": false,
+          "ultimaHelada": "08-18",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2009,
+          "lluvia": 1227,
+          "diasHelada": 13,
+          "tMedia": 17.69,
+          "heladaTardia": false,
+          "ultimaHelada": "09-28",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2010,
+          "lluvia": 1018,
+          "diasHelada": 18,
+          "tMedia": 16.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-13",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2011,
+          "lluvia": 946,
+          "diasHelada": 19,
+          "tMedia": 16.98,
+          "heladaTardia": false,
+          "ultimaHelada": "08-23",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2012,
+          "lluvia": 1489,
+          "diasHelada": 15,
+          "tMedia": 17.14,
+          "heladaTardia": false,
+          "ultimaHelada": "07-30",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2013,
+          "lluvia": 935,
+          "diasHelada": 19,
+          "tMedia": 16.92,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 1463,
+          "diasHelada": 5,
+          "tMedia": 16.9,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2015,
+          "lluvia": 1282,
+          "diasHelada": 7,
+          "tMedia": 17.16,
+          "heladaTardia": false,
+          "ultimaHelada": "07-22",
+          "vientoPrim": 2.6
+        },
+        {
+          "anio": 2016,
+          "lluvia": 1103,
+          "diasHelada": 5,
+          "tMedia": 16.87,
+          "heladaTardia": false,
+          "ultimaHelada": "09-03",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2017,
+          "lluvia": 1250,
+          "diasHelada": 5,
+          "tMedia": 17.31,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2018,
+          "lluvia": 1218,
+          "diasHelada": 14,
+          "tMedia": 17.36,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2019,
+          "lluvia": 1047,
+          "diasHelada": 9,
+          "tMedia": 16.93,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2020,
+          "lluvia": 881,
+          "diasHelada": 13,
+          "tMedia": 17.4,
+          "heladaTardia": false,
+          "ultimaHelada": "08-30",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2021,
+          "lluvia": 712,
+          "diasHelada": 10,
+          "tMedia": 17.99,
+          "heladaTardia": false,
+          "ultimaHelada": "08-11",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2022,
+          "lluvia": 631,
+          "diasHelada": 9,
+          "tMedia": 17.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-19",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2023,
+          "lluvia": 855,
+          "diasHelada": 7,
+          "tMedia": 18.66,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 3
+        },
+        {
+          "anio": 2024,
+          "lluvia": 974,
+          "diasHelada": 18,
+          "tMedia": 17.7,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2025,
+          "lluvia": 1395,
+          "diasHelada": 10,
+          "tMedia": 17.5,
+          "heladaTardia": false,
+          "ultimaHelada": "09-05",
+          "vientoPrim": 2.7
+        }
+      ],
+      "humedadRelMedia": 70,
+      "presionMedia": 1007,
+      "uvVerano": 2.6,
+      "minAnual": -3.2,
+      "altura": null
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "g-cover",
+        "name": "Maize–soybean with winter cover crops",
+        "current": false,
+        "score": 61,
+        "metrics": {
+          "waterMm": 349,
+          "bareMonths": 1.5,
+          "erosion": 0.049,
+          "nitrogen": 41,
+          "organicMatter": 0.575,
+          "pestBreak": 0.5,
+          "forage": 0.45,
+          "income": 0.7333333333333334,
+          "labor": 0.26666666666666666,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-wheat-soy",
+        "name": "Wheat/2nd soybean → maize → soybean",
+        "current": false,
+        "score": 60,
+        "metrics": {
+          "waterMm": 302,
+          "bareMonths": 4.5,
+          "erosion": 0.147,
+          "nitrogen": 13,
+          "organicMatter": 0.2833333333333334,
+          "pestBreak": 0.5,
+          "forage": 0.15,
+          "income": 0.7333333333333334,
+          "labor": 0.21666666666666667,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export (Rosario)",
+            "Export, feed, ethanol",
+            "Milling, export"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "g-mixed",
+        "name": "Mixed: 3 years pasture + 3 years crops",
+        "current": false,
+        "score": 54,
+        "metrics": {
+          "waterMm": 343,
+          "bareMonths": 2.3,
+          "erosion": 0.07513333333333333,
+          "nitrogen": 82,
+          "organicMatter": 0.5166666666666666,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.575,
+          "income": 0.6166666666666667,
+          "labor": 0.2583333333333333,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Milling, export"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-current",
+        "name": "Continuous soybean",
+        "current": true,
+        "score": 47,
+        "metrics": {
+          "waterMm": 277,
+          "bareMonths": 6,
+          "erosion": 0.196,
+          "nitrogen": 20,
+          "organicMatter": 0.125,
+          "pestBreak": 0,
+          "forage": 0.05,
+          "income": 0.615,
+          "labor": 0.2,
+          "market": 0.30000000000000004,
+          "outlets": [
+            "Export (Rosario)"
+          ],
+          "deepRoots": 0
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "chickpea",
+        "name": "Chickpea",
+        "viability": 70,
+        "agro": 82,
+        "margin": 600,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "barley",
+        "name": "Malting barley",
+        "viability": 68,
+        "agro": 79,
+        "margin": 515,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "canola",
+        "name": "Canola (rapeseed)",
+        "viability": 66,
+        "agro": 77,
+        "margin": 474,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sunflower",
+        "name": "Sunflower",
+        "viability": 58,
+        "agro": 63,
+        "margin": 372,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~420 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "wheat",
+        "name": "Wheat",
+        "viability": 56,
+        "agro": 77,
+        "margin": 302,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sorghum",
+        "name": "Grain sorghum",
+        "viability": 50,
+        "agro": 66,
+        "margin": 505,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "soy",
+        "name": "Soybean",
+        "viability": 47,
+        "agro": 61,
+        "margin": 570,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "maize",
+        "name": "Maize",
+        "viability": 41,
+        "agro": 51,
+        "margin": 645,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "pecan",
+        "name": "Pecan",
+        "viability": 35,
+        "agro": 39,
+        "margin": 5000,
+        "payback": 11.6,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful rain ~589 mm"
+        ]
+      }
+    ]
+  },
+  {
+    "point": {
+      "name": "North",
+      "lat": -33.876,
+      "lon": -60.574
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 10,
+      "silt": 65,
+      "clay": 25,
+      "soc": 18,
+      "ph": 6,
+      "nitrogen": 1.6,
+      "cec": 20,
+      "bulkDensity": 1.25,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Silt loam",
+      "organicMatter": 3.1,
+      "waterHolding": 117,
+      "infiltration": "moderate",
+      "ksat": 11,
+      "fieldCapacity": 36,
+      "wiltingPoint": 16.5
+    },
+    "sal": {
+      "ece": 0.8,
+      "cls": "low",
+      "measured": false,
+      "reasons": []
+    },
+    "health": {
+      "score": 79,
+      "level": "good",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.78,
+          "note": "3.1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.6,
+          "note": "6 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.8,
+          "note": "CEC 20 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.97,
+          "note": "117 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.9,
+          "note": "1.25 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 1,
+          "note": "~0.8 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 0.65,
+          "note": "6 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -33.876,
+        "lon": -60.574
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "08-21",
+      "ultimaHeladaP80": "09-04",
+      "aniosHeladaTardia": 0,
+      "libreHeladas": 294,
+      "diasHeladaAnio": 12,
+      "horasFrio": 716,
+      "gdd10": 2398,
+      "lluviaAnual": 1071,
+      "et0Anual": 1411,
+      "tempMedia": 17.3,
+      "vientoPrimavera": 2.8,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 17.9,
+          "tmax": 32,
+          "lluvia": 121.9,
+          "et0": 200.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.61,
+          "humedadSup": 0.58,
+          "diasHelada": 0,
+          "diasCalor": 20.9,
+          "humedadRel": 60,
+          "presion": 1003,
+          "uv": 2.8
+        },
+        {
+          "mes": 2,
+          "tmin": 17.1,
+          "tmax": 30.1,
+          "lluvia": 133.6,
+          "et0": 154.2,
+          "viento": 2.3,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.61,
+          "diasHelada": 0,
+          "diasCalor": 13.9,
+          "humedadRel": 66,
+          "presion": 1004,
+          "uv": 2.4
+        },
+        {
+          "mes": 3,
+          "tmin": 14.6,
+          "tmax": 27.2,
+          "lluvia": 124.8,
+          "et0": 130.1,
+          "viento": 2.3,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 7,
+          "humedadRel": 71,
+          "presion": 1006,
+          "uv": 1.8
+        },
+        {
+          "mes": 4,
+          "tmin": 11.2,
+          "tmax": 23.5,
+          "lluvia": 112.5,
+          "et0": 86.7,
+          "viento": 2.3,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.66,
+          "diasHelada": 0,
+          "diasCalor": 1.1,
+          "humedadRel": 75,
+          "presion": 1008,
+          "uv": 1
+        },
+        {
+          "mes": 5,
+          "tmin": 7.8,
+          "tmax": 19,
+          "lluvia": 70.1,
+          "et0": 57.8,
+          "viento": 2.3,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 0.5,
+          "diasCalor": 0.1,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.6
+        },
+        {
+          "mes": 6,
+          "tmin": 4.6,
+          "tmax": 16.1,
+          "lluvia": 27.8,
+          "et0": 43.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 2.7,
+          "diasCalor": 0,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.4
+        },
+        {
+          "mes": 7,
+          "tmin": 4.1,
+          "tmax": 15.7,
+          "lluvia": 31.8,
+          "et0": 48.4,
+          "viento": 2.6,
+          "humedadRaiz": 0.67,
+          "humedadSup": 0.67,
+          "diasHelada": 5.5,
+          "diasCalor": 0,
+          "humedadRel": 78,
+          "presion": 1011,
+          "uv": 0.4
+        },
+        {
+          "mes": 8,
+          "tmin": 5,
+          "tmax": 18.2,
+          "lluvia": 41.7,
+          "et0": 70.5,
+          "viento": 2.7,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.66,
+          "diasHelada": 2.7,
+          "diasCalor": 0.3,
+          "humedadRel": 73,
+          "presion": 1010,
+          "uv": 0.7
+        },
+        {
+          "mes": 9,
+          "tmin": 7.5,
+          "tmax": 21.1,
+          "lluvia": 71.1,
+          "et0": 99.3,
+          "viento": 2.9,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.65,
+          "diasHelada": 0.3,
+          "diasCalor": 0.7,
+          "humedadRel": 70,
+          "presion": 1009,
+          "uv": 1.1
+        },
+        {
+          "mes": 10,
+          "tmin": 10.4,
+          "tmax": 24.4,
+          "lluvia": 114.9,
+          "et0": 141.3,
+          "viento": 2.9,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.65,
+          "diasHelada": 0,
+          "diasCalor": 2.8,
+          "humedadRel": 67,
+          "presion": 1007,
+          "uv": 1.7
+        },
+        {
+          "mes": 11,
+          "tmin": 13.6,
+          "tmax": 28.2,
+          "lluvia": 107.9,
+          "et0": 174.5,
+          "viento": 2.9,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 10.4,
+          "humedadRel": 62,
+          "presion": 1005,
+          "uv": 2.3
+        },
+        {
+          "mes": 12,
+          "tmin": 16.2,
+          "tmax": 31,
+          "lluvia": 112.6,
+          "et0": 203.7,
+          "viento": 2.6,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.59,
+          "diasHelada": 0,
+          "diasCalor": 18.1,
+          "humedadRel": 58,
+          "presion": 1003,
+          "uv": 2.7
+        }
+      ],
+      "tendencia": {
+        "decada1": 17.1,
+        "decada2": 17.54,
+        "dif": 0.43
+      },
+      "tendenciaLluvia": {
+        "antes": 1134,
+        "despues": 1007,
+        "difPct": -11
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 1192,
+          "diasHelada": 7,
+          "tMedia": 17.51,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2007,
+          "lluvia": 1139,
+          "diasHelada": 27,
+          "tMedia": 15.94,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2008,
+          "lluvia": 657,
+          "diasHelada": 5,
+          "tMedia": 18.13,
+          "heladaTardia": false,
+          "ultimaHelada": "08-18",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2009,
+          "lluvia": 1227,
+          "diasHelada": 13,
+          "tMedia": 17.69,
+          "heladaTardia": false,
+          "ultimaHelada": "09-28",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2010,
+          "lluvia": 1018,
+          "diasHelada": 18,
+          "tMedia": 16.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-13",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2011,
+          "lluvia": 946,
+          "diasHelada": 19,
+          "tMedia": 16.98,
+          "heladaTardia": false,
+          "ultimaHelada": "08-23",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2012,
+          "lluvia": 1489,
+          "diasHelada": 15,
+          "tMedia": 17.14,
+          "heladaTardia": false,
+          "ultimaHelada": "07-30",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2013,
+          "lluvia": 935,
+          "diasHelada": 19,
+          "tMedia": 16.92,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 1463,
+          "diasHelada": 5,
+          "tMedia": 16.9,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2015,
+          "lluvia": 1282,
+          "diasHelada": 7,
+          "tMedia": 17.16,
+          "heladaTardia": false,
+          "ultimaHelada": "07-22",
+          "vientoPrim": 2.6
+        },
+        {
+          "anio": 2016,
+          "lluvia": 1103,
+          "diasHelada": 5,
+          "tMedia": 16.87,
+          "heladaTardia": false,
+          "ultimaHelada": "09-03",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2017,
+          "lluvia": 1250,
+          "diasHelada": 5,
+          "tMedia": 17.31,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2018,
+          "lluvia": 1218,
+          "diasHelada": 14,
+          "tMedia": 17.36,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2019,
+          "lluvia": 1047,
+          "diasHelada": 9,
+          "tMedia": 16.93,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2020,
+          "lluvia": 881,
+          "diasHelada": 13,
+          "tMedia": 17.4,
+          "heladaTardia": false,
+          "ultimaHelada": "08-30",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2021,
+          "lluvia": 712,
+          "diasHelada": 10,
+          "tMedia": 17.99,
+          "heladaTardia": false,
+          "ultimaHelada": "08-11",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2022,
+          "lluvia": 631,
+          "diasHelada": 9,
+          "tMedia": 17.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-19",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2023,
+          "lluvia": 855,
+          "diasHelada": 7,
+          "tMedia": 18.66,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 3
+        },
+        {
+          "anio": 2024,
+          "lluvia": 974,
+          "diasHelada": 18,
+          "tMedia": 17.7,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2025,
+          "lluvia": 1395,
+          "diasHelada": 10,
+          "tMedia": 17.5,
+          "heladaTardia": false,
+          "ultimaHelada": "09-05",
+          "vientoPrim": 2.7
+        }
+      ],
+      "humedadRelMedia": 70,
+      "presionMedia": 1007,
+      "uvVerano": 2.6,
+      "minAnual": -3.2,
+      "altura": null
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "g-cover",
+        "name": "Maize–soybean with winter cover crops",
+        "current": false,
+        "score": 61,
+        "metrics": {
+          "waterMm": 349,
+          "bareMonths": 1.5,
+          "erosion": 0.049,
+          "nitrogen": 41,
+          "organicMatter": 0.575,
+          "pestBreak": 0.5,
+          "forage": 0.45,
+          "income": 0.7333333333333334,
+          "labor": 0.26666666666666666,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-wheat-soy",
+        "name": "Wheat/2nd soybean → maize → soybean",
+        "current": false,
+        "score": 60,
+        "metrics": {
+          "waterMm": 302,
+          "bareMonths": 4.5,
+          "erosion": 0.147,
+          "nitrogen": 13,
+          "organicMatter": 0.2833333333333334,
+          "pestBreak": 0.5,
+          "forage": 0.15,
+          "income": 0.7333333333333334,
+          "labor": 0.21666666666666667,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export (Rosario)",
+            "Export, feed, ethanol",
+            "Milling, export"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "g-mixed",
+        "name": "Mixed: 3 years pasture + 3 years crops",
+        "current": false,
+        "score": 54,
+        "metrics": {
+          "waterMm": 343,
+          "bareMonths": 2.3,
+          "erosion": 0.07513333333333333,
+          "nitrogen": 82,
+          "organicMatter": 0.5166666666666666,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.575,
+          "income": 0.6166666666666667,
+          "labor": 0.2583333333333333,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Milling, export"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-current",
+        "name": "Continuous soybean",
+        "current": true,
+        "score": 47,
+        "metrics": {
+          "waterMm": 278,
+          "bareMonths": 6,
+          "erosion": 0.196,
+          "nitrogen": 20,
+          "organicMatter": 0.125,
+          "pestBreak": 0,
+          "forage": 0.05,
+          "income": 0.615,
+          "labor": 0.2,
+          "market": 0.30000000000000004,
+          "outlets": [
+            "Export (Rosario)"
+          ],
+          "deepRoots": 0
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "chickpea",
+        "name": "Chickpea",
+        "viability": 70,
+        "agro": 82,
+        "margin": 600,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "barley",
+        "name": "Malting barley",
+        "viability": 68,
+        "agro": 79,
+        "margin": 515,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "canola",
+        "name": "Canola (rapeseed)",
+        "viability": 66,
+        "agro": 77,
+        "margin": 474,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sunflower",
+        "name": "Sunflower",
+        "viability": 58,
+        "agro": 63,
+        "margin": 372,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~420 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "wheat",
+        "name": "Wheat",
+        "viability": 56,
+        "agro": 77,
+        "margin": 302,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sorghum",
+        "name": "Grain sorghum",
+        "viability": 50,
+        "agro": 66,
+        "margin": 505,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "soy",
+        "name": "Soybean",
+        "viability": 47,
+        "agro": 61,
+        "margin": 570,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "maize",
+        "name": "Maize",
+        "viability": 41,
+        "agro": 51,
+        "margin": 645,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "pecan",
+        "name": "Pecan",
+        "viability": 35,
+        "agro": 39,
+        "margin": 5000,
+        "payback": 11.6,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful rain ~589 mm"
+        ]
+      }
+    ]
+  },
+  {
+    "point": {
+      "name": "South",
+      "lat": -33.904,
+      "lon": -60.574
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 10,
+      "silt": 65,
+      "clay": 25,
+      "soc": 18,
+      "ph": 6,
+      "nitrogen": 1.6,
+      "cec": 20,
+      "bulkDensity": 1.25,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Silt loam",
+      "organicMatter": 3.1,
+      "waterHolding": 117,
+      "infiltration": "moderate",
+      "ksat": 11,
+      "fieldCapacity": 36,
+      "wiltingPoint": 16.5
+    },
+    "sal": {
+      "ece": 0.8,
+      "cls": "low",
+      "measured": false,
+      "reasons": []
+    },
+    "health": {
+      "score": 79,
+      "level": "good",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.78,
+          "note": "3.1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.6,
+          "note": "6 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.8,
+          "note": "CEC 20 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.97,
+          "note": "117 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.9,
+          "note": "1.25 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 1,
+          "note": "~0.8 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 0.65,
+          "note": "6 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -33.904,
+        "lon": -60.574
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "08-21",
+      "ultimaHeladaP80": "09-04",
+      "aniosHeladaTardia": 0,
+      "libreHeladas": 294,
+      "diasHeladaAnio": 12,
+      "horasFrio": 716,
+      "gdd10": 2398,
+      "lluviaAnual": 1071,
+      "et0Anual": 1411,
+      "tempMedia": 17.3,
+      "vientoPrimavera": 2.8,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 17.9,
+          "tmax": 32,
+          "lluvia": 121.9,
+          "et0": 200.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.61,
+          "humedadSup": 0.58,
+          "diasHelada": 0,
+          "diasCalor": 20.9,
+          "humedadRel": 60,
+          "presion": 1003,
+          "uv": 2.8
+        },
+        {
+          "mes": 2,
+          "tmin": 17.1,
+          "tmax": 30.1,
+          "lluvia": 133.6,
+          "et0": 154.2,
+          "viento": 2.3,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.61,
+          "diasHelada": 0,
+          "diasCalor": 13.9,
+          "humedadRel": 66,
+          "presion": 1004,
+          "uv": 2.4
+        },
+        {
+          "mes": 3,
+          "tmin": 14.6,
+          "tmax": 27.2,
+          "lluvia": 124.8,
+          "et0": 130,
+          "viento": 2.3,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 7,
+          "humedadRel": 71,
+          "presion": 1006,
+          "uv": 1.8
+        },
+        {
+          "mes": 4,
+          "tmin": 11.2,
+          "tmax": 23.5,
+          "lluvia": 112.5,
+          "et0": 86.7,
+          "viento": 2.3,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.66,
+          "diasHelada": 0,
+          "diasCalor": 1.1,
+          "humedadRel": 75,
+          "presion": 1008,
+          "uv": 1
+        },
+        {
+          "mes": 5,
+          "tmin": 7.8,
+          "tmax": 19,
+          "lluvia": 70.1,
+          "et0": 57.8,
+          "viento": 2.3,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 0.5,
+          "diasCalor": 0.1,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.6
+        },
+        {
+          "mes": 6,
+          "tmin": 4.6,
+          "tmax": 16.1,
+          "lluvia": 27.8,
+          "et0": 43.6,
+          "viento": 2.5,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 2.7,
+          "diasCalor": 0,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.4
+        },
+        {
+          "mes": 7,
+          "tmin": 4.1,
+          "tmax": 15.7,
+          "lluvia": 31.8,
+          "et0": 48.4,
+          "viento": 2.6,
+          "humedadRaiz": 0.67,
+          "humedadSup": 0.67,
+          "diasHelada": 5.5,
+          "diasCalor": 0,
+          "humedadRel": 78,
+          "presion": 1011,
+          "uv": 0.4
+        },
+        {
+          "mes": 8,
+          "tmin": 5,
+          "tmax": 18.2,
+          "lluvia": 41.7,
+          "et0": 70.5,
+          "viento": 2.7,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.66,
+          "diasHelada": 2.7,
+          "diasCalor": 0.3,
+          "humedadRel": 73,
+          "presion": 1010,
+          "uv": 0.7
+        },
+        {
+          "mes": 9,
+          "tmin": 7.5,
+          "tmax": 21.1,
+          "lluvia": 71.1,
+          "et0": 99.2,
+          "viento": 2.9,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.65,
+          "diasHelada": 0.3,
+          "diasCalor": 0.7,
+          "humedadRel": 70,
+          "presion": 1009,
+          "uv": 1.1
+        },
+        {
+          "mes": 10,
+          "tmin": 10.4,
+          "tmax": 24.4,
+          "lluvia": 114.9,
+          "et0": 141.3,
+          "viento": 2.9,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.65,
+          "diasHelada": 0,
+          "diasCalor": 2.8,
+          "humedadRel": 67,
+          "presion": 1007,
+          "uv": 1.7
+        },
+        {
+          "mes": 11,
+          "tmin": 13.6,
+          "tmax": 28.2,
+          "lluvia": 107.9,
+          "et0": 174.5,
+          "viento": 2.9,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 10.4,
+          "humedadRel": 62,
+          "presion": 1005,
+          "uv": 2.3
+        },
+        {
+          "mes": 12,
+          "tmin": 16.2,
+          "tmax": 31,
+          "lluvia": 112.6,
+          "et0": 203.7,
+          "viento": 2.6,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.59,
+          "diasHelada": 0,
+          "diasCalor": 18.1,
+          "humedadRel": 58,
+          "presion": 1003,
+          "uv": 2.7
+        }
+      ],
+      "tendencia": {
+        "decada1": 17.1,
+        "decada2": 17.54,
+        "dif": 0.43
+      },
+      "tendenciaLluvia": {
+        "antes": 1134,
+        "despues": 1007,
+        "difPct": -11
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 1192,
+          "diasHelada": 7,
+          "tMedia": 17.51,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2007,
+          "lluvia": 1139,
+          "diasHelada": 27,
+          "tMedia": 15.94,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2008,
+          "lluvia": 657,
+          "diasHelada": 5,
+          "tMedia": 18.13,
+          "heladaTardia": false,
+          "ultimaHelada": "08-18",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2009,
+          "lluvia": 1227,
+          "diasHelada": 13,
+          "tMedia": 17.69,
+          "heladaTardia": false,
+          "ultimaHelada": "09-28",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2010,
+          "lluvia": 1018,
+          "diasHelada": 18,
+          "tMedia": 16.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-13",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2011,
+          "lluvia": 946,
+          "diasHelada": 19,
+          "tMedia": 16.98,
+          "heladaTardia": false,
+          "ultimaHelada": "08-23",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2012,
+          "lluvia": 1489,
+          "diasHelada": 15,
+          "tMedia": 17.14,
+          "heladaTardia": false,
+          "ultimaHelada": "07-30",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2013,
+          "lluvia": 935,
+          "diasHelada": 19,
+          "tMedia": 16.92,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 1463,
+          "diasHelada": 5,
+          "tMedia": 16.9,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2015,
+          "lluvia": 1282,
+          "diasHelada": 7,
+          "tMedia": 17.16,
+          "heladaTardia": false,
+          "ultimaHelada": "07-22",
+          "vientoPrim": 2.6
+        },
+        {
+          "anio": 2016,
+          "lluvia": 1103,
+          "diasHelada": 5,
+          "tMedia": 16.87,
+          "heladaTardia": false,
+          "ultimaHelada": "09-03",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2017,
+          "lluvia": 1250,
+          "diasHelada": 5,
+          "tMedia": 17.31,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2018,
+          "lluvia": 1218,
+          "diasHelada": 14,
+          "tMedia": 17.36,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2019,
+          "lluvia": 1047,
+          "diasHelada": 9,
+          "tMedia": 16.93,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2020,
+          "lluvia": 881,
+          "diasHelada": 13,
+          "tMedia": 17.4,
+          "heladaTardia": false,
+          "ultimaHelada": "08-30",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2021,
+          "lluvia": 712,
+          "diasHelada": 10,
+          "tMedia": 17.99,
+          "heladaTardia": false,
+          "ultimaHelada": "08-11",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2022,
+          "lluvia": 631,
+          "diasHelada": 9,
+          "tMedia": 17.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-19",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2023,
+          "lluvia": 855,
+          "diasHelada": 7,
+          "tMedia": 18.66,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 3
+        },
+        {
+          "anio": 2024,
+          "lluvia": 974,
+          "diasHelada": 18,
+          "tMedia": 17.7,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2025,
+          "lluvia": 1395,
+          "diasHelada": 10,
+          "tMedia": 17.5,
+          "heladaTardia": false,
+          "ultimaHelada": "09-05",
+          "vientoPrim": 2.7
+        }
+      ],
+      "humedadRelMedia": 70,
+      "presionMedia": 1007,
+      "uvVerano": 2.6,
+      "minAnual": -3.2,
+      "altura": null
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "g-cover",
+        "name": "Maize–soybean with winter cover crops",
+        "current": false,
+        "score": 61,
+        "metrics": {
+          "waterMm": 349,
+          "bareMonths": 1.5,
+          "erosion": 0.049,
+          "nitrogen": 41,
+          "organicMatter": 0.575,
+          "pestBreak": 0.5,
+          "forage": 0.45,
+          "income": 0.7333333333333334,
+          "labor": 0.26666666666666666,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-wheat-soy",
+        "name": "Wheat/2nd soybean → maize → soybean",
+        "current": false,
+        "score": 60,
+        "metrics": {
+          "waterMm": 302,
+          "bareMonths": 4.5,
+          "erosion": 0.147,
+          "nitrogen": 13,
+          "organicMatter": 0.2833333333333334,
+          "pestBreak": 0.5,
+          "forage": 0.15,
+          "income": 0.7333333333333334,
+          "labor": 0.21666666666666667,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export (Rosario)",
+            "Export, feed, ethanol",
+            "Milling, export"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "g-mixed",
+        "name": "Mixed: 3 years pasture + 3 years crops",
+        "current": false,
+        "score": 54,
+        "metrics": {
+          "waterMm": 343,
+          "bareMonths": 2.3,
+          "erosion": 0.07513333333333333,
+          "nitrogen": 82,
+          "organicMatter": 0.5166666666666666,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.575,
+          "income": 0.6166666666666667,
+          "labor": 0.2583333333333333,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Milling, export"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-current",
+        "name": "Continuous soybean",
+        "current": true,
+        "score": 47,
+        "metrics": {
+          "waterMm": 277,
+          "bareMonths": 6,
+          "erosion": 0.196,
+          "nitrogen": 20,
+          "organicMatter": 0.125,
+          "pestBreak": 0,
+          "forage": 0.05,
+          "income": 0.615,
+          "labor": 0.2,
+          "market": 0.30000000000000004,
+          "outlets": [
+            "Export (Rosario)"
+          ],
+          "deepRoots": 0
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "chickpea",
+        "name": "Chickpea",
+        "viability": 70,
+        "agro": 82,
+        "margin": 600,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "barley",
+        "name": "Malting barley",
+        "viability": 68,
+        "agro": 79,
+        "margin": 515,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "canola",
+        "name": "Canola (rapeseed)",
+        "viability": 66,
+        "agro": 77,
+        "margin": 474,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sunflower",
+        "name": "Sunflower",
+        "viability": 58,
+        "agro": 63,
+        "margin": 372,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~420 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "wheat",
+        "name": "Wheat",
+        "viability": 56,
+        "agro": 77,
+        "margin": 302,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sorghum",
+        "name": "Grain sorghum",
+        "viability": 50,
+        "agro": 66,
+        "margin": 505,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "soy",
+        "name": "Soybean",
+        "viability": 47,
+        "agro": 61,
+        "margin": 570,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "maize",
+        "name": "Maize",
+        "viability": 41,
+        "agro": 51,
+        "margin": 645,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "pecan",
+        "name": "Pecan",
+        "viability": 35,
+        "agro": 39,
+        "margin": 5000,
+        "payback": 11.6,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful rain ~589 mm"
+        ]
+      }
+    ]
+  },
+  {
+    "point": {
+      "name": "East",
+      "lat": -33.89,
+      "lon": -60.554
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 10,
+      "silt": 65,
+      "clay": 25,
+      "soc": 18,
+      "ph": 6,
+      "nitrogen": 1.6,
+      "cec": 20,
+      "bulkDensity": 1.25,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Silt loam",
+      "organicMatter": 3.1,
+      "waterHolding": 117,
+      "infiltration": "moderate",
+      "ksat": 11,
+      "fieldCapacity": 36,
+      "wiltingPoint": 16.5
+    },
+    "sal": {
+      "ece": 0.8,
+      "cls": "low",
+      "measured": false,
+      "reasons": []
+    },
+    "health": {
+      "score": 79,
+      "level": "good",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.78,
+          "note": "3.1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.6,
+          "note": "6 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.8,
+          "note": "CEC 20 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.97,
+          "note": "117 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.9,
+          "note": "1.25 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 1,
+          "note": "~0.8 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 0.65,
+          "note": "6 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -33.89,
+        "lon": -60.554
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "08-21",
+      "ultimaHeladaP80": "09-04",
+      "aniosHeladaTardia": 0,
+      "libreHeladas": 294,
+      "diasHeladaAnio": 12,
+      "horasFrio": 716,
+      "gdd10": 2398,
+      "lluviaAnual": 1071,
+      "et0Anual": 1411,
+      "tempMedia": 17.3,
+      "vientoPrimavera": 2.8,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 17.9,
+          "tmax": 32,
+          "lluvia": 121.9,
+          "et0": 200.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.61,
+          "humedadSup": 0.58,
+          "diasHelada": 0,
+          "diasCalor": 20.9,
+          "humedadRel": 60,
+          "presion": 1003,
+          "uv": 2.8
+        },
+        {
+          "mes": 2,
+          "tmin": 17.1,
+          "tmax": 30.1,
+          "lluvia": 133.6,
+          "et0": 154.2,
+          "viento": 2.3,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.61,
+          "diasHelada": 0,
+          "diasCalor": 13.9,
+          "humedadRel": 66,
+          "presion": 1004,
+          "uv": 2.4
+        },
+        {
+          "mes": 3,
+          "tmin": 14.6,
+          "tmax": 27.2,
+          "lluvia": 124.8,
+          "et0": 130,
+          "viento": 2.3,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 7,
+          "humedadRel": 71,
+          "presion": 1006,
+          "uv": 1.8
+        },
+        {
+          "mes": 4,
+          "tmin": 11.2,
+          "tmax": 23.5,
+          "lluvia": 112.5,
+          "et0": 86.7,
+          "viento": 2.3,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.66,
+          "diasHelada": 0,
+          "diasCalor": 1.1,
+          "humedadRel": 75,
+          "presion": 1008,
+          "uv": 1
+        },
+        {
+          "mes": 5,
+          "tmin": 7.8,
+          "tmax": 19,
+          "lluvia": 70.1,
+          "et0": 57.8,
+          "viento": 2.3,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 0.5,
+          "diasCalor": 0.1,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.6
+        },
+        {
+          "mes": 6,
+          "tmin": 4.6,
+          "tmax": 16.1,
+          "lluvia": 27.8,
+          "et0": 43.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 2.7,
+          "diasCalor": 0,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.4
+        },
+        {
+          "mes": 7,
+          "tmin": 4.1,
+          "tmax": 15.7,
+          "lluvia": 31.8,
+          "et0": 48.4,
+          "viento": 2.6,
+          "humedadRaiz": 0.67,
+          "humedadSup": 0.67,
+          "diasHelada": 5.5,
+          "diasCalor": 0,
+          "humedadRel": 78,
+          "presion": 1011,
+          "uv": 0.4
+        },
+        {
+          "mes": 8,
+          "tmin": 5,
+          "tmax": 18.2,
+          "lluvia": 41.7,
+          "et0": 70.5,
+          "viento": 2.7,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.66,
+          "diasHelada": 2.7,
+          "diasCalor": 0.3,
+          "humedadRel": 73,
+          "presion": 1010,
+          "uv": 0.7
+        },
+        {
+          "mes": 9,
+          "tmin": 7.5,
+          "tmax": 21.1,
+          "lluvia": 71.1,
+          "et0": 99.2,
+          "viento": 2.9,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.65,
+          "diasHelada": 0.3,
+          "diasCalor": 0.7,
+          "humedadRel": 70,
+          "presion": 1009,
+          "uv": 1.1
+        },
+        {
+          "mes": 10,
+          "tmin": 10.4,
+          "tmax": 24.4,
+          "lluvia": 114.9,
+          "et0": 141.3,
+          "viento": 2.9,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.65,
+          "diasHelada": 0,
+          "diasCalor": 2.8,
+          "humedadRel": 67,
+          "presion": 1007,
+          "uv": 1.7
+        },
+        {
+          "mes": 11,
+          "tmin": 13.6,
+          "tmax": 28.2,
+          "lluvia": 107.9,
+          "et0": 174.5,
+          "viento": 2.9,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 10.4,
+          "humedadRel": 62,
+          "presion": 1005,
+          "uv": 2.3
+        },
+        {
+          "mes": 12,
+          "tmin": 16.2,
+          "tmax": 31,
+          "lluvia": 112.6,
+          "et0": 203.7,
+          "viento": 2.6,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.59,
+          "diasHelada": 0,
+          "diasCalor": 18.1,
+          "humedadRel": 58,
+          "presion": 1003,
+          "uv": 2.7
+        }
+      ],
+      "tendencia": {
+        "decada1": 17.1,
+        "decada2": 17.54,
+        "dif": 0.43
+      },
+      "tendenciaLluvia": {
+        "antes": 1134,
+        "despues": 1007,
+        "difPct": -11
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 1192,
+          "diasHelada": 7,
+          "tMedia": 17.51,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2007,
+          "lluvia": 1139,
+          "diasHelada": 27,
+          "tMedia": 15.94,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2008,
+          "lluvia": 657,
+          "diasHelada": 5,
+          "tMedia": 18.13,
+          "heladaTardia": false,
+          "ultimaHelada": "08-18",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2009,
+          "lluvia": 1227,
+          "diasHelada": 13,
+          "tMedia": 17.69,
+          "heladaTardia": false,
+          "ultimaHelada": "09-28",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2010,
+          "lluvia": 1018,
+          "diasHelada": 18,
+          "tMedia": 16.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-13",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2011,
+          "lluvia": 946,
+          "diasHelada": 19,
+          "tMedia": 16.98,
+          "heladaTardia": false,
+          "ultimaHelada": "08-23",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2012,
+          "lluvia": 1489,
+          "diasHelada": 15,
+          "tMedia": 17.14,
+          "heladaTardia": false,
+          "ultimaHelada": "07-30",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2013,
+          "lluvia": 935,
+          "diasHelada": 19,
+          "tMedia": 16.92,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 1463,
+          "diasHelada": 5,
+          "tMedia": 16.9,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2015,
+          "lluvia": 1282,
+          "diasHelada": 7,
+          "tMedia": 17.16,
+          "heladaTardia": false,
+          "ultimaHelada": "07-22",
+          "vientoPrim": 2.6
+        },
+        {
+          "anio": 2016,
+          "lluvia": 1103,
+          "diasHelada": 5,
+          "tMedia": 16.87,
+          "heladaTardia": false,
+          "ultimaHelada": "09-03",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2017,
+          "lluvia": 1250,
+          "diasHelada": 5,
+          "tMedia": 17.31,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2018,
+          "lluvia": 1218,
+          "diasHelada": 14,
+          "tMedia": 17.36,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2019,
+          "lluvia": 1047,
+          "diasHelada": 9,
+          "tMedia": 16.93,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2020,
+          "lluvia": 881,
+          "diasHelada": 13,
+          "tMedia": 17.4,
+          "heladaTardia": false,
+          "ultimaHelada": "08-30",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2021,
+          "lluvia": 712,
+          "diasHelada": 10,
+          "tMedia": 17.99,
+          "heladaTardia": false,
+          "ultimaHelada": "08-11",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2022,
+          "lluvia": 631,
+          "diasHelada": 9,
+          "tMedia": 17.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-19",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2023,
+          "lluvia": 855,
+          "diasHelada": 7,
+          "tMedia": 18.66,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 3
+        },
+        {
+          "anio": 2024,
+          "lluvia": 974,
+          "diasHelada": 18,
+          "tMedia": 17.7,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2025,
+          "lluvia": 1395,
+          "diasHelada": 10,
+          "tMedia": 17.5,
+          "heladaTardia": false,
+          "ultimaHelada": "09-05",
+          "vientoPrim": 2.7
+        }
+      ],
+      "humedadRelMedia": 70,
+      "presionMedia": 1007,
+      "uvVerano": 2.6,
+      "minAnual": -3.2,
+      "altura": null
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "g-cover",
+        "name": "Maize–soybean with winter cover crops",
+        "current": false,
+        "score": 61,
+        "metrics": {
+          "waterMm": 349,
+          "bareMonths": 1.5,
+          "erosion": 0.049,
+          "nitrogen": 41,
+          "organicMatter": 0.575,
+          "pestBreak": 0.5,
+          "forage": 0.45,
+          "income": 0.7333333333333334,
+          "labor": 0.26666666666666666,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-wheat-soy",
+        "name": "Wheat/2nd soybean → maize → soybean",
+        "current": false,
+        "score": 60,
+        "metrics": {
+          "waterMm": 302,
+          "bareMonths": 4.5,
+          "erosion": 0.147,
+          "nitrogen": 13,
+          "organicMatter": 0.2833333333333334,
+          "pestBreak": 0.5,
+          "forage": 0.15,
+          "income": 0.7333333333333334,
+          "labor": 0.21666666666666667,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export (Rosario)",
+            "Export, feed, ethanol",
+            "Milling, export"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "g-mixed",
+        "name": "Mixed: 3 years pasture + 3 years crops",
+        "current": false,
+        "score": 54,
+        "metrics": {
+          "waterMm": 343,
+          "bareMonths": 2.3,
+          "erosion": 0.07513333333333333,
+          "nitrogen": 82,
+          "organicMatter": 0.5166666666666666,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.575,
+          "income": 0.6166666666666667,
+          "labor": 0.2583333333333333,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Milling, export"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-current",
+        "name": "Continuous soybean",
+        "current": true,
+        "score": 47,
+        "metrics": {
+          "waterMm": 277,
+          "bareMonths": 6,
+          "erosion": 0.196,
+          "nitrogen": 20,
+          "organicMatter": 0.125,
+          "pestBreak": 0,
+          "forage": 0.05,
+          "income": 0.615,
+          "labor": 0.2,
+          "market": 0.30000000000000004,
+          "outlets": [
+            "Export (Rosario)"
+          ],
+          "deepRoots": 0
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "chickpea",
+        "name": "Chickpea",
+        "viability": 70,
+        "agro": 82,
+        "margin": 600,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "barley",
+        "name": "Malting barley",
+        "viability": 68,
+        "agro": 79,
+        "margin": 515,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "canola",
+        "name": "Canola (rapeseed)",
+        "viability": 66,
+        "agro": 77,
+        "margin": 474,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sunflower",
+        "name": "Sunflower",
+        "viability": 58,
+        "agro": 63,
+        "margin": 372,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~420 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "wheat",
+        "name": "Wheat",
+        "viability": 56,
+        "agro": 77,
+        "margin": 302,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sorghum",
+        "name": "Grain sorghum",
+        "viability": 50,
+        "agro": 66,
+        "margin": 505,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "soy",
+        "name": "Soybean",
+        "viability": 47,
+        "agro": 61,
+        "margin": 570,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "maize",
+        "name": "Maize",
+        "viability": 41,
+        "agro": 51,
+        "margin": 645,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "pecan",
+        "name": "Pecan",
+        "viability": 35,
+        "agro": 39,
+        "margin": 5000,
+        "payback": 11.6,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful rain ~589 mm"
+        ]
+      }
+    ]
+  },
+  {
+    "point": {
+      "name": "West",
+      "lat": -33.89,
+      "lon": -60.594
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 10,
+      "silt": 65,
+      "clay": 25,
+      "soc": 18,
+      "ph": 6,
+      "nitrogen": 1.6,
+      "cec": 20,
+      "bulkDensity": 1.25,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Silt loam",
+      "organicMatter": 3.1,
+      "waterHolding": 117,
+      "infiltration": "moderate",
+      "ksat": 11,
+      "fieldCapacity": 36,
+      "wiltingPoint": 16.5
+    },
+    "sal": {
+      "ece": 0.8,
+      "cls": "low",
+      "measured": false,
+      "reasons": []
+    },
+    "health": {
+      "score": 79,
+      "level": "good",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.78,
+          "note": "3.1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.6,
+          "note": "6 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.8,
+          "note": "CEC 20 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.97,
+          "note": "117 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.9,
+          "note": "1.25 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 1,
+          "note": "~0.8 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 0.65,
+          "note": "6 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -33.89,
+        "lon": -60.594
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "08-21",
+      "ultimaHeladaP80": "09-04",
+      "aniosHeladaTardia": 0,
+      "libreHeladas": 294,
+      "diasHeladaAnio": 12,
+      "horasFrio": 716,
+      "gdd10": 2398,
+      "lluviaAnual": 1071,
+      "et0Anual": 1411,
+      "tempMedia": 17.3,
+      "vientoPrimavera": 2.8,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 17.9,
+          "tmax": 32,
+          "lluvia": 121.9,
+          "et0": 200.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.61,
+          "humedadSup": 0.58,
+          "diasHelada": 0,
+          "diasCalor": 20.9,
+          "humedadRel": 60,
+          "presion": 1003,
+          "uv": 2.8
+        },
+        {
+          "mes": 2,
+          "tmin": 17.1,
+          "tmax": 30.1,
+          "lluvia": 133.6,
+          "et0": 154.2,
+          "viento": 2.3,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.61,
+          "diasHelada": 0,
+          "diasCalor": 13.9,
+          "humedadRel": 66,
+          "presion": 1004,
+          "uv": 2.4
+        },
+        {
+          "mes": 3,
+          "tmin": 14.6,
+          "tmax": 27.2,
+          "lluvia": 124.8,
+          "et0": 130,
+          "viento": 2.3,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 7,
+          "humedadRel": 71,
+          "presion": 1006,
+          "uv": 1.8
+        },
+        {
+          "mes": 4,
+          "tmin": 11.2,
+          "tmax": 23.5,
+          "lluvia": 112.5,
+          "et0": 86.7,
+          "viento": 2.3,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.66,
+          "diasHelada": 0,
+          "diasCalor": 1.1,
+          "humedadRel": 75,
+          "presion": 1008,
+          "uv": 1
+        },
+        {
+          "mes": 5,
+          "tmin": 7.8,
+          "tmax": 19,
+          "lluvia": 70.1,
+          "et0": 57.8,
+          "viento": 2.3,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 0.5,
+          "diasCalor": 0.1,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.6
+        },
+        {
+          "mes": 6,
+          "tmin": 4.6,
+          "tmax": 16.1,
+          "lluvia": 27.8,
+          "et0": 43.7,
+          "viento": 2.5,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.67,
+          "diasHelada": 2.7,
+          "diasCalor": 0,
+          "humedadRel": 79,
+          "presion": 1010,
+          "uv": 0.4
+        },
+        {
+          "mes": 7,
+          "tmin": 4.1,
+          "tmax": 15.7,
+          "lluvia": 31.8,
+          "et0": 48.4,
+          "viento": 2.6,
+          "humedadRaiz": 0.67,
+          "humedadSup": 0.67,
+          "diasHelada": 5.5,
+          "diasCalor": 0,
+          "humedadRel": 78,
+          "presion": 1011,
+          "uv": 0.4
+        },
+        {
+          "mes": 8,
+          "tmin": 5,
+          "tmax": 18.2,
+          "lluvia": 41.7,
+          "et0": 70.5,
+          "viento": 2.7,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.66,
+          "diasHelada": 2.7,
+          "diasCalor": 0.3,
+          "humedadRel": 73,
+          "presion": 1010,
+          "uv": 0.7
+        },
+        {
+          "mes": 9,
+          "tmin": 7.5,
+          "tmax": 21.1,
+          "lluvia": 71.1,
+          "et0": 99.2,
+          "viento": 2.9,
+          "humedadRaiz": 0.66,
+          "humedadSup": 0.65,
+          "diasHelada": 0.3,
+          "diasCalor": 0.7,
+          "humedadRel": 70,
+          "presion": 1009,
+          "uv": 1.1
+        },
+        {
+          "mes": 10,
+          "tmin": 10.4,
+          "tmax": 24.4,
+          "lluvia": 114.9,
+          "et0": 141.3,
+          "viento": 2.9,
+          "humedadRaiz": 0.65,
+          "humedadSup": 0.65,
+          "diasHelada": 0,
+          "diasCalor": 2.8,
+          "humedadRel": 67,
+          "presion": 1007,
+          "uv": 1.7
+        },
+        {
+          "mes": 11,
+          "tmin": 13.6,
+          "tmax": 28.2,
+          "lluvia": 107.9,
+          "et0": 174.5,
+          "viento": 2.9,
+          "humedadRaiz": 0.63,
+          "humedadSup": 0.63,
+          "diasHelada": 0,
+          "diasCalor": 10.4,
+          "humedadRel": 62,
+          "presion": 1005,
+          "uv": 2.3
+        },
+        {
+          "mes": 12,
+          "tmin": 16.2,
+          "tmax": 31,
+          "lluvia": 112.6,
+          "et0": 203.7,
+          "viento": 2.6,
+          "humedadRaiz": 0.62,
+          "humedadSup": 0.59,
+          "diasHelada": 0,
+          "diasCalor": 18.1,
+          "humedadRel": 58,
+          "presion": 1003,
+          "uv": 2.7
+        }
+      ],
+      "tendencia": {
+        "decada1": 17.1,
+        "decada2": 17.54,
+        "dif": 0.43
+      },
+      "tendenciaLluvia": {
+        "antes": 1134,
+        "despues": 1007,
+        "difPct": -11
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 1192,
+          "diasHelada": 7,
+          "tMedia": 17.51,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2007,
+          "lluvia": 1139,
+          "diasHelada": 27,
+          "tMedia": 15.94,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2008,
+          "lluvia": 657,
+          "diasHelada": 5,
+          "tMedia": 18.13,
+          "heladaTardia": false,
+          "ultimaHelada": "08-18",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2009,
+          "lluvia": 1227,
+          "diasHelada": 13,
+          "tMedia": 17.69,
+          "heladaTardia": false,
+          "ultimaHelada": "09-28",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2010,
+          "lluvia": 1018,
+          "diasHelada": 18,
+          "tMedia": 16.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-13",
+          "vientoPrim": 2.7
+        },
+        {
+          "anio": 2011,
+          "lluvia": 946,
+          "diasHelada": 19,
+          "tMedia": 16.98,
+          "heladaTardia": false,
+          "ultimaHelada": "08-23",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2012,
+          "lluvia": 1489,
+          "diasHelada": 15,
+          "tMedia": 17.14,
+          "heladaTardia": false,
+          "ultimaHelada": "07-30",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2013,
+          "lluvia": 935,
+          "diasHelada": 19,
+          "tMedia": 16.92,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 1463,
+          "diasHelada": 5,
+          "tMedia": 16.9,
+          "heladaTardia": false,
+          "ultimaHelada": "08-27",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2015,
+          "lluvia": 1282,
+          "diasHelada": 7,
+          "tMedia": 17.16,
+          "heladaTardia": false,
+          "ultimaHelada": "07-22",
+          "vientoPrim": 2.6
+        },
+        {
+          "anio": 2016,
+          "lluvia": 1103,
+          "diasHelada": 5,
+          "tMedia": 16.87,
+          "heladaTardia": false,
+          "ultimaHelada": "09-03",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2017,
+          "lluvia": 1250,
+          "diasHelada": 5,
+          "tMedia": 17.31,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2018,
+          "lluvia": 1218,
+          "diasHelada": 14,
+          "tMedia": 17.36,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2019,
+          "lluvia": 1047,
+          "diasHelada": 9,
+          "tMedia": 16.93,
+          "heladaTardia": false,
+          "ultimaHelada": "09-04",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2020,
+          "lluvia": 881,
+          "diasHelada": 13,
+          "tMedia": 17.4,
+          "heladaTardia": false,
+          "ultimaHelada": "08-30",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2021,
+          "lluvia": 712,
+          "diasHelada": 10,
+          "tMedia": 17.99,
+          "heladaTardia": false,
+          "ultimaHelada": "08-11",
+          "vientoPrim": 2.9
+        },
+        {
+          "anio": 2022,
+          "lluvia": 631,
+          "diasHelada": 9,
+          "tMedia": 17.67,
+          "heladaTardia": false,
+          "ultimaHelada": "08-19",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2023,
+          "lluvia": 855,
+          "diasHelada": 7,
+          "tMedia": 18.66,
+          "heladaTardia": false,
+          "ultimaHelada": "07-18",
+          "vientoPrim": 3
+        },
+        {
+          "anio": 2024,
+          "lluvia": 974,
+          "diasHelada": 18,
+          "tMedia": 17.7,
+          "heladaTardia": false,
+          "ultimaHelada": "08-25",
+          "vientoPrim": 2.8
+        },
+        {
+          "anio": 2025,
+          "lluvia": 1395,
+          "diasHelada": 10,
+          "tMedia": 17.5,
+          "heladaTardia": false,
+          "ultimaHelada": "09-05",
+          "vientoPrim": 2.7
+        }
+      ],
+      "humedadRelMedia": 70,
+      "presionMedia": 1007,
+      "uvVerano": 2.6,
+      "minAnual": -3.2,
+      "altura": null
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "g-cover",
+        "name": "Maize–soybean with winter cover crops",
+        "current": false,
+        "score": 61,
+        "metrics": {
+          "waterMm": 349,
+          "bareMonths": 1.5,
+          "erosion": 0.049,
+          "nitrogen": 41,
+          "organicMatter": 0.575,
+          "pestBreak": 0.5,
+          "forage": 0.45,
+          "income": 0.7333333333333334,
+          "labor": 0.26666666666666666,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-wheat-soy",
+        "name": "Wheat/2nd soybean → maize → soybean",
+        "current": false,
+        "score": 60,
+        "metrics": {
+          "waterMm": 302,
+          "bareMonths": 4.5,
+          "erosion": 0.147,
+          "nitrogen": 13,
+          "organicMatter": 0.2833333333333334,
+          "pestBreak": 0.5,
+          "forage": 0.15,
+          "income": 0.7333333333333334,
+          "labor": 0.21666666666666667,
+          "market": 0.9466666666666668,
+          "outlets": [
+            "Export (Rosario)",
+            "Export, feed, ethanol",
+            "Milling, export"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "g-mixed",
+        "name": "Mixed: 3 years pasture + 3 years crops",
+        "current": false,
+        "score": 54,
+        "metrics": {
+          "waterMm": 343,
+          "bareMonths": 2.3,
+          "erosion": 0.07513333333333333,
+          "nitrogen": 82,
+          "organicMatter": 0.5166666666666666,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.575,
+          "income": 0.6166666666666667,
+          "labor": 0.2583333333333333,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "Export, feed, ethanol",
+            "Export (Rosario)",
+            "Milling, export"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "g-current",
+        "name": "Continuous soybean",
+        "current": true,
+        "score": 47,
+        "metrics": {
+          "waterMm": 277,
+          "bareMonths": 6,
+          "erosion": 0.196,
+          "nitrogen": 20,
+          "organicMatter": 0.125,
+          "pestBreak": 0,
+          "forage": 0.05,
+          "income": 0.615,
+          "labor": 0.2,
+          "market": 0.30000000000000004,
+          "outlets": [
+            "Export (Rosario)"
+          ],
+          "deepRoots": 0
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "chickpea",
+        "name": "Chickpea",
+        "viability": 70,
+        "agro": 82,
+        "margin": 600,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "barley",
+        "name": "Malting barley",
+        "viability": 68,
+        "agro": 79,
+        "margin": 515,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "canola",
+        "name": "Canola (rapeseed)",
+        "viability": 66,
+        "agro": 77,
+        "margin": 474,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sunflower",
+        "name": "Sunflower",
+        "viability": 58,
+        "agro": 63,
+        "margin": 372,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~420 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "wheat",
+        "name": "Wheat",
+        "viability": 56,
+        "agro": 77,
+        "margin": 302,
+        "payback": 1,
+        "limits": []
+      },
+      {
+        "id": "sorghum",
+        "name": "Grain sorghum",
+        "viability": 50,
+        "agro": 66,
+        "margin": 505,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "soy",
+        "name": "Soybean",
+        "viability": 47,
+        "agro": 61,
+        "margin": 570,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "maize",
+        "name": "Maize",
+        "viability": 41,
+        "agro": 51,
+        "margin": 645,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful rain ~589 mm"
+        ]
+      },
+      {
+        "id": "pecan",
+        "name": "Pecan",
+        "viability": 35,
+        "agro": 39,
+        "margin": 5000,
+        "payback": 11.6,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful rain ~589 mm"
+        ]
+      }
+    ]
+  }
+]

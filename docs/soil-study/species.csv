@@ -1,0 +1,61 @@
+point,species,status,viability,soil_climate_fit,margin_usd_ha,payback_years,fills_off_season,main_limit
+West orchards,Winter greens in tunnels,new,90,85,40000,2.8,yes,
+West orchards,Saffron,new,81,91,11000,3.5,yes,
+West orchards,Rhubarb,new,77,71,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~660 mm
+West orchards,Strawberry,current,75,66,30000,1.6,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+West orchards,Haskap berry,new,75,71,24000,3.7,yes,Water: Needs ~400 mm/season; useful supply ~660 mm
+West orchards,Sea buckthorn,new,74,81,13000,4.9,yes,
+West orchards,Calafate,new,73,86,19000,3.6,no,
+West orchards,Rosehip (rosa mosqueta),new,72,86,3500,4.3,yes,
+West orchards,Garlic,current,64,77,12000,1,no,
+West orchards,Elderberry,new,64,66,11000,3.8,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+West orchards,Asparagus,new,62,65,10000,4.5,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+West orchards,Raspberry,current,58,62,23000,2.7,no,Water: Needs ~500 mm/season; useful supply ~660 mm
+West orchards,Lavender,new,57,80,3000,4.5,no,
+West orchards,Hazelnut,new,54,59,7000,7.2,yes,Water: Needs ~500 mm/season; useful supply ~660 mm
+West orchards,Hops,new,50,53,8000,6.7,yes,Water: Needs ~550 mm/season; useful supply ~660 mm
+West orchards,Apple,new,45,46,9000,8.3,yes,Water: Needs ~650 mm/season; useful supply ~660 mm
+West orchards,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.6; likes 4.5–5.5
+West orchards,Cherry,current,43,47,23000,6.3,no,Water: Needs ~650 mm/season; useful supply ~660 mm
+West orchards,Quinoa,new,41,34,3000,1,yes,Winter cold: Coldest night averages -8.9 °C; survives 0 °C
+West orchards,Walnut,new,38,41,6500,10.5,yes,Water: Needs ~700 mm/season; useful supply ~660 mm
+Town chacras,Winter greens in tunnels,new,90,85,40000,2.8,yes,
+Town chacras,Saffron,new,81,91,11000,3.5,yes,
+Town chacras,Rhubarb,new,77,71,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~660 mm
+Town chacras,Strawberry,current,75,66,30000,1.6,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+Town chacras,Haskap berry,new,75,71,24000,3.7,yes,Water: Needs ~400 mm/season; useful supply ~660 mm
+Town chacras,Sea buckthorn,new,74,81,13000,4.9,yes,
+Town chacras,Calafate,new,73,86,19000,3.6,no,
+Town chacras,Rosehip (rosa mosqueta),new,72,86,3500,4.3,yes,
+Town chacras,Garlic,current,64,77,12000,1,no,
+Town chacras,Elderberry,new,64,66,11000,3.8,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+Town chacras,Asparagus,new,62,65,10000,4.5,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+Town chacras,Raspberry,current,58,62,23000,2.7,no,Water: Needs ~500 mm/season; useful supply ~660 mm
+Town chacras,Lavender,new,57,79,3000,4.5,no,
+Town chacras,Hazelnut,new,54,59,7000,7.2,yes,Water: Needs ~500 mm/season; useful supply ~660 mm
+Town chacras,Hops,new,50,53,8000,6.7,yes,Water: Needs ~550 mm/season; useful supply ~660 mm
+Town chacras,Apple,new,44,45,9000,8.4,yes,Water: Needs ~650 mm/season; useful supply ~660 mm
+Town chacras,Blueberry,new,44,34,28000,5.6,yes,Soil pH: Soil pH 7.6; likes 4.5–5.5
+Town chacras,Cherry,current,42,46,23000,6.4,no,Water: Needs ~650 mm/season; useful supply ~660 mm
+Town chacras,Quinoa,new,41,34,3000,1,yes,Winter cold: Coldest night averages -9.3 °C; survives 0 °C
+Town chacras,Walnut,new,38,41,6500,10.5,yes,Water: Needs ~700 mm/season; useful supply ~660 mm
+East chacras,Winter greens in tunnels,new,90,85,40000,2.8,yes,
+East chacras,Saffron,new,80,89,11000,3.6,yes,
+East chacras,Rhubarb,new,76,70,26000,2.3,yes,Water: Needs ~400 mm/season; useful supply ~660 mm
+East chacras,Haskap berry,new,75,71,24000,3.7,yes,Water: Needs ~400 mm/season; useful supply ~660 mm
+East chacras,Sea buckthorn,new,74,81,13000,4.9,yes,
+East chacras,Calafate,new,73,86,19000,3.6,no,
+East chacras,Strawberry,current,72,62,30000,1.6,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+East chacras,Rosehip (rosa mosqueta),new,72,86,3500,4.3,yes,
+East chacras,Garlic,current,64,77,12000,1,no,
+East chacras,Elderberry,new,63,65,11000,3.8,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+East chacras,Asparagus,new,60,63,10000,4.6,yes,Water: Needs ~450 mm/season; useful supply ~660 mm
+East chacras,Raspberry,current,57,61,23000,2.7,no,Water: Needs ~500 mm/season; useful supply ~660 mm
+East chacras,Lavender,new,57,79,3000,4.5,no,
+East chacras,Hazelnut,new,53,58,7000,7.2,yes,Water: Needs ~500 mm/season; useful supply ~660 mm
+East chacras,Hops,new,50,52,8000,6.8,yes,Water: Needs ~550 mm/season; useful supply ~660 mm
+East chacras,Apple,new,44,45,9000,8.4,yes,Water: Needs ~650 mm/season; useful supply ~660 mm
+East chacras,Blueberry,new,43,32,28000,5.8,yes,Soil pH: Soil pH 7.6; likes 4.5–5.5
+East chacras,Quinoa,new,41,33,3000,1,yes,Winter cold: Coldest night averages -6.3 °C; survives 0 °C
+East chacras,Cherry,current,40,44,23000,6.5,no,Water: Needs ~650 mm/season; useful supply ~660 mm
+East chacras,Walnut,new,37,39,6500,10.7,yes,Water: Needs ~700 mm/season; useful supply ~660 mm

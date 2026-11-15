@@ -1,0 +1,4613 @@
+[
+  {
+    "point": {
+      "name": "Perito Moreno centre",
+      "lat": -46.59,
+      "lon": -70.926
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 60,
+      "silt": 27,
+      "clay": 13,
+      "soc": 6,
+      "ph": 7.9,
+      "nitrogen": 0.6,
+      "cec": 12,
+      "bulkDensity": 1.4,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Sandy loam",
+      "organicMatter": 1,
+      "waterHolding": 60,
+      "infiltration": "moderate",
+      "ksat": 29.2,
+      "fieldCapacity": 18.5,
+      "wiltingPoint": 8.5
+    },
+    "sal": {
+      "ece": 1.4,
+      "cls": "low",
+      "measured": false,
+      "reasons": [
+        "Dry climate: rain is only 26% of evaporation, so salts are not washed down naturally.",
+        "pH 7.9: alkaline soils often carry carbonates and some sodium.",
+        "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
+      ]
+    },
+    "health": {
+      "score": 60,
+      "level": "watch",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.25,
+          "note": "1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.45,
+          "note": "7.9 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.48,
+          "note": "CEC 12 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.5,
+          "note": "60 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.6,
+          "note": "1.4 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 0.9,
+          "note": "~1.4 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 1,
+          "note": "0 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -46.59,
+        "lon": -70.926
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "10-28",
+      "ultimaHeladaP80": "11-09",
+      "aniosHeladaTardia": 9,
+      "libreHeladas": 169,
+      "diasHeladaAnio": 99,
+      "horasFrio": 1762,
+      "gdd10": 691,
+      "lluviaAnual": 246,
+      "et0Anual": 936,
+      "tempMedia": 9,
+      "vientoPrimavera": 5.1,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 9,
+          "tmax": 23.4,
+          "lluvia": 11.2,
+          "et0": 160.1,
+          "viento": 5.5,
+          "humedadRaiz": 0.39,
+          "humedadSup": 0.31,
+          "diasHelada": 0,
+          "diasCalor": 2.6,
+          "humedadRel": 49,
+          "presion": 941,
+          "uv": 2.6
+        },
+        {
+          "mes": 2,
+          "tmin": 8.7,
+          "tmax": 23,
+          "lluvia": 16.6,
+          "et0": 123.3,
+          "viento": 5,
+          "humedadRaiz": 0.38,
+          "humedadSup": 0.28,
+          "diasHelada": 0,
+          "diasCalor": 2.8,
+          "humedadRel": 52,
+          "presion": 942,
+          "uv": 2
+        },
+        {
+          "mes": 3,
+          "tmin": 6.4,
+          "tmax": 19.3,
+          "lluvia": 18.6,
+          "et0": 89.1,
+          "viento": 4.6,
+          "humedadRaiz": 0.39,
+          "humedadSup": 0.33,
+          "diasHelada": 0.1,
+          "diasCalor": 0.2,
+          "humedadRel": 60,
+          "presion": 942,
+          "uv": 1.2
+        },
+        {
+          "mes": 4,
+          "tmin": 3.5,
+          "tmax": 14.6,
+          "lluvia": 23.2,
+          "et0": 46.9,
+          "viento": 4.3,
+          "humedadRaiz": 0.4,
+          "humedadSup": 0.39,
+          "diasHelada": 3.5,
+          "diasCalor": 0,
+          "humedadRel": 70,
+          "presion": 942,
+          "uv": 0.5
+        },
+        {
+          "mes": 5,
+          "tmin": 0.8,
+          "tmax": 9.8,
+          "lluvia": 30.3,
+          "et0": 24.1,
+          "viento": 3.8,
+          "humedadRaiz": 0.43,
+          "humedadSup": 0.44,
+          "diasHelada": 12.9,
+          "diasCalor": 0,
+          "humedadRel": 81,
+          "presion": 942,
+          "uv": 0.2
+        },
+        {
+          "mes": 6,
+          "tmin": -1.4,
+          "tmax": 5.9,
+          "lluvia": 36.7,
+          "et0": 13.8,
+          "viento": 3.8,
+          "humedadRaiz": 0.46,
+          "humedadSup": 0.49,
+          "diasHelada": 20.4,
+          "diasCalor": 0,
+          "humedadRel": 86,
+          "presion": 940,
+          "uv": 0.1
+        },
+        {
+          "mes": 7,
+          "tmin": -2.3,
+          "tmax": 5.3,
+          "lluvia": 27.9,
+          "et0": 16,
+          "viento": 3.7,
+          "humedadRaiz": 0.5,
+          "humedadSup": 0.52,
+          "diasHelada": 23.4,
+          "diasCalor": 0,
+          "humedadRel": 86,
+          "presion": 942,
+          "uv": 0.1
+        },
+        {
+          "mes": 8,
+          "tmin": -0.8,
+          "tmax": 7.9,
+          "lluvia": 26.3,
+          "et0": 29.1,
+          "viento": 4.1,
+          "humedadRaiz": 0.52,
+          "humedadSup": 0.55,
+          "diasHelada": 20.6,
+          "diasCalor": 0,
+          "humedadRel": 81,
+          "presion": 941,
+          "uv": 0.3
+        },
+        {
+          "mes": 9,
+          "tmin": 0.7,
+          "tmax": 11.6,
+          "lluvia": 18.2,
+          "et0": 54.6,
+          "viento": 4.3,
+          "humedadRaiz": 0.52,
+          "humedadSup": 0.54,
+          "diasHelada": 12.3,
+          "diasCalor": 0,
+          "humedadRel": 73,
+          "presion": 943,
+          "uv": 0.7
+        },
+        {
+          "mes": 10,
+          "tmin": 2.6,
+          "tmax": 15.4,
+          "lluvia": 10.5,
+          "et0": 93.9,
+          "viento": 4.9,
+          "humedadRaiz": 0.49,
+          "humedadSup": 0.49,
+          "diasHelada": 5,
+          "diasCalor": 0.1,
+          "humedadRel": 63,
+          "presion": 942,
+          "uv": 1.3
+        },
+        {
+          "mes": 11,
+          "tmin": 5.4,
+          "tmax": 19,
+          "lluvia": 13,
+          "et0": 128,
+          "viento": 5.4,
+          "humedadRaiz": 0.45,
+          "humedadSup": 0.42,
+          "diasHelada": 0.6,
+          "diasCalor": 0.3,
+          "humedadRel": 55,
+          "presion": 941,
+          "uv": 2.1
+        },
+        {
+          "mes": 12,
+          "tmin": 7.7,
+          "tmax": 21.7,
+          "lluvia": 13.2,
+          "et0": 157.1,
+          "viento": 5.7,
+          "humedadRaiz": 0.41,
+          "humedadSup": 0.37,
+          "diasHelada": 0,
+          "diasCalor": 1.9,
+          "humedadRel": 51,
+          "presion": 940,
+          "uv": 2.5
+        }
+      ],
+      "tendencia": {
+        "decada1": 8.92,
+        "decada2": 9.11,
+        "dif": 0.19
+      },
+      "tendenciaLluvia": {
+        "antes": 261,
+        "despues": 231,
+        "difPct": -12
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 244,
+          "diasHelada": 100,
+          "tMedia": 8.68,
+          "heladaTardia": true,
+          "ultimaHelada": "11-17",
+          "vientoPrim": 5.6
+        },
+        {
+          "anio": 2007,
+          "lluvia": 182,
+          "diasHelada": 110,
+          "tMedia": 8.76,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2008,
+          "lluvia": 207,
+          "diasHelada": 103,
+          "tMedia": 9.83,
+          "heladaTardia": false,
+          "ultimaHelada": "09-19",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2009,
+          "lluvia": 250,
+          "diasHelada": 99,
+          "tMedia": 8.72,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2010,
+          "lluvia": 297,
+          "diasHelada": 101,
+          "tMedia": 8.21,
+          "heladaTardia": false,
+          "ultimaHelada": "10-22",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2011,
+          "lluvia": 258,
+          "diasHelada": 95,
+          "tMedia": 9.17,
+          "heladaTardia": false,
+          "ultimaHelada": "10-22",
+          "vientoPrim": 4.6
+        },
+        {
+          "anio": 2012,
+          "lluvia": 281,
+          "diasHelada": 106,
+          "tMedia": 8.79,
+          "heladaTardia": false,
+          "ultimaHelada": "10-07",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2013,
+          "lluvia": 250,
+          "diasHelada": 93,
+          "tMedia": 9.49,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 312,
+          "diasHelada": 92,
+          "tMedia": 8.7,
+          "heladaTardia": true,
+          "ultimaHelada": "11-02",
+          "vientoPrim": 5.5
+        },
+        {
+          "anio": 2015,
+          "lluvia": 326,
+          "diasHelada": 103,
+          "tMedia": 8.81,
+          "heladaTardia": true,
+          "ultimaHelada": "11-19",
+          "vientoPrim": 4.5
+        },
+        {
+          "anio": 2016,
+          "lluvia": 173,
+          "diasHelada": 93,
+          "tMedia": 9.75,
+          "heladaTardia": false,
+          "ultimaHelada": "10-15",
+          "vientoPrim": 4.7
+        },
+        {
+          "anio": 2017,
+          "lluvia": 340,
+          "diasHelada": 85,
+          "tMedia": 8.79,
+          "heladaTardia": false,
+          "ultimaHelada": "10-21",
+          "vientoPrim": 5.4
+        },
+        {
+          "anio": 2018,
+          "lluvia": 213,
+          "diasHelada": 106,
+          "tMedia": 8.84,
+          "heladaTardia": true,
+          "ultimaHelada": "11-06",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2019,
+          "lluvia": 200,
+          "diasHelada": 89,
+          "tMedia": 9.08,
+          "heladaTardia": true,
+          "ultimaHelada": "11-08",
+          "vientoPrim": 5.3
+        },
+        {
+          "anio": 2020,
+          "lluvia": 222,
+          "diasHelada": 103,
+          "tMedia": 8.93,
+          "heladaTardia": false,
+          "ultimaHelada": "10-20",
+          "vientoPrim": 5.3
+        },
+        {
+          "anio": 2021,
+          "lluvia": 125,
+          "diasHelada": 76,
+          "tMedia": 10.37,
+          "heladaTardia": false,
+          "ultimaHelada": "10-30",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2022,
+          "lluvia": 160,
+          "diasHelada": 112,
+          "tMedia": 9.05,
+          "heladaTardia": false,
+          "ultimaHelada": "10-30",
+          "vientoPrim": 5.2
+        },
+        {
+          "anio": 2023,
+          "lluvia": 217,
+          "diasHelada": 113,
+          "tMedia": 8.68,
+          "heladaTardia": false,
+          "ultimaHelada": "10-31",
+          "vientoPrim": 4.7
+        },
+        {
+          "anio": 2024,
+          "lluvia": 260,
+          "diasHelada": 118,
+          "tMedia": 8.77,
+          "heladaTardia": false,
+          "ultimaHelada": "10-05",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2025,
+          "lluvia": 398,
+          "diasHelada": 83,
+          "tMedia": 8.84,
+          "heladaTardia": true,
+          "ultimaHelada": "11-03",
+          "vientoPrim": 5.4
+        }
+      ],
+      "humedadRelMedia": 67,
+      "presionMedia": 942,
+      "uvVerano": 2.4,
+      "minAnual": -9.4,
+      "altura": {
+        "celda": 594,
+        "campo": 388,
+        "deltaC": 1.34
+      }
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "f-break",
+        "name": "Alfalfa with a crop break",
+        "current": false,
+        "score": 62,
+        "metrics": {
+          "waterMm": 547,
+          "bareMonths": 0.3,
+          "erosion": 0.028776785714285713,
+          "nitrogen": 107,
+          "organicMatter": 0.6900000000000001,
+          "pestBreak": 0.4666666666666666,
+          "forage": 0.8400000000000001,
+          "income": 0.47000000000000003,
+          "labor": 0.45,
+          "market": 0.894,
+          "outlets": [
+            "Hay / livestock",
+            "Local / regional",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "f-mixed",
+        "name": "Alfalfa–grass mix, rotational grazing",
+        "current": false,
+        "score": 49,
+        "metrics": {
+          "waterMm": 624,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 75,
+          "organicMatter": 0.825,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.8875000000000001,
+          "income": 0.425,
+          "labor": 0.25,
+          "market": 0.635,
+          "outlets": [
+            "Hay / livestock",
+            "Grazing / hay"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "f-cash",
+        "name": "Alfalfa → garlic → fava",
+        "current": false,
+        "score": 44,
+        "metrics": {
+          "waterMm": 594,
+          "bareMonths": 0.8,
+          "erosion": 0.07673809523809524,
+          "nitrogen": 101,
+          "organicMatter": 0.6625000000000001,
+          "pestBreak": 0.41666666666666663,
+          "forage": 0.7125,
+          "income": 0.5375,
+          "labor": 0.49999999999999994,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "National",
+            "Local",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.4
+        }
+      },
+      {
+        "id": "f-current",
+        "name": "Continuous alfalfa",
+        "current": true,
+        "score": 42,
+        "metrics": {
+          "waterMm": 643,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 150,
+          "organicMatter": 0.75,
+          "pestBreak": 0,
+          "forage": 1,
+          "income": 0.5,
+          "labor": 0.3,
+          "market": 0.4,
+          "outlets": [
+            "Hay / livestock"
+          ],
+          "deepRoots": 1
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "tunnel-greens",
+        "name": "Winter greens in tunnels",
+        "viability": 85,
+        "agro": 77,
+        "margin": 40000,
+        "payback": 2.9,
+        "limits": []
+      },
+      {
+        "id": "saffron",
+        "name": "Saffron",
+        "viability": 80,
+        "agro": 89,
+        "margin": 11000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "seabuckthorn",
+        "name": "Sea buckthorn",
+        "viability": 68,
+        "agro": 72,
+        "margin": 13000,
+        "payback": 5,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "calafate",
+        "name": "Calafate",
+        "viability": 67,
+        "agro": 78,
+        "margin": 19000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "rosehip",
+        "name": "Rosehip (rosa mosqueta)",
+        "viability": 66,
+        "agro": 78,
+        "margin": 3500,
+        "payback": 4.5,
+        "limits": []
+      },
+      {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 66,
+        "agro": 57,
+        "margin": 26000,
+        "payback": 2.3,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "haskap",
+        "name": "Haskap berry",
+        "viability": 65,
+        "agro": 59,
+        "margin": 24000,
+        "payback": 3.8,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "quinoa",
+        "name": "Quinoa",
+        "viability": 63,
+        "agro": 69,
+        "margin": 3000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "strawberry",
+        "name": "Strawberry",
+        "viability": 59,
+        "agro": 46,
+        "margin": 30000,
+        "payback": 1.9,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 50% of years"
+        ]
+      },
+      {
+        "id": "garlic",
+        "name": "Garlic",
+        "viability": 57,
+        "agro": 67,
+        "margin": 12000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~330 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "elderberry",
+        "name": "Elderberry",
+        "viability": 54,
+        "agro": 53,
+        "margin": 11000,
+        "payback": 4,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "lavender",
+        "name": "Lavender",
+        "viability": 52,
+        "agro": 71,
+        "margin": 3000,
+        "payback": 4.8,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "asparagus",
+        "name": "Asparagus",
+        "viability": 50,
+        "agro": 49,
+        "margin": 10000,
+        "payback": 5,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 50% of years"
+        ]
+      },
+      {
+        "id": "raspberry",
+        "name": "Raspberry",
+        "viability": 43,
+        "agro": 44,
+        "margin": 23000,
+        "payback": 3,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "hazelnut",
+        "name": "Hazelnut",
+        "viability": 43,
+        "agro": 44,
+        "margin": 7000,
+        "payback": 7.9,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "blueberry",
+        "name": "Blueberry",
+        "viability": 41,
+        "agro": 30,
+        "margin": 28000,
+        "payback": 6,
+        "limits": [
+          "Soil pH: Soil pH 7.9; likes 4.5–5.5",
+          "Water: Needs ~500 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 50% of years"
+        ]
+      },
+      {
+        "id": "hops",
+        "name": "Hops",
+        "viability": 38,
+        "agro": 37,
+        "margin": 8000,
+        "payback": 8.8,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful supply ~495 mm",
+          "Wind: Spring wind 5.1 m/s; tolerance low"
+        ]
+      },
+      {
+        "id": "apple",
+        "name": "Apple",
+        "viability": 36,
+        "agro": 35,
+        "margin": 9000,
+        "payback": 9.7,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "viability": 31,
+        "agro": 34,
+        "margin": 23000,
+        "payback": 7.2,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 50% of years"
+        ]
+      },
+      {
+        "id": "walnut",
+        "name": "Walnut",
+        "viability": 30,
+        "agro": 31,
+        "margin": 6500,
+        "payback": 12,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful supply ~495 mm",
+          "Season length: 169 frost-free days; needs ~170",
+          "Summer heat: 691 degree-days available; needs ~1400"
+        ]
+      }
+    ]
+  },
+  {
+    "point": {
+      "name": "North",
+      "lat": -46.576,
+      "lon": -70.926
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 60,
+      "silt": 27,
+      "clay": 13,
+      "soc": 6,
+      "ph": 7.9,
+      "nitrogen": 0.6,
+      "cec": 12,
+      "bulkDensity": 1.4,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Sandy loam",
+      "organicMatter": 1,
+      "waterHolding": 60,
+      "infiltration": "moderate",
+      "ksat": 29.2,
+      "fieldCapacity": 18.5,
+      "wiltingPoint": 8.5
+    },
+    "sal": {
+      "ece": 1.4,
+      "cls": "low",
+      "measured": false,
+      "reasons": [
+        "Dry climate: rain is only 26% of evaporation, so salts are not washed down naturally.",
+        "pH 7.9: alkaline soils often carry carbonates and some sodium.",
+        "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
+      ]
+    },
+    "health": {
+      "score": 60,
+      "level": "watch",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.25,
+          "note": "1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.45,
+          "note": "7.9 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.48,
+          "note": "CEC 12 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.5,
+          "note": "60 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.6,
+          "note": "1.4 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 0.9,
+          "note": "~1.4 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 1,
+          "note": "0 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -46.576,
+        "lon": -70.926
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "10-28",
+      "ultimaHeladaP80": "11-09",
+      "aniosHeladaTardia": 9,
+      "libreHeladas": 169,
+      "diasHeladaAnio": 104,
+      "horasFrio": 1749,
+      "gdd10": 667,
+      "lluviaAnual": 246,
+      "et0Anual": 931,
+      "tempMedia": 8.9,
+      "vientoPrimavera": 5.1,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 8.9,
+          "tmax": 23.3,
+          "lluvia": 11.2,
+          "et0": 159.4,
+          "viento": 5.5,
+          "humedadRaiz": 0.39,
+          "humedadSup": 0.31,
+          "diasHelada": 0,
+          "diasCalor": 2.4,
+          "humedadRel": 49,
+          "presion": 941,
+          "uv": 2.6
+        },
+        {
+          "mes": 2,
+          "tmin": 8.5,
+          "tmax": 22.8,
+          "lluvia": 16.6,
+          "et0": 122.8,
+          "viento": 5,
+          "humedadRaiz": 0.38,
+          "humedadSup": 0.28,
+          "diasHelada": 0,
+          "diasCalor": 2.5,
+          "humedadRel": 52,
+          "presion": 942,
+          "uv": 2
+        },
+        {
+          "mes": 3,
+          "tmin": 6.2,
+          "tmax": 19.2,
+          "lluvia": 18.6,
+          "et0": 88.6,
+          "viento": 4.6,
+          "humedadRaiz": 0.39,
+          "humedadSup": 0.33,
+          "diasHelada": 0.1,
+          "diasCalor": 0.2,
+          "humedadRel": 60,
+          "presion": 942,
+          "uv": 1.2
+        },
+        {
+          "mes": 4,
+          "tmin": 3.3,
+          "tmax": 14.4,
+          "lluvia": 23.2,
+          "et0": 46.6,
+          "viento": 4.3,
+          "humedadRaiz": 0.4,
+          "humedadSup": 0.39,
+          "diasHelada": 3.8,
+          "diasCalor": 0,
+          "humedadRel": 70,
+          "presion": 942,
+          "uv": 0.5
+        },
+        {
+          "mes": 5,
+          "tmin": 0.7,
+          "tmax": 9.6,
+          "lluvia": 30.3,
+          "et0": 23.9,
+          "viento": 3.8,
+          "humedadRaiz": 0.43,
+          "humedadSup": 0.44,
+          "diasHelada": 13.4,
+          "diasCalor": 0,
+          "humedadRel": 81,
+          "presion": 942,
+          "uv": 0.2
+        },
+        {
+          "mes": 6,
+          "tmin": -1.5,
+          "tmax": 5.8,
+          "lluvia": 36.7,
+          "et0": 13.7,
+          "viento": 3.8,
+          "humedadRaiz": 0.46,
+          "humedadSup": 0.49,
+          "diasHelada": 21.5,
+          "diasCalor": 0,
+          "humedadRel": 86,
+          "presion": 940,
+          "uv": 0.1
+        },
+        {
+          "mes": 7,
+          "tmin": -2.4,
+          "tmax": 5.2,
+          "lluvia": 27.9,
+          "et0": 15.9,
+          "viento": 3.7,
+          "humedadRaiz": 0.5,
+          "humedadSup": 0.52,
+          "diasHelada": 23.9,
+          "diasCalor": 0,
+          "humedadRel": 86,
+          "presion": 942,
+          "uv": 0.1
+        },
+        {
+          "mes": 8,
+          "tmin": -1,
+          "tmax": 7.7,
+          "lluvia": 26.3,
+          "et0": 28.9,
+          "viento": 4.1,
+          "humedadRaiz": 0.52,
+          "humedadSup": 0.55,
+          "diasHelada": 21.4,
+          "diasCalor": 0,
+          "humedadRel": 81,
+          "presion": 941,
+          "uv": 0.3
+        },
+        {
+          "mes": 9,
+          "tmin": 0.5,
+          "tmax": 11.5,
+          "lluvia": 18.2,
+          "et0": 54.2,
+          "viento": 4.3,
+          "humedadRaiz": 0.52,
+          "humedadSup": 0.54,
+          "diasHelada": 13.2,
+          "diasCalor": 0,
+          "humedadRel": 73,
+          "presion": 943,
+          "uv": 0.7
+        },
+        {
+          "mes": 10,
+          "tmin": 2.4,
+          "tmax": 15.2,
+          "lluvia": 10.5,
+          "et0": 93.3,
+          "viento": 4.9,
+          "humedadRaiz": 0.49,
+          "humedadSup": 0.49,
+          "diasHelada": 5.5,
+          "diasCalor": 0.1,
+          "humedadRel": 63,
+          "presion": 942,
+          "uv": 1.3
+        },
+        {
+          "mes": 11,
+          "tmin": 5.2,
+          "tmax": 18.8,
+          "lluvia": 13,
+          "et0": 127.3,
+          "viento": 5.4,
+          "humedadRaiz": 0.45,
+          "humedadSup": 0.42,
+          "diasHelada": 0.8,
+          "diasCalor": 0.3,
+          "humedadRel": 55,
+          "presion": 941,
+          "uv": 2.1
+        },
+        {
+          "mes": 12,
+          "tmin": 7.5,
+          "tmax": 21.5,
+          "lluvia": 13.2,
+          "et0": 156.3,
+          "viento": 5.7,
+          "humedadRaiz": 0.41,
+          "humedadSup": 0.37,
+          "diasHelada": 0,
+          "diasCalor": 1.9,
+          "humedadRel": 51,
+          "presion": 940,
+          "uv": 2.5
+        }
+      ],
+      "tendencia": {
+        "decada1": 8.76,
+        "decada2": 8.95,
+        "dif": 0.19
+      },
+      "tendenciaLluvia": {
+        "antes": 261,
+        "despues": 231,
+        "difPct": -12
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 244,
+          "diasHelada": 102,
+          "tMedia": 8.52,
+          "heladaTardia": true,
+          "ultimaHelada": "11-17",
+          "vientoPrim": 5.6
+        },
+        {
+          "anio": 2007,
+          "lluvia": 182,
+          "diasHelada": 112,
+          "tMedia": 8.6,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2008,
+          "lluvia": 207,
+          "diasHelada": 109,
+          "tMedia": 9.67,
+          "heladaTardia": false,
+          "ultimaHelada": "09-19",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2009,
+          "lluvia": 250,
+          "diasHelada": 104,
+          "tMedia": 8.56,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2010,
+          "lluvia": 297,
+          "diasHelada": 104,
+          "tMedia": 8.05,
+          "heladaTardia": false,
+          "ultimaHelada": "10-22",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2011,
+          "lluvia": 258,
+          "diasHelada": 103,
+          "tMedia": 9.01,
+          "heladaTardia": false,
+          "ultimaHelada": "10-22",
+          "vientoPrim": 4.6
+        },
+        {
+          "anio": 2012,
+          "lluvia": 281,
+          "diasHelada": 110,
+          "tMedia": 8.63,
+          "heladaTardia": false,
+          "ultimaHelada": "10-09",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2013,
+          "lluvia": 250,
+          "diasHelada": 99,
+          "tMedia": 9.33,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 312,
+          "diasHelada": 95,
+          "tMedia": 8.54,
+          "heladaTardia": true,
+          "ultimaHelada": "11-02",
+          "vientoPrim": 5.5
+        },
+        {
+          "anio": 2015,
+          "lluvia": 326,
+          "diasHelada": 108,
+          "tMedia": 8.65,
+          "heladaTardia": true,
+          "ultimaHelada": "11-19",
+          "vientoPrim": 4.5
+        },
+        {
+          "anio": 2016,
+          "lluvia": 173,
+          "diasHelada": 99,
+          "tMedia": 9.59,
+          "heladaTardia": false,
+          "ultimaHelada": "10-15",
+          "vientoPrim": 4.7
+        },
+        {
+          "anio": 2017,
+          "lluvia": 340,
+          "diasHelada": 91,
+          "tMedia": 8.63,
+          "heladaTardia": false,
+          "ultimaHelada": "10-21",
+          "vientoPrim": 5.4
+        },
+        {
+          "anio": 2018,
+          "lluvia": 213,
+          "diasHelada": 111,
+          "tMedia": 8.68,
+          "heladaTardia": true,
+          "ultimaHelada": "11-06",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2019,
+          "lluvia": 200,
+          "diasHelada": 91,
+          "tMedia": 8.92,
+          "heladaTardia": true,
+          "ultimaHelada": "11-08",
+          "vientoPrim": 5.3
+        },
+        {
+          "anio": 2020,
+          "lluvia": 222,
+          "diasHelada": 109,
+          "tMedia": 8.77,
+          "heladaTardia": false,
+          "ultimaHelada": "10-20",
+          "vientoPrim": 5.3
+        },
+        {
+          "anio": 2021,
+          "lluvia": 125,
+          "diasHelada": 79,
+          "tMedia": 10.21,
+          "heladaTardia": false,
+          "ultimaHelada": "10-30",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2022,
+          "lluvia": 160,
+          "diasHelada": 117,
+          "tMedia": 8.89,
+          "heladaTardia": false,
+          "ultimaHelada": "10-30",
+          "vientoPrim": 5.2
+        },
+        {
+          "anio": 2023,
+          "lluvia": 217,
+          "diasHelada": 117,
+          "tMedia": 8.52,
+          "heladaTardia": false,
+          "ultimaHelada": "10-31",
+          "vientoPrim": 4.7
+        },
+        {
+          "anio": 2024,
+          "lluvia": 260,
+          "diasHelada": 121,
+          "tMedia": 8.61,
+          "heladaTardia": false,
+          "ultimaHelada": "10-05",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2025,
+          "lluvia": 398,
+          "diasHelada": 89,
+          "tMedia": 8.68,
+          "heladaTardia": true,
+          "ultimaHelada": "11-03",
+          "vientoPrim": 5.4
+        }
+      ],
+      "humedadRelMedia": 67,
+      "presionMedia": 942,
+      "uvVerano": 2.4,
+      "minAnual": -9.5,
+      "altura": {
+        "celda": 594,
+        "campo": 412,
+        "deltaC": 1.18
+      }
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "f-break",
+        "name": "Alfalfa with a crop break",
+        "current": false,
+        "score": 62,
+        "metrics": {
+          "waterMm": 544,
+          "bareMonths": 0.3,
+          "erosion": 0.028776785714285713,
+          "nitrogen": 107,
+          "organicMatter": 0.6900000000000001,
+          "pestBreak": 0.4666666666666666,
+          "forage": 0.8400000000000001,
+          "income": 0.47000000000000003,
+          "labor": 0.45,
+          "market": 0.894,
+          "outlets": [
+            "Hay / livestock",
+            "Local / regional",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "f-mixed",
+        "name": "Alfalfa–grass mix, rotational grazing",
+        "current": false,
+        "score": 49,
+        "metrics": {
+          "waterMm": 620,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 75,
+          "organicMatter": 0.825,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.8875000000000001,
+          "income": 0.425,
+          "labor": 0.25,
+          "market": 0.635,
+          "outlets": [
+            "Hay / livestock",
+            "Grazing / hay"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "f-cash",
+        "name": "Alfalfa → garlic → fava",
+        "current": false,
+        "score": 44,
+        "metrics": {
+          "waterMm": 591,
+          "bareMonths": 0.8,
+          "erosion": 0.07673809523809524,
+          "nitrogen": 101,
+          "organicMatter": 0.6625000000000001,
+          "pestBreak": 0.41666666666666663,
+          "forage": 0.7125,
+          "income": 0.5375,
+          "labor": 0.49999999999999994,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "National",
+            "Local",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.4
+        }
+      },
+      {
+        "id": "f-current",
+        "name": "Continuous alfalfa",
+        "current": true,
+        "score": 42,
+        "metrics": {
+          "waterMm": 639,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 150,
+          "organicMatter": 0.75,
+          "pestBreak": 0,
+          "forage": 1,
+          "income": 0.5,
+          "labor": 0.3,
+          "market": 0.4,
+          "outlets": [
+            "Hay / livestock"
+          ],
+          "deepRoots": 1
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "tunnel-greens",
+        "name": "Winter greens in tunnels",
+        "viability": 85,
+        "agro": 77,
+        "margin": 40000,
+        "payback": 2.9,
+        "limits": []
+      },
+      {
+        "id": "saffron",
+        "name": "Saffron",
+        "viability": 80,
+        "agro": 89,
+        "margin": 11000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "seabuckthorn",
+        "name": "Sea buckthorn",
+        "viability": 68,
+        "agro": 72,
+        "margin": 13000,
+        "payback": 5,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "calafate",
+        "name": "Calafate",
+        "viability": 67,
+        "agro": 78,
+        "margin": 19000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "rosehip",
+        "name": "Rosehip (rosa mosqueta)",
+        "viability": 66,
+        "agro": 78,
+        "margin": 3500,
+        "payback": 4.5,
+        "limits": []
+      },
+      {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 66,
+        "agro": 57,
+        "margin": 26000,
+        "payback": 2.3,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "haskap",
+        "name": "Haskap berry",
+        "viability": 65,
+        "agro": 59,
+        "margin": 24000,
+        "payback": 3.8,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "quinoa",
+        "name": "Quinoa",
+        "viability": 63,
+        "agro": 69,
+        "margin": 3000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "strawberry",
+        "name": "Strawberry",
+        "viability": 59,
+        "agro": 46,
+        "margin": 30000,
+        "payback": 1.9,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years"
+        ]
+      },
+      {
+        "id": "garlic",
+        "name": "Garlic",
+        "viability": 57,
+        "agro": 67,
+        "margin": 12000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~330 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "elderberry",
+        "name": "Elderberry",
+        "viability": 54,
+        "agro": 53,
+        "margin": 11000,
+        "payback": 4,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "lavender",
+        "name": "Lavender",
+        "viability": 52,
+        "agro": 71,
+        "margin": 3000,
+        "payback": 4.8,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "asparagus",
+        "name": "Asparagus",
+        "viability": 49,
+        "agro": 47,
+        "margin": 10000,
+        "payback": 5.1,
+        "limits": [
+          "Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 60% of years",
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "raspberry",
+        "name": "Raspberry",
+        "viability": 43,
+        "agro": 44,
+        "margin": 23000,
+        "payback": 3,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "hazelnut",
+        "name": "Hazelnut",
+        "viability": 43,
+        "agro": 44,
+        "margin": 7000,
+        "payback": 7.9,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "blueberry",
+        "name": "Blueberry",
+        "viability": 41,
+        "agro": 30,
+        "margin": 28000,
+        "payback": 6,
+        "limits": [
+          "Soil pH: Soil pH 7.9; likes 4.5–5.5",
+          "Water: Needs ~500 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 60% of years"
+        ]
+      },
+      {
+        "id": "hops",
+        "name": "Hops",
+        "viability": 38,
+        "agro": 37,
+        "margin": 8000,
+        "payback": 8.8,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful supply ~495 mm",
+          "Wind: Spring wind 5.1 m/s; tolerance low"
+        ]
+      },
+      {
+        "id": "apple",
+        "name": "Apple",
+        "viability": 36,
+        "agro": 35,
+        "margin": 9000,
+        "payback": 9.7,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "viability": 31,
+        "agro": 34,
+        "margin": 23000,
+        "payback": 7.2,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 60% of years"
+        ]
+      },
+      {
+        "id": "walnut",
+        "name": "Walnut",
+        "viability": 30,
+        "agro": 30,
+        "margin": 6500,
+        "payback": 12.2,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful supply ~495 mm",
+          "Season length: 169 frost-free days; needs ~170",
+          "Summer heat: 667 degree-days available; needs ~1400",
+          "Spring frost: Frost ≤ -1.5 °C at budbreak (Oct 15–Nov 20) in 35% of years"
+        ]
+      }
+    ]
+  },
+  {
+    "point": {
+      "name": "South",
+      "lat": -46.604,
+      "lon": -70.926
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 60,
+      "silt": 27,
+      "clay": 13,
+      "soc": 6,
+      "ph": 7.9,
+      "nitrogen": 0.6,
+      "cec": 12,
+      "bulkDensity": 1.4,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Sandy loam",
+      "organicMatter": 1,
+      "waterHolding": 60,
+      "infiltration": "moderate",
+      "ksat": 29.2,
+      "fieldCapacity": 18.5,
+      "wiltingPoint": 8.5
+    },
+    "sal": {
+      "ece": 1.4,
+      "cls": "low",
+      "measured": false,
+      "reasons": [
+        "Dry climate: rain is only 26% of evaporation, so salts are not washed down naturally.",
+        "pH 7.9: alkaline soils often carry carbonates and some sodium.",
+        "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
+      ]
+    },
+    "health": {
+      "score": 60,
+      "level": "watch",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.25,
+          "note": "1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.45,
+          "note": "7.9 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.48,
+          "note": "CEC 12 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.5,
+          "note": "60 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.6,
+          "note": "1.4 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 0.9,
+          "note": "~1.4 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 1,
+          "note": "0 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -46.604,
+        "lon": -70.926
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "10-28",
+      "ultimaHeladaP80": "11-09",
+      "aniosHeladaTardia": 9,
+      "libreHeladas": 169,
+      "diasHeladaAnio": 103,
+      "horasFrio": 1751,
+      "gdd10": 669,
+      "lluviaAnual": 246,
+      "et0Anual": 931,
+      "tempMedia": 8.9,
+      "vientoPrimavera": 5.1,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 8.9,
+          "tmax": 23.3,
+          "lluvia": 11.2,
+          "et0": 159.4,
+          "viento": 5.5,
+          "humedadRaiz": 0.39,
+          "humedadSup": 0.31,
+          "diasHelada": 0,
+          "diasCalor": 2.4,
+          "humedadRel": 49,
+          "presion": 941,
+          "uv": 2.6
+        },
+        {
+          "mes": 2,
+          "tmin": 8.5,
+          "tmax": 22.8,
+          "lluvia": 16.6,
+          "et0": 122.8,
+          "viento": 5,
+          "humedadRaiz": 0.38,
+          "humedadSup": 0.28,
+          "diasHelada": 0,
+          "diasCalor": 2.6,
+          "humedadRel": 52,
+          "presion": 942,
+          "uv": 2
+        },
+        {
+          "mes": 3,
+          "tmin": 6.2,
+          "tmax": 19.2,
+          "lluvia": 18.6,
+          "et0": 88.6,
+          "viento": 4.6,
+          "humedadRaiz": 0.39,
+          "humedadSup": 0.33,
+          "diasHelada": 0.1,
+          "diasCalor": 0.2,
+          "humedadRel": 60,
+          "presion": 942,
+          "uv": 1.2
+        },
+        {
+          "mes": 4,
+          "tmin": 3.3,
+          "tmax": 14.4,
+          "lluvia": 23.2,
+          "et0": 46.6,
+          "viento": 4.3,
+          "humedadRaiz": 0.4,
+          "humedadSup": 0.39,
+          "diasHelada": 3.8,
+          "diasCalor": 0,
+          "humedadRel": 70,
+          "presion": 942,
+          "uv": 0.5
+        },
+        {
+          "mes": 5,
+          "tmin": 0.7,
+          "tmax": 9.7,
+          "lluvia": 30.3,
+          "et0": 23.9,
+          "viento": 3.8,
+          "humedadRaiz": 0.43,
+          "humedadSup": 0.44,
+          "diasHelada": 13.4,
+          "diasCalor": 0,
+          "humedadRel": 81,
+          "presion": 942,
+          "uv": 0.2
+        },
+        {
+          "mes": 6,
+          "tmin": -1.5,
+          "tmax": 5.8,
+          "lluvia": 36.7,
+          "et0": 13.6,
+          "viento": 3.8,
+          "humedadRaiz": 0.46,
+          "humedadSup": 0.49,
+          "diasHelada": 21.4,
+          "diasCalor": 0,
+          "humedadRel": 86,
+          "presion": 940,
+          "uv": 0.1
+        },
+        {
+          "mes": 7,
+          "tmin": -2.4,
+          "tmax": 5.2,
+          "lluvia": 27.9,
+          "et0": 15.8,
+          "viento": 3.7,
+          "humedadRaiz": 0.5,
+          "humedadSup": 0.52,
+          "diasHelada": 23.8,
+          "diasCalor": 0,
+          "humedadRel": 86,
+          "presion": 942,
+          "uv": 0.1
+        },
+        {
+          "mes": 8,
+          "tmin": -1,
+          "tmax": 7.8,
+          "lluvia": 26.3,
+          "et0": 28.9,
+          "viento": 4.1,
+          "humedadRaiz": 0.52,
+          "humedadSup": 0.55,
+          "diasHelada": 21.3,
+          "diasCalor": 0,
+          "humedadRel": 81,
+          "presion": 941,
+          "uv": 0.3
+        },
+        {
+          "mes": 9,
+          "tmin": 0.5,
+          "tmax": 11.5,
+          "lluvia": 18.2,
+          "et0": 54.2,
+          "viento": 4.3,
+          "humedadRaiz": 0.52,
+          "humedadSup": 0.54,
+          "diasHelada": 13.2,
+          "diasCalor": 0,
+          "humedadRel": 73,
+          "presion": 943,
+          "uv": 0.7
+        },
+        {
+          "mes": 10,
+          "tmin": 2.4,
+          "tmax": 15.2,
+          "lluvia": 10.5,
+          "et0": 93.3,
+          "viento": 4.9,
+          "humedadRaiz": 0.49,
+          "humedadSup": 0.49,
+          "diasHelada": 5.4,
+          "diasCalor": 0.1,
+          "humedadRel": 63,
+          "presion": 942,
+          "uv": 1.3
+        },
+        {
+          "mes": 11,
+          "tmin": 5.2,
+          "tmax": 18.9,
+          "lluvia": 13,
+          "et0": 127.3,
+          "viento": 5.4,
+          "humedadRaiz": 0.45,
+          "humedadSup": 0.42,
+          "diasHelada": 0.8,
+          "diasCalor": 0.3,
+          "humedadRel": 55,
+          "presion": 941,
+          "uv": 2.1
+        },
+        {
+          "mes": 12,
+          "tmin": 7.5,
+          "tmax": 21.5,
+          "lluvia": 13.2,
+          "et0": 156.4,
+          "viento": 5.7,
+          "humedadRaiz": 0.41,
+          "humedadSup": 0.37,
+          "diasHelada": 0,
+          "diasCalor": 1.9,
+          "humedadRel": 51,
+          "presion": 940,
+          "uv": 2.5
+        }
+      ],
+      "tendencia": {
+        "decada1": 8.77,
+        "decada2": 8.96,
+        "dif": 0.19
+      },
+      "tendenciaLluvia": {
+        "antes": 261,
+        "despues": 231,
+        "difPct": -12
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 244,
+          "diasHelada": 102,
+          "tMedia": 8.53,
+          "heladaTardia": true,
+          "ultimaHelada": "11-17",
+          "vientoPrim": 5.6
+        },
+        {
+          "anio": 2007,
+          "lluvia": 182,
+          "diasHelada": 112,
+          "tMedia": 8.61,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2008,
+          "lluvia": 207,
+          "diasHelada": 108,
+          "tMedia": 9.68,
+          "heladaTardia": false,
+          "ultimaHelada": "09-19",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2009,
+          "lluvia": 250,
+          "diasHelada": 104,
+          "tMedia": 8.57,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2010,
+          "lluvia": 297,
+          "diasHelada": 104,
+          "tMedia": 8.06,
+          "heladaTardia": false,
+          "ultimaHelada": "10-22",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2011,
+          "lluvia": 258,
+          "diasHelada": 102,
+          "tMedia": 9.02,
+          "heladaTardia": false,
+          "ultimaHelada": "10-22",
+          "vientoPrim": 4.6
+        },
+        {
+          "anio": 2012,
+          "lluvia": 281,
+          "diasHelada": 109,
+          "tMedia": 8.64,
+          "heladaTardia": false,
+          "ultimaHelada": "10-09",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2013,
+          "lluvia": 250,
+          "diasHelada": 99,
+          "tMedia": 9.34,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 312,
+          "diasHelada": 94,
+          "tMedia": 8.55,
+          "heladaTardia": true,
+          "ultimaHelada": "11-02",
+          "vientoPrim": 5.5
+        },
+        {
+          "anio": 2015,
+          "lluvia": 326,
+          "diasHelada": 106,
+          "tMedia": 8.66,
+          "heladaTardia": true,
+          "ultimaHelada": "11-19",
+          "vientoPrim": 4.5
+        },
+        {
+          "anio": 2016,
+          "lluvia": 173,
+          "diasHelada": 98,
+          "tMedia": 9.6,
+          "heladaTardia": false,
+          "ultimaHelada": "10-15",
+          "vientoPrim": 4.7
+        },
+        {
+          "anio": 2017,
+          "lluvia": 340,
+          "diasHelada": 91,
+          "tMedia": 8.64,
+          "heladaTardia": false,
+          "ultimaHelada": "10-21",
+          "vientoPrim": 5.4
+        },
+        {
+          "anio": 2018,
+          "lluvia": 213,
+          "diasHelada": 111,
+          "tMedia": 8.69,
+          "heladaTardia": true,
+          "ultimaHelada": "11-06",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2019,
+          "lluvia": 200,
+          "diasHelada": 90,
+          "tMedia": 8.93,
+          "heladaTardia": true,
+          "ultimaHelada": "11-08",
+          "vientoPrim": 5.3
+        },
+        {
+          "anio": 2020,
+          "lluvia": 222,
+          "diasHelada": 109,
+          "tMedia": 8.78,
+          "heladaTardia": false,
+          "ultimaHelada": "10-20",
+          "vientoPrim": 5.3
+        },
+        {
+          "anio": 2021,
+          "lluvia": 125,
+          "diasHelada": 79,
+          "tMedia": 10.22,
+          "heladaTardia": false,
+          "ultimaHelada": "10-30",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2022,
+          "lluvia": 160,
+          "diasHelada": 115,
+          "tMedia": 8.9,
+          "heladaTardia": false,
+          "ultimaHelada": "10-30",
+          "vientoPrim": 5.2
+        },
+        {
+          "anio": 2023,
+          "lluvia": 217,
+          "diasHelada": 117,
+          "tMedia": 8.53,
+          "heladaTardia": false,
+          "ultimaHelada": "10-31",
+          "vientoPrim": 4.7
+        },
+        {
+          "anio": 2024,
+          "lluvia": 260,
+          "diasHelada": 121,
+          "tMedia": 8.62,
+          "heladaTardia": false,
+          "ultimaHelada": "10-05",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2025,
+          "lluvia": 398,
+          "diasHelada": 89,
+          "tMedia": 8.69,
+          "heladaTardia": true,
+          "ultimaHelada": "11-03",
+          "vientoPrim": 5.4
+        }
+      ],
+      "humedadRelMedia": 67,
+      "presionMedia": 942,
+      "uvVerano": 2.4,
+      "minAnual": -9.5,
+      "altura": {
+        "celda": 594,
+        "campo": 411,
+        "deltaC": 1.19
+      }
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "f-break",
+        "name": "Alfalfa with a crop break",
+        "current": false,
+        "score": 62,
+        "metrics": {
+          "waterMm": 544,
+          "bareMonths": 0.3,
+          "erosion": 0.028776785714285713,
+          "nitrogen": 107,
+          "organicMatter": 0.6900000000000001,
+          "pestBreak": 0.4666666666666666,
+          "forage": 0.8400000000000001,
+          "income": 0.47000000000000003,
+          "labor": 0.45,
+          "market": 0.894,
+          "outlets": [
+            "Hay / livestock",
+            "Local / regional",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "f-mixed",
+        "name": "Alfalfa–grass mix, rotational grazing",
+        "current": false,
+        "score": 49,
+        "metrics": {
+          "waterMm": 620,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 75,
+          "organicMatter": 0.825,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.8875000000000001,
+          "income": 0.425,
+          "labor": 0.25,
+          "market": 0.635,
+          "outlets": [
+            "Hay / livestock",
+            "Grazing / hay"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "f-cash",
+        "name": "Alfalfa → garlic → fava",
+        "current": false,
+        "score": 44,
+        "metrics": {
+          "waterMm": 591,
+          "bareMonths": 0.8,
+          "erosion": 0.07673809523809524,
+          "nitrogen": 101,
+          "organicMatter": 0.6625000000000001,
+          "pestBreak": 0.41666666666666663,
+          "forage": 0.7125,
+          "income": 0.5375,
+          "labor": 0.49999999999999994,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "National",
+            "Local",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.4
+        }
+      },
+      {
+        "id": "f-current",
+        "name": "Continuous alfalfa",
+        "current": true,
+        "score": 42,
+        "metrics": {
+          "waterMm": 639,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 150,
+          "organicMatter": 0.75,
+          "pestBreak": 0,
+          "forage": 1,
+          "income": 0.5,
+          "labor": 0.3,
+          "market": 0.4,
+          "outlets": [
+            "Hay / livestock"
+          ],
+          "deepRoots": 1
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "tunnel-greens",
+        "name": "Winter greens in tunnels",
+        "viability": 85,
+        "agro": 77,
+        "margin": 40000,
+        "payback": 2.9,
+        "limits": []
+      },
+      {
+        "id": "saffron",
+        "name": "Saffron",
+        "viability": 80,
+        "agro": 89,
+        "margin": 11000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "seabuckthorn",
+        "name": "Sea buckthorn",
+        "viability": 68,
+        "agro": 72,
+        "margin": 13000,
+        "payback": 5,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "calafate",
+        "name": "Calafate",
+        "viability": 67,
+        "agro": 78,
+        "margin": 19000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "rosehip",
+        "name": "Rosehip (rosa mosqueta)",
+        "viability": 66,
+        "agro": 78,
+        "margin": 3500,
+        "payback": 4.5,
+        "limits": []
+      },
+      {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 66,
+        "agro": 57,
+        "margin": 26000,
+        "payback": 2.3,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "haskap",
+        "name": "Haskap berry",
+        "viability": 65,
+        "agro": 59,
+        "margin": 24000,
+        "payback": 3.8,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "quinoa",
+        "name": "Quinoa",
+        "viability": 63,
+        "agro": 69,
+        "margin": 3000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "strawberry",
+        "name": "Strawberry",
+        "viability": 59,
+        "agro": 46,
+        "margin": 30000,
+        "payback": 1.9,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 55% of years"
+        ]
+      },
+      {
+        "id": "garlic",
+        "name": "Garlic",
+        "viability": 57,
+        "agro": 67,
+        "margin": 12000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~330 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "elderberry",
+        "name": "Elderberry",
+        "viability": 54,
+        "agro": 53,
+        "margin": 11000,
+        "payback": 4,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "lavender",
+        "name": "Lavender",
+        "viability": 52,
+        "agro": 71,
+        "margin": 3000,
+        "payback": 4.8,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "asparagus",
+        "name": "Asparagus",
+        "viability": 49,
+        "agro": 47,
+        "margin": 10000,
+        "payback": 5.1,
+        "limits": [
+          "Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 60% of years",
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "raspberry",
+        "name": "Raspberry",
+        "viability": 43,
+        "agro": 44,
+        "margin": 23000,
+        "payback": 3,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "hazelnut",
+        "name": "Hazelnut",
+        "viability": 43,
+        "agro": 44,
+        "margin": 7000,
+        "payback": 7.9,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "blueberry",
+        "name": "Blueberry",
+        "viability": 41,
+        "agro": 30,
+        "margin": 28000,
+        "payback": 6,
+        "limits": [
+          "Soil pH: Soil pH 7.9; likes 4.5–5.5",
+          "Water: Needs ~500 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 60% of years"
+        ]
+      },
+      {
+        "id": "hops",
+        "name": "Hops",
+        "viability": 38,
+        "agro": 37,
+        "margin": 8000,
+        "payback": 8.8,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful supply ~495 mm",
+          "Wind: Spring wind 5.1 m/s; tolerance low"
+        ]
+      },
+      {
+        "id": "apple",
+        "name": "Apple",
+        "viability": 36,
+        "agro": 35,
+        "margin": 9000,
+        "payback": 9.7,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "viability": 31,
+        "agro": 34,
+        "margin": 23000,
+        "payback": 7.2,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 60% of years"
+        ]
+      },
+      {
+        "id": "walnut",
+        "name": "Walnut",
+        "viability": 30,
+        "agro": 30,
+        "margin": 6500,
+        "payback": 12.2,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful supply ~495 mm",
+          "Season length: 169 frost-free days; needs ~170",
+          "Summer heat: 669 degree-days available; needs ~1400",
+          "Spring frost: Frost ≤ -1.5 °C at budbreak (Oct 15–Nov 20) in 35% of years"
+        ]
+      }
+    ]
+  },
+  {
+    "point": {
+      "name": "East",
+      "lat": -46.59,
+      "lon": -70.906
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 60,
+      "silt": 27,
+      "clay": 13,
+      "soc": 6,
+      "ph": 7.9,
+      "nitrogen": 0.6,
+      "cec": 12,
+      "bulkDensity": 1.4,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Sandy loam",
+      "organicMatter": 1,
+      "waterHolding": 60,
+      "infiltration": "moderate",
+      "ksat": 29.2,
+      "fieldCapacity": 18.5,
+      "wiltingPoint": 8.5
+    },
+    "sal": {
+      "ece": 1.4,
+      "cls": "low",
+      "measured": false,
+      "reasons": [
+        "Dry climate: rain is only 26% of evaporation, so salts are not washed down naturally.",
+        "pH 7.9: alkaline soils often carry carbonates and some sodium.",
+        "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
+      ]
+    },
+    "health": {
+      "score": 60,
+      "level": "watch",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.25,
+          "note": "1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.45,
+          "note": "7.9 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.48,
+          "note": "CEC 12 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.5,
+          "note": "60 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.6,
+          "note": "1.4 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 0.9,
+          "note": "~1.4 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 1,
+          "note": "0 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -46.59,
+        "lon": -70.906
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "10-28",
+      "ultimaHeladaP80": "11-09",
+      "aniosHeladaTardia": 9,
+      "libreHeladas": 169,
+      "diasHeladaAnio": 99,
+      "horasFrio": 1762,
+      "gdd10": 694,
+      "lluviaAnual": 246,
+      "et0Anual": 936,
+      "tempMedia": 9,
+      "vientoPrimavera": 5.1,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 9,
+          "tmax": 23.4,
+          "lluvia": 11.2,
+          "et0": 160.2,
+          "viento": 5.5,
+          "humedadRaiz": 0.39,
+          "humedadSup": 0.31,
+          "diasHelada": 0,
+          "diasCalor": 2.6,
+          "humedadRel": 49,
+          "presion": 941,
+          "uv": 2.6
+        },
+        {
+          "mes": 2,
+          "tmin": 8.7,
+          "tmax": 23,
+          "lluvia": 16.6,
+          "et0": 123.4,
+          "viento": 5,
+          "humedadRaiz": 0.38,
+          "humedadSup": 0.28,
+          "diasHelada": 0,
+          "diasCalor": 2.8,
+          "humedadRel": 52,
+          "presion": 942,
+          "uv": 2
+        },
+        {
+          "mes": 3,
+          "tmin": 6.4,
+          "tmax": 19.3,
+          "lluvia": 18.6,
+          "et0": 89.1,
+          "viento": 4.6,
+          "humedadRaiz": 0.39,
+          "humedadSup": 0.33,
+          "diasHelada": 0.1,
+          "diasCalor": 0.2,
+          "humedadRel": 60,
+          "presion": 942,
+          "uv": 1.2
+        },
+        {
+          "mes": 4,
+          "tmin": 3.5,
+          "tmax": 14.6,
+          "lluvia": 23.2,
+          "et0": 46.9,
+          "viento": 4.3,
+          "humedadRaiz": 0.4,
+          "humedadSup": 0.39,
+          "diasHelada": 3.5,
+          "diasCalor": 0,
+          "humedadRel": 70,
+          "presion": 942,
+          "uv": 0.5
+        },
+        {
+          "mes": 5,
+          "tmin": 0.9,
+          "tmax": 9.8,
+          "lluvia": 30.3,
+          "et0": 24.1,
+          "viento": 3.8,
+          "humedadRaiz": 0.43,
+          "humedadSup": 0.44,
+          "diasHelada": 12.9,
+          "diasCalor": 0,
+          "humedadRel": 81,
+          "presion": 942,
+          "uv": 0.2
+        },
+        {
+          "mes": 6,
+          "tmin": -1.4,
+          "tmax": 5.9,
+          "lluvia": 36.7,
+          "et0": 13.8,
+          "viento": 3.8,
+          "humedadRaiz": 0.46,
+          "humedadSup": 0.49,
+          "diasHelada": 20.4,
+          "diasCalor": 0,
+          "humedadRel": 86,
+          "presion": 940,
+          "uv": 0.1
+        },
+        {
+          "mes": 7,
+          "tmin": -2.2,
+          "tmax": 5.3,
+          "lluvia": 27.9,
+          "et0": 16,
+          "viento": 3.7,
+          "humedadRaiz": 0.5,
+          "humedadSup": 0.52,
+          "diasHelada": 23.3,
+          "diasCalor": 0,
+          "humedadRel": 86,
+          "presion": 942,
+          "uv": 0.1
+        },
+        {
+          "mes": 8,
+          "tmin": -0.8,
+          "tmax": 7.9,
+          "lluvia": 26.3,
+          "et0": 29.2,
+          "viento": 4.1,
+          "humedadRaiz": 0.52,
+          "humedadSup": 0.55,
+          "diasHelada": 20.4,
+          "diasCalor": 0,
+          "humedadRel": 81,
+          "presion": 941,
+          "uv": 0.3
+        },
+        {
+          "mes": 9,
+          "tmin": 0.7,
+          "tmax": 11.7,
+          "lluvia": 18.2,
+          "et0": 54.6,
+          "viento": 4.3,
+          "humedadRaiz": 0.52,
+          "humedadSup": 0.54,
+          "diasHelada": 12.3,
+          "diasCalor": 0,
+          "humedadRel": 73,
+          "presion": 943,
+          "uv": 0.7
+        },
+        {
+          "mes": 10,
+          "tmin": 2.6,
+          "tmax": 15.4,
+          "lluvia": 10.5,
+          "et0": 93.9,
+          "viento": 4.9,
+          "humedadRaiz": 0.49,
+          "humedadSup": 0.49,
+          "diasHelada": 5,
+          "diasCalor": 0.1,
+          "humedadRel": 63,
+          "presion": 942,
+          "uv": 1.3
+        },
+        {
+          "mes": 11,
+          "tmin": 5.4,
+          "tmax": 19,
+          "lluvia": 13,
+          "et0": 128.1,
+          "viento": 5.4,
+          "humedadRaiz": 0.45,
+          "humedadSup": 0.42,
+          "diasHelada": 0.6,
+          "diasCalor": 0.3,
+          "humedadRel": 55,
+          "presion": 941,
+          "uv": 2.1
+        },
+        {
+          "mes": 12,
+          "tmin": 7.7,
+          "tmax": 21.7,
+          "lluvia": 13.2,
+          "et0": 157.2,
+          "viento": 5.7,
+          "humedadRaiz": 0.41,
+          "humedadSup": 0.37,
+          "diasHelada": 0,
+          "diasCalor": 1.9,
+          "humedadRel": 51,
+          "presion": 940,
+          "uv": 2.5
+        }
+      ],
+      "tendencia": {
+        "decada1": 8.94,
+        "decada2": 9.13,
+        "dif": 0.19
+      },
+      "tendenciaLluvia": {
+        "antes": 261,
+        "despues": 231,
+        "difPct": -12
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 244,
+          "diasHelada": 100,
+          "tMedia": 8.7,
+          "heladaTardia": true,
+          "ultimaHelada": "11-17",
+          "vientoPrim": 5.6
+        },
+        {
+          "anio": 2007,
+          "lluvia": 182,
+          "diasHelada": 110,
+          "tMedia": 8.78,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2008,
+          "lluvia": 207,
+          "diasHelada": 103,
+          "tMedia": 9.85,
+          "heladaTardia": false,
+          "ultimaHelada": "09-19",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2009,
+          "lluvia": 250,
+          "diasHelada": 99,
+          "tMedia": 8.74,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2010,
+          "lluvia": 297,
+          "diasHelada": 101,
+          "tMedia": 8.23,
+          "heladaTardia": false,
+          "ultimaHelada": "10-22",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2011,
+          "lluvia": 258,
+          "diasHelada": 95,
+          "tMedia": 9.19,
+          "heladaTardia": false,
+          "ultimaHelada": "10-22",
+          "vientoPrim": 4.6
+        },
+        {
+          "anio": 2012,
+          "lluvia": 281,
+          "diasHelada": 105,
+          "tMedia": 8.81,
+          "heladaTardia": false,
+          "ultimaHelada": "10-07",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2013,
+          "lluvia": 250,
+          "diasHelada": 93,
+          "tMedia": 9.51,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2014,
+          "lluvia": 312,
+          "diasHelada": 91,
+          "tMedia": 8.72,
+          "heladaTardia": true,
+          "ultimaHelada": "11-02",
+          "vientoPrim": 5.5
+        },
+        {
+          "anio": 2015,
+          "lluvia": 326,
+          "diasHelada": 102,
+          "tMedia": 8.83,
+          "heladaTardia": true,
+          "ultimaHelada": "11-19",
+          "vientoPrim": 4.5
+        },
+        {
+          "anio": 2016,
+          "lluvia": 173,
+          "diasHelada": 93,
+          "tMedia": 9.77,
+          "heladaTardia": false,
+          "ultimaHelada": "10-15",
+          "vientoPrim": 4.7
+        },
+        {
+          "anio": 2017,
+          "lluvia": 340,
+          "diasHelada": 83,
+          "tMedia": 8.81,
+          "heladaTardia": false,
+          "ultimaHelada": "10-21",
+          "vientoPrim": 5.4
+        },
+        {
+          "anio": 2018,
+          "lluvia": 213,
+          "diasHelada": 104,
+          "tMedia": 8.86,
+          "heladaTardia": true,
+          "ultimaHelada": "11-06",
+          "vientoPrim": 4.9
+        },
+        {
+          "anio": 2019,
+          "lluvia": 200,
+          "diasHelada": 88,
+          "tMedia": 9.1,
+          "heladaTardia": true,
+          "ultimaHelada": "11-08",
+          "vientoPrim": 5.3
+        },
+        {
+          "anio": 2020,
+          "lluvia": 222,
+          "diasHelada": 103,
+          "tMedia": 8.95,
+          "heladaTardia": false,
+          "ultimaHelada": "10-20",
+          "vientoPrim": 5.3
+        },
+        {
+          "anio": 2021,
+          "lluvia": 125,
+          "diasHelada": 76,
+          "tMedia": 10.39,
+          "heladaTardia": false,
+          "ultimaHelada": "10-30",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2022,
+          "lluvia": 160,
+          "diasHelada": 112,
+          "tMedia": 9.07,
+          "heladaTardia": false,
+          "ultimaHelada": "10-30",
+          "vientoPrim": 5.2
+        },
+        {
+          "anio": 2023,
+          "lluvia": 217,
+          "diasHelada": 113,
+          "tMedia": 8.7,
+          "heladaTardia": false,
+          "ultimaHelada": "10-31",
+          "vientoPrim": 4.7
+        },
+        {
+          "anio": 2024,
+          "lluvia": 260,
+          "diasHelada": 118,
+          "tMedia": 8.79,
+          "heladaTardia": false,
+          "ultimaHelada": "10-05",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2025,
+          "lluvia": 398,
+          "diasHelada": 82,
+          "tMedia": 8.86,
+          "heladaTardia": true,
+          "ultimaHelada": "11-03",
+          "vientoPrim": 5.4
+        }
+      ],
+      "humedadRelMedia": 67,
+      "presionMedia": 942,
+      "uvVerano": 2.4,
+      "minAnual": -9.4,
+      "altura": {
+        "celda": 594,
+        "campo": 385,
+        "deltaC": 1.36
+      }
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "f-break",
+        "name": "Alfalfa with a crop break",
+        "current": false,
+        "score": 62,
+        "metrics": {
+          "waterMm": 547,
+          "bareMonths": 0.3,
+          "erosion": 0.028776785714285713,
+          "nitrogen": 107,
+          "organicMatter": 0.6900000000000001,
+          "pestBreak": 0.4666666666666666,
+          "forage": 0.8400000000000001,
+          "income": 0.47000000000000003,
+          "labor": 0.45,
+          "market": 0.894,
+          "outlets": [
+            "Hay / livestock",
+            "Local / regional",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "f-mixed",
+        "name": "Alfalfa–grass mix, rotational grazing",
+        "current": false,
+        "score": 49,
+        "metrics": {
+          "waterMm": 624,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 75,
+          "organicMatter": 0.825,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.8875000000000001,
+          "income": 0.425,
+          "labor": 0.25,
+          "market": 0.635,
+          "outlets": [
+            "Hay / livestock",
+            "Grazing / hay"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "f-cash",
+        "name": "Alfalfa → garlic → fava",
+        "current": false,
+        "score": 44,
+        "metrics": {
+          "waterMm": 594,
+          "bareMonths": 0.8,
+          "erosion": 0.07673809523809524,
+          "nitrogen": 101,
+          "organicMatter": 0.6625000000000001,
+          "pestBreak": 0.41666666666666663,
+          "forage": 0.7125,
+          "income": 0.5375,
+          "labor": 0.49999999999999994,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "National",
+            "Local",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.4
+        }
+      },
+      {
+        "id": "f-current",
+        "name": "Continuous alfalfa",
+        "current": true,
+        "score": 42,
+        "metrics": {
+          "waterMm": 643,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 150,
+          "organicMatter": 0.75,
+          "pestBreak": 0,
+          "forage": 1,
+          "income": 0.5,
+          "labor": 0.3,
+          "market": 0.4,
+          "outlets": [
+            "Hay / livestock"
+          ],
+          "deepRoots": 1
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "tunnel-greens",
+        "name": "Winter greens in tunnels",
+        "viability": 85,
+        "agro": 77,
+        "margin": 40000,
+        "payback": 2.9,
+        "limits": []
+      },
+      {
+        "id": "saffron",
+        "name": "Saffron",
+        "viability": 80,
+        "agro": 89,
+        "margin": 11000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "seabuckthorn",
+        "name": "Sea buckthorn",
+        "viability": 68,
+        "agro": 72,
+        "margin": 13000,
+        "payback": 5,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "calafate",
+        "name": "Calafate",
+        "viability": 67,
+        "agro": 78,
+        "margin": 19000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "rosehip",
+        "name": "Rosehip (rosa mosqueta)",
+        "viability": 66,
+        "agro": 78,
+        "margin": 3500,
+        "payback": 4.5,
+        "limits": []
+      },
+      {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 66,
+        "agro": 57,
+        "margin": 26000,
+        "payback": 2.3,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "haskap",
+        "name": "Haskap berry",
+        "viability": 65,
+        "agro": 59,
+        "margin": 24000,
+        "payback": 3.8,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "quinoa",
+        "name": "Quinoa",
+        "viability": 63,
+        "agro": 69,
+        "margin": 3000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "strawberry",
+        "name": "Strawberry",
+        "viability": 59,
+        "agro": 46,
+        "margin": 30000,
+        "payback": 1.9,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -1 °C at bloom (Oct 15–Nov 30) in 50% of years"
+        ]
+      },
+      {
+        "id": "garlic",
+        "name": "Garlic",
+        "viability": 57,
+        "agro": 67,
+        "margin": 12000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~330 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "elderberry",
+        "name": "Elderberry",
+        "viability": 54,
+        "agro": 53,
+        "margin": 11000,
+        "payback": 4,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "lavender",
+        "name": "Lavender",
+        "viability": 52,
+        "agro": 71,
+        "margin": 3000,
+        "payback": 4.8,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "asparagus",
+        "name": "Asparagus",
+        "viability": 50,
+        "agro": 49,
+        "margin": 10000,
+        "payback": 5,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at spear (Oct 1–Nov 15) in 50% of years"
+        ]
+      },
+      {
+        "id": "raspberry",
+        "name": "Raspberry",
+        "viability": 43,
+        "agro": 44,
+        "margin": 23000,
+        "payback": 3,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "hazelnut",
+        "name": "Hazelnut",
+        "viability": 43,
+        "agro": 44,
+        "margin": 7000,
+        "payback": 7.9,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "blueberry",
+        "name": "Blueberry",
+        "viability": 42,
+        "agro": 31,
+        "margin": 28000,
+        "payback": 5.9,
+        "limits": [
+          "Soil pH: Soil pH 7.9; likes 4.5–5.5",
+          "Water: Needs ~500 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Nov 10) in 50% of years"
+        ]
+      },
+      {
+        "id": "hops",
+        "name": "Hops",
+        "viability": 38,
+        "agro": 37,
+        "margin": 8000,
+        "payback": 8.8,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful supply ~495 mm",
+          "Wind: Spring wind 5.1 m/s; tolerance low"
+        ]
+      },
+      {
+        "id": "apple",
+        "name": "Apple",
+        "viability": 36,
+        "agro": 35,
+        "margin": 9000,
+        "payback": 9.7,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "viability": 31,
+        "agro": 34,
+        "margin": 23000,
+        "payback": 7.2,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm",
+          "Spring frost: Frost ≤ -2 °C at bloom (Oct 1–Oct 31) in 50% of years"
+        ]
+      },
+      {
+        "id": "walnut",
+        "name": "Walnut",
+        "viability": 30,
+        "agro": 31,
+        "margin": 6500,
+        "payback": 12,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful supply ~495 mm",
+          "Season length: 169 frost-free days; needs ~170",
+          "Summer heat: 694 degree-days available; needs ~1400"
+        ]
+      }
+    ]
+  },
+  {
+    "point": {
+      "name": "West",
+      "lat": -46.59,
+      "lon": -70.946
+    },
+    "sources": {
+      "soil": "regional reference",
+      "climate": "daily record 20 yr",
+      "vegetation": "simulated"
+    },
+    "layers": [
+      {
+        "depth": "0-5 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "5-15 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "15-30 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "30-60 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "60-100 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      },
+      {
+        "depth": "100-200 cm",
+        "sand": null,
+        "silt": null,
+        "clay": null,
+        "soc": null,
+        "ph": null,
+        "cec": null,
+        "bdod": null,
+        "cfvo": null,
+        "texture": "—",
+        "fc": null,
+        "wp": null,
+        "awcMm": null,
+        "ksat": null,
+        "range": ""
+      }
+    ],
+    "rootZoneAwc": 0,
+    "soil": {
+      "sand": 60,
+      "silt": 27,
+      "clay": 13,
+      "soc": 6,
+      "ph": 7.9,
+      "nitrogen": 0.6,
+      "cec": 12,
+      "bulkDensity": 1.4,
+      "source": "reference",
+      "depth": "0–30 cm",
+      "texture": "Sandy loam",
+      "organicMatter": 1,
+      "waterHolding": 60,
+      "infiltration": "moderate",
+      "ksat": 29.2,
+      "fieldCapacity": 18.5,
+      "wiltingPoint": 8.5
+    },
+    "sal": {
+      "ece": 1.3,
+      "cls": "low",
+      "measured": false,
+      "reasons": [
+        "Dry climate: rain is only 29% of evaporation, so salts are not washed down naturally.",
+        "pH 7.9: alkaline soils often carry carbonates and some sodium.",
+        "Surface irrigation leaches salts if fields drain well; watch low, wet corners."
+      ]
+    },
+    "health": {
+      "score": 60,
+      "level": "watch",
+      "parts": [
+        {
+          "name": "Organic matter",
+          "value": 0.25,
+          "note": "1% (target > 3%)"
+        },
+        {
+          "name": "pH",
+          "value": 0.45,
+          "note": "7.9 (best 6.0–7.5)"
+        },
+        {
+          "name": "Nutrient holding",
+          "value": 0.48,
+          "note": "CEC 12 cmol/kg"
+        },
+        {
+          "name": "Water holding",
+          "value": 0.5,
+          "note": "60 mm in 60 cm"
+        },
+        {
+          "name": "Compaction",
+          "value": 0.6,
+          "note": "1.4 g/cm³ (< 1.5 is loose)"
+        },
+        {
+          "name": "Salinity",
+          "value": 0.93,
+          "note": "~1.3 dS/m (estimated)"
+        },
+        {
+          "name": "Ground cover",
+          "value": 1,
+          "note": "0 bare months/yr"
+        },
+        {
+          "name": "Plant activity",
+          "value": 0.6,
+          "note": "average NDVI 0.40"
+        }
+      ]
+    },
+    "climate": {
+      "celda": {
+        "lat": -46.59,
+        "lon": -70.946
+      },
+      "periodo": [
+        2006,
+        2025
+      ],
+      "ultimaHeladaMedia": "10-17",
+      "ultimaHeladaP80": "10-31",
+      "aniosHeladaTardia": 3,
+      "libreHeladas": 189,
+      "diasHeladaAnio": 79,
+      "horasFrio": 1916,
+      "gdd10": 588,
+      "lluviaAnual": 247,
+      "et0Anual": 843,
+      "tempMedia": 8.5,
+      "vientoPrimavera": 5.6,
+      "mensual": [
+        {
+          "mes": 1,
+          "tmin": 9.3,
+          "tmax": 21.5,
+          "lluvia": 11.1,
+          "et0": 143.4,
+          "viento": 6.1,
+          "humedadRaiz": 0.36,
+          "humedadSup": 0.29,
+          "diasHelada": 0,
+          "diasCalor": 1,
+          "humedadRel": 53,
+          "presion": 941,
+          "uv": 2.6
+        },
+        {
+          "mes": 2,
+          "tmin": 9,
+          "tmax": 21.2,
+          "lluvia": 16.8,
+          "et0": 111.6,
+          "viento": 5.4,
+          "humedadRaiz": 0.35,
+          "humedadSup": 0.26,
+          "diasHelada": 0,
+          "diasCalor": 1.1,
+          "humedadRel": 55,
+          "presion": 942,
+          "uv": 2
+        },
+        {
+          "mes": 3,
+          "tmin": 6.9,
+          "tmax": 17.8,
+          "lluvia": 18.2,
+          "et0": 80.6,
+          "viento": 5.1,
+          "humedadRaiz": 0.36,
+          "humedadSup": 0.3,
+          "diasHelada": 0.1,
+          "diasCalor": 0,
+          "humedadRel": 62,
+          "presion": 942,
+          "uv": 1.2
+        },
+        {
+          "mes": 4,
+          "tmin": 4.2,
+          "tmax": 13.4,
+          "lluvia": 23.1,
+          "et0": 42.3,
+          "viento": 4.6,
+          "humedadRaiz": 0.37,
+          "humedadSup": 0.35,
+          "diasHelada": 1.4,
+          "diasCalor": 0,
+          "humedadRel": 71,
+          "presion": 941,
+          "uv": 0.5
+        },
+        {
+          "mes": 5,
+          "tmin": 1.4,
+          "tmax": 8.9,
+          "lluvia": 30.8,
+          "et0": 21.8,
+          "viento": 3.8,
+          "humedadRaiz": 0.4,
+          "humedadSup": 0.41,
+          "diasHelada": 9.3,
+          "diasCalor": 0,
+          "humedadRel": 80,
+          "presion": 942,
+          "uv": 0.2
+        },
+        {
+          "mes": 6,
+          "tmin": -1.4,
+          "tmax": 5.1,
+          "lluvia": 37.4,
+          "et0": 12.6,
+          "viento": 3.7,
+          "humedadRaiz": 0.45,
+          "humedadSup": 0.45,
+          "diasHelada": 19.1,
+          "diasCalor": 0,
+          "humedadRel": 84,
+          "presion": 940,
+          "uv": 0.1
+        },
+        {
+          "mes": 7,
+          "tmin": -2.3,
+          "tmax": 4.6,
+          "lluvia": 28.4,
+          "et0": 14.8,
+          "viento": 3.7,
+          "humedadRaiz": 0.48,
+          "humedadSup": 0.49,
+          "diasHelada": 22.3,
+          "diasCalor": 0,
+          "humedadRel": 85,
+          "presion": 942,
+          "uv": 0.1
+        },
+        {
+          "mes": 8,
+          "tmin": -0.4,
+          "tmax": 6.9,
+          "lluvia": 26.1,
+          "et0": 26.2,
+          "viento": 4.2,
+          "humedadRaiz": 0.51,
+          "humedadSup": 0.52,
+          "diasHelada": 16.9,
+          "diasCalor": 0,
+          "humedadRel": 80,
+          "presion": 941,
+          "uv": 0.3
+        },
+        {
+          "mes": 9,
+          "tmin": 1.4,
+          "tmax": 10.4,
+          "lluvia": 17.6,
+          "et0": 49.1,
+          "viento": 4.6,
+          "humedadRaiz": 0.51,
+          "humedadSup": 0.51,
+          "diasHelada": 8,
+          "diasCalor": 0,
+          "humedadRel": 73,
+          "presion": 943,
+          "uv": 0.7
+        },
+        {
+          "mes": 10,
+          "tmin": 3.3,
+          "tmax": 13.9,
+          "lluvia": 11.2,
+          "et0": 84.4,
+          "viento": 5.5,
+          "humedadRaiz": 0.47,
+          "humedadSup": 0.46,
+          "diasHelada": 2.1,
+          "diasCalor": 0,
+          "humedadRel": 64,
+          "presion": 942,
+          "uv": 1.3
+        },
+        {
+          "mes": 11,
+          "tmin": 5.9,
+          "tmax": 17.3,
+          "lluvia": 13.8,
+          "et0": 114.9,
+          "viento": 6.1,
+          "humedadRaiz": 0.42,
+          "humedadSup": 0.39,
+          "diasHelada": 0.2,
+          "diasCalor": 0.1,
+          "humedadRel": 57,
+          "presion": 941,
+          "uv": 2.1
+        },
+        {
+          "mes": 12,
+          "tmin": 7.9,
+          "tmax": 19.9,
+          "lluvia": 12.6,
+          "et0": 141.5,
+          "viento": 6.3,
+          "humedadRaiz": 0.38,
+          "humedadSup": 0.33,
+          "diasHelada": 0,
+          "diasCalor": 0.7,
+          "humedadRel": 54,
+          "presion": 940,
+          "uv": 2.5
+        }
+      ],
+      "tendencia": {
+        "decada1": 8.45,
+        "decada2": 8.64,
+        "dif": 0.19
+      },
+      "tendenciaLluvia": {
+        "antes": 272,
+        "despues": 222,
+        "difPct": -18
+      },
+      "anual": [
+        {
+          "anio": 2006,
+          "lluvia": 236,
+          "diasHelada": 79,
+          "tMedia": 8.25,
+          "heladaTardia": true,
+          "ultimaHelada": "11-02",
+          "vientoPrim": 6.1
+        },
+        {
+          "anio": 2007,
+          "lluvia": 181,
+          "diasHelada": 83,
+          "tMedia": 8.26,
+          "heladaTardia": false,
+          "ultimaHelada": "10-29",
+          "vientoPrim": 5.6
+        },
+        {
+          "anio": 2008,
+          "lluvia": 215,
+          "diasHelada": 96,
+          "tMedia": 9.27,
+          "heladaTardia": false,
+          "ultimaHelada": "09-18",
+          "vientoPrim": 5.4
+        },
+        {
+          "anio": 2009,
+          "lluvia": 270,
+          "diasHelada": 78,
+          "tMedia": 8.18,
+          "heladaTardia": true,
+          "ultimaHelada": "11-09",
+          "vientoPrim": 5.8
+        },
+        {
+          "anio": 2010,
+          "lluvia": 308,
+          "diasHelada": 80,
+          "tMedia": 7.81,
+          "heladaTardia": false,
+          "ultimaHelada": "10-08",
+          "vientoPrim": 5.7
+        },
+        {
+          "anio": 2011,
+          "lluvia": 266,
+          "diasHelada": 76,
+          "tMedia": 8.7,
+          "heladaTardia": false,
+          "ultimaHelada": "09-22",
+          "vientoPrim": 5.1
+        },
+        {
+          "anio": 2012,
+          "lluvia": 305,
+          "diasHelada": 85,
+          "tMedia": 8.37,
+          "heladaTardia": false,
+          "ultimaHelada": "10-07",
+          "vientoPrim": 5.6
+        },
+        {
+          "anio": 2013,
+          "lluvia": 262,
+          "diasHelada": 77,
+          "tMedia": 9.07,
+          "heladaTardia": false,
+          "ultimaHelada": "10-20",
+          "vientoPrim": 5.5
+        },
+        {
+          "anio": 2014,
+          "lluvia": 335,
+          "diasHelada": 65,
+          "tMedia": 8.2,
+          "heladaTardia": false,
+          "ultimaHelada": "10-31",
+          "vientoPrim": 6.1
+        },
+        {
+          "anio": 2015,
+          "lluvia": 341,
+          "diasHelada": 86,
+          "tMedia": 8.4,
+          "heladaTardia": true,
+          "ultimaHelada": "11-19",
+          "vientoPrim": 5
+        },
+        {
+          "anio": 2016,
+          "lluvia": 162,
+          "diasHelada": 66,
+          "tMedia": 9.39,
+          "heladaTardia": false,
+          "ultimaHelada": "09-16",
+          "vientoPrim": 5.2
+        },
+        {
+          "anio": 2017,
+          "lluvia": 337,
+          "diasHelada": 65,
+          "tMedia": 8.38,
+          "heladaTardia": false,
+          "ultimaHelada": "10-21",
+          "vientoPrim": 6.1
+        },
+        {
+          "anio": 2018,
+          "lluvia": 215,
+          "diasHelada": 85,
+          "tMedia": 8.3,
+          "heladaTardia": false,
+          "ultimaHelada": "10-10",
+          "vientoPrim": 5.4
+        },
+        {
+          "anio": 2019,
+          "lluvia": 201,
+          "diasHelada": 70,
+          "tMedia": 8.6,
+          "heladaTardia": false,
+          "ultimaHelada": "10-13",
+          "vientoPrim": 5.9
+        },
+        {
+          "anio": 2020,
+          "lluvia": 219,
+          "diasHelada": 84,
+          "tMedia": 8.46,
+          "heladaTardia": false,
+          "ultimaHelada": "10-20",
+          "vientoPrim": 5.9
+        },
+        {
+          "anio": 2021,
+          "lluvia": 109,
+          "diasHelada": 58,
+          "tMedia": 9.87,
+          "heladaTardia": false,
+          "ultimaHelada": "10-06",
+          "vientoPrim": 5.6
+        },
+        {
+          "anio": 2022,
+          "lluvia": 149,
+          "diasHelada": 94,
+          "tMedia": 8.47,
+          "heladaTardia": false,
+          "ultimaHelada": "10-13",
+          "vientoPrim": 5.8
+        },
+        {
+          "anio": 2023,
+          "lluvia": 200,
+          "diasHelada": 91,
+          "tMedia": 8.15,
+          "heladaTardia": false,
+          "ultimaHelada": "10-31",
+          "vientoPrim": 5.2
+        },
+        {
+          "anio": 2024,
+          "lluvia": 229,
+          "diasHelada": 97,
+          "tMedia": 8.36,
+          "heladaTardia": false,
+          "ultimaHelada": "10-04",
+          "vientoPrim": 5.8
+        },
+        {
+          "anio": 2025,
+          "lluvia": 405,
+          "diasHelada": 71,
+          "tMedia": 8.46,
+          "heladaTardia": false,
+          "ultimaHelada": "10-27",
+          "vientoPrim": 6
+        }
+      ],
+      "humedadRelMedia": 68,
+      "presionMedia": 941,
+      "uvVerano": 2.4,
+      "minAnual": -9.7,
+      "altura": {
+        "celda": 581,
+        "campo": 425,
+        "deltaC": 1.02
+      }
+    },
+    "veg": {
+      "latest": {
+        "fecha": "2026-11-15",
+        "ndvi": 0.462,
+        "evi": 0.286
+      },
+      "points": 46
+    },
+    "results": [
+      {
+        "id": "f-break",
+        "name": "Alfalfa with a crop break",
+        "current": false,
+        "score": 70,
+        "metrics": {
+          "waterMm": 487,
+          "bareMonths": 0.3,
+          "erosion": 0.030249999999999992,
+          "nitrogen": 107,
+          "organicMatter": 0.6900000000000001,
+          "pestBreak": 0.4666666666666666,
+          "forage": 0.8400000000000001,
+          "income": 0.47000000000000003,
+          "labor": 0.45,
+          "market": 0.894,
+          "outlets": [
+            "Hay / livestock",
+            "Local / regional",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.3333333333333333
+        }
+      },
+      {
+        "id": "f-mixed",
+        "name": "Alfalfa–grass mix, rotational grazing",
+        "current": false,
+        "score": 51,
+        "metrics": {
+          "waterMm": 552,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 75,
+          "organicMatter": 0.825,
+          "pestBreak": 0.3333333333333333,
+          "forage": 0.8875000000000001,
+          "income": 0.425,
+          "labor": 0.25,
+          "market": 0.635,
+          "outlets": [
+            "Hay / livestock",
+            "Grazing / hay"
+          ],
+          "deepRoots": 0.5
+        }
+      },
+      {
+        "id": "f-cash",
+        "name": "Alfalfa → garlic → fava",
+        "current": false,
+        "score": 45,
+        "metrics": {
+          "waterMm": 529,
+          "bareMonths": 0.8,
+          "erosion": 0.08066666666666665,
+          "nitrogen": 101,
+          "organicMatter": 0.6625000000000001,
+          "pestBreak": 0.41666666666666663,
+          "forage": 0.7125,
+          "income": 0.5375,
+          "labor": 0.49999999999999994,
+          "market": 1,
+          "outlets": [
+            "Hay / livestock",
+            "National",
+            "Local",
+            "Forage / green manure"
+          ],
+          "deepRoots": 0.4
+        }
+      },
+      {
+        "id": "f-current",
+        "name": "Continuous alfalfa",
+        "current": true,
+        "score": 43,
+        "metrics": {
+          "waterMm": 569,
+          "bareMonths": 0,
+          "erosion": 0,
+          "nitrogen": 150,
+          "organicMatter": 0.75,
+          "pestBreak": 0,
+          "forage": 1,
+          "income": 0.5,
+          "labor": 0.3,
+          "market": 0.4,
+          "outlets": [
+            "Hay / livestock"
+          ],
+          "deepRoots": 1
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "tunnel-greens",
+        "name": "Winter greens in tunnels",
+        "viability": 85,
+        "agro": 77,
+        "margin": 40000,
+        "payback": 2.9,
+        "limits": []
+      },
+      {
+        "id": "saffron",
+        "name": "Saffron",
+        "viability": 80,
+        "agro": 89,
+        "margin": 11000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "seabuckthorn",
+        "name": "Sea buckthorn",
+        "viability": 68,
+        "agro": 72,
+        "margin": 13000,
+        "payback": 5,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "calafate",
+        "name": "Calafate",
+        "viability": 67,
+        "agro": 78,
+        "margin": 19000,
+        "payback": 3.6,
+        "limits": []
+      },
+      {
+        "id": "rosehip",
+        "name": "Rosehip (rosa mosqueta)",
+        "viability": 66,
+        "agro": 78,
+        "margin": 3500,
+        "payback": 4.5,
+        "limits": []
+      },
+      {
+        "id": "rhubarb",
+        "name": "Rhubarb",
+        "viability": 66,
+        "agro": 57,
+        "margin": 26000,
+        "payback": 2.3,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "haskap",
+        "name": "Haskap berry",
+        "viability": 65,
+        "agro": 59,
+        "margin": 24000,
+        "payback": 3.8,
+        "limits": [
+          "Water: Needs ~400 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "quinoa",
+        "name": "Quinoa",
+        "viability": 63,
+        "agro": 69,
+        "margin": 3000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "strawberry",
+        "name": "Strawberry",
+        "viability": 62,
+        "agro": 50,
+        "margin": 30000,
+        "payback": 1.8,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "garlic",
+        "name": "Garlic",
+        "viability": 57,
+        "agro": 67,
+        "margin": 12000,
+        "payback": 1,
+        "limits": [
+          "Water: Needs ~330 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "elderberry",
+        "name": "Elderberry",
+        "viability": 54,
+        "agro": 52,
+        "margin": 11000,
+        "payback": 4,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "lavender",
+        "name": "Lavender",
+        "viability": 52,
+        "agro": 71,
+        "margin": 3000,
+        "payback": 4.8,
+        "limits": [
+          "Water: Needs ~300 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "asparagus",
+        "name": "Asparagus",
+        "viability": 52,
+        "agro": 51,
+        "margin": 10000,
+        "payback": 5,
+        "limits": [
+          "Water: Needs ~450 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "raspberry",
+        "name": "Raspberry",
+        "viability": 44,
+        "agro": 45,
+        "margin": 23000,
+        "payback": 3,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "blueberry",
+        "name": "Blueberry",
+        "viability": 43,
+        "agro": 32,
+        "margin": 28000,
+        "payback": 5.8,
+        "limits": [
+          "Soil pH: Soil pH 7.9; likes 4.5–5.5",
+          "Water: Needs ~500 mm/season; useful supply ~495 mm"
+        ]
+      },
+      {
+        "id": "hazelnut",
+        "name": "Hazelnut",
+        "viability": 42,
+        "agro": 43,
+        "margin": 7000,
+        "payback": 8,
+        "limits": [
+          "Water: Needs ~500 mm/season; useful supply ~495 mm",
+          "Summer heat: 588 degree-days available; needs ~1000"
+        ]
+      },
+      {
+        "id": "hops",
+        "name": "Hops",
+        "viability": 37,
+        "agro": 36,
+        "margin": 8000,
+        "payback": 8.9,
+        "limits": [
+          "Water: Needs ~550 mm/season; useful supply ~495 mm",
+          "Wind: Spring wind 5.6 m/s; tolerance low"
+        ]
+      },
+      {
+        "id": "apple",
+        "name": "Apple",
+        "viability": 36,
+        "agro": 35,
+        "margin": 9000,
+        "payback": 9.7,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm",
+          "Summer heat: 588 degree-days available; needs ~1100",
+          "Wind: Spring wind 5.6 m/s; tolerance low"
+        ]
+      },
+      {
+        "id": "walnut",
+        "name": "Walnut",
+        "viability": 34,
+        "agro": 35,
+        "margin": 6500,
+        "payback": 11.3,
+        "limits": [
+          "Water: Needs ~700 mm/season; useful supply ~495 mm",
+          "Summer heat: 588 degree-days available; needs ~1400"
+        ]
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "viability": 33,
+        "agro": 36,
+        "margin": 23000,
+        "payback": 7,
+        "limits": [
+          "Water: Needs ~650 mm/season; useful supply ~495 mm",
+          "Wind: Spring wind 5.6 m/s; tolerance low"
+        ]
+      }
+    ]
+  }
+]

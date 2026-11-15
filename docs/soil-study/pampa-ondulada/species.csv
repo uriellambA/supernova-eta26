@@ -1,0 +1,46 @@
+point,species,status,viability,soil_climate_fit,margin_usd_ha,payback_years,fills_off_season,main_limit
+Pampa Ondulada centre,Chickpea,new,70,82,600,1,yes,
+Pampa Ondulada centre,Malting barley,new,68,79,515,1,yes,
+Pampa Ondulada centre,Canola (rapeseed),new,66,77,474,1,yes,
+Pampa Ondulada centre,Sunflower,new,58,63,372,1,yes,Water: Needs ~420 mm/season; useful rain ~589 mm
+Pampa Ondulada centre,Wheat,current,56,77,302,1,no,
+Pampa Ondulada centre,Grain sorghum,new,50,66,505,1,no,Water: Needs ~400 mm/season; useful rain ~589 mm
+Pampa Ondulada centre,Soybean,current,47,61,570,1,no,Water: Needs ~450 mm/season; useful rain ~589 mm
+Pampa Ondulada centre,Maize,current,41,51,645,1,no,Water: Needs ~550 mm/season; useful rain ~589 mm
+Pampa Ondulada centre,Pecan,new,35,39,5000,11.6,yes,Water: Needs ~700 mm/season; useful rain ~589 mm
+North,Chickpea,new,70,82,600,1,yes,
+North,Malting barley,new,68,79,515,1,yes,
+North,Canola (rapeseed),new,66,77,474,1,yes,
+North,Sunflower,new,58,63,372,1,yes,Water: Needs ~420 mm/season; useful rain ~589 mm
+North,Wheat,current,56,77,302,1,no,
+North,Grain sorghum,new,50,66,505,1,no,Water: Needs ~400 mm/season; useful rain ~589 mm
+North,Soybean,current,47,61,570,1,no,Water: Needs ~450 mm/season; useful rain ~589 mm
+North,Maize,current,41,51,645,1,no,Water: Needs ~550 mm/season; useful rain ~589 mm
+North,Pecan,new,35,39,5000,11.6,yes,Water: Needs ~700 mm/season; useful rain ~589 mm
+South,Chickpea,new,70,82,600,1,yes,
+South,Malting barley,new,68,79,515,1,yes,
+South,Canola (rapeseed),new,66,77,474,1,yes,
+South,Sunflower,new,58,63,372,1,yes,Water: Needs ~420 mm/season; useful rain ~589 mm
+South,Wheat,current,56,77,302,1,no,
+South,Grain sorghum,new,50,66,505,1,no,Water: Needs ~400 mm/season; useful rain ~589 mm
+South,Soybean,current,47,61,570,1,no,Water: Needs ~450 mm/season; useful rain ~589 mm
+South,Maize,current,41,51,645,1,no,Water: Needs ~550 mm/season; useful rain ~589 mm
+South,Pecan,new,35,39,5000,11.6,yes,Water: Needs ~700 mm/season; useful rain ~589 mm
+East,Chickpea,new,70,82,600,1,yes,
+East,Malting barley,new,68,79,515,1,yes,
+East,Canola (rapeseed),new,66,77,474,1,yes,
+East,Sunflower,new,58,63,372,1,yes,Water: Needs ~420 mm/season; useful rain ~589 mm
+East,Wheat,current,56,77,302,1,no,
+East,Grain sorghum,new,50,66,505,1,no,Water: Needs ~400 mm/season; useful rain ~589 mm
+East,Soybean,current,47,61,570,1,no,Water: Needs ~450 mm/season; useful rain ~589 mm
+East,Maize,current,41,51,645,1,no,Water: Needs ~550 mm/season; useful rain ~589 mm
+East,Pecan,new,35,39,5000,11.6,yes,Water: Needs ~700 mm/season; useful rain ~589 mm
+West,Chickpea,new,70,82,600,1,yes,
+West,Malting barley,new,68,79,515,1,yes,
+West,Canola (rapeseed),new,66,77,474,1,yes,
+West,Sunflower,new,58,63,372,1,yes,Water: Needs ~420 mm/season; useful rain ~589 mm
+West,Wheat,current,56,77,302,1,no,
+West,Grain sorghum,new,50,66,505,1,no,Water: Needs ~400 mm/season; useful rain ~589 mm
+West,Soybean,current,47,61,570,1,no,Water: Needs ~450 mm/season; useful rain ~589 mm
+West,Maize,current,41,51,645,1,no,Water: Needs ~550 mm/season; useful rain ~589 mm
+West,Pecan,new,35,39,5000,11.6,yes,Water: Needs ~700 mm/season; useful rain ~589 mm
