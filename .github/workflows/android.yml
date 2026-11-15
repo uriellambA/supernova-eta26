@@ -19,6 +19,10 @@ on:
       - "desktop/**"
       - ".github/workflows/android.yml"
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to attach the APK to (e.g. desktop-v0.1.0). Empty: only build."
+        required: false
 
 permissions:
   contents: write
@@ -113,10 +117,11 @@ jobs:
           path: ${{ env.APK }}
 
       - name: Add to the GitHub Release
-        if: startsWith(github.ref, 'refs/tags/desktop-v')
+        if: startsWith(github.ref, 'refs/tags/desktop-v') || github.event.inputs.tag != ''
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ env.APK }}
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           # the APK is usually ready first: create the Release with the same name and text as the desktop workflow
           name: Growvia Desktop ${{ env.VERSION }}
           body: |
