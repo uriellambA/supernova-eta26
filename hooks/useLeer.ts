@@ -45,8 +45,8 @@ function trozos(t: string) {
 let serverTts: boolean | null = null; // null = not tried yet
 
 // ---------------- shared state (every Listen button shows the same playback) ----------------
-type Estado = { hablando: boolean; pausado: boolean; cargando: boolean };
-const INICIAL: Estado = { hablando: false, pausado: false, cargando: false };
+type Estado = { hablando: boolean; pausado: boolean; cargando: boolean; /** reading with the phone/computer voice (its volume cannot be raised by the page) */ dispositivo: boolean };
+const INICIAL: Estado = { hablando: false, pausado: false, cargando: false, dispositivo: false };
 let estado = INICIAL;
 const subs = new Set<() => void>();
 const actualizar = (p: Partial<Estado>) => {
@@ -123,6 +123,40 @@ let turno = 0; // each new reading cancels the previous one
 let alTerminarBloque: ((ok: boolean) => void) | null = null;
 
 /**
+ * Makes the server voice loud and clear on phone speakers:
+ * low-cut (rumble wastes loudness) → +4 dB presence at 3 kHz (speech clarity) → +14 dB → compressor (evens soft
+ * and loud words) → +5 dB → limiter just under 0 dBFS (as loud as possible without distortion).
+ */
+export function cadenaFuerte(ctx: BaseAudioContext, entrada: AudioNode): AudioNode {
+  const corte = ctx.createBiquadFilter();
+  corte.type = "highpass";
+  corte.frequency.value = 100;
+  const presencia = ctx.createBiquadFilter();
+  presencia.type = "peaking";
+  presencia.frequency.value = 3000;
+  presencia.Q.value = 0.9;
+  presencia.gain.value = 4;
+  const pre = ctx.createGain();
+  pre.gain.value = 5; // +14 dB
+  const comp = ctx.createDynamicsCompressor();
+  comp.threshold.value = -26;
+  comp.knee.value = 8;
+  comp.ratio.value = 8;
+  comp.attack.value = 0.003;
+  comp.release.value = 0.2;
+  const post = ctx.createGain();
+  post.gain.value = 1.8; // +5 dB
+  const limitador = ctx.createDynamicsCompressor();
+  limitador.threshold.value = -1.5;
+  limitador.knee.value = 0;
+  limitador.ratio.value = 20;
+  limitador.attack.value = 0.001;
+  limitador.release.value = 0.08;
+  entrada.connect(corte).connect(presencia).connect(pre).connect(comp).connect(post).connect(limitador);
+  return limitador;
+}
+
+/**
  * Must run inside a tap/click: browsers (above all on phones) only allow sound that starts from a user gesture.
  * Creates the player and plays a tiny silence so that later audio is allowed even after waiting for the server.
  */
@@ -135,15 +169,11 @@ export function desbloquearAudio() {
     }
     if (!ctx && "AudioContext" in window) {
       ctx = new AudioContext();
-      const gain = ctx.createGain();
-      gain.gain.value = 2.5; // louder than the device voice
-      const comp = ctx.createDynamicsCompressor(); // keeps the boost from distorting
-      comp.threshold.value = -12;
-      comp.ratio.value = 6;
+      const salida = cadenaFuerte(ctx, ctx.createMediaElementSource(el));
       analizador = ctx.createAnalyser(); // loudness for the avatar's mouth
       analizador.fftSize = 512;
-      ctx.createMediaElementSource(el).connect(gain).connect(comp).connect(ctx.destination);
-      comp.connect(analizador);
+      salida.connect(ctx.destination);
+      salida.connect(analizador);
     }
     ctx?.resume().catch(() => {});
     if (!estado.hablando) {
@@ -181,11 +211,15 @@ function reproducir(url: string, t: number) {
 function leerDispositivo(texto: string, t: number) {
   const s = window.speechSynthesis;
   s.cancel();
+  // iPhone/Android lower ("duck") the device voice while our Web Audio player is active: release it first
+  el?.pause();
+  if (el) el.removeAttribute("src");
+  ctx?.suspend().catch(() => {});
   setSpeaking(true);
   setAnalyser(null);
   const v = elegirVoz();
   const partes = trozos(texto);
-  actualizar({ cargando: false });
+  actualizar({ cargando: false, dispositivo: true });
   partes.forEach((p, i) => {
     const u = new SpeechSynthesisUtterance(p);
     if (v) u.voice = v;

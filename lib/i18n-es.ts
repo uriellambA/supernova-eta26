@@ -646,6 +646,7 @@ export const ES: Record<string, string> = {
   "Bare months": "Meses desnudo", "N kg/ha": "N kg/ha", "Main benefit / risk": "Principal beneficio / riesgo", "New crops ranked for this field": "Cultivos nuevos ordenados para este campo", "Main limit": "Principal limitante", "Margin USD/ha": "Margen USD/ha",
   // ---------- Rotation explorer ----------
   "in {n}": "en {n}",
+  "Using your device's voice: turn up the volume of your phone or computer": "Se usa la voz de tu dispositivo: subí el volumen del celular o la compu",
   "Auto voice on": "Voz automática: sí",
   "Auto voice off": "Voz automática: no",
   "Speak each answer automatically": "Leer cada respuesta en voz alta automáticamente",

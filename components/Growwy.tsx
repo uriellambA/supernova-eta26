@@ -107,6 +107,7 @@ export function Growwy({ busy, advice, question, isReply, onReply }: {
               ) : (
                 <button className="rounded-full bg-cta px-3 py-1 text-xs font-medium text-cta-ink" onClick={() => tts.leer(parts)}>▶ Listen to Growwy</button>
               ))}
+              {tts.hablando && tts.dispositivo && <p className="w-full text-[11px] text-muted">Using your device&apos;s voice: turn up the volume of your phone or computer.</p>}
               <button className={`${pill} ${replying ? "!border-ink" : ""}`} onClick={() => setReplying((r) => !r)} aria-expanded={replying}>↩ Reply</button>
             </div>
           )}
